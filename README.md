@@ -22,7 +22,7 @@ You can do the second step differently: either you can create the file with the 
 1. Copy IDs of your preferred channel (turn on Developer Mode in your Discord settings and right click on any channel).
 2. Set it up like an example below (of course, change `000000000000000000` to correct channel IDs), where the tool would send the messages about all the changes in MediaWiki namespace and about the changes at `Википедия:Запросы к администраторам/Быстрые` page that are larger than 900 bytes:
 
-```json
+```js
 {
 	// Namespace example (brackets are required), use {{NAMESPACENUMBER}} or other means to get namespace number
 	"<8>": [
