@@ -29,10 +29,10 @@ namespace DiscordWikiBot
 		public async Task Run()
 		{
 			// Check for a token
-			string tokenPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"token.txt");
+			string tokenPath = @"token.txt";
 			if (!File.Exists(tokenPath))
 			{
-				Client.DebugLogger.LogMessage(LogLevel.Critical, "DiscordWikiBot", "Please create a file called \"token.txt\" before running the bot!", DateTime.Now);
+				Console.WriteLine("Please create a file called \"token.txt\" before running the bot!");
 				Console.WriteLine("[Press any key to exit...]");
 				Console.ReadKey();
 				Environment.Exit(0);
@@ -41,10 +41,10 @@ namespace DiscordWikiBot
 
 			// Get JSON config file
 			string json = "";
-			string cfgPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"config.json");
+			string cfgPath = @"config.json";
 			if (!File.Exists(cfgPath))
 			{
-				Client.DebugLogger.LogMessage(LogLevel.Critical, "DiscordWikiBot", "Please create a JSON file called \"config.json\" before running the bot!", DateTime.Now);
+				Console.WriteLine("Please create a JSON file called \"config.json\" before running the bot!");
 				Console.WriteLine("[Press any key to exit...]");
 				Console.ReadKey();
 				Environment.Exit(0);
@@ -99,7 +99,23 @@ namespace DiscordWikiBot
 			await Client.ConnectAsync();
 
 			// Make sure not to close down automatically
-			await Task.Delay(-1);
+			await CtrlC();
+		}
+
+		private static Task CtrlC()
+		{
+			var tcs = new TaskCompletionSource<object>();
+
+			ConsoleCancelEventHandler handler = null;
+			handler = (s, e) =>
+			{
+				tcs.TrySetResult(null);
+				Console.CancelKeyPress -= handler;
+				e.Cancel = true;
+			};
+
+			Console.CancelKeyPress += handler;
+			return tcs.Task;
 		}
 
 		private Task Client_GuildAvailable(GuildCreateEventArgs e)

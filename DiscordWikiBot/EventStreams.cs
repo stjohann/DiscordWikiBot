@@ -27,7 +27,7 @@ namespace DiscordWikiBot
 			// Get JSON
 			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Reading JSON config", DateTime.Now);
 			string json = "";
-			string jsonPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"eventStreams.json");
+			string jsonPath = @"eventStreams.json";
 			if (!File.Exists(jsonPath))
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", "Please create a JSON file called \"eventStreams.json\" before trying to use EventStreams.", DateTime.Now);
