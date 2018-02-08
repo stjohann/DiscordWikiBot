@@ -16,7 +16,7 @@ namespace DiscordWikiBot
 		// Link pattern: [[]], [[|, {{}} or {{|
 		private static string pattern = string.Format("(?:{0}|{1})",
 			"(\\[{2})([^\\[\\]\\|\n]+)(?:\\|[^\\[\\]\\|\n]*)?]{2}",
-			"({{2})([^#][^{}\\|\n]+)(?:\\|*[^{}\n]*)?}{2}");
+			"({{2})([^#][^{}\\|\n]*)(?:\\|*[^{}\n]*)?}{2}");
 
 		// Site information storage
 		public class SiteInfo
@@ -83,7 +83,6 @@ namespace DiscordWikiBot
 		static public string AddLink(Match link)
 		{
 			string linkFormat = Program.Config.Wiki;
-			bool linkIsLanguageVersion = true;
 			GroupCollection groups = link.Groups;
 			string type = ( groups[1].Value.Length == 0 ? groups[3].Value : groups[1].Value).Trim();
 			string str = ( groups[2].Value.Length == 0 ? groups[4].Value : groups[2].Value ).Trim();
@@ -118,12 +117,12 @@ namespace DiscordWikiBot
 				while (type == "[[" && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
-					InterwikiMap list = (tempIWList != null ? tempIWList : IWList);
-					if (list.Contains(prefix))
+					InterwikiMap latestIWList = (tempIWList != null ? tempIWList : IWList);
+					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : NSList);
+					if (latestIWList.Contains(prefix) && !latestNSList.Contains(prefix))
 					{
 						string oldLinkFormat = linkFormat;
-						linkFormat = list[prefix].Url;
-						linkIsLanguageVersion = (list[prefix].LanguageAutonym != null || list[prefix].SiteName != null);
+						linkFormat = latestIWList[prefix].Url;
 
 						// Fetch temporary site information if necessary and store new prefix
 						if (iw != "" || oldLinkFormat.Replace(iw, prefix) != linkFormat)
@@ -135,7 +134,9 @@ namespace DiscordWikiBot
 						}
 						iw = prefix;
 
-						str = Regex.Replace(str, $":?{prefix}:", "", RegexOptions.IgnoreCase).Trim();
+						Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+						str = only.Replace(str, "", 1).Trim();
+
 						iwMatch = Regex.Match(str, "^:?([A-Za-z-]+):");
 					} else
 					{
@@ -149,19 +150,22 @@ namespace DiscordWikiBot
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
+					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : NSList);
 					if (linkFormat == Program.Config.Wiki)
 					{
 						if (NSList.Contains(prefix))
 						{
 							ns = NSList[prefix].CustomName;
-							str = Regex.Replace(str, $":?{prefix}:", "", RegexOptions.IgnoreCase);
+							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+							str = only.Replace(str, "", 1);
 						}
-					} else if (linkIsLanguageVersion)
+					} else
 					{
-						if (tempNSList.Contains(prefix))
+						if (latestNSList.Contains(prefix))
 						{
-							ns = tempNSList[prefix].CustomName;
-							str = Regex.Replace(str, $":?{prefix}:", "", RegexOptions.IgnoreCase);
+							ns = latestNSList[prefix].CustomName;
+							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+							str = only.Replace(str, "", 1);
 						}
 					}
 				}

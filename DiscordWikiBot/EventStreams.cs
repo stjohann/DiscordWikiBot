@@ -162,7 +162,7 @@ namespace DiscordWikiBot
 				comment = Regex.Replace(comment, linkPatternPipe, string.Empty).Replace("]]", string.Empty);
 
 				// Add italic and parentheses
-				comment = $" _({comment})_";
+				comment = $" *({comment})*";
 			}
 
 			// Form and return the entire message
