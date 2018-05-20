@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AsyncEnumerableExtensions, Version=0.1.4.0, Culture=neutral, PublicKeyToken=d11d507ad6f26314, processorArchitecture=MSIL">
       <HintPath>..\packages\CXuesong.AsyncEnumerableExtensions.0.1.4\lib\netstandard1.1\AsyncEnumerableExtensions.dll</HintPath>
@@ -97,6 +100,7 @@
   <ItemGroup>
     <Compile Include="EventStreams.cs" />
     <Compile Include="Linking.cs" />
+    <Compile Include="Locale.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming.cs" />
@@ -113,6 +117,8 @@
     <None Include="eventStreams.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="i18n\en.json" />
+    <None Include="i18n\ru.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +146,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY "$(ProjectDir)i18n" "$(TargetDir)i18n" /E /Y</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

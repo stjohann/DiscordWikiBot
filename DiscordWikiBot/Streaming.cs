@@ -26,13 +26,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel.ToString() == "")
 			{
-				await ctx.RespondAsync("Название канала — обязательный параметр. Чтобы получить полную справку, введите `!help openStream`.");
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", "!help openStream"));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync("Цель потока — обязательный параметр. Чтобы получить полную справку, введите `!help openStream`.");
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", "!help openStream"));
 				return;
 			}
 
@@ -43,7 +43,7 @@ namespace DiscordWikiBot
 			string len = (minLength != -1 ? minLength.ToString() : "");
 			EventStreams.SetData(goal, channel.Id.ToString(), len);
 
-			await ctx.RespondAsync($"Поток с целью `{goal}` добавлен для обработки в канал {channel.Mention}.");
+			await ctx.RespondAsync(Locale.GetMessage("streaming-added", goal, channel.Mention));
 		}
 
 		[Command("closeStream")]
@@ -60,13 +60,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel.ToString() == "")
 			{
-				await ctx.RespondAsync("Название канала — обязательный параметр. Чтобы получить полную справку, введите `!help openStream`.");
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", "!help closeStream"));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync("Цель потока — обязательный параметр. Чтобы получить полную справку, введите `!help openStream`.");
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", "!help closeStream"));
 				return;
 			}
 
@@ -77,7 +77,7 @@ namespace DiscordWikiBot
 			string len = (minLength != -1 ? minLength.ToString() : "");
 			EventStreams.RemoveData(goal, channel.Id.ToString(), len);
 
-			await ctx.RespondAsync($"Поток с целью `{goal}` удалён из обработки в канале {channel.Mention}.");
+			await ctx.RespondAsync(Locale.GetMessage("streaming-removed", goal, channel.Mention));
 		}
 	}
 }

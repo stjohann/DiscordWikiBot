@@ -1,0 +1,13 @@
+﻿{
+	"@metadata": {
+		"authors": [
+			"stjn"
+		]
+	},
+	"linking-link": "Link:",
+	"linking-links":  "Links:",
+	"streaming-added": "**[+]** Stream with a goal `{0}` was added for processing in the channel {1}.",
+	"streaming-removed": "**[−]** Stream with a goal `{0}` was removed from processing in the channel {1}.",
+	"streaming-required-channel": "The channel name is a required parameter.\nTo get full help for the command, send `{0}`.",
+	"streaming-required-goal": "The stream goal is a required parameter.\nTo get full help for the command, send `{0}`."
+}

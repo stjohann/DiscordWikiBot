@@ -72,7 +72,7 @@ namespace DiscordWikiBot
 				// Check if message is not empty and send it
 				if (msg != "")
 				{
-					msg = (links.Count > 1 ? "Ссылки:\n" : "Ссылка: ") + msg;
+					msg = (links.Count > 1 ? Locale.GetMessage("linking-links") + "\n" : Locale.GetMessage("linking-link") + " ") + msg;
 					
 					return e.Message.RespondAsync(msg);
 				}

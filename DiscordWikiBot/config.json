@@ -1,12 +1,5 @@
 {
-	// Domain of your wiki, used by EventStreams
-	// Set to "" if your wiki is not a Wikimedia Foundation project
-	// Full information:
-	// 1) https://wikitech.wikimedia.org/wiki/EventStreams
-	// 2) https://wikitech.wikimedia.org/wiki/XmlRcs
 	"domain": "ru.wikipedia.org",
-	// URLs at your wiki should be in this format: https://example.wiki/wiki/$1
-	// API should be in this format: https://example.wiki/w/api.php
-	// (other formats are currently unsupported)
+	"lang":  "ru",
 	"wiki": "https://ru.wikipedia.org/wiki/$1"
 }

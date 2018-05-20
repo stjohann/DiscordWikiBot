@@ -66,6 +66,10 @@ namespace DiscordWikiBot
 			// Initialise events
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Initialising events", DateTime.Now);
 
+			// Get locale
+			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", string.Format("Loading {0} locale", Config.Lang.ToUpper()), DateTime.Now);
+			Locale.Init();
+
 			// Get site information and start linking bot
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Getting wiki site information", DateTime.Now);
 			Linking.Init();
@@ -149,6 +153,9 @@ namespace DiscordWikiBot
 		{
 			[JsonProperty("domain")]
 			public string Domain { get; private set; }
+
+			[JsonProperty("lang")]
+			public string Lang { get; private set; }
 
 			[JsonProperty("wiki")]
 			public string Wiki { get; private set; }
