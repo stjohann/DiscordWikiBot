@@ -7,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using WikiClientLibrary;
 using WikiClientLibrary.Client;
+using WikiClientLibrary.Sites;
 using Newtonsoft.Json;
 
 namespace DiscordWikiBot
@@ -212,7 +213,8 @@ namespace DiscordWikiBot
 				{
 					ClientUserAgent = "DiscordWikiBot/1.0",
 				};
-				Site site = await Site.CreateAsync(wikiClient, url.Replace(urlWiki, "/w/api.php"));
+				WikiSite site = new WikiSite(wikiClient, url.Replace(urlWiki, "/w/api.php"));
+				await site.Initialization;
 
 				// Generate and return the info needed
 				result.iw = site.InterwikiMap;
@@ -259,7 +261,8 @@ namespace DiscordWikiBot
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding
 			char[] specialChars =
 			{
-				'"',
+				// Discord already escapes this character in URLs
+				// '"',
 				'%',
 				'&',
 				'+',

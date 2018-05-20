@@ -50,12 +50,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AsyncEnumerableExtensions, Version=0.1.4.0, Culture=neutral, PublicKeyToken=d11d507ad6f26314, processorArchitecture=MSIL">
+      <HintPath>..\packages\CXuesong.AsyncEnumerableExtensions.0.1.4\lib\netstandard1.1\AsyncEnumerableExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DSharpPlus, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DSharpPlus.3.2.3\lib\net45\DSharpPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="DSharpPlus.CommandsNext, Version=3.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DSharpPlus.CommandsNext.3.2.3\lib\net45\DSharpPlus.CommandsNext.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.1.2\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -81,8 +89,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WikiClientLibrary, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CXuesong.MW.WikiClientLibrary.0.5.1\lib\netstandard1.1\WikiClientLibrary.dll</HintPath>
+    <Reference Include="WikiClientLibrary, Version=0.6.0.16, Culture=neutral, PublicKeyToken=67999c51074b98f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\CXuesong.MW.WikiClientLibrary.0.6.0-intX6\lib\netstandard1.1\WikiClientLibrary.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

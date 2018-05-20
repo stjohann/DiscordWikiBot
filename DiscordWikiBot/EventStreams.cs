@@ -190,7 +190,7 @@ namespace DiscordWikiBot
 			Data[goal].Add(str);
 
 			// Write it to JSON file
-			string jsonPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"eventStreams.json");
+			string jsonPath = @"eventStreams.json";
 			File.WriteAllText(jsonPath, Data.ToString());
 		}
 
@@ -213,7 +213,7 @@ namespace DiscordWikiBot
 			}
 
 			// Write it to JSON file
-			string jsonPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, @"eventStreams.json");
+			string jsonPath = @"eventStreams.json";
 			File.WriteAllText(jsonPath, Data.ToString());
 		}
 	}
