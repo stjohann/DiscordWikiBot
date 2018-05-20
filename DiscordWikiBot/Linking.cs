@@ -58,11 +58,11 @@ namespace DiscordWikiBot
 
 			if (matches.Count > 0)
 			{
-				// Go through matches
+				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
 					string str = AddLink(link);
-					if (!links.Contains(str))
+					if (str.Length > 0 && !links.Contains(str))
 					{
 						msg += str;
 						links.Add(str);
