@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading;
@@ -110,29 +111,62 @@ namespace DiscordWikiBot
 				}
 
 				// Send the message
-				await client.SendMessageAsync(channel, GetMessage(change));
+				await client.SendMessageAsync(channel, embed: GetEmbed(change));
 			}
+		}
+		
+		public static DiscordEmbedBuilder GetEmbed(RecentChange change)
+		{
+			DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+				.WithTimestamp(change.Timestamp);
+
+			DiscordColor embedColor = new DiscordColor(0x72777d);
+			string embedIcon = "2/25/MobileFrontend_bytes-neutral.svg/512px-MobileFrontend_bytes-neutral.svg.png";
+
+			// Parse statuses from the diff
+			string status = "";
+			if (change.Type == RecentChange.ChangeType.New)
+			{
+				status += Locale.GetMessage("eventstreams-new");
+			}
+			if (change.Minor == true)
+			{
+				status += Locale.GetMessage("eventstreams-minor");
+			}
+
+			if (status != "")
+			{
+				embed.WithFooter(status);
+			}
+
+			// Parse length of the diff
+			int length = (change.LengthNew - change.LengthOld);
+			if (length > 0)
+			{
+				embedColor = new DiscordColor(0x00af89);
+				embedIcon = "a/ab/MobileFrontend_bytes-added.svg/512px-MobileFrontend_bytes-added.svg.png";
+			} else if (length < 0)
+			{
+				embedIcon = "7/7c/MobileFrontend_bytes-removed.svg/512px-MobileFrontend_bytes-removed.svg.png";
+				embedColor = new DiscordColor(0xdd3333);
+			}
+
+			embed
+				.WithAuthor(
+					change.Title,
+					Linking.GetLink(change.Title),
+					string.Format("https://upload.wikimedia.org/wikipedia/commons/thumb/{0}", embedIcon)
+				)
+				.WithColor(embedColor)
+				.WithDescription(GetMessage(change));
+
+			return embed;
 		}
 
 		public static string GetMessage(RecentChange change)
 		{
 			string linkPattern = "\\[{2}([^\\[\\]\\|\n]+)\\]{2}";
 			string linkPatternPipe = "\\[{2}([^\\[\\]\\|\n]+)\\|";
-
-			// Parse statuses from the diff
-			string status = "";
-			if (change.Minor == true)
-			{
-				status = "м";
-			}
-			if (change.Type == RecentChange.ChangeType.New)
-			{
-				status += (status != "" ? " " : "") + "Н";
-			}
-			if (status != "")
-			{
-				status = $"**{status}** ";
-			}
 
 			// Parse length of the diff
 			string strLength = "";
@@ -165,10 +199,32 @@ namespace DiscordWikiBot
 				comment = $" *({comment})*";
 			}
 
-			// Form and return the entire message
-			string link = Program.Config.Wiki.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.OldID != 0 ? "diff=" : "oldid=" ), change.RevID));
-			string msg = $"{status}{change.Title} . . {strLength} . . {change.User}{comment}\n<{link}>";
+			// Markdownify link
+			string link = Program.Config.Wiki.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.OldID != 0 ? "diff=" : "oldid="), change.RevID));
+			link = string.Format("([{0}]({1}))", Locale.GetMessage("eventstreams-diff"), link);
 
+			// Markdownify user
+			string user = "User:" + change.User;
+			string talk = "User_talk:" + change.User;
+			string contribs = "Special:Contributions/" + change.User;
+
+			user = Linking.GetLink(user);
+			talk = Linking.GetLink(talk);
+			contribs = Linking.GetLink(contribs);
+
+			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk"), talk);
+
+			IPAddress address;
+			if (IPAddress.TryParse(change.User, out address))
+			{
+				user = $"[{change.User}]({contribs}) ({talk})";
+			} else
+			{
+				contribs = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-contribs"), contribs);
+				user = $"[{change.User}]({user}) ({talk} | {contribs})";
+			}
+
+			string msg = $"{link} . . {strLength} . . {user}{comment}";
 			return msg;
 		}
 

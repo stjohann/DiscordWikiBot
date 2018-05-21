@@ -12,15 +12,17 @@ namespace DiscordWikiBot
 {
 	class Streaming
 	{
-		[Command("openStream")]
-		[Description("Начать трансляцию части потока в канал. Работает только в #moderators.")]
+		[Command("openStream"), Description("streaming-help-open")]
 		public async Task OpenStream(CommandContext ctx,
-			[Description("Доступный вам канал, в который необходимо начать трансляцию.")] DiscordChannel channel,
-			[Description("Заголовок страницы (через \\_) или номер пространства.")] string goal = "",
-			[Description("Минимальный размер диффа (необязательно).")] int minLength = -1)
+			[Description("streaming-help-channel")] DiscordChannel channel,
+			[Description("streaming-help-goal")] string goal = "",
+			[Description("streaming-help-minlength")] int minLength = -1)
 		{
 			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators") return;
+			if (ctx.Channel.Name != "moderators") {
+				await ctx.RespondAsync(Locale.GetMessage("streaming-denied"));
+				return;
+			};
 			await ctx.TriggerTypingAsync();
 
 			// Check for required parameters
@@ -46,19 +48,21 @@ namespace DiscordWikiBot
 			await ctx.RespondAsync(Locale.GetMessage("streaming-added", goal, channel.Mention));
 		}
 
-		[Command("closeStream")]
-		[Description("Прекратить трансляцию части потока в канал. Работает только в #moderators.")]
+		[Command("closeStream"), Description("streaming-help-close")]
 		public async Task CloseStream(CommandContext ctx,
-			[Description("Доступный вам канал, в который необходимо начать трансляцию.")] DiscordChannel channel,
-			[Description("Заголовок страницы (через \\_) или номер пространства (в <>).")] string goal = "",
-			[Description("Минимальный размер диффа (необязательно).")] int minLength = -1)
+			[Description("streaming-help-channel")] DiscordChannel channel,
+			[Description("streaming-help-goal")] string goal = "",
+			[Description("streaming-help-minlength")] int minLength = -1)
 		{
 			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators") return;
+			if (ctx.Channel.Name != "moderators") {
+				await ctx.RespondAsync(Locale.GetMessage("streaming-denied"));
+				return;
+			};
 			await ctx.TriggerTypingAsync();
 
 			// Check for required parameters
-			if (channel.ToString() == "")
+			if (channel == null)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", "!help closeStream"));
 				return;

@@ -4,10 +4,37 @@
 			"stjn"
 		]
 	},
+
+	"help-title": "Help",
+	"help-title-command":  "{0} – help",
+	"help-all": "Listing all top-level commands and groups. Specify a command to see more information.",
+	"help-commands":  "Commands",
+	"help-subcommands": "Subcommands",
+	"help-aliases": "Aliases",
+	"help-arguments": "Arguments",
+	"help-separator": " – {0}",
+	"help-default": "By default: {0}.",
+	"help-optional": "optional",
+	"help-group-standalone": "This group is a standalone command.",
+	"help-command": "Displays command help.",
+	"help-command-command": "command to provide help for.",
+
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "talk",
+	"eventstreams-contribs": "contribs",
+	"eventstreams-new": "N",
+	"eventstreams-minor": "m",
+
 	"linking-link": "Link:",
-	"linking-links":  "Links:",
+	"linking-links": "Links:",
+
 	"streaming-added": "**[+]** Stream with a goal `{0}` was added for processing in the channel {1}.",
 	"streaming-removed": "**[−]** Stream with a goal `{0}` was removed from processing in the channel {1}.",
 	"streaming-required-channel": "The channel name is a required parameter.\nTo get full help for the command, send `{0}`.",
-	"streaming-required-goal": "The stream goal is a required parameter.\nTo get full help for the command, send `{0}`."
+	"streaming-required-goal": "The stream goal is a required parameter.\nTo get full help for the command, send `{0}`.",
+	"streaming-help-open": "Start broadcasting a part of the stream in the channel. Works only in #moderators.",
+	"streaming-help-close": "Stop broadcasting a part of the stream in the channel. Works only in #moderators.",
+	"streaming-help-channel": "the channel that is available to you in which the broadcast must be done.",
+	"streaming-help-goal": "the page title (with \\_ for spaces) or namespace number (in <>).",
+	"streaming-help-minlength": "minimal length for a diff (optional)."
 }

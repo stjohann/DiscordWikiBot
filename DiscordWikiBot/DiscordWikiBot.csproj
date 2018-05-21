@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LocalisedHelpFormatter.cs" />
     <Compile Include="EventStreams.cs" />
     <Compile Include="Linking.cs" />
     <Compile Include="Locale.cs" />

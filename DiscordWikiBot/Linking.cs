@@ -193,11 +193,8 @@ namespace DiscordWikiBot
 					{
 						str = string.Join(":", new[] { ns, str });
 					}
-
-					// Do a set of character conversions
-					str = EncodePageTitle(str);
 				}
-				return $"<{linkFormat}>\n".Replace("$1", str);
+				return string.Format("<{0}>\n", GetLink(str, linkFormat));
 			}
 			return "";
 		}
@@ -253,6 +250,17 @@ namespace DiscordWikiBot
 			}
 
 			return false;
+		}
+
+		public static string GetLink(string title, string format = null)
+		{
+			if (format == null)
+			{
+				format = Program.Config.Wiki;
+			}
+
+			title = EncodePageTitle(title);
+			return format.Replace("$1", title);
 		}
 
 		public static string EncodePageTitle(string str)

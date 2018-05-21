@@ -88,15 +88,23 @@ namespace DiscordWikiBot
 			Client.ClientErrored += Client_ClientErrored;
 
 			// Initialise commands
+			if (Config.Prefix == null)
+			{
+				Config.Prefix = "!";
+			}
+
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Setting up commands", DateTime.Now);
 			Commands = Client.UseCommandsNext(new CommandsNextConfiguration
 			{
-				StringPrefix = "!",
+				StringPrefix = Config.Prefix,
 				EnableDms = false,
 				EnableMentionPrefix = true,
 			});
 
 			Commands.RegisterCommands<Streaming>();
+
+			// Set up custom formatter
+			Commands.SetHelpFormatter<LocalisedHelpFormatter>();
 
 			// Connect and start
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Connecting...", DateTime.Now);
@@ -156,6 +164,9 @@ namespace DiscordWikiBot
 
 			[JsonProperty("lang")]
 			public string Lang { get; private set; }
+
+			[JsonProperty("prefix")]
+			public string Prefix { get; set; }
 
 			[JsonProperty("wiki")]
 			public string Wiki { get; private set; }
