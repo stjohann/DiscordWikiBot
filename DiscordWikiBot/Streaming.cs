@@ -18,9 +18,11 @@ namespace DiscordWikiBot
 			[Description("streaming-help-goal")] string goal = "",
 			[Description("streaming-help-minlength")] int minLength = -1)
 		{
+			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+
 			// Ensure that we are in private channel
 			if (ctx.Channel.Name != "moderators") {
-				await ctx.RespondAsync(Locale.GetMessage("streaming-denied"));
+				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
 				return;
 			};
 			await ctx.TriggerTypingAsync();
@@ -28,13 +30,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", "!help openStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "!help openStream"));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", "!help openStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "!help openStream"));
 				return;
 			}
 
@@ -45,7 +47,7 @@ namespace DiscordWikiBot
 			string len = (minLength != -1 ? minLength.ToString() : "");
 			EventStreams.SetData(goal, channel.Id.ToString(), len);
 
-			await ctx.RespondAsync(Locale.GetMessage("streaming-added", goal, channel.Mention));
+			await ctx.RespondAsync(Locale.GetMessage("streaming-added", lang, goal, channel.Mention));
 		}
 
 		[Command("closeStream"), Description("streaming-help-close")]
@@ -54,9 +56,11 @@ namespace DiscordWikiBot
 			[Description("streaming-help-goal")] string goal = "",
 			[Description("streaming-help-minlength")] int minLength = -1)
 		{
+			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+
 			// Ensure that we are in private channel
 			if (ctx.Channel.Name != "moderators") {
-				await ctx.RespondAsync(Locale.GetMessage("streaming-denied"));
+				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
 				return;
 			};
 			await ctx.TriggerTypingAsync();
@@ -64,13 +68,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel == null)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", "!help closeStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "!help closeStream"));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", "!help closeStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "!help closeStream"));
 				return;
 			}
 
@@ -81,7 +85,7 @@ namespace DiscordWikiBot
 			string len = (minLength != -1 ? minLength.ToString() : "");
 			EventStreams.RemoveData(goal, channel.Id.ToString(), len);
 
-			await ctx.RespondAsync(Locale.GetMessage("streaming-removed", goal, channel.Mention));
+			await ctx.RespondAsync(Locale.GetMessage("streaming-removed", lang, goal, channel.Mention));
 		}
 	}
 }

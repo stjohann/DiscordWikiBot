@@ -98,6 +98,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="Configuring.cs" />
     <Compile Include="LocalisedHelpFormatter.cs" />
     <Compile Include="EventStreams.cs" />
     <Compile Include="Linking.cs" />
@@ -120,6 +122,9 @@
     </None>
     <None Include="i18n\en.json" />
     <None Include="i18n\ru.json" />
+    <None Include="overrides.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

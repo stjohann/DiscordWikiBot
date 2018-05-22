@@ -17,13 +17,13 @@ namespace DiscordWikiBot
 
 		public LocalisedHelpFormatter()
 		{
-			this.EmbedBuilder = new DiscordEmbedBuilder().WithColor(new DiscordColor(0x72777d));
+			EmbedBuilder = new DiscordEmbedBuilder().WithColor(new DiscordColor(0x72777d));
 		}
 
 		public IHelpFormatter WithCommandName(string name)
 		{
-			this.Command = name;
-			this.EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", name, Program.Config.Prefix));
+			Command = name;
+			EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", "en", name, Config.GetValue("prefix")));
 
 			return this;
 		}
@@ -36,20 +36,20 @@ namespace DiscordWikiBot
 				description = "help-command";
 			}
 
-			this.EmbedBuilder.WithDescription(Locale.GetMessage(description));
+			EmbedBuilder.WithDescription(Locale.GetMessage(description, "en"));
 			return this;
 		}
 
 		public IHelpFormatter WithGroupExecutable()
 		{
-			this.EmbedBuilder.WithFooter(Locale.GetMessage("help-group-standalone"));
+			EmbedBuilder.WithFooter(Locale.GetMessage("help-group-standalone", "en"));
 
 			return this;
 		}
 
 		public IHelpFormatter WithAliases(IEnumerable<string> aliases)
 		{
-			this.EmbedBuilder.AddField(Locale.GetMessage("help-aliases"), string.Join(", ", aliases));
+			EmbedBuilder.AddField(Locale.GetMessage("help-aliases", "en"), string.Join(", ", aliases));
 
 			return this;
 		}
@@ -64,7 +64,7 @@ namespace DiscordWikiBot
 					string optional = "";
 
 					// Override help command
-					if (this.Command == "help")
+					if (Command == "help")
 					{
 						desc = "help-command-" + xarg.Name;
 					}
@@ -72,16 +72,16 @@ namespace DiscordWikiBot
 					// Provide optional information
 					if (xarg.Description.Length > 0)
 					{
-						desc = Locale.GetMessage("help-separator", Locale.GetMessage(desc));
+						desc = Locale.GetMessage("help-separator", "en", Locale.GetMessage(desc, "en"));
 					}
 
 					if (xarg.DefaultValue != null && xarg.DefaultValue.ToString() != "")
 					{
-						def = " " + Locale.GetMessage("help-default", xarg.DefaultValue.ToString());
+						def = " " + Locale.GetMessage("help-default", "en", xarg.DefaultValue.ToString());
 
 						if (xarg.IsOptional)
 						{
-							optional = ", " + Locale.GetMessage("help-optional");
+							optional = ", " + Locale.GetMessage("help-optional", "en");
 						}
 					}
 
@@ -95,31 +95,31 @@ namespace DiscordWikiBot
 				})
 			);
 
-			this.EmbedBuilder.AddField(Locale.GetMessage("help-arguments"), args);
+			EmbedBuilder.AddField(Locale.GetMessage("help-arguments", "en"), args);
 			return this;
 		}
 
 		public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
 		{
-			string header = Locale.GetMessage("help-subcommands");
-			if (this.Command == null )
+			string header = Locale.GetMessage("help-subcommands", "en");
+			if (Command == null)
 			{
-				header = Locale.GetMessage("help-commands");
+				header = Locale.GetMessage("help-commands", "en");
 			}
-			this.EmbedBuilder.AddField(header, string.Join(", ", subcommands.Select(xc => $"`{Program.Config.Prefix}{xc.Name}`")));
+			EmbedBuilder.AddField(header, string.Join(", ", subcommands.Select(xc => $"`{Config.GetValue("prefix")}{xc.Name}`")));
 
 			return this;
 		}
 
 		public CommandHelpMessage Build()
 		{
-			if (this.Command == null)
+			if (Command == null)
 			{
-				this.EmbedBuilder
-					.WithTitle(Locale.GetMessage("help-title"))
-					.WithDescription(Locale.GetMessage("help-all"));
+				EmbedBuilder
+					.WithTitle(Locale.GetMessage("help-title", "en"))
+					.WithDescription(Locale.GetMessage("help-all", "en"));
 			}
-			return new CommandHelpMessage(embed: this.EmbedBuilder.Build());
+			return new CommandHelpMessage(embed: EmbedBuilder.Build());
 		}
 	}
 }

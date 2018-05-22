@@ -41,7 +41,7 @@ namespace DiscordWikiBot
 			// Open new EventStreams instance
 			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Connecting to huggle-rc.wmflabs.org", DateTime.Now);
 			Stream = new Provider(true, true);
-			Stream.Subscribe(Program.Config.Domain);
+			Stream.Subscribe(Config.GetDomain());
 
 			// Respond when server is ready
 			Stream.On_OK += new Provider.OKHandler((o, e) =>
@@ -68,6 +68,7 @@ namespace DiscordWikiBot
 			Stream.On_Change += new Provider.EditHandler((o, e) =>
 			{
 				bool isEdit = (e.Change.Type == RecentChange.ChangeType.Edit || e.Change.Type == RecentChange.ChangeType.New);
+
 				if (e.Change.Bot == false && isEdit)
 				{
 					string ns = e.Change.Namespace.ToString();
@@ -90,14 +91,41 @@ namespace DiscordWikiBot
 			Stream.Connect();
 		}
 
+		public static void Subscribe(string domain)
+		{
+			if (domain == null || domain == Config.GetDomain()) return;
+			Stream.Subscribe(domain);
+		}
+
+		public static void Unsubscribe(string domain = null)
+		{
+			if (domain == null || domain == Config.GetDomain()) return;
+			Stream.Unsubscribe(domain);
+		}
+
 		public static async Task React(DiscordClient client, JArray data, RecentChange change)
 		{
 			for (int i = 0; i < data.Count; i++)
 			{
+				// Setup basic info
 				string[] info = data[i].ToString().Split('|');
 				ulong channelId = ulong.Parse(info[0]);
 				DiscordChannel channel = await client.GetChannelAsync(channelId);
 				int minLength = (info.Length > 1 ? Convert.ToInt32(info[1]) : -1);
+
+				// Check if domain is the same
+				string domain = Config.GetDomain();
+				if (channel != null)
+				{
+					domain = domain = Config.GetDomain(channel.Guild.Id.ToString());
+					if (domain != change.ServerName)
+					{
+						continue;
+					}
+				}
+
+				// Set up domain for future usage for link formatting
+				domain = $"https://{domain}/wiki/$1";
 				
 				// Check if the diff is above required length if it is set
 				if (minLength > -1)
@@ -111,11 +139,12 @@ namespace DiscordWikiBot
 				}
 
 				// Send the message
-				await client.SendMessageAsync(channel, embed: GetEmbed(change));
+				string lang = Config.GetLang(channel.Guild.Id.ToString());
+				await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));
 			}
 		}
 		
-		public static DiscordEmbedBuilder GetEmbed(RecentChange change)
+		public static DiscordEmbedBuilder GetEmbed(RecentChange change, string format, string lang)
 		{
 			DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
 				.WithTimestamp(change.Timestamp);
@@ -127,11 +156,11 @@ namespace DiscordWikiBot
 			string status = "";
 			if (change.Type == RecentChange.ChangeType.New)
 			{
-				status += Locale.GetMessage("eventstreams-new");
+				status += Locale.GetMessage("eventstreams-new", lang);
 			}
 			if (change.Minor == true)
 			{
-				status += Locale.GetMessage("eventstreams-minor");
+				status += Locale.GetMessage("eventstreams-minor", lang);
 			}
 
 			if (status != "")
@@ -154,16 +183,16 @@ namespace DiscordWikiBot
 			embed
 				.WithAuthor(
 					change.Title,
-					Linking.GetLink(change.Title),
+					Linking.GetLink(change.Title, format),
 					string.Format("https://upload.wikimedia.org/wikipedia/commons/thumb/{0}", embedIcon)
 				)
 				.WithColor(embedColor)
-				.WithDescription(GetMessage(change));
+				.WithDescription(GetMessage(change, format, lang));
 
 			return embed;
 		}
 
-		public static string GetMessage(RecentChange change)
+		public static string GetMessage(RecentChange change, string format, string lang)
 		{
 			string linkPattern = "\\[{2}([^\\[\\]\\|\n]+)\\]{2}";
 			string linkPatternPipe = "\\[{2}([^\\[\\]\\|\n]+)\\|";
@@ -200,19 +229,19 @@ namespace DiscordWikiBot
 			}
 
 			// Markdownify link
-			string link = Program.Config.Wiki.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.OldID != 0 ? "diff=" : "oldid="), change.RevID));
-			link = string.Format("([{0}]({1}))", Locale.GetMessage("eventstreams-diff"), link);
+			string link = format.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.OldID != 0 ? "diff=" : "oldid="), change.RevID));
+			link = string.Format("([{0}]({1}))", Locale.GetMessage("eventstreams-diff", lang), link);
 
 			// Markdownify user
 			string user = "User:" + change.User;
 			string talk = "User_talk:" + change.User;
 			string contribs = "Special:Contributions/" + change.User;
 
-			user = Linking.GetLink(user);
-			talk = Linking.GetLink(talk);
-			contribs = Linking.GetLink(contribs);
+			user = Linking.GetLink(user, format);
+			talk = Linking.GetLink(talk, format);
+			contribs = Linking.GetLink(contribs, format);
 
-			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk"), talk);
+			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk", lang), talk);
 
 			IPAddress address;
 			if (IPAddress.TryParse(change.User, out address))
@@ -220,7 +249,7 @@ namespace DiscordWikiBot
 				user = $"[{change.User}]({contribs}) ({talk})";
 			} else
 			{
-				contribs = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-contribs"), contribs);
+				contribs = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-contribs", lang), contribs);
 				user = $"[{change.User}]({user}) ({talk} | {contribs})";
 			}
 
@@ -231,7 +260,7 @@ namespace DiscordWikiBot
 		public static void SetData(string goal, string channel, string minLength)
 		{
 			if (Data == null) return;
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after the command was fired", DateTime.Now);
+			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after a command was fired", DateTime.Now);
 			
 			// Change current data
 			string str = string.Format("{0}{1}", channel, (minLength != "" ? $"|{minLength}" : ""));

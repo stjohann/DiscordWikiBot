@@ -13,8 +13,6 @@ namespace DiscordWikiBot
 {
 	class Program
 	{
-		// Configuration for Discord bot
-		public static ConfigJson Config;
 
 		// Instance of Discord client
 		public static DiscordClient Client;
@@ -40,17 +38,7 @@ namespace DiscordWikiBot
 			Token = File.ReadAllText(tokenPath);
 
 			// Get JSON config file
-			string json = "";
-			string cfgPath = @"config.json";
-			if (!File.Exists(cfgPath))
-			{
-				Console.WriteLine("Please create a JSON file called \"config.json\" before running the bot!");
-				Console.WriteLine("[Press any key to exit...]");
-				Console.ReadKey();
-				Environment.Exit(0);
-			}
-			json = File.ReadAllText(cfgPath);
-			Config = JsonConvert.DeserializeObject<ConfigJson>(json);
+			Config.Init();
 
 			// Initialise Discord client
 			Client = new DiscordClient(new DiscordConfiguration()
@@ -67,7 +55,7 @@ namespace DiscordWikiBot
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Initialising events", DateTime.Now);
 
 			// Get locale
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", string.Format("Loading {0} locale", Config.Lang.ToUpper()), DateTime.Now);
+			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", string.Format("Loading {0} locale", Config.GetLang().ToUpper()), DateTime.Now);
 			Locale.Init();
 
 			// Get site information and start linking bot
@@ -77,7 +65,7 @@ namespace DiscordWikiBot
 			Client.MessageCreated += Linking.Answer;
 
 			// Start EventStreams
-			if (Config.Domain != "")
+			if (Config.GetDomain() != "")
 			{
 				EventStreams.Init();
 			}
@@ -88,18 +76,15 @@ namespace DiscordWikiBot
 			Client.ClientErrored += Client_ClientErrored;
 
 			// Initialise commands
-			if (Config.Prefix == null)
-			{
-				Config.Prefix = "!";
-			}
-
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Setting up commands", DateTime.Now);
 			Commands = Client.UseCommandsNext(new CommandsNextConfiguration
 			{
-				StringPrefix = Config.Prefix,
+				StringPrefix = Config.GetValue("prefix"),
 				EnableDms = false,
 				EnableMentionPrefix = true,
 			});
+
+			Commands.RegisterCommands<Configuring>();
 
 			Commands.RegisterCommands<Streaming>();
 
@@ -135,6 +120,11 @@ namespace DiscordWikiBot
 			// Log the name of the guild that just became available
 			e.Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Guild available: {e.Guild.Name}", DateTime.Now);
 
+			// Load custom values if needed
+			Linking.Init(e.Guild.Id.ToString());
+			Locale.LoadCustomLocale(Config.GetLang(e.Guild.Id.ToString()));
+			EventStreams.Subscribe(Config.GetDomain(e.Guild.Id.ToString()));
+
 			return Task.FromResult(0);
 		}
 
@@ -155,21 +145,6 @@ namespace DiscordWikiBot
 			e.Client.DebugLogger.LogMessage(LogLevel.Error, "DiscordWikiBot", $"Exception occured: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
 
 			return Task.FromResult(0);
-		}
-
-		public struct ConfigJson
-		{
-			[JsonProperty("domain")]
-			public string Domain { get; private set; }
-
-			[JsonProperty("lang")]
-			public string Lang { get; private set; }
-
-			[JsonProperty("prefix")]
-			public string Prefix { get; set; }
-
-			[JsonProperty("wiki")]
-			public string Wiki { get; private set; }
 		}
 	}
 }

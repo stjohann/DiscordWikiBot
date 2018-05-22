@@ -27,18 +27,47 @@ namespace DiscordWikiBot
 			public bool isCaseSensitive;
 		}
 
-		// Permanent site information for main wiki
-		public static InterwikiMap IWList;
-		public static NamespaceCollection NSList;
-		public static bool IsCaseSensitive;
+		// Permanent site information for main wikis
+		private static Dictionary<string, InterwikiMap> IWList;
+		private static Dictionary<string, NamespaceCollection> NSList;
+		private static Dictionary<string, bool> IsCaseSensitive;
 
-		static public void Init()
+		static public void Init(string goal = "")
 		{
-			// Fetch site information for default wiki
-			SiteInfo data = FetchSiteInfo(Program.Config.Wiki).Result;
-			IWList = data.iw;
-			NSList = data.ns;
-			IsCaseSensitive = data.isCaseSensitive;
+			string wiki = Config.GetWiki(goal);
+			if (goal != "" && wiki == Config.GetWiki()) return;
+
+			// Set defaults for first fetch
+			if (goal == "")
+			{
+				IWList = new Dictionary<string, InterwikiMap>();
+				NSList = new Dictionary<string, NamespaceCollection>();
+				IsCaseSensitive = new Dictionary<string, bool>();
+			}
+
+			// Fetch values for the goal
+			if (!IWList.ContainsKey(goal))
+			{
+				// Fetch site information for default wiki
+				SiteInfo data = FetchSiteInfo(wiki).Result;
+				if (goal == "" || goal == null)
+				{
+					goal = "default";
+				}
+
+				IWList.Add(goal, data.iw);
+				NSList.Add(goal, data.ns);
+				IsCaseSensitive.Add(goal, data.isCaseSensitive);
+			}
+		}
+
+		static public void Remove(string goal = "")
+		{
+			if (goal == "" || goal == null) return;
+
+			IWList.Remove(goal);
+			NSList.Remove(goal);
+			IsCaseSensitive.Remove(goal);
 		}
 
 		static public Task Answer(MessageCreateEventArgs e)
@@ -51,6 +80,11 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, "```(.|\n)*?```", String.Empty);
 			content = Regex.Replace(content, "`.*?`", String.Empty);
 
+			// Determine our goal
+			string goal = e.Guild.Id.ToString();
+			string lang = Config.GetLang(goal);
+			Init(goal);
+
 			// Start digging for links
 			string msg = "";
 			MatchCollection matches = Regex.Matches(content, pattern);
@@ -61,7 +95,7 @@ namespace DiscordWikiBot
 				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
-					string str = AddLink(link);
+					string str = AddLink(link, goal);
 					if (str.Length > 0 && !links.Contains(str))
 					{
 						msg += str;
@@ -72,7 +106,7 @@ namespace DiscordWikiBot
 				// Check if message is not empty and send it
 				if (msg != "")
 				{
-					msg = (links.Count > 1 ? Locale.GetMessage("linking-links") + "\n" : Locale.GetMessage("linking-link") + " ") + msg;
+					msg = (links.Count > 1 ? Locale.GetMessage("linking-links", lang) + "\n" : Locale.GetMessage("linking-link", lang) + " ") + msg;
 					
 					return e.Message.RespondAsync(msg);
 				}
@@ -81,12 +115,16 @@ namespace DiscordWikiBot
 			return Task.FromResult(0);
 		}
 
-		static public string AddLink(Match link)
+		static public string AddLink(Match link, string goal)
 		{
-			string linkFormat = Program.Config.Wiki;
+			string linkFormat = Config.GetWiki(goal);
 			GroupCollection groups = link.Groups;
 			string type = ( groups[1].Value.Length == 0 ? groups[3].Value : groups[1].Value).Trim();
 			string str = ( groups[2].Value.Length == 0 ? groups[4].Value : groups[2].Value ).Trim();
+
+			// Default site info
+			InterwikiMap defaultIWList = GetList(goal, "iw");
+			NamespaceCollection defaultNSList = GetList(goal, "ns");
 
 			// Temporary site info for other wikis
 			InterwikiMap tempIWList = null;
@@ -109,7 +147,7 @@ namespace DiscordWikiBot
 				// Add template namespace for template links and remove substitution
 				if (type == "{{")
 				{
-					ns = NSList["template"].CustomName;
+					ns = defaultNSList["template"].CustomName;
 					str = Regex.Replace(str, "^(?:subst|подст):", "");
 				}
 
@@ -118,8 +156,8 @@ namespace DiscordWikiBot
 				while (type == "[[" && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
-					InterwikiMap latestIWList = (tempIWList != null ? tempIWList : IWList);
-					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : NSList);
+					InterwikiMap latestIWList = (tempIWList != null ? tempIWList : defaultIWList);
+					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : defaultNSList);
 					if (latestIWList.Contains(prefix) && !latestNSList.Contains(prefix))
 					{
 						string oldLinkFormat = linkFormat;
@@ -151,12 +189,12 @@ namespace DiscordWikiBot
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
-					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : NSList);
-					if (linkFormat == Program.Config.Wiki)
+					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : defaultNSList);
+					if (linkFormat == Config.GetWiki(goal))
 					{
-						if (NSList.Contains(prefix))
+						if (defaultNSList.Contains(prefix))
 						{
-							ns = NSList[prefix].CustomName;
+							ns = defaultNSList[prefix].CustomName;
 							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
 							str = only.Replace(str, "", 1);
 						}
@@ -178,7 +216,7 @@ namespace DiscordWikiBot
 				if (str.Length > 0)
 				{
 					// Capitalise first letter if wiki does not allow lowercase titles
-					if ((linkFormat == Program.Config.Wiki && !IsCaseSensitive) || (linkFormat != Program.Config.Wiki && !tempIsCaseSensitive))
+					if ((linkFormat == Config.GetWiki(goal) && !GetList(goal)) || (linkFormat != Config.GetWiki(goal) && !tempIsCaseSensitive))
 					{
 						str = str[0].ToString().ToUpper() + str.Substring(1);
 					}
@@ -256,14 +294,41 @@ namespace DiscordWikiBot
 		{
 			if (format == null)
 			{
-				format = Program.Config.Wiki;
+				format = Config.GetWiki();
 			}
 
 			title = EncodePageTitle(title);
 			return format.Replace("$1", title);
 		}
 
-		public static string EncodePageTitle(string str)
+		private static dynamic GetList(string goal, string key = "")
+		{
+			if (key == "iw")
+			{
+				if (IWList.ContainsKey(goal))
+				{
+					return IWList[goal];
+				}
+				return IWList["default"];
+			}
+
+			if (key == "ns")
+			{
+				if (NSList.ContainsKey(goal))
+				{
+					return NSList[goal];
+				}
+				return NSList["default"];
+			}
+
+			if (IsCaseSensitive.ContainsKey(goal))
+			{
+				return IsCaseSensitive[goal];
+			}
+			return IsCaseSensitive["default"];
+		}
+
+		private static string EncodePageTitle(string str)
 		{
 			// Following character conversions are based on {{PAGENAMEE}} specification:
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding

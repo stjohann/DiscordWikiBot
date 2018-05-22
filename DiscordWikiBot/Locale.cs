@@ -5,19 +5,20 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus.Entities;
 using Newtonsoft.Json;
 
 namespace DiscordWikiBot
 {
 	class Locale
 	{
-		//private static string prefix = "discordwikibot-";
-
-		private static Dictionary<string, string> List;
+		private static Dictionary<string, string> Default;
+		private static Dictionary<string, Dictionary<string, string>> Custom;
 
 		public static void Init()
 		{
-			List = LoadLocale(Program.Config.Lang);
+			Default = LoadLocale(Config.GetLang());
+			Custom = new Dictionary<string, Dictionary<string, string>>();
 		}
 
 		private static Dictionary<string, string> LoadLocale(string lang)
@@ -37,17 +38,49 @@ namespace DiscordWikiBot
 			return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 		}
 
-		public static string GetMessage(string key, params string[] args)
+		public static void LoadCustomLocale(string lang)
+		{
+			if (lang == Config.GetLang()) return;
+			string localePath = string.Format(@"i18n/{0}.json", lang);
+			if (!File.Exists(localePath))
+			{
+				Console.WriteLine("Please create a file with {0} locale. Reverting to EN.", lang.ToUpper());
+				if (!Custom.ContainsKey("en"))
+				{
+					LoadCustomLocale("en");
+					return;
+				}
+			}
+
+			if (!Custom.ContainsKey(lang))
+			{
+				Custom.Add(lang, LoadLocale(lang));
+			}
+		}
+
+		public static string GetMessage(string key, string lang, params string[] args)
 		{
 			string str = "";
+			Dictionary<string, string> list = Default;
 
-			// Add a prefix to the key
-			//key = prefix + key;
-
-			// Return a message without a key if it doesn’t exist
-			if ( !List.TryGetValue(key, out str) )
+			if (lang != Config.GetLang())
 			{
-				str = string.Format("<{0}>", key);
+				if (!Custom.ContainsKey(lang))
+				{
+					LoadCustomLocale(lang);
+				}
+				list = Custom[lang];
+			}
+
+			// Return a MediaWiki-styled key-value pair if there is no message
+			if ( !list.TryGetValue(key, out str) )
+			{
+				string strArgs = string.Join(", ", args);
+				if (strArgs != "")
+				{
+					strArgs = $": {strArgs}";
+				}
+				str = string.Format("({0}{1})", key, strArgs);
 				return str;
 			}
 

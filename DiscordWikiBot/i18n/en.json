@@ -18,6 +18,23 @@
 	"help-group-standalone": "This group is a standalone command.",
 	"help-command": "Displays command help.",
 	"help-command-command": "command to provide help for.",
+	
+	"denied":  "This command works only in private #moderators channel.",
+
+	"configuring-changed-domain": "Domain for translation of recent changes was changed to **{0}**.",
+	"configuring-changed-lang": "Language for the bot on this server was changed to **{0}**.",
+	"configuring-changed-wiki": "Wiki for links on this server was changed to **{0}**.",
+	"configuring-changed-reset": "The value was reset back to default.",
+	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{0}`.",
+	"configuring-badvalue-domain": "Edit broadcasting is available only for Wikimedia projects.\nList of allowed domains: {0}.",
+	"configuring-badvalue-lang": "The bot doesn’t recognise your input as a valid ISO 639 code.",
+	"configuring-badvalue-wiki": "There must be `{0}` at the end of your URL.",
+	"configuring-help-domain": "Change the domain from which recent changes are broadcasted on this server. Works only for Wikimedia projects.",
+	"configuring-help-domain-value": "domain of a Wikimedia project (in ru.wikipedia.org format). Use `-` to reset to default.",
+	"configuring-help-lang": "Change the language of the bot on this server.",
+	"configuring-help-lang-value": "the language of bot you want. Use `-` to reset to default.",
+	"configuring-help-wiki": "Change the main wiki for links on this server. /wiki/$1 at the end is required.",
+	"configuring-help-wiki-value": "the wiki you want (in <https://ru.wikipedia.org/wiki/$1> format). Use `-` to reset to default.",
 
 	"eventstreams-diff": "diff",
 	"eventstreams-talk": "talk",
@@ -36,5 +53,5 @@
 	"streaming-help-close": "Stop broadcasting a part of the stream in the channel. Works only in #moderators.",
 	"streaming-help-channel": "the channel that is available to you in which the broadcast must be done.",
 	"streaming-help-goal": "the page title (with \\_ for spaces) or namespace number (in <>).",
-	"streaming-help-minlength": "minimal length for a diff (optional)."
+	"streaming-help-minlength": "minimal length for a diff."
 }
