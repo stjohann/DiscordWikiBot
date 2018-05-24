@@ -54,8 +54,6 @@
 	"streaming-help-channel": "the channel that is available to you in which the broadcast must be done.",
 	"streaming-help-goal": "the page title (with \\_ for spaces) or namespace number (in <>).",
 	"streaming-help-minlength": "minimal length for a diff.",
-
-	"translatewiki-authors": "{1:Author|Authors}: {0}",
-	"translatewiki-new": "In the last hour {0:one message was|{} messages were} edited on TranslateWiki.\n",
-	"translatewiki-new-atleast": "In the last hour at least {0:one message was|{} messages were} edited on TranslateWiki.\n"
+	
+	"translatewiki-header": "{1:One message|{0} messages} from {2:one author|{} authors}"
 }
