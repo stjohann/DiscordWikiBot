@@ -46,9 +46,6 @@ namespace DiscordWikiBot
 			// Start updates for new language
 			if (!Languages.Contains(lang))
 			{
-				Console.WriteLine(lang);
-				Console.WriteLine(channel);
-
 				if (lang == "" || lang == null)
 				{
 					channel = Config.GetTWChannel();
@@ -92,9 +89,7 @@ namespace DiscordWikiBot
 
 		private static void RequestOnTimer(object source, string lang)
 		{
-			Console.WriteLine($"Timer started ({lang})");
-			Console.WriteLine(LatestFetchTime[lang]);
-			DateTime now = DateTime.Now;
+			DateTime now = DateTime.UtcNow;
 			if (LatestFetchTime[lang] < now.Hour || (LatestFetchTime[lang] == 23 && now.Hour == 0))
 			{
 				// Inform about update deadline after Wednesday 6:00 UTC
