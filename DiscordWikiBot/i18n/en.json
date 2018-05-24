@@ -29,8 +29,8 @@
 	"configuring-changed-wiki": "Wiki for links on this server was changed to **{0}**.",
 	"configuring-changed-reset": "The value was reset back to default.",
 	
-	"configuring-required-channel": "The channel in which both you and the bot have the access is required.\nTo get full help for the command, send `{0}`.",
-	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{0}`.",
+	"configuring-required-channel": "The channel in which both you and the bot have the access is required.\nTo get full help for the command, send `{1}{0}`.",
+	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{1}{0}`.",
 	"configuring-badvalue-domain": "Edit broadcasting is available only for Wikimedia projects.\nList of allowed domains: {0}.",
 	"configuring-badvalue-lang": "The bot doesn’t recognise your input as a valid ISO 639 code.",
 	"configuring-badvalue-wiki": "There must be `{0}` at the end of your URL.",
@@ -60,8 +60,8 @@
 
 	"streaming-added": "**[+]** Stream with a goal `{0}` was added for processing in the channel {1}.",
 	"streaming-removed": "**[−]** Stream with a goal `{0}` was removed from processing in the channel {1}.",
-	"streaming-required-channel": "The channel name is a required parameter.\nTo get full help for the command, send `{0}`.",
-	"streaming-required-goal": "The stream goal is a required parameter.\nTo get full help for the command, send `{0}`.",
+	"streaming-required-channel": "The channel name is a required parameter.\nTo get full help for the command, send `{1}{0}`.",
+	"streaming-required-goal": "The stream goal is a required parameter.\nTo get full help for the command, send `{1}{0}`.",
 	"streaming-help-open": "Start broadcasting a part of the stream in the channel. Works only in #moderators.",
 	"streaming-help-close": "Stop broadcasting a part of the stream in the channel. Works only in #moderators.",
 	"streaming-help-channel": "the channel that is available to you in which the broadcast must be done.",

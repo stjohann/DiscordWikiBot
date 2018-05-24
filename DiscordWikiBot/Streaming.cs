@@ -30,13 +30,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "!help openStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "help openStream", Config.GetValue("prefix")));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "!help openStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "help openStream", Config.GetValue("prefix")));
 				return;
 			}
 
@@ -68,13 +68,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel == null)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "!help closeStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-channel", lang, "help closeStream", Config.GetValue("prefix")));
 				return;
 			}
 
 			if (goal == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "!help closeStream"));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, "help closeStream", Config.GetValue("prefix")));
 				return;
 			}
 

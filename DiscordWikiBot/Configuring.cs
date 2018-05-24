@@ -134,7 +134,7 @@ namespace DiscordWikiBot
 		[Command("guildTW"), Description("configuring-help-tw")]
 		public async Task SetTranslate(CommandContext ctx,
 			[Description("configuring-help-tw-channel")] DiscordChannel channel,
-			[Description("confugiring-help-tw-value"), RemainingText] string value)
+			[Description("configuring-help-tw-value"), RemainingText] string value)
 		{
 			string chanId = channel.Id.ToString();
 			string chanPrevId = Config.GetTWChannel(ctx.Guild.Id.ToString());
@@ -159,13 +159,13 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (channel == null)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-channel", lang, "!help guildTW"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-channel", lang, "help guildTW", Config.GetValue("prefix")));
 				return;
 			}
 
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "!help guildTW"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildTW", Config.GetValue("prefix")));
 				return;
 			}
 
