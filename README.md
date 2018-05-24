@@ -34,9 +34,9 @@ The default config file should look more or less like this (without comments, th
 ```
 
 You can configure the bot per guild using special commands (use command `!help` if you are stuck):
-# `!guildLang en` would change the language of bot to English. Works only for ISO 639-2 languages.
-# `!guildWiki <https://en.wikipedia.org/wiki/$1>` would change default link of bot to English Wikipedia.
-# `!guildDomain en.wikipedia.org` would change default EventStreams target domain to en.wikipedia.org (works only for Wikimedia projects).
++ `!guildLang en` would change the language of bot to English. Works only for ISO 639-2 languages.
++ `!guildWiki <https://en.wikipedia.org/wiki/$1>` would change default link of bot to English Wikipedia.
++ `!guildDomain en.wikipedia.org` would change default EventStreams target domain to en.wikipedia.org (works only for Wikimedia projects).
 All commands above are available only in `#moderators` channel (which, ideally, you should make the most private one on the server) and are reversible back to default using `-` as a value (`!guildLang -` etc.).
 
 In the future it is planned to have sensitive commands check for user’s permissions, but for now it doesn’t do this. Please don’t provide access to #moderators channel to non-trusted users when using this bot.
