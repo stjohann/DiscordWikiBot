@@ -75,9 +75,11 @@ namespace DiscordWikiBot
 			}
 
 			// Start Translatewiki fetches
-			var tw = Config.Default["translatewiki"];
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Turning on Translatewiki ({tw["lang"].ToString().ToUpper()})", DateTime.Now);
-			TranslateWiki.Init(tw["channel"].ToString(), tw["lang"].ToString());
+			if (Config.GetTWChannel() != null && Config.GetTWLang() != null)
+			{
+				Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Turning on Translatewiki ({Config.GetTWLang()})", DateTime.Now);
+				TranslateWiki.Init();
+			}
 
 			// Set some events for logging the information
 			Client.Ready += Client_Ready;
@@ -130,9 +132,21 @@ namespace DiscordWikiBot
 			e.Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Guild available: {e.Guild.Name}", DateTime.Now);
 
 			// Load custom values if needed
-			Linking.Init(e.Guild.Id.ToString());
-			Locale.LoadCustomLocale(Config.GetLang(e.Guild.Id.ToString()));
-			EventStreams.Subscribe(Config.GetDomain(e.Guild.Id.ToString()));
+			string guild = e.Guild.Id.ToString();
+
+			Linking.Init(guild);
+
+			Locale.LoadCustomLocale(Config.GetLang(guild));
+
+			if (Config.GetTWChannel() != null && Config.GetTWLang() != null)
+			{
+				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
+			}
+
+			if (Config.GetDomain() != "")
+			{
+				EventStreams.Subscribe(Config.GetDomain(guild));
+			}
 
 			return Task.FromResult(0);
 		}

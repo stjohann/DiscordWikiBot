@@ -45,7 +45,7 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "!help guildDomain"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildDomain", Config.GetValue("prefix")));
 				return;
 			}
 
@@ -102,7 +102,7 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "!help guildLang"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildLang", Config.GetValue("prefix")));
 				return;
 			}
 
@@ -134,17 +134,87 @@ namespace DiscordWikiBot
 		[Command("guildTW"), Description("configuring-help-tw")]
 		public async Task SetTranslate(CommandContext ctx,
 			[Description("configuring-help-tw-channel")] DiscordChannel channel,
-			[Description("confugiring-help-tw-lang"), RemainingText] string lang)
+			[Description("confugiring-help-tw-value"), RemainingText] string value)
 		{
-			string guildLang = Config.GetLang(ctx.Guild.Id.ToString());
+			string chanId = channel.Id.ToString();
+			string chanPrevId = Config.GetTWChannel(ctx.Guild.Id.ToString());
+			string chanPrevLang = Config.GetTWLang(ctx.Guild.Id.ToString());
+			string lang = Config.GetLang(ctx.Guild.Id.ToString());
 
 			// Ensure that we are in private channel
 			if (ctx.Channel.Name != "moderators")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("denied", guildLang));
+				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
 				return;
 			};
 			await ctx.TriggerTypingAsync();
+
+			// Check for return to default
+			if (value == "-")
+			{
+				chanId = Config.GetTWChannel();
+				value = Config.GetTWLang();
+			}
+
+			// Check for required parameters
+			if (channel == null)
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-channel", lang, "!help guildTW"));
+				return;
+			}
+
+			if (value.ToString() == "")
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "!help guildTW"));
+				return;
+			}
+
+			// Do action and respond
+			int succeedsChan = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-channel", chanId);
+			int succeedsLang = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-lang", value);
+			await ctx.RespondAsync($"{succeedsChan} / {succeedsLang}");
+
+			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_CHANGE)
+			{
+				// Different channel and language
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, value.ToUpper()));
+				TranslateWiki.Init(chanId, value);
+			}
+
+			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_RESET)
+			{
+				// Different channel, default language
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-channel", lang, channel.Mention));
+				TranslateWiki.Remove(chanId, chanPrevLang);
+				TranslateWiki.Init(chanId, value);
+			}
+			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_SAME)
+			{
+				// Different channel, same language
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-channel", lang, channel.Mention));
+				TranslateWiki.Remove(chanPrevId, value);
+				TranslateWiki.Init(chanId, value);
+			}
+			if (succeedsChan == Config.RESULT_SAME && (succeedsLang == Config.RESULT_RESET || succeedsLang == Config.RESULT_CHANGE))
+			{
+				// Same channel, different language
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-lang", lang, value.ToUpper()));
+				TranslateWiki.Remove(chanId, chanPrevLang);
+				TranslateWiki.Init(chanId, value);
+			}
+
+			if (succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_RESET)
+			{
+				// Reset both channel and language with -
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-reset", lang));
+				TranslateWiki.Remove(channel.Id.ToString(), value);
+			}
+
+			if (succeedsChan == Config.RESULT_STRANGE || succeedsLang == Config.RESULT_STRANGE)
+			{
+				// Other strange errors
+				await ctx.RespondAsync(Locale.GetMessage("configuring-error-strange", lang));
+			}
 		}
 
 		[Command("guildWiki"), Description("configuring-help-wiki")]
@@ -170,7 +240,7 @@ namespace DiscordWikiBot
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "!help guildWiki"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildWiki", Config.GetValue("prefix")));
 				return;
 			}
 

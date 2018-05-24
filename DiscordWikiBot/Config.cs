@@ -70,6 +70,7 @@ namespace DiscordWikiBot
 		{
 			JObject source;
 			JToken value;
+			string str = null;
 			
 			// Return an override if it exists
 			if (goal != "" || goal != null)
@@ -77,13 +78,17 @@ namespace DiscordWikiBot
 				source = (JObject)Overrides[goal];
 				if (source != null && source.TryGetValue(key, out value))
 				{
-					return value.ToString();
+					str = value.ToString();
+					return str;
 				}
 			}
 
 			// Return default value
-			value = Default.GetValue(key).ToString();
-			return value.ToString();
+			value = Default.GetValue(key);
+			if (value != null) {
+				str = value.ToString();
+			}
+			return str;
 		}
 
 		static public string GetDomain(string goal = "")
@@ -94,6 +99,16 @@ namespace DiscordWikiBot
 		static public string GetLang(string goal = "")
 		{
 			return GetValue("lang", goal);
+		}
+
+		static public string GetTWChannel(string goal = "")
+		{
+			return GetValue("translatewiki-channel", goal);
+		}
+
+		static public string GetTWLang(string goal = "")
+		{
+			return GetValue("translatewiki-lang", goal);
 		}
 
 		static public string GetWiki(string goal = "")

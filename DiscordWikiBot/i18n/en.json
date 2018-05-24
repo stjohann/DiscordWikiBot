@@ -23,16 +23,28 @@
 
 	"configuring-changed-domain": "Domain for translation of recent changes was changed to **{0}**.",
 	"configuring-changed-lang": "Language for the bot on this server was changed to **{0}**.",
+	"configuring-changed-translatewiki": "Reports about recent changes on Translatewiki are enabled in the channel {0} for language **{1}**.",
+	"configuring-changed-translatewiki-channel": "The channel for reports about recent changes on Translatewiki was changed to {0}.",
+	"configuring-changed-translatewiki-lang": "The language for which the reports about recent changes on Translatewiki are compiled was changed to **{0}**.",
 	"configuring-changed-wiki": "Wiki for links on this server was changed to **{0}**.",
 	"configuring-changed-reset": "The value was reset back to default.",
+	
+	"configuring-required-channel": "The channel in which both you and the bot have the access is required.\nTo get full help for the command, send `{0}`.",
 	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{0}`.",
 	"configuring-badvalue-domain": "Edit broadcasting is available only for Wikimedia projects.\nList of allowed domains: {0}.",
 	"configuring-badvalue-lang": "The bot doesn’t recognise your input as a valid ISO 639 code.",
 	"configuring-badvalue-wiki": "There must be `{0}` at the end of your URL.",
+
 	"configuring-help-domain": "Change the domain from which recent changes are broadcasted on this server. Works only for Wikimedia projects.",
 	"configuring-help-domain-value": "domain of a Wikimedia project (in ru.wikipedia.org format). Use `-` to reset to default.",
+
 	"configuring-help-lang": "Change the language of the bot on this server.",
 	"configuring-help-lang-value": "the language of bot you want. Use `-` to reset to default.",
+	
+	"configuring-help-tw": "Start or end reporting hourly about recent changes on Translatewiki in one of the channels.",
+	"configuring-help-tw-channel": "channel in which the recent changes must be reported.",
+	"configuring-help-tw-value": "language that is available on Translatewiki for translation (language code in ISO 639). Fill `-` as a language to end reporting.",
+
 	"configuring-help-wiki": "Change the main wiki for links on this server. /wiki/$1 at the end is required.",
 	"configuring-help-wiki-value": "the wiki you want (in <https://ru.wikipedia.org/wiki/$1> format). Use `-` to reset to default.",
 
@@ -44,6 +56,7 @@
 
 	"linking-link": "Link:",
 	"linking-links": "Links:",
+	"linking-toolong": "Links to the message above are not provided because the message would be too long for Discord.",
 
 	"streaming-added": "**[+]** Stream with a goal `{0}` was added for processing in the channel {1}.",
 	"streaming-removed": "**[−]** Stream with a goal `{0}` was removed from processing in the channel {1}.",
@@ -55,5 +68,6 @@
 	"streaming-help-goal": "the page title (with \\_ for spaces) or namespace number (in <>).",
 	"streaming-help-minlength": "minimal length for a diff.",
 	
+	"translatewiki-deadline": "Find time to check translations for this week **until 00:00** Thursday UTC to avoid bad translations and vandalism to catch on.",
 	"translatewiki-header": "{1:One message|{0} messages} from {2:one author|{} authors}"
 }

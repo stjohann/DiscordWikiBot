@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -38,7 +39,7 @@ namespace DiscordWikiBot
 			if (goal != "" && wiki == Config.GetWiki()) return;
 
 			// Set defaults for first fetch
-			if (goal == "")
+			if (IWList == null)
 			{
 				IWList = new Dictionary<string, InterwikiMap>();
 				NSList = new Dictionary<string, NamespaceCollection>();
@@ -107,6 +108,10 @@ namespace DiscordWikiBot
 				if (msg != "")
 				{
 					msg = (links.Count > 1 ? Locale.GetMessage("linking-links", lang) + "\n" : Locale.GetMessage("linking-link", lang) + " ") + msg;
+					if (msg.Length > 2000)
+					{
+						msg = Locale.GetMessage("linking-toolong", lang);
+					}
 					
 					return e.Message.RespondAsync(msg);
 				}
@@ -270,6 +275,9 @@ namespace DiscordWikiBot
 				str = anchor[0];
 			}
 
+			// Check if page title length is more than 255 bytes
+			if (Encoding.UTF8.GetByteCount(str) > 255) return true;
+
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title
 			string[] illegalExprs =
@@ -355,6 +363,9 @@ namespace DiscordWikiBot
 			{
 				str = str.Replace(ch.ToString(), Uri.EscapeDataString(ch.ToString()));
 			}
+
+			// Escape all ) to not break links
+			str = str.Replace(")", "\\)");
 
 			return str;
 		}
