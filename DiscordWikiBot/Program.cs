@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -26,6 +27,9 @@ namespace DiscordWikiBot
 
 		public async Task Run()
 		{
+			// Set proper TLS settings
+			ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
 			// Check for a token
 			string tokenPath = @"token.txt";
 			if (!File.Exists(tokenPath))
@@ -69,6 +73,11 @@ namespace DiscordWikiBot
 			{
 				EventStreams.Init();
 			}
+
+			// Start Translatewiki fetches
+			var tw = Config.Default["translatewiki"];
+			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Turning on Translatewiki ({tw["lang"].ToString().ToUpper()})", DateTime.Now);
+			TranslateWiki.Init(tw["channel"].ToString(), tw["lang"].ToString());
 
 			// Set some events for logging the information
 			Client.Ready += Client_Ready;

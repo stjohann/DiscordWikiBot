@@ -73,6 +73,10 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SmartFormat, Version=2.2.0.0, Culture=neutral, PublicKeyToken=568866805651201f, processorArchitecture=MSIL">
+      <HintPath>..\packages\SmartFormat.NET.2.2.0\lib\net45\SmartFormat.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -107,6 +111,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming.cs" />
+    <Compile Include="TranslateWiki.cs" />
     <Compile Include="XmlRcs\Configuration.cs" />
     <Compile Include="XmlRcs\Provider.cs" />
     <Compile Include="XmlRcs\RecentChange.cs" />

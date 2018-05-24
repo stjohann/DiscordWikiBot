@@ -18,7 +18,7 @@ namespace DiscordWikiBot
 		public const int RESULT_CHANGE = 1;
 
 		// Data storage
-		private static JObject Default;
+		public static JObject Default;
 		public static JObject Overrides;
 
 		// JSON file paths

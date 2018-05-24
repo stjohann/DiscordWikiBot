@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 
 namespace DiscordWikiBot
 {
@@ -128,6 +129,22 @@ namespace DiscordWikiBot
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-lang", lang, value.ToUpper()));
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
+		}
+
+		[Command("guildTW"), Description("configuring-help-tw")]
+		public async Task SetTranslate(CommandContext ctx,
+			[Description("configuring-help-tw-channel")] DiscordChannel channel,
+			[Description("confugiring-help-tw-lang"), RemainingText] string lang)
+		{
+			string guildLang = Config.GetLang(ctx.Guild.Id.ToString());
+
+			// Ensure that we are in private channel
+			if (ctx.Channel.Name != "moderators")
+			{
+				await ctx.RespondAsync(Locale.GetMessage("denied", guildLang));
+				return;
+			};
+			await ctx.TriggerTypingAsync();
 		}
 
 		[Command("guildWiki"), Description("configuring-help-wiki")]

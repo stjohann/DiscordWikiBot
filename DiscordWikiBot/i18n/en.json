@@ -6,9 +6,9 @@
 	},
 
 	"help-title": "Help",
-	"help-title-command":  "{0} – help",
+	"help-title-command": "{0} – help",
 	"help-all": "Listing all top-level commands and groups. Specify a command to see more information.",
-	"help-commands":  "Commands",
+	"help-commands": "Commands",
 	"help-subcommands": "Subcommands",
 	"help-aliases": "Aliases",
 	"help-arguments": "Arguments",
@@ -19,7 +19,7 @@
 	"help-command": "Displays command help.",
 	"help-command-command": "command to provide help for.",
 	
-	"denied":  "This command works only in private #moderators channel.",
+	"denied": "This command works only in private #moderators channel.",
 
 	"configuring-changed-domain": "Domain for translation of recent changes was changed to **{0}**.",
 	"configuring-changed-lang": "Language for the bot on this server was changed to **{0}**.",
@@ -53,5 +53,9 @@
 	"streaming-help-close": "Stop broadcasting a part of the stream in the channel. Works only in #moderators.",
 	"streaming-help-channel": "the channel that is available to you in which the broadcast must be done.",
 	"streaming-help-goal": "the page title (with \\_ for spaces) or namespace number (in <>).",
-	"streaming-help-minlength": "minimal length for a diff."
+	"streaming-help-minlength": "minimal length for a diff.",
+
+	"translatewiki-authors": "{1:Author|Authors}: {0}",
+	"translatewiki-new": "In the last hour {0:one message was|{} messages were} edited on TranslateWiki.\n",
+	"translatewiki-new-atleast": "In the last hour at least {0:one message was|{} messages were} edited on TranslateWiki.\n"
 }

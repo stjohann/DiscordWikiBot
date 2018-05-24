@@ -77,13 +77,13 @@ namespace DiscordWikiBot
 					// React if there is server data for namespace
 					if (Data[$"<{ns}>"] != null)
 					{
-						React(Program.Client, Data[$"<{ns}>"], e.Change).Wait();
+						React(Data[$"<{ns}>"], e.Change).Wait();
 					}
 
 					// React if there is server data for title
 					if (Data[title] != null)
 					{
-						React(Program.Client, Data[title], e.Change).Wait();
+						React(Data[title], e.Change).Wait();
 					}
 				}
 			});
@@ -103,8 +103,9 @@ namespace DiscordWikiBot
 			Stream.Unsubscribe(domain);
 		}
 
-		public static async Task React(DiscordClient client, JArray data, RecentChange change)
+		public static async Task React(JArray data, RecentChange change)
 		{
+			DiscordClient client = Program.Client;
 			for (int i = 0; i < data.Count; i++)
 			{
 				// Setup basic info

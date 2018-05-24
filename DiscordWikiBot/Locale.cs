@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using Newtonsoft.Json;
+using SmartFormat;
 
 namespace DiscordWikiBot
 {
@@ -58,7 +60,7 @@ namespace DiscordWikiBot
 			}
 		}
 
-		public static string GetMessage(string key, string lang, params string[] args)
+		public static string GetMessage(string key, string lang, params dynamic[] args)
 		{
 			string str = "";
 			Dictionary<string, string> list = Default;
@@ -87,7 +89,7 @@ namespace DiscordWikiBot
 			// Set params
 			if (args.Length > 0)
 			{
-				str = string.Format(str, args);
+				str = Smart.Format(CultureInfo.GetCultureInfo(lang), str, args);
 			}
 
 			return str;
