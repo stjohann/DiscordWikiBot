@@ -6,7 +6,7 @@
 	},
 
 	"help-title": "Help",
-	"help-title-command": "{0} – help",
+	"help-title-command": "{1}{0} – help",
 	"help-all": "Listing all top-level commands and groups. Specify a command to see more information.",
 	"help-commands": "Commands",
 	"help-subcommands": "Subcommands",

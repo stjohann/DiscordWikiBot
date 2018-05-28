@@ -298,14 +298,14 @@ namespace DiscordWikiBot
 			return false;
 		}
 
-		public static string GetLink(string title, string format = null)
+		public static string GetLink(string title, string format = null, bool escapePar = false)
 		{
 			if (format == null)
 			{
 				format = Config.GetWiki();
 			}
 
-			title = EncodePageTitle(title);
+			title = EncodePageTitle(title, escapePar);
 			return format.Replace("$1", title);
 		}
 
@@ -336,7 +336,7 @@ namespace DiscordWikiBot
 			return IsCaseSensitive["default"];
 		}
 
-		private static string EncodePageTitle(string str)
+		private static string EncodePageTitle(string str, bool escapePar)
 		{
 			// Following character conversions are based on {{PAGENAMEE}} specification:
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding
@@ -364,8 +364,11 @@ namespace DiscordWikiBot
 				str = str.Replace(ch.ToString(), Uri.EscapeDataString(ch.ToString()));
 			}
 
-			// Escape all ) to not break links
-			str = str.Replace(")", "\\)");
+			// Escape ) in embeds to not break links
+			if (escapePar)
+			{
+				str = str.Replace(")", "\\)");
+			}
 
 			return str;
 		}

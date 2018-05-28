@@ -184,7 +184,7 @@ namespace DiscordWikiBot
 			embed
 				.WithAuthor(
 					change.Title,
-					Linking.GetLink(change.Title, format),
+					Linking.GetLink(change.Title, format, true),
 					string.Format("https://upload.wikimedia.org/wikipedia/commons/thumb/{0}", embedIcon)
 				)
 				.WithColor(embedColor)
@@ -238,9 +238,9 @@ namespace DiscordWikiBot
 			string talk = "User_talk:" + change.User;
 			string contribs = "Special:Contributions/" + change.User;
 
-			user = Linking.GetLink(user, format);
-			talk = Linking.GetLink(talk, format);
-			contribs = Linking.GetLink(contribs, format);
+			user = Linking.GetLink(user, format, true);
+			talk = Linking.GetLink(talk, format, true);
+			contribs = Linking.GetLink(contribs, format, true);
 
 			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk", lang), talk);
 

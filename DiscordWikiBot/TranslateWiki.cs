@@ -216,7 +216,7 @@ namespace DiscordWikiBot
 					string str = twNames[ns.Key] + ": ";
 					str += string.Join(", ", ns.Value.Select(author =>
 					{
-						return string.Format("[{0}]({1})", author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contribs/$1"));
+						return string.Format("[{0}]({1})", author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contribs/$1", true));
 					}));
 
 					return str;
