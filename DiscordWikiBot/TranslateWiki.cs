@@ -61,7 +61,7 @@ namespace DiscordWikiBot
 
 				// To start fetching ASAP
 				LatestFetchTime[lang] = -1;
-				LatestFetchKey[lang] = null;
+				LatestFetchKey[lang] = Config.GetInternal("translatewiki-key", channel);
 				
 				Timers[lang] = new System.Timers.Timer(20000);
 				Timers[lang].Elapsed += (sender, args) => RequestOnTimer(sender, lang);
@@ -78,6 +78,7 @@ namespace DiscordWikiBot
 
 		public static void Remove(string channel = "", string lang = "")
 		{
+			Config.SetInternal(channel, "translatewiki-key", null);
 			Channels[lang].Remove(channel);
 			if (Channels[lang].Count == 0)
 			{
@@ -94,10 +95,11 @@ namespace DiscordWikiBot
 			{
 				// Inform about update deadline after Wednesday 6:00 UTC
 				if (now.DayOfWeek == DayOfWeek.Wednesday && now.Hour > 6) {
-					if (UpdateDeadline == UpdateDeadlineDone) UpdateDeadline = !UpdateDeadlineDone;
+					if (!UpdateDeadlineDone) UpdateDeadline = true;
 				} else
 				{
-					if (UpdateDeadlineDone) UpdateDeadlineDone = false;
+					UpdateDeadline = false;
+					UpdateDeadlineDone = false;
 				}
 
 				// Remember new hour
@@ -193,6 +195,9 @@ namespace DiscordWikiBot
 				ulong chanId = ulong.Parse(chan);
 				DiscordChannel channel = await client.GetChannelAsync(chanId);
 				string guildLang = Config.GetLang(channel.GuildId.ToString());
+
+				// Remember the key of first message
+				Config.SetInternal(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
 
 				// Inform about deadline if needed
 				string deadlineInfo = null;

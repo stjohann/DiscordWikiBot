@@ -96,6 +96,12 @@ namespace DiscordWikiBot
 			return GetValue("domain", goal);
 		}
 
+		static public string GetInternal(string key, string goal = "")
+		{
+			if (key == null) return "";
+			return GetValue("_" + key, goal);
+		}
+
 		static public string GetLang(string goal = "")
 		{
 			return GetValue("lang", goal);
@@ -175,6 +181,12 @@ namespace DiscordWikiBot
 			// Write it to JSON file
 			File.WriteAllText(overridesPath, Overrides.ToString());
 			return code;
+		}
+		
+		static public int SetInternal(string goal, string key, string value)
+		{
+			if (key == null) return RESULT_STRANGE;
+			return SetOverride(goal, "_" + key, value);
 		}
 	}
 }

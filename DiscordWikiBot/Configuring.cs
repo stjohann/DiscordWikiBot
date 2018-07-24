@@ -172,7 +172,6 @@ namespace DiscordWikiBot
 			// Do action and respond
 			int succeedsChan = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-channel", chanId);
 			int succeedsLang = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-lang", value);
-			await ctx.RespondAsync($"{succeedsChan} / {succeedsLang}");
 
 			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_CHANGE)
 			{
@@ -188,6 +187,7 @@ namespace DiscordWikiBot
 				TranslateWiki.Remove(chanId, chanPrevLang);
 				TranslateWiki.Init(chanId, value);
 			}
+
 			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_SAME)
 			{
 				// Different channel, same language
@@ -195,9 +195,15 @@ namespace DiscordWikiBot
 				TranslateWiki.Remove(chanPrevId, value);
 				TranslateWiki.Init(chanId, value);
 			}
-			if (succeedsChan == Config.RESULT_SAME && (succeedsLang == Config.RESULT_RESET || succeedsLang == Config.RESULT_CHANGE))
+
+			if ( succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_CHANGE
+				|| (
+					succeedsChan == Config.RESULT_SAME
+					&& (succeedsLang == Config.RESULT_RESET || succeedsLang == Config.RESULT_CHANGE)
+				)
+			)
 			{
-				// Same channel, different language
+				// Same or default channel, different language
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-lang", lang, value.ToUpper()));
 				TranslateWiki.Remove(chanId, chanPrevLang);
 				TranslateWiki.Init(chanId, value);
