@@ -204,6 +204,7 @@ namespace DiscordWikiBot
 				if (UpdateDeadline)
 				{
 					deadlineInfo = Locale.GetMessage("translatewiki-deadline", guildLang);
+					UpdateDeadline = false;
 					UpdateDeadlineDone = true;
 				}
 
