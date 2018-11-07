@@ -49,19 +49,10 @@ namespace DiscordWikiBot
 				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Ready!", DateTime.Now);
 			});
 
-			// Try to reconnect after an exception is raised
-			int delay = 5000;
+			// Log any exceptions
 			Stream.On_Exception += new Provider.ExceptionHandler(async (o, e) =>
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Stream returned the following exception: {e.Exception}", DateTime.Now);
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Reconnecting in {delay / 1000} seconds...", DateTime.Now);
-				await Task.Delay(delay);
-				try
-				{
-					delay *= 2;
-					Stream.Reconnect();
-				}
-				catch { }
 			});
 
 			// Start recording events
