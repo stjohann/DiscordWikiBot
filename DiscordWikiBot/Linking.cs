@@ -17,8 +17,8 @@ namespace DiscordWikiBot
 	{
 		// Link pattern: [[]], [[|, {{}} or {{|
 		private static string pattern = string.Format("(?:{0}|{1})",
-			"(\\[{2})([^\\[\\]\\|\n]+)(?:\\|[^\\[\\]\\|\n]*)?]{2}",
-			"({{2})([^#][^{}\\|\n]*)(?:\\|*[^{}\n]*)?}{2}");
+			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
+			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
 
 		// Site information storage
 		public class SiteInfo
@@ -78,8 +78,8 @@ namespace DiscordWikiBot
 
 			// Remove code from the message
 			string content = e.Message.Content;
-			content = Regex.Replace(content, "```(.|\n)*?```", String.Empty);
-			content = Regex.Replace(content, "`.*?`", String.Empty);
+			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
+			content = Regex.Replace(content, "`.*?`", string.Empty);
 
 			// Determine our goal
 			string goal = e.Guild.Id.ToString();
@@ -134,7 +134,7 @@ namespace DiscordWikiBot
 			// Temporary site info for other wikis
 			InterwikiMap tempIWList = null;
 			NamespaceCollection tempNSList = null;
-			bool tempIsCaseSensitive = false;
+			bool tempIsCaseSensitive = true;
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
@@ -261,6 +261,9 @@ namespace DiscordWikiBot
 				result.ns = site.Namespaces;
 
 				result.isCaseSensitive = site.SiteInfo.IsTitleCaseSensitive;
+			} else
+			{
+				result.isCaseSensitive = true;
 			}
 
 			await Task.FromResult(0);
