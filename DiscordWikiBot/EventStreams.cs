@@ -50,7 +50,7 @@ namespace DiscordWikiBot
 			});
 
 			// Log any exceptions
-			Stream.On_Exception += new Provider.ExceptionHandler(async (o, e) =>
+			Stream.On_Exception += new Provider.ExceptionHandler((o, e) =>
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Stream returned the following exception: {e.Exception}", DateTime.Now);
 			});
@@ -186,9 +186,6 @@ namespace DiscordWikiBot
 
 		public static string GetMessage(RecentChange change, string format, string lang)
 		{
-			string linkPattern = "\\[{2}([^\\[\\]\\|\n]+)\\]{2}";
-			string linkPatternPipe = "\\[{2}([^\\[\\]\\|\n]+)\\|";
-
 			// Parse length of the diff
 			string strLength = "";
 			int length = (change.LengthNew - change.LengthOld);
@@ -202,22 +199,6 @@ namespace DiscordWikiBot
 			if (length > 500 || length < -500)
 			{
 				strLength = $"**{strLength}**";
-			}
-
-			// Parse edit comment
-			string comment = "";
-			if (change.Summary != "")
-			{
-				// Transform code for section to simpler version
-				comment = change.Summary.ToString().Replace("/* ", "→");
-				comment = Regex.Replace(comment, " \\*/$", string.Empty).Replace(" */", ":");
-
-				// Remove links
-				comment = Regex.Replace(comment, linkPattern, "$1");
-				comment = Regex.Replace(comment, linkPatternPipe, string.Empty).Replace("]]", string.Empty);
-
-				// Add italic and parentheses
-				comment = $" *({comment})*";
 			}
 
 			// Markdownify link
@@ -245,7 +226,15 @@ namespace DiscordWikiBot
 				user = $"[{change.User}]({user}) ({talk} | {contribs})";
 			}
 
-			string msg = $"{link} . . {strLength} . . {user}{comment}";
+			// Parse comment, adjusting for its length
+			string comment = ParseComment(change.Summary, format);
+			string msg = $"{link} . . {strLength} . . {user}";
+			if (msg.Length + comment.Length > 2000)
+			{
+				comment = ParseComment(change.Summary, format, false);
+			}
+			msg += comment;
+
 			return msg;
 		}
 
@@ -292,6 +281,48 @@ namespace DiscordWikiBot
 			// Write it to JSON file
 			string jsonPath = @"eventStreams.json";
 			File.WriteAllText(jsonPath, Data.ToString());
+		}
+
+		private static string ParseComment(string summary, string format, bool linkify = true)
+		{
+			if (summary.Length == 0)
+			{
+				return "";
+			}
+
+			string linkPattern = "\\[{2}([^\\[\\]\\|\n]+)\\]{2}";
+			string linkPatternPipe = "\\[{2}([^\\[\\]\\|\n]+)\\|([^\\[\\]\n]+)\\]{2}";
+
+			// Transform code for section to simpler version
+			string comment = summary.ToString().Replace("/* ", "→");
+			comment = Regex.Replace(comment, " \\*/$", string.Empty).Replace(" */", ":");
+			
+			if (linkify)
+			{
+				// Linkify every wiki link in comment text
+				comment = Regex.Replace(comment, linkPattern, m => {
+					string title = m.Groups[1].Value;
+					string link = string.Format("[{0}]({1})", title, Linking.GetLink(title, format, true));
+
+					return link;
+				});
+
+				comment = Regex.Replace(comment, linkPatternPipe, m => {
+					string title = m.Groups[1].Value;
+					string text = m.Groups[2].Value;
+					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
+
+					return link;
+				});
+			} else {
+				// Display wiki links as plain text
+				comment = Regex.Replace(comment, linkPattern, "$1");
+				comment = Regex.Replace(comment, linkPatternPipe, "$2");
+			}
+
+			// Add italic and parentheses
+			comment = $" *({comment})*";
+			return comment;
 		}
 	}
 }

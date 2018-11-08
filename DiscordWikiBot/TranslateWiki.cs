@@ -112,7 +112,14 @@ namespace DiscordWikiBot
 					JToken[] msgs = msgresult.ToArray();
 					if (msgs != null)
 					{
-						React(msgs, lang).Wait();
+						try
+						{
+							React(msgs, lang).Wait();
+						}
+						catch (Exception e)
+						{
+							Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Message could not be posted: {e.Message}", DateTime.Now);
+						}
 					}
 				}
 			}

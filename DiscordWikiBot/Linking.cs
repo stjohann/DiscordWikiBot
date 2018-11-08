@@ -190,7 +190,7 @@ namespace DiscordWikiBot
 				}
 
 				// Check if link contains namespace
-				Match nsMatch = Regex.Match(str, "^:?(.*):");
+				Match nsMatch = Regex.Match(str, "^:?([^:]+):");
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
