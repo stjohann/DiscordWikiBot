@@ -20,6 +20,9 @@ namespace DiscordWikiBot
 			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
 			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
 
+		// Name of default configuration key
+		private static string LANG_DEFAULT = "default";
+
 		// Site information storage
 		public class SiteInfo
 		{
@@ -53,7 +56,7 @@ namespace DiscordWikiBot
 				SiteInfo data = FetchSiteInfo(wiki).Result;
 				if (goal == "" || goal == null)
 				{
-					goal = "default";
+					goal = LANG_DEFAULT;
 				}
 
 				IWList.Add(goal, data.iw);
@@ -81,8 +84,8 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
 			content = Regex.Replace(content, "`.*?`", string.Empty);
 
-			// Determine our goal
-			string goal = e.Guild.Id.ToString();
+			// Determine our goal (default for DMs)
+			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
 			string lang = Config.GetLang(goal);
 			Init(goal);
 
@@ -324,7 +327,7 @@ namespace DiscordWikiBot
 				{
 					return IWList[goal];
 				}
-				return IWList["default"];
+				return IWList[LANG_DEFAULT];
 			}
 
 			if (key == "ns")
@@ -333,14 +336,14 @@ namespace DiscordWikiBot
 				{
 					return NSList[goal];
 				}
-				return NSList["default"];
+				return NSList[LANG_DEFAULT];
 			}
 
 			if (IsCaseSensitive.ContainsKey(goal))
 			{
 				return IsCaseSensitive[goal];
 			}
-			return IsCaseSensitive["default"];
+			return IsCaseSensitive[LANG_DEFAULT];
 		}
 
 		private static string EncodePageTitle(string str, bool escapePar)

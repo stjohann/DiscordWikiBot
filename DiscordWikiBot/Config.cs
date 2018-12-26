@@ -73,7 +73,7 @@ namespace DiscordWikiBot
 			string str = null;
 			
 			// Return an override if it exists
-			if (goal != "" || goal != null)
+			if (goal != "" && goal != null)
 			{
 				source = (JObject)Overrides[goal];
 				if (source != null && source.TryGetValue(key, out value))
