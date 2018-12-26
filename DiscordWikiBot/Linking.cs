@@ -194,23 +194,17 @@ namespace DiscordWikiBot
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
-					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : defaultNSList);
-					if (linkFormat == Config.GetWiki(goal))
+					NamespaceCollection latestNSList = defaultNSList;
+					if (linkFormat != Config.GetWiki(goal) && tempNSList != null)
 					{
-						if (defaultNSList.Contains(prefix))
-						{
-							ns = defaultNSList[prefix].CustomName;
-							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
-							str = only.Replace(str, "", 1);
-						}
-					} else
+						latestNSList = tempNSList;
+					}
+
+					if (latestNSList.Contains(prefix))
 					{
-						if (latestNSList.Contains(prefix))
-						{
-							ns = latestNSList[prefix].CustomName;
-							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
-							str = only.Replace(str, "", 1);
-						}
+						ns = latestNSList[prefix].CustomName;
+						Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+						str = only.Replace(str, "", 1).Trim();
 					}
 				}
 
@@ -280,6 +274,16 @@ namespace DiscordWikiBot
 
 			// Check if page title length is more than 255 bytes
 			if (Encoding.UTF8.GetByteCount(str) > 255) return true;
+
+			// Check if it is a MediaWiki-valid URL
+			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
+			string[] uriProtocols = {
+				"bitcoin:", "ftp://", "ftps://", "geo:", "git://", "gopher://", "http://",
+				"https://", "irc://", "ircs://", "magnet:", "mailto:", "mms://", "news:",
+				"nntp://", "redis://", "sftp://", "sip:", "sips:", "sms:", "ssh://",
+				"svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:", "//"
+			};
+			if (uriProtocols.Any(str.StartsWith)) return true;
 
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title
@@ -360,6 +364,9 @@ namespace DiscordWikiBot
 			
 			// Replace all spaces to underscores
 			str = Regex.Replace(str, "\\s{1,}", "_");
+
+			// Decode percent-encoded symbols before encoding
+			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
 
 			// Percent encoding for special characters
 			foreach (var ch in specialChars)
