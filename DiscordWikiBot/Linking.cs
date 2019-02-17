@@ -112,9 +112,10 @@ namespace DiscordWikiBot
 			if (e.Message.Author.IsBot) return;
 
 			// Determine our goal (default for DMs)
-			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
+			bool isServerMessage = (e.Guild != null);
+			string goal = (isServerMessage ? e.Guild.Id.ToString() : LANG_DEFAULT);
 			string lang = Config.GetLang(goal);
-			Init(goal);
+			if (isServerMessage) Init(goal);
 
 			// Send message
 			string msg = PrepareMessage(e.Message.Content, goal);
@@ -127,7 +128,7 @@ namespace DiscordWikiBot
 				}
 
 				DiscordMessage response = await e.Message.RespondAsync(msg);
-				if (!isTooLong)
+				if (isServerMessage && !isTooLong)
 				{
 					Cache.Add(e.Message.Id, response.Id);
 				}
@@ -140,8 +141,8 @@ namespace DiscordWikiBot
 			if (e.Message.Author.IsBot) return;
 
 			// Only update known messages
-			if (!Cache.ContainsKey(e.Message.Id)) return;
 			ulong id = e.Message.Id;
+			if (!Cache.ContainsKey(id)) return;
 
 			// Determine our goal (default for DMs)
 			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
@@ -166,8 +167,8 @@ namespace DiscordWikiBot
 			if (e.Message.Author.IsBot) return;
 
 			// Only update known messages
-			if (!Cache.ContainsKey(e.Message.Id)) return;
 			ulong id = e.Message.Id;
+			if (!Cache.ContainsKey(id)) return;
 
 			// Delete message
 			DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
