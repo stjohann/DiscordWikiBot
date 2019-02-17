@@ -214,6 +214,9 @@ namespace DiscordWikiBot
 				// If there is only namespace, return nothing
 				if (ns != "" && str.Length == 0) return "";
 
+				// Check if it’s a parser function
+				if (type == "{{" && str.StartsWith("#")) return "";
+
 				// Rewrite other text
 				if (str.Length > 0)
 				{

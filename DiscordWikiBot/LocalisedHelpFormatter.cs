@@ -115,9 +115,16 @@ namespace DiscordWikiBot
 		{
 			if (Command == null)
 			{
+				// Add a link to the source code repository
+				string description = Locale.GetMessage("help-all", "en");
+				if (Config.GetValue("repo") != null)
+				{
+					description = Locale.GetMessage("help-repo", "en", Config.GetValue("repo")) + description;
+				}
+
 				EmbedBuilder
 					.WithTitle(Locale.GetMessage("help-title", "en"))
-					.WithDescription(Locale.GetMessage("help-all", "en"));
+					.WithDescription(description);
 			}
 			return new CommandHelpMessage(embed: EmbedBuilder.Build());
 		}
