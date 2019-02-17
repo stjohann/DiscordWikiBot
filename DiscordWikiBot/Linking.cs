@@ -10,6 +10,7 @@ using WikiClientLibrary;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Sites;
 using Newtonsoft.Json;
+using DSharpPlus.Entities;
 
 namespace DiscordWikiBot
 {
@@ -22,6 +23,33 @@ namespace DiscordWikiBot
 
 		// Name of default configuration key
 		private static string LANG_DEFAULT = "default";
+
+		// Error for long messages
+		private static string TOO_LONG = "TOO_LONG";
+
+		// Messages ID storage
+		public class Buffer<TKey, TValue> : Dictionary<TKey, TValue>
+		{
+			public int MaxItems { get; set; }
+
+			private Queue<TKey> orderedKeys = new Queue<TKey>();
+
+			public new void Add(TKey key, TValue value)
+			{
+				orderedKeys.Enqueue(key);
+				if (this.MaxItems != 0 && this.Count >= MaxItems)
+				{
+					this.Remove(orderedKeys.Dequeue());
+				}
+
+				base.Add(key, value);
+			}
+		}
+
+		private static Buffer<ulong, ulong> Cache;
+
+		// Maximum cache length
+		private static int CACHE_LENGTH = 500;
 
 		// Site information storage
 		public class SiteInfo
@@ -47,6 +75,10 @@ namespace DiscordWikiBot
 				IWList = new Dictionary<string, InterwikiMap>();
 				NSList = new Dictionary<string, NamespaceCollection>();
 				IsCaseSensitive = new Dictionary<string, bool>();
+
+				// Create cache
+				Cache = new Buffer<ulong, ulong>();
+				Cache.MaxItems = CACHE_LENGTH;
 			}
 
 			// Fetch values for the goal
@@ -74,25 +106,88 @@ namespace DiscordWikiBot
 			IsCaseSensitive.Remove(goal);
 		}
 
-		static public Task Answer(MessageCreateEventArgs e)
+		static public async Task Answer(MessageCreateEventArgs e)
 		{
-			// Stop answering to bots
-			if (e.Message.Author.IsBot) return Task.FromResult(0);
-
-			// Remove code from the message
-			string content = e.Message.Content;
-			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
-			content = Regex.Replace(content, "`.*?`", string.Empty);
+			// Ignore bots
+			if (e.Message.Author.IsBot) return;
 
 			// Determine our goal (default for DMs)
 			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
 			string lang = Config.GetLang(goal);
 			Init(goal);
 
+			// Send message
+			string msg = PrepareMessage(e.Message.Content, goal);
+			if (msg != "")
+			{
+				bool isTooLong = (msg == TOO_LONG);
+				if (isTooLong)
+				{
+					msg = Locale.GetMessage("linking-toolong", lang);
+				}
+
+				DiscordMessage response = await e.Message.RespondAsync(msg);
+				if (!isTooLong)
+				{
+					Cache.Add(e.Message.Id, response.Id);
+				}
+			}
+		}
+
+		static public async Task Edit(MessageUpdateEventArgs e)
+		{
+			// Ignore bots
+			if (e.Message.Author.IsBot) return;
+
+			// Only update known messages
+			if (!Cache.ContainsKey(e.Message.Id)) return;
+			ulong id = e.Message.Id;
+
+			// Determine our goal (default for DMs)
+			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
+			string lang = Config.GetLang(goal);
+			Init(goal);
+
+			// Update message
+			string msg = PrepareMessage(e.Message.Content, goal);
+			if (msg != "")
+			{
+				bool isTooLong = (msg == TOO_LONG);
+				if (isTooLong) return;
+
+				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
+				await response.ModifyAsync(msg);
+			}
+		}
+
+		static public async Task Delete(MessageDeleteEventArgs e)
+		{
+			// Ignore bots
+			if (e.Message.Author.IsBot) return;
+
+			// Only update known messages
+			if (!Cache.ContainsKey(e.Message.Id)) return;
+			ulong id = e.Message.Id;
+
+			// Delete message
+			DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
+			Cache.Remove(id);
+			await response.DeleteAsync();
+		}
+
+		static public string PrepareMessage(string content, string goal)
+		{
+			// Remove code from the message
+			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
+			content = Regex.Replace(content, "`.*?`", string.Empty);
+
 			// Start digging for links
 			string msg = "";
 			MatchCollection matches = Regex.Matches(content, pattern);
 			List<string> links = new List<string>();
+
+			// Get language from the goal
+			string lang = Config.GetLang(goal);
 
 			if (matches.Count > 0)
 			{
@@ -107,20 +202,20 @@ namespace DiscordWikiBot
 					}
 				}
 
-				// Check if message is not empty and send it
 				if (msg != "")
 				{
 					msg = (links.Count > 1 ? Locale.GetMessage("linking-links", lang) + "\n" : Locale.GetMessage("linking-link", lang) + " ") + msg;
+
 					if (msg.Length > 2000)
 					{
-						msg = Locale.GetMessage("linking-toolong", lang);
+						msg = TOO_LONG;
 					}
-					
-					return e.Message.RespondAsync(msg);
 				}
+
+				return msg;
 			}
 
-			return Task.FromResult(0);
+			return "";
 		}
 
 		static public string AddLink(Match link, string goal)

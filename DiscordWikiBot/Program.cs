@@ -66,7 +66,10 @@ namespace DiscordWikiBot
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Getting wiki site information", DateTime.Now);
 			Linking.Init();
 
+			// Methods for linking bot
 			Client.MessageCreated += Linking.Answer;
+			Client.MessageUpdated += Linking.Edit;
+			Client.MessageDeleted += Linking.Delete;
 
 			// Start EventStreams
 			if (Config.GetDomain() != "")
