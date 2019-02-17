@@ -137,8 +137,8 @@ namespace DiscordWikiBot
 
 		static public async Task Edit(MessageUpdateEventArgs e)
 		{
-			// Ignore bots
-			if (e.Message.Author.IsBot) return;
+			// Ignore bots / DMs
+			if (e.Message.Author.IsBot || e.Guild == null) return;
 
 			// Only update known messages
 			ulong id = e.Message.Id;
@@ -146,7 +146,6 @@ namespace DiscordWikiBot
 
 			// Determine our goal (default for DMs)
 			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
-			string lang = Config.GetLang(goal);
 			Init(goal);
 
 			// Update message
@@ -158,13 +157,18 @@ namespace DiscordWikiBot
 
 				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
 				await response.ModifyAsync(msg);
+			} else
+			{
+				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
+				Cache.Remove(id);
+				await response.DeleteAsync();
 			}
 		}
 
 		static public async Task Delete(MessageDeleteEventArgs e)
 		{
-			// Ignore bots
-			if (e.Message.Author.IsBot) return;
+			// Ignore bots / DMs
+			if (e.Message.Author.IsBot || e.Guild == null) return;
 
 			// Only update known messages
 			ulong id = e.Message.Id;
