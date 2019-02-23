@@ -156,7 +156,7 @@ namespace DiscordWikiBot
 				if (isTooLong) return;
 
 				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
-				await response.ModifyAsync(msg);
+				if (response.Content != msg) await response.ModifyAsync(msg);
 			} else
 			{
 				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
@@ -186,8 +186,10 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
 			content = Regex.Replace(content, "`.*?`", string.Empty);
 
+			// Remove links from the message
+			content = Regex.Replace(content, "https?://[^\\s/$.?#].[^\\s]*", string.Empty);
+
 			// Start digging for links
-			string msg = "";
 			MatchCollection matches = Regex.Matches(content, pattern);
 			List<string> links = new List<string>();
 
@@ -202,20 +204,28 @@ namespace DiscordWikiBot
 					string str = AddLink(link, goal);
 					if (str.Length > 0 && !links.Contains(str))
 					{
-						msg += str;
 						links.Add(str);
 					}
 				}
 
-				if (msg != "")
-				{
-					msg = (links.Count > 1 ? Locale.GetMessage("linking-links", lang) + "\n" : Locale.GetMessage("linking-link", lang) + " ") + msg;
+				// Reject if there are no links
+				if (links.Count == 0) return "";
 
-					if (msg.Length > 2000)
-					{
-						msg = TOO_LONG;
-					}
+				// Choose label and separator
+				string label = "linking-link";
+				string separator = " ";
+				if (links.Count > 1)
+				{
+					label = "linking-links";
+					separator = "\n";
 				}
+
+				// Compose message
+				string msg = Locale.GetMessage(label, lang) + separator;
+				msg += string.Join("\n", links);
+
+				// Reject if the message is too long
+				if (msg.Length > 2000) return TOO_LONG;
 
 				return msg;
 			}
@@ -337,8 +347,9 @@ namespace DiscordWikiBot
 						str = string.Join(":", new[] { ns, str });
 					}
 				}
-				return string.Format("<{0}>\n", GetLink(str, linkFormat));
+				return string.Format("<{0}>", GetLink(str, linkFormat));
 			}
+
 			return "";
 		}
 
