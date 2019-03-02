@@ -1,0 +1,74 @@
+﻿{
+	"@metadata": {
+		"authors": [
+			"Meiræ"
+		]
+	},
+
+	"help-title": "Aide",
+	"help-title-command": "{1}{0} – aide",
+	"help-all": "Liste de toutes les commandes et groupes de niveau supérieur. Spécifiez une commande pour afficher plus d'informations.",
+	"help-repo": "Code source: {0}\n\n",
+	"help-commands": "Commandes",
+	"help-subcommands": "Sous-commandes",
+	"help-aliases": "Alias",
+	"help-arguments": "Arguments",
+	"help-separator": " – {0}",
+	"help-default": "Par défaut: {0}.",
+	"help-optional": "optionnel",
+	"help-group-standalone": "Ce groupe est une commande autonome.",
+	"help-command": "Affiche l'aide à la commande.",
+	"help-command-command": "commande pour laquelle vous pouvez aider.",
+	
+	"denied": "Cette commande ne fonctionne que sur le canal privé #moderators",
+
+	"configuring-changed-domain": "Le domaine pour la traduction des modifications récentes a été remplacé par **{0}**.",
+	"configuring-changed-lang": "La langue du bot sur ce serveur a été changée en **{0}**.",
+	"configuring-changed-translatewiki": "Les rapports sur les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",
+	"configuring-changed-translatewiki-channel": "Le canal pour les rapports sur les modifications récents sur Translatewiki a été changé en {0}.",
+	"configuring-changed-translatewiki-lang": "La langue pour laquelle les rapports sur les modifications récentes sur Translatewiki ont été compilées a été changée en **{0}**.",
+	"configuring-changed-wiki": "Le wiki pour les liens sur ce serveur a été remplacé par **{0}**.",
+	"configuring-changed-reset": "Le valeur a été réinitialisé à défaut.",
+	
+	"configuring-required-channel": "Le canal sur lequel vous et le bot avez accès est requis.\nPour obtenir une aide complète, envoyez `{1}{0}`.",
+	"configuring-required-value": "La valeur d'un paramètre est requise.\nPour obtenir une aide complète, envoyez `{1}{0}`.",
+	"configuring-badvalue-domain": "La diffusion des modifications récentes ne fonctionne qu'avec les domaines de projet Wikimedia.\nListe des domaines autorisés: {0}.",
+	"configuring-badvalue-lang": "Le bot ne reconnaît pas votre entrée en tant que code ISO 639 valide.",
+	"configuring-badvalue-wiki": "Il doit y avoir `{0}` à la fin de votre URL.",
+
+	"configuring-help-domain": "Modifiez le domaine à partir duquel les modifications récentes sont diffusées sur ce serveur. Ne fonctionne que pour les projets Wikimedia.",
+	"configuring-help-domain-value": "domaine d’un projet Wikimedia (en format fr.wikipedia.org). Utilisez `-` pour rétablir les valeurs par défaut.",
+
+	"configuring-help-lang": "Changer la langue du bot sur ce serveur.",
+	"configuring-help-lang-value": "la langue des réponses du bot. Utilisez `-` pour rétablir les valeurs par défaut.",
+	
+	"configuring-help-tw": "Démarrer ou terminer des rapports horaires sur les modifications récentes sur Translatewiki dans l'un des canaux.",
+	"configuring-help-tw-channel": "canal dans lequel les modifications récentes doivent être signalées.",
+	"configuring-help-tw-value": "langue disponible sur Translatewiki pour traduction (code de langue ISO 639). Remplissez `-` comme une langue pour mettre fin aux rapports.",
+
+	"configuring-help-wiki": "Changer le wiki principal pour les liens sur ce serveur. /wiki/$1 à la fin est requis.",
+	"configuring-help-wiki-value": "le wiki de votre choix (au format <https://fr.wikipedia.org/wiki/$1>). Utilisez `-` pour rétablir les valeurs par défaut.",
+
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "discuter",
+	"eventstreams-contribs": "contributions",
+	"eventstreams-new": "N",
+	"eventstreams-minor": "m",
+
+	"linking-link": "Lien:",
+	"linking-links": "Liens:",
+	"linking-toolong": "Les liens vers le message ci-dessus ne sont pas affichés, car le message serait trop long pour Discord.",
+
+	"streaming-added": "**[+]** Le flux avec un objectif `{0}`a été ajouté pour traitement dans le canal {1}.",
+	"streaming-removed": "**[−]** Le flux avec un objectif `{0}` a été supprimé du traitement dans le canal {1}.",
+	"streaming-required-channel": "Le nom du canal est un paramètre obligatoire.\nPour obtenir une aide complète, envoyez `{1}{0}`.",
+	"streaming-required-goal": "L'objectif de flux est un paramètre obligatoire.\nPour obtenir une aide complète, envoyez `{1}{0}`.",
+	"streaming-help-open": "Démarrer la diffusion d'une partie du flux dans le canal. Ne fonctionne que sur le canal #moderators.",
+	"streaming-help-close": "Terminer la diffusion d'une partie du flux dans le canal. Ne fonctionne que sur le canal #moderators.",
+	"streaming-help-channel": "le canal disponible pour vous pour démarrer la diffusion.",
+	"streaming-help-goal": "le titre de la page (avec \\_ pour les espaces) ou le numéro de l'espace de nom (entre <>).",
+	"streaming-help-minlength": "longueur minimale pour un diff.",
+	
+	"translatewiki-deadline": "Vérifiez les traductions pour cette semaine **jusqu'à 00h00** jeudi UTC pour éviter les mauvaises traductions et le vandalisme.",
+	"translatewiki-header": "{1:Un message|{0} messages} de {2:un auteur|{} auteurs}"
+}

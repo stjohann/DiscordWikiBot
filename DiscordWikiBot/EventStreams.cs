@@ -109,7 +109,7 @@ namespace DiscordWikiBot
 				string domain = Config.GetDomain();
 				if (channel != null)
 				{
-					domain = domain = Config.GetDomain(channel.Guild.Id.ToString());
+					domain = Config.GetDomain(channel.Guild.Id.ToString());
 					if (domain != change.ServerName)
 					{
 						continue;

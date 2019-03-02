@@ -126,6 +126,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="i18n\en.json" />
+    <None Include="i18n\fr.json" />
     <None Include="i18n\ru.json" />
     <None Include="overrides.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
