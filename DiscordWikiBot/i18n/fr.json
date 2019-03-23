@@ -1,7 +1,8 @@
 ﻿{
 	"@metadata": {
 		"authors": [
-			"Meiræ"
+			"Meiræ",
+			"Sadenar"
 		]
 	},
 
@@ -17,13 +18,13 @@
 	"help-default": "Par défaut: {0}.",
 	"help-optional": "optionnel",
 	"help-group-standalone": "Ce groupe est une commande autonome.",
-	"help-command": "Affiche l'aide à la commande.",
+	"help-command": "Affiche l'aide pour la commande.",
 	"help-command-command": "commande pour laquelle vous pouvez aider.",
 	
 	"denied": "Cette commande ne fonctionne que sur le canal privé #moderators",
 
 	"configuring-changed-domain": "Le domaine pour la traduction des modifications récentes a été remplacé par **{0}**.",
-	"configuring-changed-lang": "La langue du bot sur ce serveur a été changée en **{0}**.",
+	"configuring-changed-lang": "La langue du bot sur ce serveur a été changée et est maintenant **{0}**.",
 	"configuring-changed-translatewiki": "Les rapports sur les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",
 	"configuring-changed-translatewiki-channel": "Le canal pour les rapports sur les modifications récents sur Translatewiki a été changé en {0}.",
 	"configuring-changed-translatewiki-lang": "La langue pour laquelle les rapports sur les modifications récentes sur Translatewiki ont été compilées a été changée en **{0}**.",
