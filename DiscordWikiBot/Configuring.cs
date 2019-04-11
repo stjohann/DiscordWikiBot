@@ -4,68 +4,39 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
 {
+	[RequireUserPermissions(Permissions.ManageGuild)]
 	class Configuring
 	{
-		[Command("guildDomain"), Description("configuring-help-domain")]
+		[Command("guildDomain")]
+		[Description("configuring-help-domain")]
 		public async Task SetDomain(CommandContext ctx,
 			[Description("configuring-help-domain-value"), RemainingText] string value)
 		{
 			string prevDomain = Config.GetDomain(ctx.Guild.Id.ToString());
 			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-
-			// List of Wikimedia projects
-			string[] wmfProjects = {
-				".wikipedia.org",
-				".wiktionary.org",
-				".wikibooks.org",
-				".wikinews.org",
-				".wikiquote.org",
-				".wikisource.org",
-				".wikiversity.org",
-				".wikivoyage.org",
-				".wikimedia.org",
-				"www.mediawiki.org",
-				"www.wikidata.org"
-			};
-
-			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
-				return;
-			};
 			await ctx.TriggerTypingAsync();
 
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildDomain", Config.GetValue("prefix")));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
 			}
 
 			// Check if matches Wikimedia project
-			bool isWmfProject = false;
-			if (value != "-" && wmfProjects.Any(value.Contains))
+			bool notWmProject = (value != "-" && EventStreams.WMProjects.Any(value.Contains));
+			if (notWmProject)
 			{
-				isWmfProject = true;
-			}
-
-			if (!isWmfProject)
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-domain", lang, "`" + string.Join("`, `", wmfProjects) + "`"));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-domain", lang, "`" + string.Join("`, `", EventStreams.WMProjects) + "`"));
 				return;
-			}
-
-			// Check for return to default
-			if (value == "-")
-			{
-				value = Config.GetDomain();
 			}
 
 			// Do action and respond
@@ -85,35 +56,23 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 
-		[Command("guildLang"), Description("configuring-help-lang")]
+		[Command("guildLang")]
+		[Description("configuring-help-lang")]
 		public async Task SetLanguage(CommandContext ctx,
 			[Description("configuring-help-lang-value")] string value)
 		{
 			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-
-			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
-				return;
-			};
 			await ctx.TriggerTypingAsync();
 
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildLang", Config.GetValue("prefix")));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
 			}
 
-			// Check for return to default
-			if (value == "-")
-			{
-				value = Config.GetLang();
-			}
-
 			// Check if it is a valid language
-			if (!IsValidLanguage(value))
+			if (value != "-" && !IsValidLanguage(value))
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-lang", lang));
 				return;
@@ -131,7 +90,8 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 
-		[Command("guildTW"), Description("configuring-help-tw")]
+		[Command("guildTW")]
+		[Description("configuring-help-tw")]
 		public async Task SetTranslate(CommandContext ctx,
 			[Description("configuring-help-tw-channel")] DiscordChannel channel,
 			[Description("configuring-help-tw-value"), RemainingText] string value)
@@ -140,32 +100,19 @@ namespace DiscordWikiBot
 			string chanPrevId = Config.GetTWChannel(ctx.Guild.Id.ToString());
 			string chanPrevLang = Config.GetTWLang(ctx.Guild.Id.ToString());
 			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-
-			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
-				return;
-			};
 			await ctx.TriggerTypingAsync();
 
 			// Check for return to default
 			if (value == "-")
 			{
-				chanId = Config.GetTWChannel();
-				value = Config.GetTWLang();
+				chanId = "-";
+				value = "-";
 			}
 
 			// Check for required parameters
-			if (channel == null)
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-channel", lang, "help guildTW", Config.GetValue("prefix")));
-				return;
-			}
-
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildTW", Config.GetValue("prefix")));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
 			}
 
@@ -223,30 +170,18 @@ namespace DiscordWikiBot
 			}
 		}
 
-		[Command("guildWiki"), Description("configuring-help-wiki")]
+		[Command("guildWiki")]
+		[Description("configuring-help-wiki")]
 		public async Task SetWiki(CommandContext ctx,
 			[Description("configuring-help-wiki-value"), RemainingText] string value)
 		{
 			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-
-			// Ensure that we are in private channel
-			if (ctx.Channel.Name != "moderators")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("denied", lang));
-				return;
-			};
 			await ctx.TriggerTypingAsync();
-
-			// Check for return to default
-			if (value == "-")
-			{
-				value = Config.GetWiki();
-			}
 
 			// Check for required parameters
 			if (value.ToString() == "")
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, "help guildWiki", Config.GetValue("prefix")));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
 			}
 
@@ -271,7 +206,7 @@ namespace DiscordWikiBot
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
-
+		
 		private async Task RespondOnErrors(int response, CommandContext ctx, string lang)
 		{
 			if (response == Config.RESULT_RESET)
@@ -295,6 +230,33 @@ namespace DiscordWikiBot
 			return CultureInfo
 				.GetCultures(CultureTypes.NeutralCultures)
 				.Any(c => c.Name == name);
+		}
+	}
+	
+	class Pinging
+	{
+		[Command("status")]
+		[Aliases("ping", "pong")]
+		[Description("configuring-help-status")]
+		public async Task Status(CommandContext ctx)
+		{
+			await ctx.TriggerTypingAsync();
+
+			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+			IReadOnlyList<DiscordChannel> channelList = await ctx.Guild.GetChannelsAsync();
+			string[] list = channelList.Cast<DiscordChannel>().Select(x => x.Id.ToString()).ToArray();
+			JObject streams = EventStreams.GetData(list);
+
+			// Inform about streams if they exist on a server
+			string streamingMsg = "";
+			if (streams.Count > 0)
+			{
+				TimeSpan timestamp = DateTime.Now - EventStreams.LatestTimestamp;
+				streamingMsg = Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
+			}
+
+			// Respond to message
+			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + streamingMsg);
 		}
 	}
 }

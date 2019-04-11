@@ -39,7 +39,7 @@ namespace DiscordWikiBot
 				Console.ReadKey();
 				Environment.Exit(0);
 			}
-			Token = File.ReadAllText(tokenPath);
+			Token = File.ReadAllText(tokenPath, Encoding.Default);
 
 			// Get JSON config file
 			Config.Init();
@@ -72,7 +72,7 @@ namespace DiscordWikiBot
 			Client.MessageDeleted += Linking.Delete;
 
 			// Start EventStreams
-			if (Config.GetDomain() != "")
+			if (Config.GetDomain() != null)
 			{
 				EventStreams.Init();
 			}
@@ -80,7 +80,6 @@ namespace DiscordWikiBot
 			// Start Translatewiki fetches
 			if (Config.GetTWChannel() != null && Config.GetTWLang() != null)
 			{
-				Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Turning on Translatewiki ({Config.GetTWLang()})", DateTime.Now);
 				TranslateWiki.Init();
 			}
 
@@ -141,12 +140,12 @@ namespace DiscordWikiBot
 
 			Locale.LoadCustomLocale(Config.GetLang(guild));
 
-			if (Config.GetTWChannel() != null && Config.GetTWLang() != null)
+			if (Config.GetTWChannel(guild) != null && Config.GetTWLang(guild) != null)
 			{
 				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
 			}
 
-			if (Config.GetDomain() != "")
+			if (Config.GetDomain() != null)
 			{
 				EventStreams.Subscribe(Config.GetDomain(guild));
 			}

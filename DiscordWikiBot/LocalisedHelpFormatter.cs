@@ -72,7 +72,7 @@ namespace DiscordWikiBot
 					// Provide optional information
 					if (xarg.Description.Length > 0)
 					{
-						desc = Locale.GetMessage("help-separator", "en", Locale.GetMessage(desc, "en"));
+						desc = Locale.GetMessage("separator", "en", Locale.GetMessage(desc, "en"));
 					}
 
 					if (xarg.DefaultValue != null && xarg.DefaultValue.ToString() != "")
@@ -106,8 +106,24 @@ namespace DiscordWikiBot
 			{
 				header = Locale.GetMessage("help-commands", "en");
 			}
-			EmbedBuilder.AddField(header, string.Join(", ", subcommands.Select(xc => $"`{Config.GetValue("prefix")}{xc.Name}`")));
+			string list = string.Join("\n", subcommands.Select(xc => {
+				if (!xc.IsHidden)
+				{
+					string comm = $"{xc.Name}";
+					if (Command != null)
+					{
+						comm = $"{Command} {comm}";
+					}
+					string descId = (xc.Name == "help" ? "help-command" : xc.Description);
 
+					string desc = Locale.GetMessage("separator", "en", Locale.GetMessage(descId, "en"));
+					return Locale.GetMessage("bullet", "en", $"`{Config.GetValue("prefix")}{comm}{desc}`");
+				}
+
+				return null;
+			}).Where(s => !string.IsNullOrEmpty(s)));
+
+			EmbedBuilder.AddField(header, list);
 			return this;
 		}
 

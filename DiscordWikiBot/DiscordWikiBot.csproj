@@ -159,7 +159,7 @@
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.1\build\NETStandard.Library.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(ProjectDir)i18n" "$(TargetDir)i18n" /E /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(ProjectDir)i18n" "$(TargetDir)i18n" /E /I /Y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

@@ -4,48 +4,48 @@
 			"stjn"
 		]
 	},
+	
+	"bullet": "— {0}",
+	"separator": " — {0}",
+	"yes-no": "{0:да|нет}",
 
 	"help-title": "Справка",
-	"help-title-command": "{1}{0} — справка",
+	"help-title-command": "{1}{0}{msg:separator}справка",
 	"help-all": "Перечислены все команды верхнего уровня и группы. Укажите команду, чтобы получить больше информации.",
 	"help-repo": "Исходный код: {0}\n\n",
 	"help-commands": "Команды",
 	"help-subcommands": "Подкоманды",
 	"help-aliases": "Алиасы",
 	"help-arguments": "Аргументы",
-	"help-separator": " — {0}",
 	"help-default": "По умолчанию: `{0}`.",
 	"help-optional": "необязательно",
 	"help-group-standalone": "Эта группа — отдельная команда.",
 	"help-command": "Отображает справку по команде.",
 	"help-command-command": "команда, по которой нужно дать помощь.",
 	
-	"denied": "Данная команда работает только в приватном канале #moderators.",
-
+	"configuring-status": ":information_source: Включён в розетку.",
+	"configuring-status-streaming": " Последний ответ трансляций: {0} {0:минута|минуты|минут} {1} {1:секунда|секунды|секунд} назад.",
 	"configuring-changed-domain": "Домен трансляции свежих правок на этом сервере изменён на **{0}**.",
 	"configuring-changed-lang": "Язык бота на этом сервере изменён на **{0}**.",
 	"configuring-changed-translatewiki": "В канале {0} включены уведомления о свежих правках на Translatewiki на языке **{1}**.",
 	"configuring-changed-translatewiki-channel": "Канал для уведомлений о свежих правках на Translatewiki изменён на {0}.",
-	"configuring-changed-translatewiki-lang": "Язык, с которого идут уведомления о свежих правках на Translatewiki, изменён на **{0}**.",
+	"configuring-changed-translatewiki-lang": "Язык, для которого идут уведомления о свежих правках на Translatewiki, изменён на **{0}**.",
 	"configuring-changed-wiki": "Вики для ссылок на этом сервере изменена на **{0}**.",
 	"configuring-changed-reset": "Возвращено значение по умолчанию.",
 
-	"configuring-required-channel": "Необходимо указать канал, к которому вы и бот имеете доступ.\nЧтобы получить полную справку, введите `{1}{0}`.",
-	"configuring-required-value": "Необходимо указать новое значение параметра.\nЧтобы получить полную справку, введите `{1}{0}`.",
-	"configuring-badvalue-domain": "Трансляция свежих правок работает только с доменами проектов Викимедиа.\nСписок допустимых доменов: {0}.",
+	"configuring-required-value": "Требуется значение параметра.\nЧтобы получить полную справку, введите `{1}help {0}`.",
+	"configuring-badvalue-domain": "Потоки доступны только для проектов Викимедиа.\nСписок допустимых доменов: {0}.",
 	"configuring-badvalue-lang": "Бот не считает введённое вами корректным языковым кодом ISO 639.",
 	"configuring-badvalue-wiki": "В передаваемом вами URL должно содержаться `{0}`.",
 
+	"confuguring-help-status": "Проверить работу бота.",
 	"configuring-help-domain": "Изменить домен, с которого транслируются свежие правки, на этом сервере. Доступно только для проектов Викимедиа.",
 	"configuring-help-domain-value": "домен проекта Викимедиа (в формате ru.wikipedia.org). Укажите `-`, чтобы вернуть к значению по умолчанию.",
-
 	"configuring-help-lang": "Изменить язык ответов бота на этом сервере.",
 	"configuring-help-lang-value": "желаемый язык ответов бота (языковой код ISO 639). Укажите `-`, чтобы вернуть к значению по умолчанию.",
-	
 	"configuring-help-tw": "Начать или завершить ежечасное слежение за свежими правками на Translatewiki в одном из каналов.",
-	"configuring-help-tw-channel": "канал, в который необходимо сообщать о свежих правках.",
+	"configuring-help-tw-channel": "канал, доступный боту.",
 	"configuring-help-tw-value": "язык, доступный на Translatewiki (языковой код ISO 639). Укажите `-` в качестве языка, чтобы завершить слежение.",
-
 	"configuring-help-wiki": "Изменить главную вики ссылок на этом сервере. Окончание формата /wiki/$1 обязательно.",
 	"configuring-help-wiki-value": "желаемая вики ссылок (в формате <https://ru.wikipedia.org/wiki/$1>). Укажите `-`, чтобы вернуть к значению по умолчанию.",
 
@@ -59,15 +59,33 @@
 	"linking-links": "Ссылки:",
 	"linking-toolong": "Ссылки к сообщению выше не отображены, так как сообщение с ними — слишком длинное.",
 
-	"streaming-added": "**[+]** Поток с целью `{0}` добавлен для обработки в канале {1}.",
-	"streaming-removed": "**[−]** Поток с целью `{0}` удалён из обработки в канале {1}.",
-	"streaming-required-channel": "Необходимо указать название канала.\nЧтобы получить полную справку, введите `{1}{0}`.",
-	"streaming-required-goal": "Необходимо указать цель потока.\nЧтобы получить полную справку, введите `{1}{0}`.",
-	"streaming-help-open": "Начать трансляцию части потока в канал. Работает только в #moderators.",
-	"streaming-help-close": "Прекратить трансляцию части потока в канал. Работает только в #moderators.",
-	"streaming-help-channel": "доступный вам канал, в который необходимо начать трансляцию.",
-	"streaming-help-goal": "заголовок страницы (через \\_ вместо пробелов) или номер пространства (в <>).",
-	"streaming-help-minlength": "минимальный размер диффа.",
+	"streaming-stream-namespace": "{1:Трансляция|Трансляции} из пространства `{0}`",
+	"streaming-stream-page": "{1:Трансляция|Трансляции} со страницы `{0}`",
+	"streaming-opened": ":white_check_mark: {0} добавлена в канал {1}{2}",
+	"streaming-edited": ":eight_spoked_asterisk: {0} в канале {1} поменяла следующие параметры:\n{2}",
+	"streaming-edited-nothing": ":ok: {0} в канале {1} не поменяла параметров.",
+	"streaming-closed": ":negative_squared_cross_mark: {0} прекращена в канале {1}.",
+	"streaming-list": ":information_source: {0} {0:действующая трансляция|действующие трансляции|действующих трансляций} на этом сервере.\n{1}",
+	"streaming-list-streams": "**{0}**:\n",
+	"streaming-list-nothing": ":ok: На этом сервере нет действующих трансляций.",
+
+	"streaming-key-bot": "включать правки ботов",
+	"streaming-key-in-comment": "искать в тексте комментария",
+	"streaming-key-diff-length": "минимальный размер правки",
+	"streaming-key-minor": "включать малые правки",
+	"streaming-key-namespace": "номер пространства имён",
+	"streaming-key-patrolled": "фильтровать по патрулированию",
+	"streaming-key-title": "заголовок страницы",
+	"streaming-key-type": "тип правки",
+
+	"streaming-required-goal": "Необходимо указать цель трансляции (название страницы или номер пространства имён).\nЧтобы получить полную справку, введите `{1}help {0}`.",
+
+	"streaming-help-open": "Начать транслировать свежие правки в канале.",
+	"streaming-help-edit": "Изменить параметры трансляции свежих правок в канале.",
+	"streaming-help-close": "Отключить трансляцию свежих правок в канале.",
+	"streaming-help-list": "Перечислить действующие трансляции на этом сервере.",
+	"streaming-help-channel": "доступный боту канал трансляции.",
+	"streaming-help-args": "параметры трансляции:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	
 	"translatewiki-deadline": "Успейте проверить сообщения за неделю **до 00:00** четверга по UTC, чтобы избежать вандализма и плохого перевода.",
 	"translatewiki-header": "{0} {1:сообщение|сообщения|сообщений} от {2} {2:автора|авторов|авторов}"

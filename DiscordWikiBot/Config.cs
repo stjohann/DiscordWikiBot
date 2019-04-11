@@ -61,7 +61,7 @@ namespace DiscordWikiBot
 			{
 				return JObject.Parse(json);
 			}
-			json = File.ReadAllText(path);
+			json = File.ReadAllText(path, Encoding.Default);
 
 			return JObject.Parse(json);
 		}
@@ -71,7 +71,7 @@ namespace DiscordWikiBot
 			JObject source;
 			JToken value;
 			string str = null;
-			
+
 			// Return an override if it exists
 			if (goal != "" && goal != null)
 			{
@@ -86,7 +86,11 @@ namespace DiscordWikiBot
 			// Return default value
 			value = Default.GetValue(key);
 			if (value != null) {
-				str = value.ToString();
+				string val = value.ToString();
+				if (val != "")
+				{
+					str = val;
+				}
 			}
 			return str;
 		}
@@ -172,14 +176,14 @@ namespace DiscordWikiBot
 
 			// Reset data if it matches defaults
 			int code = RESULT_CHANGE;
-			if (value == GetValue(key))
+			if (value == "-" || value == GetValue(key))
 			{
 				(Overrides.Property(goal).Value as JObject).Property(key).Remove();
 				code = RESULT_RESET;
 			}
 
 			// Write it to JSON file
-			File.WriteAllText(overridesPath, Overrides.ToString());
+			File.WriteAllText(overridesPath, Overrides.ToString(), Encoding.Default);
 			return code;
 		}
 		

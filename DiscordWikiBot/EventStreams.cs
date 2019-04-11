@@ -18,29 +18,59 @@ namespace DiscordWikiBot
 	class EventStreams
 	{
 		// EventSource stream instance
-		public static Provider Stream;
+		private static Provider Stream;
 
 		// EventSource stream translations
-		public static dynamic Data;
+		private static dynamic Data = null;
+
+		// Last message timestamp
+		public static DateTime LatestTimestamp;
+
+		// List of all Wikimedia projects
+		// List of Wikimedia projects
+		public static string[] WMProjects = {
+			".wikipedia.org",
+			".wiktionary.org",
+			".wikibooks.org",
+			".wikinews.org",
+			".wikiquote.org",
+			".wikisource.org",
+			".wikiversity.org",
+			".wikivoyage.org",
+			".wikimedia.org",
+			"www.mediawiki.org",
+			"www.wikidata.org"
+		};
+
+		// Path to JSON file
+		private static string JSON_PATH = @"eventStreams.json";
 
 		public static void Init()
 		{
 			// Get JSON
 			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Reading JSON config", DateTime.Now);
 			string json = "";
-			string jsonPath = @"eventStreams.json";
-			if (!File.Exists(jsonPath))
+			if (!File.Exists(JSON_PATH))
 			{
-				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", "Please create a JSON file called \"eventStreams.json\" before trying to use EventStreams.", DateTime.Now);
+				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Please create a JSON file called \"{JSON_PATH}\" before trying to use EventStreams.", DateTime.Now);
 				return;
 			}
-			json = File.ReadAllText(jsonPath);
+			json = File.ReadAllText(JSON_PATH, Encoding.Default);
+			json = ReformatData(json);
 
-			Data = JsonConvert.DeserializeObject(json);
+			Data = JObject.Parse(json);
+
+			// Check if default domain is a Wikimedia project
+			if (Config.GetDomain() != null && !WMProjects.Any(Config.GetDomain().Contains))
+			{
+				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", DateTime.Now);
+				return;
+			}
 
 			// Open new EventStreams instance
 			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Connecting to huggle-rc.wmflabs.org", DateTime.Now);
 			Stream = new Provider(true, true);
+			LatestTimestamp = DateTime.Now;
 			Stream.Subscribe(Config.GetDomain());
 
 			// Respond when server is ready
@@ -56,28 +86,7 @@ namespace DiscordWikiBot
 			});
 
 			// Start recording events
-			Stream.On_Change += new Provider.EditHandler((o, e) =>
-			{
-				bool isEdit = (e.Change.Type == RecentChange.ChangeType.Edit || e.Change.Type == RecentChange.ChangeType.New);
-
-				if (e.Change.Bot == false && isEdit)
-				{
-					string ns = e.Change.Namespace.ToString();
-					string title = e.Change.Title;
-
-					// React if there is server data for namespace
-					if (Data[$"<{ns}>"] != null)
-					{
-						React(Data[$"<{ns}>"], e.Change).Wait();
-					}
-
-					// React if there is server data for title
-					if (Data[title] != null)
-					{
-						React(Data[title], e.Change).Wait();
-					}
-				}
-			});
+			Stream.On_Change += Stream_On_Change;
 
 			Stream.Connect();
 		}
@@ -94,16 +103,36 @@ namespace DiscordWikiBot
 			Stream.Unsubscribe(domain);
 		}
 
-		public static async Task React(JArray data, RecentChange change)
+		private static void Stream_On_Change(object sender, EditEventArgs e)
+		{
+			LatestTimestamp = e.Change.Timestamp;
+			bool notEdit = (e.Change.Type != RecentChange.ChangeType.Edit && e.Change.Type != RecentChange.ChangeType.New);
+			if (notEdit) return;
+			
+			string ns = e.Change.Namespace.ToString();
+			string title = e.Change.Title;
+
+			// React if there is server data for namespace
+			if (Data[$"<{ns}>"] != null)
+			{
+				React(Data[$"<{ns}>"], e.Change).Wait();
+			}
+
+			// React if there is server data for title
+			if (Data[title] != null)
+			{
+				React(Data[title], e.Change).Wait();
+			}
+		}
+
+		public static async Task React(JObject data, RecentChange change)
 		{
 			DiscordClient client = Program.Client;
-			for (int i = 0; i < data.Count; i++)
+			foreach (KeyValuePair<string, JToken> item in data)
 			{
-				// Setup basic info
-				string[] info = data[i].ToString().Split('|');
-				ulong channelId = ulong.Parse(info[0]);
-				DiscordChannel channel = await client.GetChannelAsync(channelId);
-				int minLength = (info.Length > 1 ? Convert.ToInt32(info[1]) : -1);
+				ulong channelID = ulong.Parse(item.Key);
+				DiscordChannel channel = await client.GetChannelAsync(channelID);
+				Dictionary<string, dynamic> args = item.Value.ToObject<Dictionary<string, dynamic>>();
 
 				// Check if domain is the same
 				string domain = Config.GetDomain();
@@ -118,13 +147,58 @@ namespace DiscordWikiBot
 
 				// Set up domain for future usage for link formatting
 				domain = $"https://{domain}/wiki/$1";
-				
-				// Check if the diff is above required length if it is set
-				if (minLength > -1)
+
+				// Check if bot edits are allowed
+				if (!args.ContainsKey("bot") && change.Bot == true)
 				{
+					continue;
+				}
+
+				// Check if minor edits are disallowed
+				if (args.ContainsKey("minor"))
+				{
+					if (args["minor"] == false && change.Minor == true)
+					{
+						continue;
+					}
+				}
+
+				// Check if patrolled edits are allowed
+				if (args.ContainsKey("patrolled"))
+				{
+					bool patrolStatus = (args["patrolled"] == "only" ? true : false);
+					if (change.Patrolled == patrolStatus)
+					{
+						continue;
+					}
+				}
+
+				// Check the edit type if it is defined
+				if (args.ContainsKey("type"))
+				{
+					if (args["type"] != change.Type.ToString().ToLower())
+					{
+						continue;
+					}
+				}
+
+				// Check for minimum length of the diff
+				if (args.ContainsKey("diff-length"))
+				{
+					int minLength = Convert.ToInt32(args["diff-length"]);
 					int revLength = (change.LengthNew - change.LengthOld);
-					bool isMinLength = (revLength > minLength);
-					if (isMinLength == false)
+					
+					if (revLength < minLength)
+					{
+						continue;
+					}
+				}
+
+				// Check string in comment text
+				if (args.ContainsKey("in-comment"))
+				{
+					string comment = change.Summary.ToString().ToLower();
+					if (!comment.Contains(args["in-comment"]))
 					{
 						continue;
 					}
@@ -238,49 +312,134 @@ namespace DiscordWikiBot
 			return msg;
 		}
 
-		public static void SetData(string goal, string channel, string minLength)
+		public static dynamic GetData(string[] channels)
 		{
-			if (Data == null) return;
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after a command was fired", DateTime.Now);
-			
-			// Change current data
-			string str = string.Format("{0}{1}", channel, (minLength != "" ? $"|{minLength}" : ""));
-			if (Data[goal] == null)
-			{
-				Data[goal] = new JArray();
-			} else
-			{
-				var el = ((IEnumerable<dynamic>)Data[goal]).FirstOrDefault(j => j.ToString() == str);
-				if (el != null) return;
-			}
-			Data[goal].Add(str);
+			if (Data == null) return null;
+			JObject result = new JObject();
 
-			// Write it to JSON file
-			string jsonPath = @"eventStreams.json";
-			File.WriteAllText(jsonPath, Data.ToString());
+			// Remove streams belonging to other servers
+			foreach (JProperty entry in Data)
+			{
+				JObject value = (JObject)entry.Value;
+
+				foreach (KeyValuePair<string, JToken> item in value)
+				{
+					if (channels.Contains(item.Key))
+					{
+						if (result[entry.Name] == null)
+						{
+							result.Add(entry.Name, new JObject());
+						}
+
+						((JObject)result[entry.Name]).Add(new JProperty(item.Key, item.Value));
+					}
+				}
+			}
+			
+			return result;
 		}
 
-		public static void RemoveData(string goal, string channel, string minLength) {
+		public static Dictionary<string, dynamic> SetData(string channel, Dictionary<string, dynamic> args, bool reset = true)
+		{
+			if (Data == null) return null;
+			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
+			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after a command was fired", DateTime.Now);
+			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
+
+			// List of allowed keys
+			string[] allowedKeys =
+			{
+				"bot",
+				"in-comment",
+				"diff-length",
+				"minor",
+				"patrolled",
+				"type",
+			};
+
+			// Default values for keys
+			Dictionary<string, dynamic> defaults = new Dictionary<string, dynamic>
+			{
+				{ "bot", false },
+				{ "minor", true },
+				{ "patrolled", "any" },
+				{ "type", "any" },
+			};
+
+			// Set data object if undefined
+			if (Data[goal] == null)
+			{
+				Data[goal] = new JObject();
+			}
+
+			// Add or append necessary data
+			JObject result = new JObject();
+			if (reset == false && Data[goal][channel] != null)
+			{
+				result = Data[goal][channel];
+			}
+
+			foreach (KeyValuePair<string, dynamic> item in args)
+			{
+				if (allowedKeys.Contains(item.Key))
+				{
+					string key = item.Key;
+					dynamic value = item.Value;
+
+					// Ignore same values
+					if (reset == false && result[key] != null && result[key] == value) {
+						continue;
+					}
+
+					// Reset to default
+					if (defaults.ContainsKey(key) && value == defaults[key])
+					{
+						if (reset == false)
+						{
+							JProperty prop = result.Property(key);
+							if (prop != null)
+							{
+								prop.Remove();
+								changes.Add(key, value);
+							}
+						}
+						continue;
+					}
+
+					// Set and remember data
+					result[key] = value;
+					changes.Add(key, value);
+				}
+			}
+
+			// Set and save data
+			if (reset == false && changes.Count == 0)
+			{
+				return changes;
+			}
+
+			Data[goal][channel] = result;
+			File.WriteAllText(JSON_PATH, Data.ToString(), Encoding.Default);
+			return changes;
+		}
+
+		public static void RemoveData(string channel, Dictionary<string, dynamic> args)
+		{
 			if (Data == null) return;
+			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
 			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after the command was fired", DateTime.Now);
 
 			// Change current data and remove an item if necessary
 			if (Data[goal] == null) return;
-			string str = string.Format("{0}{1}", channel, (minLength != "" ? $"|{minLength}" : ""));
-			var el = ((IEnumerable<dynamic>)Data[goal]).FirstOrDefault(j => j.ToString() == str);
-			if (el != null)
-			{
-				Data[goal].Remove(el);
-			}
+			Data[goal].Property(channel)?.Remove();
 
-			if(Data[goal].Count == 0)
+			if (Data[goal].ToString() == "{}")
 			{
 				Data.Property(goal).Remove();
 			}
 
 			// Write it to JSON file
-			string jsonPath = @"eventStreams.json";
-			File.WriteAllText(jsonPath, Data.ToString());
+			File.WriteAllText(JSON_PATH, Data.ToString(), Encoding.Default);
 		}
 
 		private static string ParseComment(string summary, string format, bool linkify = true)
@@ -323,6 +482,48 @@ namespace DiscordWikiBot
 			// Add italic and parentheses
 			comment = $" *({comment})*";
 			return comment;
+		}
+
+		private static string ReformatData(string json)
+		{
+			JObject oldData = JObject.Parse(json);
+			bool doNothing = false;
+			foreach (KeyValuePair<string, JToken> item in oldData)
+			{
+				if (item.Value.Type != JTokenType.Array)
+				{
+					doNothing = true;
+					break;
+				}
+				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Converting old \"{JSON_PATH}\" into our new format.", DateTime.Now);
+
+				// Convert values from array
+				JObject result = new JObject();
+				foreach (string entry in item.Value)
+				{
+					string[] info = entry.Split('|');
+					string channel = info[0];
+					int diffLength = (info.Length > 1 ? Convert.ToInt32(info[1]) : -1);
+
+					JObject obj = new JObject();
+					if (diffLength != -1)
+					{
+						obj.Add(new JProperty("diff-length", diffLength));
+					}
+					result[channel] = obj;
+				}
+
+				oldData[item.Key] = result;
+			}
+
+			if (doNothing)
+			{
+				return json;
+			}
+
+			// Rewrite the old data if needed
+			File.WriteAllText(JSON_PATH, oldData.ToString(), Encoding.Default);
+			return oldData.ToString();
 		}
 	}
 }

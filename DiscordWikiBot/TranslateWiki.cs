@@ -52,6 +52,7 @@ namespace DiscordWikiBot
 					lang = Config.GetTWLang();
 				}
 
+				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Watching changes for {lang.ToUpper()}", DateTime.Now);
 				Languages.Add(lang);
 				if (!Channels.ContainsKey(lang))
 				{

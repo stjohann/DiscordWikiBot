@@ -1,71 +1,42 @@
 # DiscordWikiBot
-**DiscordWikiBot** [ˈdɪskɔːdˈwiːkibɒt] is a bot for Discord chat of Russian Wikipedians that can transform your [[wiki]] and {{template}} links into actual links using APIs, and send recent changes into the channels on server moderators’ discretion. It is built using [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus) and [XmlRcs](https://github.com/huggle/XMLRCS/tree/master/clients/c%23/XmlRcs) libraries.
+**DiscordWikiBot** [ˈdɪskɔːdˈwiːkibɒt] is a bot that can transform [[wiki]] and {{template}} links in Discord messages into actual links using MediaWiki APIs and can inform about recent changes in Wikimedia projects and on Translatewiki.net. It is developed for the Discord server of Russian Wikipedians. A private instance of the bot is run for Discord servers of Wikimedia communities and is available by request.
 
-DiscordWikiBot is published under MIT licence.
+DiscordWikiBot is built using [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus) and [XmlRcs](https://github.com/huggle/XMLRCS/tree/master/clients/c%23/XmlRcs) libraries. Its code is published under MIT licence.
 
-## Usage
+## Installation
 1. Download the source files.
 2. Create `token.txt` in project folder with a private token for your Discord bot. If you haven’t created your own Discord bot, [create it first](https://discordapp.com/developers/applications/me). Do not share your private token.
 3. Change `config.json` to your needs according to instructions there.
-4. Add `eventStreams.json` file (see below) to the folder with a project if you intend to use recent changes streams.
+4. Add `eventStreams.json` file containing only `{}` to the folder with `config.json` if you intend to use recent changes streams (Wikimedia projects only).
+5. Compile the bot’s binaries using any C# compiler (easiest way is to use IDEs like Visual Studio or MonoDevelop).
 
 ## Configuration
-The default config file should look more or less like this (without comments, they are provided here for guidance):
+By default, the bot is configured for the usage in Russian Wikipedia. Your instance of the bot can use different options by changing `config.json`. Below is the documentation for every available variable (remove lines starting with `//` if you’re going to copy from here). Required parameters are marked.
+
 ```js
 {
-	// Domain for EventStreams function, set to "" if it is not needed for the server
+	// Link to the bot’s source code
+	"repo":  "<https://github.com/stjohann/DiscordWikiBot> (C# / MIT)",
+
+	// Domain for recent changes streams (only Wikimedia projects are allowed)
 	"domain": "ru.wikipedia.org",
 	
-	// Language of the bot
+	// REQUIRED: Language of the bot
 	"lang": "ru",
 
-	//
-	// Notifications about new messages on Translatewiki
-	// Remove both fields from the config if you won’t be using it at all
-	//
-	// Channel for notifications: should be the one bot has access to, otherwise it will fail
+	// REQUIRED: Default wiki link configuration
+	"wiki": "https://ru.wikipedia.org/wiki/$1",
+
+	// Channel for recent changes reports from Translatewiki.net
 	"translatewiki-channel": "448985285603098624",
-	// Language from which notifications should be sent
-	"translatewiki-language": "ru",
-
-	// Default wiki link configuration
-	"wiki": "https://ru.wikipedia.org/wiki/$1"
+	// Language for which recent changes reports from Translatewiki.net should be sent
+	"translatewiki-language": "ru"
 }
 ```
 
-You can configure the bot per guild using special commands (use command `!help` if you are stuck):
-+ `!guildLang en` would change the language of bot to English. Works only for ISO 639-2 languages.
-+ `!guildWiki <https://en.wikipedia.org/wiki/$1>` would change default link of bot to English Wikipedia.
-+ `!guildDomain en.wikipedia.org` would change default EventStreams target domain to en.wikipedia.org (works only for Wikimedia projects).
-All commands above are available only in `#moderators` channel (which, ideally, you should make the most private one on the server) and are reversible back to default using `-` as a value (`!guildLang -` etc.).
+Most variables in `config.json` can be overridden per server by members with ‘Manage server’ permission.
 
-In the future it is planned to have sensitive commands check for user’s permissions, but for now it doesn’t do this. Please don’t provide access to #moderators channel to non-trusted users when using this bot.
+## Usage
+When the bot is enabled, it will transform [[link syntax]] to real URLs to the pages of your wiki or its interwiki links, and will transform {{template syntax}} to real URLs to the templates of your wiki. To stop the bot from reacting to links in your message, wrap it into \` (\`[[example]]\`) or escape [[ symbols (with \\ before them).
 
-## EventStreams
-DiscordWikiBot uses [EventStreams](https://wikitech.wikimedia.org/wiki/EventStreams) through proxy of [XmlRcs](https://wikitech.wikimedia.org/wiki/XmlRcs), that were developed for [Huggle](https://en.wikipedia.org/wiki/Wikipedia:Huggle), an anti-vandalism tool. This feature is not suitable for usage outside of Wikimedia projects.
-
-To use EventStreams with your favourite Wikimedia project, you would have to do two things:
-
-1. Set `domain` setting in `config.json` with domain of your project (such as `ru.wikipedia.org` or `www.wikidata.org`).
-2. Create `eventStreams.json` file in the same folder as your `config.json`.
-
-You can do the second step in different ways: either you can create the file with the content `{}` (eventually having an empty JSON object) and use `#moderators` channel for later configuration (commands are `!openStream` and `!closeStream`, use command `!help` if you are stuck), or you can configure it manually:
-
-1. Copy IDs of your preferred channel (turn on Developer Mode in your Discord settings and right click on any channel).
-2. Set it up like an example below (of course, change `000000000000000000` to correct channel IDs), where the tool would send the messages about all the changes in MediaWiki namespace and about the changes at `Википедия:Запросы к администраторам/Быстрые` page that are larger than 900 bytes:
-
-```js
-{
-	// Namespace example (brackets are required), use {{NAMESPACENUMBER}} or other means to get namespace number
-	"<8>": [
-		"000000000000000000"
-	],
-	// Page example, not having brackets would match page title
-	// The integer after a pipe is minimum length of the revision
-	"Википедия:Запросы к администраторам/Быстрые": [
-		"000000000000000000|900"
-	]
-}
-```
-
-Please note: EventStreams are somewhat unreliable and developers bear no responsibility if it does not work as reliable as you could’ve expected it because it uses an external library.
+DiscordWikiBot can be configured per server by server members with ‘Manage server’ permission. Available configuration includes the language of the bot, the default wiki URL, recent changes streams parameters etc. Up-to-date instructions for configuration of the bot [are provided on Meta-Wiki](https://meta.wikimedia.org/wiki/Discord#WikiBot).

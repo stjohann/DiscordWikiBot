@@ -2,7 +2,5 @@
 	"repo":  "<https://github.com/stjohann/DiscordWikiBot> (C# / MIT)",
 	"domain": "ru.wikipedia.org",
 	"lang": "ru",
-	"translatewiki-channel": "448985285603098624",
-	"translatewiki-lang": "ru",
 	"wiki": "https://ru.wikipedia.org/wiki/$1"
 }
