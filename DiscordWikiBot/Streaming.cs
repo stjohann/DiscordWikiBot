@@ -12,9 +12,19 @@ using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Streaming class.
+	/// <para>Adds commands for configuring the recent changes streams.</para>
+	/// </summary>
 	[RequireUserPermissions(Permissions.ManageGuild)]
 	class Streaming
 	{
+		/// <summary>
+		/// Open a new stream in a specified channel.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="args">Stream parameters.</param>
 		[Command("openStream")]
 		[Description("streaming-help-open")]
 		public async Task OpenStream(CommandContext ctx,
@@ -34,6 +44,12 @@ namespace DiscordWikiBot
 			});
 		}
 
+		/// <summary>
+		/// Edit stream parameters in a specified channel.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="args">Stream parameters.</param>
 		[Command("editStream")]
 		[Description("streaming-help-edit")]
 		public async Task EditStream(CommandContext ctx,
@@ -59,6 +75,12 @@ namespace DiscordWikiBot
 			});
 		}
 
+		/// <summary>
+		/// Close a stream in a specified channel.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="args">Stream parameters.</param>
 		[Command("closeStream")]
 		[Description("streaming-help-close")]
 		public async Task CloseStream(CommandContext ctx,
@@ -76,6 +98,10 @@ namespace DiscordWikiBot
 			});
 		}
 
+		/// <summary>
+		/// List all streams on a server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
 		[Command("listStreams")]
 		[Description("streaming-help-list")]
 		public async Task ListStreams(CommandContext ctx)
@@ -124,6 +150,13 @@ namespace DiscordWikiBot
 			await ctx.RespondAsync(Locale.GetMessage("streaming-list", lang, result.Count, string.Join("\n", msg)));
 		}
 
+		/// <summary>
+		/// Common checks for streaming commands.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="args">Stream arguments.</param>
+		/// <param name="callback">Method to execute after all checks.</param>
 		private async Task CommandChecks(CommandContext ctx, DiscordChannel channel, string args, Action<Dictionary<string, dynamic>, string> callback)
 		{
 			string lang = Config.GetLang(ctx.Guild.Id.ToString());
@@ -140,6 +173,11 @@ namespace DiscordWikiBot
 			callback(arguments, lang);
 		}
 		
+		/// <summary>
+		/// Parse a string with stream parameters.
+		/// </summary>
+		/// <param name="args">String with stream parameters.</param>
+		/// <returns>A dictionary with stream parameters.</returns>
 		private static Dictionary<string, dynamic> ParseArguments(string args = "")
 		{
 			if (args == "")
@@ -250,6 +288,12 @@ namespace DiscordWikiBot
 			return result;
 		}
 
+		/// <summary>
+		/// Format specified stream parameters in human-readable form.
+		/// </summary>
+		/// <param name="args">Stream parameters.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <returns>Information about stream parameters.</returns>
 		private static string ListArguments(Dictionary<string, dynamic> args, string lang)
 		{
 			if (args == null) return "";

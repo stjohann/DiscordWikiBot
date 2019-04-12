@@ -13,6 +13,10 @@ using DSharpPlus;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Localisation class.
+	/// <para>Adds methods for fetching, adding and removing localisations.</para>
+	/// </summary>
 	class Locale
 	{
 		// Storage for loaded localisations
@@ -22,12 +26,21 @@ namespace DiscordWikiBot
 		// Fallback language should always be English
 		private static string FALLBACK_LANG = "en";
 
+		/// <summary>
+		/// Initialise the default settings and setup things for overrides
+		/// </summary>
 		public static void Init()
 		{
 			Default = LoadLocale(Config.GetLang());
 			Custom = new Dictionary<string, Dictionary<string, string>>();
 		}
 
+		/// <summary>
+		/// Load a localisation file in JSON format
+		/// </summary>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <returns>A parsed dictionary of localised messages.</returns>
+		/// <seealso cref="LoadCustomLocale(string)"/>
 		private static Dictionary<string, string> LoadLocale(string lang)
 		{
 			string json = "";
@@ -45,6 +58,10 @@ namespace DiscordWikiBot
 			return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 		}
 
+		/// <summary>
+		/// Load custom localisation file or a fallback language file
+		/// </summary>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void LoadCustomLocale(string lang)
 		{
 			if (lang == Config.GetLang()) return;
@@ -65,6 +82,13 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Get localised message in a specified language.
+		/// </summary>
+		/// <param name="key">Message key in JSON file.</param>
+		/// <param name="lang">Language code in ISO 639.</param>
+		/// <param name="args">List of arguments to be substituted in a message.</param>
+		/// <returns>A parsed message.</returns>
 		public static string GetMessage(string key, string lang, params dynamic[] args)
 		{
 			string str = "";

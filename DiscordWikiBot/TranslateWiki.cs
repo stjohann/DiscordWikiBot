@@ -15,6 +15,10 @@ using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// TranslateWiki notifications class.
+	/// <para>Adds methods for reacting to new messages, and adding and removing notifications from channels.</para>
+	/// </summary>
 	class TranslateWiki
 	{
 		// List of used languages and guilds
@@ -30,6 +34,11 @@ namespace DiscordWikiBot
 		private static bool UpdateDeadline = false;
 		private static bool UpdateDeadlineDone = false;
 
+		/// <summary>
+		/// Initialise the default settings and setup things for overrides.
+		/// </summary>
+		/// <param name="channel">Discord channel ID for recent changes notifications.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Init(string channel = "", string lang = "")
 		{
 			// Set defaults for first fetch 
@@ -77,6 +86,11 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Stop notifying about TranslateWiki recent changes in a specified channel.
+		/// </summary>
+		/// <param name="channel">Discord channel ID for recent changes notifications.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Remove(string channel = "", string lang = "")
 		{
 			Config.SetInternal(channel, "translatewiki-key", null);
@@ -89,6 +103,11 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Notify about recent changes every hour.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		private static void RequestOnTimer(object source, string lang)
 		{
 			DateTime now = DateTime.UtcNow;
@@ -126,6 +145,11 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// React if there are new messages in a specified language.
+		/// </summary>
+		/// <param name="list">List of all fetched messages.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static async Task React(JToken[] list, string lang)
 		{
 			// List of MediaWiki/Wikimedia-related projects
@@ -256,6 +280,11 @@ namespace DiscordWikiBot
 			LatestFetchKey[lang] = query.First()["key"].ToString();
 		}
 
+		/// <summary>
+		/// Perform an API request for latest messages in a specified language.
+		/// </summary>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <returns>A list of messages.</returns>
 		public static async Task<JToken> Fetch(string lang)
 		{
 			if (lang == null) return null;

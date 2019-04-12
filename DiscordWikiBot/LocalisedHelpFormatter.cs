@@ -10,16 +10,33 @@ using DSharpPlus.Entities;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Provide customised help with proper localisation abilities.
+	/// </summary>
 	class LocalisedHelpFormatter : IHelpFormatter
 	{
+		/// <summary>
+		/// Name of a command that’s being executed.
+		/// </summary>
 		private string Command;
+
+		/// <summary>
+		/// Discord embed.
+		/// </summary>
 		private DiscordEmbedBuilder EmbedBuilder { get; }
 
+		/// <summary>
+		/// Initialise the Discord embed.
+		/// </summary>
 		public LocalisedHelpFormatter()
 		{
 			EmbedBuilder = new DiscordEmbedBuilder().WithColor(new DiscordColor(0x72777d));
 		}
 
+		/// <summary>
+		/// Remember the command name and add a title to the embed.
+		/// </summary>
+		/// <param name="name">Command name.</param>
 		public IHelpFormatter WithCommandName(string name)
 		{
 			Command = name;
@@ -28,6 +45,10 @@ namespace DiscordWikiBot
 			return this;
 		}
 
+		/// <summary>
+		/// Provide a localised description to the embed.
+		/// </summary>
+		/// <param name="description">Description key.</param>
 		public IHelpFormatter WithDescription(string description)
 		{
 			// Override help command
@@ -40,6 +61,9 @@ namespace DiscordWikiBot
 			return this;
 		}
 
+		/// <summary>
+		/// Add information to the embed if the command is a standalone group.
+		/// </summary>
 		public IHelpFormatter WithGroupExecutable()
 		{
 			EmbedBuilder.WithFooter(Locale.GetMessage("help-group-standalone", "en"));
@@ -47,13 +71,21 @@ namespace DiscordWikiBot
 			return this;
 		}
 
+		/// <summary>
+		/// Add the aliases information to the embed.
+		/// </summary>
+		/// <param name="aliases">List of aliases.</param>
 		public IHelpFormatter WithAliases(IEnumerable<string> aliases)
 		{
-			EmbedBuilder.AddField(Locale.GetMessage("help-aliases", "en"), string.Join(", ", aliases));
+			EmbedBuilder.AddField(Locale.GetMessage("help-aliases", "en"), string.Join(", ", aliases.Select(xa => $"`{Config.GetValue("prefix")}{xa}`")));
 
 			return this;
 		}
 
+		/// <summary>
+		/// List arguments with localised information in the embed.
+		/// </summary>
+		/// <param name="arguments">List of arguments</param>
 		public IHelpFormatter WithArguments(IEnumerable<CommandArgument> arguments)
 		{
 			string args = string.Join("\n",
@@ -99,6 +131,10 @@ namespace DiscordWikiBot
 			return this;
 		}
 
+		/// <summary>
+		/// List commands with localised information in the embed.
+		/// </summary>
+		/// <param name="subcommands">List of commands</param>
 		public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
 		{
 			string header = Locale.GetMessage("help-subcommands", "en");
@@ -127,6 +163,9 @@ namespace DiscordWikiBot
 			return this;
 		}
 
+		/// <summary>
+		/// Respond with a Discord embed.
+		/// </summary>
 		public CommandHelpMessage Build()
 		{
 			if (Command == null)

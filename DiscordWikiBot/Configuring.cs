@@ -12,9 +12,18 @@ using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Configuring class.
+	/// <para>Adds commands for overriding bot settings per server.</para>
+	/// </summary>
 	[RequireUserPermissions(Permissions.ManageGuild)]
 	class Configuring
 	{
+		/// <summary>
+		/// Set EventStreams domain for a Discord server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="value">New EventStreams domain.</param>
 		[Command("guildDomain")]
 		[Description("configuring-help-domain")]
 		public async Task SetDomain(CommandContext ctx,
@@ -56,6 +65,11 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 
+		/// <summary>
+		/// Set language of the bot for a Discord server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="value">Language code in ISO 639 format.</param>
 		[Command("guildLang")]
 		[Description("configuring-help-lang")]
 		public async Task SetLanguage(CommandContext ctx,
@@ -90,6 +104,12 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 
+		/// <summary>
+		/// Set TranslateWiki notifications channel for a Discord server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="value">Language code in ISO 639 format.</param>
 		[Command("guildTW")]
 		[Description("configuring-help-tw")]
 		public async Task SetTranslate(CommandContext ctx,
@@ -170,6 +190,11 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Set wiki link URL for a Discord server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="value">Wiki link URL.</param>
 		[Command("guildWiki")]
 		[Description("configuring-help-wiki")]
 		public async Task SetWiki(CommandContext ctx,
@@ -207,6 +232,12 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 		
+		/// <summary>
+		/// Common responses to error response codes.
+		/// </summary>
+		/// <param name="response">Response code from configuration function.</param>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
 		private async Task RespondOnErrors(int response, CommandContext ctx, string lang)
 		{
 			if (response == Config.RESULT_RESET)
@@ -235,6 +266,10 @@ namespace DiscordWikiBot
 	
 	class Pinging
 	{
+		/// <summary>
+		/// Check if the bot’s functions are operational.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
 		[Command("status")]
 		[Aliases("ping", "pong")]
 		[Description("configuring-help-status")]

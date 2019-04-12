@@ -8,23 +8,35 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
-using Newtonsoft.Json;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Main class of the bot.
+	/// <para>Provides functions for bot’s initialisation.</para>
+	/// </summary>
 	class Program
 	{
-
-		// Instance of Discord client
+		/// <summary>
+		/// An instance of Discord client.
+		/// </summary>
 		public static DiscordClient Client;
 
-		// Available bot commands
-		public CommandsNextModule Commands { get; set; }
+		/// <summary>
+		/// Available bot commands.
+		/// </summary>
+		private CommandsNextModule Commands { get; set; }
 
-		public static string Token;
+		/// <summary>
+		/// Discord developer token.
+		/// </summary>
+		private static string Token;
 
 		static void Main(string[] args) => new Program().Run().GetAwaiter().GetResult();
 
+		/// <summary>
+		/// Initialise the bot and keep it running
+		/// </summary>
 		public async Task Run()
 		{
 			// Set proper TLS settings
@@ -97,6 +109,8 @@ namespace DiscordWikiBot
 				EnableMentionPrefix = true,
 			});
 
+			Commands.RegisterCommands<Pinging>();
+
 			Commands.RegisterCommands<Configuring>();
 
 			Commands.RegisterCommands<Streaming>();
@@ -112,6 +126,9 @@ namespace DiscordWikiBot
 			await CtrlC();
 		}
 
+		/// <summary>
+		/// Have the ability to stop the bot on Ctrl+C
+		/// </summary>
 		private static Task CtrlC()
 		{
 			var tcs = new TaskCompletionSource<object>();
@@ -128,6 +145,10 @@ namespace DiscordWikiBot
 			return tcs.Task;
 		}
 
+		/// <summary>
+		/// Initialise the common functions for every server.
+		/// </summary>
+		/// <param name="e">Discord event information.</param>
 		private Task Client_GuildAvailable(GuildCreateEventArgs e)
 		{
 			// Log the name of the guild that just became available
@@ -145,7 +166,7 @@ namespace DiscordWikiBot
 				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
 			}
 
-			if (Config.GetDomain() != null)
+			if (Config.GetDomain(guild) != null)
 			{
 				EventStreams.Subscribe(Config.GetDomain(guild));
 			}
@@ -153,6 +174,10 @@ namespace DiscordWikiBot
 			return Task.FromResult(0);
 		}
 
+		/// <summary>
+		/// Log the ready state of the bot.
+		/// </summary>
+		/// <param name="e">Discord event information.</param>
 		private Task Client_Ready(ReadyEventArgs e)
 		{
 			// Log the ready event
@@ -164,6 +189,10 @@ namespace DiscordWikiBot
 			return Task.FromResult(0);
 		}
 
+		/// <summary>
+		/// Log the errors from the bot.
+		/// </summary>
+		/// <param name="e">Discord event information.</param>
 		private Task Client_ClientErrored(ClientErrorEventArgs e)
 		{
 			// Log the exception and its message

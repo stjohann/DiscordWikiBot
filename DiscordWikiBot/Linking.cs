@@ -14,6 +14,10 @@ using DSharpPlus.Entities;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// Linking class.
+	/// <para>Adds methods for formatting wiki links and reacting to messages.</para>
+	/// </summary>
 	class Linking
 	{
 		// Link pattern: [[]], [[|, {{}} or {{|
@@ -21,13 +25,19 @@ namespace DiscordWikiBot
 			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
 			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
 
-		// Name of default configuration key
+		/// <summary>
+		/// Key of default configuration.
+		/// </summary>
 		private static string LANG_DEFAULT = "default";
 
-		// Error for long messages
+		/// <summary>
+		/// Replacement string for long messages.
+		/// </summary>
 		private static string TOO_LONG = "TOO_LONG";
 
-		// Messages ID storage
+		/// <summary>
+		/// Dictionary extension class to store a specified number of items.
+		/// </summary>
 		public class Buffer<TKey, TValue> : Dictionary<TKey, TValue>
 		{
 			public int MaxItems { get; set; }
@@ -46,12 +56,15 @@ namespace DiscordWikiBot
 			}
 		}
 
+		// Messages ID storage
 		private static Buffer<ulong, ulong> Cache;
 
 		// Maximum cache length
 		private static int CACHE_LENGTH = 500;
 
-		// Site information storage
+		/// <summary>
+		/// Class to store needed wiki site information.
+		/// </summary>
 		public class SiteInfo
 		{
 			public InterwikiMap iw;
@@ -64,6 +77,10 @@ namespace DiscordWikiBot
 		private static Dictionary<string, NamespaceCollection> NSList;
 		private static Dictionary<string, bool> IsCaseSensitive;
 
+		/// <summary>
+		/// Initialise the default settings and setup things for overrides.
+		/// </summary>
+		/// <param name="goal">Discord server ID.</param>
 		static public void Init(string goal = "")
 		{
 			string wiki = Config.GetWiki(goal);
@@ -97,6 +114,10 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Remove wiki site information for a specified server.
+		/// </summary>
+		/// <param name="goal">Discord server ID.</param>
 		static public void Remove(string goal = "")
 		{
 			if (goal == "" || goal == null) return;
@@ -106,6 +127,10 @@ namespace DiscordWikiBot
 			IsCaseSensitive.Remove(goal);
 		}
 
+		/// <summary>
+		/// React to a Discord message containing wiki links.
+		/// </summary>
+		/// <param name="e">Discord message information.</param>
 		static public async Task Answer(MessageCreateEventArgs e)
 		{
 			// Ignore bots
@@ -135,6 +160,10 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Edit or delete the bot’s message if one of the messages in cache was edited.
+		/// </summary>
+		/// <param name="e">Discord message information.</param>
 		static public async Task Edit(MessageUpdateEventArgs e)
 		{
 			// Ignore bots / DMs
@@ -165,6 +194,10 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// Delete the bot’s message if one of the messages in cache was deleted.
+		/// </summary>
+		/// <param name="e">Discord message information.</param>
 		static public async Task Delete(MessageDeleteEventArgs e)
 		{
 			// Ignore bots / DMs
@@ -180,6 +213,12 @@ namespace DiscordWikiBot
 			await response.DeleteAsync();
 		}
 
+		/// <summary>
+		/// Parse a Discord message.
+		/// </summary>
+		/// <param name="content">Discord message content.</param>
+		/// <param name="goal">Discord server ID.</param>
+		/// <returns>A message with parsed wiki links or a response code.</returns>
 		static public string PrepareMessage(string content, string goal)
 		{
 			// Remove code from the message
@@ -233,6 +272,12 @@ namespace DiscordWikiBot
 			return "";
 		}
 
+		/// <summary>
+		/// Parse a matched wiki link syntax.
+		/// </summary>
+		/// <param name="link">Regular expression match.</param>
+		/// <param name="goal">Discord server ID.</param>
+		/// <returns>A parsed URL from the match.</returns>
 		static public string AddLink(Match link, string goal)
 		{
 			string linkFormat = Config.GetWiki(goal);
@@ -353,6 +398,11 @@ namespace DiscordWikiBot
 			return "";
 		}
 
+		/// <summary>
+		/// Get wiki site information.
+		/// </summary>
+		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
+		/// <returns>Site information from the wiki site.</returns>
 		public static async Task<SiteInfo> FetchSiteInfo(string url)
 		{
 			string urlWiki = "/wiki/$1";
@@ -381,6 +431,11 @@ namespace DiscordWikiBot
 			return result;
 		}
 
+		/// <summary>
+		/// Check if a page title is invalid according to MediaWiki restrictions.
+		/// </summary>
+		/// <param name="str">Page title.</param>
+		/// <returns>Is page title invalid.</returns>
 		public static bool IsInvalid(string str)
 		{
 			var anchor = str.Split('#');
@@ -422,6 +477,13 @@ namespace DiscordWikiBot
 			return false;
 		}
 
+		/// <summary>
+		/// Get a URL for a specified title and a wiki URL.
+		/// </summary>
+		/// <param name="title">Page title.</param>
+		/// <param name="format">Wiki URL.</param>
+		/// <param name="escapePar">Escape parentheses for Markdown links.</param>
+		/// <returns>A page URL in specified format.</returns>
 		public static string GetLink(string title, string format = null, bool escapePar = false)
 		{
 			if (format == null)
@@ -433,6 +495,12 @@ namespace DiscordWikiBot
 			return format.Replace("$1", title);
 		}
 
+		/// <summary>
+		/// Get site information for a specified goal.
+		/// </summary>
+		/// <param name="goal">Discord server ID.</param>
+		/// <param name="key">Short key for needed information.</param>
+		/// <returns>A list or a boolean value.</returns>
 		private static dynamic GetList(string goal, string key = "")
 		{
 			if (key == "iw")
@@ -460,6 +528,12 @@ namespace DiscordWikiBot
 			return IsCaseSensitive[LANG_DEFAULT];
 		}
 
+		/// <summary>
+		/// Encode page title according to the rules of MediaWiki.
+		/// </summary>
+		/// <param name="str">Page title.</param>
+		/// <param name="escapePar">Escape parentheses for Markdown links.</param>
+		/// <returns>An encoded page title.</returns>
 		private static string EncodePageTitle(string str, bool escapePar)
 		{
 			// Following character conversions are based on {{PAGENAMEE}} specification:

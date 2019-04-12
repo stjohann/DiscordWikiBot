@@ -15,6 +15,10 @@ using XmlRcs;
 
 namespace DiscordWikiBot
 {
+	/// <summary>
+	/// EventStreams class.
+	/// <para>Adds methods for subscribing and unsubscribing to streams, and formatting recent changes in Discord embeds.</para>
+	/// </summary>
 	class EventStreams
 	{
 		// EventSource stream instance
@@ -23,11 +27,14 @@ namespace DiscordWikiBot
 		// EventSource stream translations
 		private static dynamic Data = null;
 
-		// Last message timestamp
+		/// <summary>
+		/// Latest message timestamp.
+		/// </summary>
 		public static DateTime LatestTimestamp;
 
-		// List of all Wikimedia projects
-		// List of Wikimedia projects
+		/// <summary>
+		/// List of all allowed Wikimedia projects.
+		/// </summary>
 		public static string[] WMProjects = {
 			".wikipedia.org",
 			".wiktionary.org",
@@ -44,7 +51,10 @@ namespace DiscordWikiBot
 
 		// Path to JSON file
 		private static string JSON_PATH = @"eventStreams.json";
-
+		
+		/// <summary>
+		/// Initialise the default settings and setup things for overrides.
+		/// </summary>
 		public static void Init()
 		{
 			// Get JSON
@@ -91,18 +101,31 @@ namespace DiscordWikiBot
 			Stream.Connect();
 		}
 
+		/// <summary>
+		/// Subscribe to recent changes for a specified domain.
+		/// </summary>
+		/// <param name="domain">Wikimedia domain.</param>
 		public static void Subscribe(string domain)
 		{
 			if (domain == null || domain == Config.GetDomain()) return;
 			Stream.Subscribe(domain);
 		}
 
+		/// <summary>
+		/// Unsubscribe from recent changes to a specified domain.
+		/// </summary>
+		/// <param name="domain">Wikimedia domain.</param>
 		public static void Unsubscribe(string domain = null)
 		{
 			if (domain == null || domain == Config.GetDomain()) return;
 			Stream.Unsubscribe(domain);
 		}
 
+		/// <summary>
+		/// Respond to a new recent change if it matches a title or a namespace number.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e">Recent change information.</param>
 		private static void Stream_On_Change(object sender, EditEventArgs e)
 		{
 			LatestTimestamp = e.Change.Timestamp;
@@ -125,6 +148,12 @@ namespace DiscordWikiBot
 			}
 		}
 
+		/// <summary>
+		/// React to a change in channels if it matches their parameters.
+		/// </summary>
+		/// <param name="data">A list of Discord channels and their parameters.</param>
+		/// <param name="change">Recent change information.</param>
+		/// <returns></returns>
 		public static async Task React(JObject data, RecentChange change)
 		{
 			DiscordClient client = Program.Client;
@@ -210,6 +239,13 @@ namespace DiscordWikiBot
 			}
 		}
 		
+		/// <summary>
+		/// Build a Discord embed in the style of a MediaWiki diff.
+		/// </summary>
+		/// <param name="change">Recent change information.</param>
+		/// <param name="format">Wiki link URL.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <returns>Discord embed.</returns>
 		public static DiscordEmbedBuilder GetEmbed(RecentChange change, string format, string lang)
 		{
 			DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
@@ -258,6 +294,13 @@ namespace DiscordWikiBot
 			return embed;
 		}
 
+		/// <summary>
+		/// Build a string in the style of a MediaWiki diff.
+		/// </summary>
+		/// <param name="change">Recent change information.</param>
+		/// <param name="format">Wiki link URL.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <returns>String with recent change information and links.</returns>
 		public static string GetMessage(RecentChange change, string format, string lang)
 		{
 			// Parse length of the diff
@@ -312,7 +355,12 @@ namespace DiscordWikiBot
 			return msg;
 		}
 
-		public static dynamic GetData(string[] channels)
+		/// <summary>
+		/// Get parameters for streams from specified list of channels.
+		/// </summary>
+		/// <param name="channels">List of Discord channel IDs.</param>
+		/// <returns>An object with a list of channels and their parameters.</returns>
+		public static JObject GetData(string[] channels)
 		{
 			if (Data == null) return null;
 			JObject result = new JObject();
@@ -339,6 +387,13 @@ namespace DiscordWikiBot
 			return result;
 		}
 
+		/// <summary>
+		/// Set stream parameters for a specified Discord channel.
+		/// </summary>
+		/// <param name="channel">Discord channel ID.</param>
+		/// <param name="args">List of parameters.</param>
+		/// <param name="reset">Should original parameters be discarded.</param>
+		/// <returns>A list with changed parameters.</returns>
 		public static Dictionary<string, dynamic> SetData(string channel, Dictionary<string, dynamic> args, bool reset = true)
 		{
 			if (Data == null) return null;
@@ -423,6 +478,11 @@ namespace DiscordWikiBot
 			return changes;
 		}
 
+		/// <summary>
+		/// Remove stream data for a specified channel.
+		/// </summary>
+		/// <param name="channel">Discord channel ID.</param>
+		/// <param name="args">List of parameters.</param>
 		public static void RemoveData(string channel, Dictionary<string, dynamic> args)
 		{
 			if (Data == null) return;
@@ -442,6 +502,13 @@ namespace DiscordWikiBot
 			File.WriteAllText(JSON_PATH, Data.ToString(), Encoding.Default);
 		}
 
+		/// <summary>
+		/// Format the comment in the style of a MediaWiki diff.
+		/// </summary>
+		/// <param name="summary">Comment text.</param>
+		/// <param name="format">Wiki link URL.</param>
+		/// <param name="linkify">Should links be linkified or just removed.</param>
+		/// <returns>Parsed comment with styling.</returns>
 		private static string ParseComment(string summary, string format, bool linkify = true)
 		{
 			if (summary.Length == 0)
@@ -484,6 +551,11 @@ namespace DiscordWikiBot
 			return comment;
 		}
 
+		/// <summary>
+		/// Reformat the old data format for the new storage system.
+		/// </summary>
+		/// <param name="json">Old JSON text.</param>
+		/// <returns>Reformatted JSON text.</returns>
 		private static string ReformatData(string json)
 		{
 			JObject oldData = JObject.Parse(json);
