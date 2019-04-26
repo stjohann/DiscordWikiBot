@@ -128,7 +128,7 @@ namespace DiscordWikiBot
 		/// <param name="e">Recent change information.</param>
 		private static void Stream_On_Change(object sender, EditEventArgs e)
 		{
-			LatestTimestamp = e.Change.Timestamp;
+			LatestTimestamp = e.Change.Timestamp.ToUniversalTime();
 			bool notEdit = (e.Change.Type != RecentChange.ChangeType.Edit && e.Change.Type != RecentChange.ChangeType.New);
 			if (notEdit) return;
 			
@@ -285,7 +285,7 @@ namespace DiscordWikiBot
 			embed
 				.WithAuthor(
 					change.Title,
-					Linking.GetLink(change.Title, format, true),
+					Linking.GetLink(change.Title, format),
 					string.Format("https://upload.wikimedia.org/wikipedia/commons/thumb/{0}", embedIcon)
 				)
 				.WithColor(embedColor)

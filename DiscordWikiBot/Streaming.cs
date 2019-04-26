@@ -140,8 +140,9 @@ namespace DiscordWikiBot
 					// Combine everything
 					string editGoal = (goal == entry.Key ? $" --title {goal}" : $" --namespace {goal}");
 					string argsMsg = ListArguments(args, lang);
+					argsMsg = (argsMsg.Length > 0 ? $":\n{argsMsg}" : "");
 
-					output += $"{channel.Mention}:\n{argsMsg}\n`!editStream #{channel.Name}{editGoal}`";
+					output += $"{channel.Mention}{argsMsg}\n`!editStream #{channel.Name}{editGoal}`";
 				}
 
 				msg.Add(output);
@@ -164,7 +165,11 @@ namespace DiscordWikiBot
 			await ctx.TriggerTypingAsync();
 
 			// Check for the goal
-			if (args == "" || !(arguments.ContainsKey("title") || arguments.ContainsKey("namespace")))
+			if (
+				args == ""
+				|| !(arguments.ContainsKey("title") || arguments.ContainsKey("namespace"))
+				|| arguments.ContainsKey("title") && Linking.IsInvalid(arguments["title"])
+			)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
@@ -206,6 +211,16 @@ namespace DiscordWikiBot
 
 				return value;
 			});
+
+			// Remove anchor from page title
+			if (result.ContainsKey("title"))
+			{
+				string[] anchor = ((string)result["title"]).Split('#');
+				if (anchor.Length > 1)
+				{
+					result["title"] = anchor[0];
+				}
+			}
 
 			// Assume default values if they are undefined
 			Dictionary<string, dynamic> defaults = new Dictionary<string, dynamic>

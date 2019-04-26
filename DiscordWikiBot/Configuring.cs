@@ -286,7 +286,7 @@ namespace DiscordWikiBot
 			string streamingMsg = "";
 			if (streams.Count > 0)
 			{
-				TimeSpan timestamp = DateTime.Now - EventStreams.LatestTimestamp;
+				TimeSpan timestamp = DateTime.UtcNow - EventStreams.LatestTimestamp;
 				streamingMsg = Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
 			}
 

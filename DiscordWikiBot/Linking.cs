@@ -438,7 +438,7 @@ namespace DiscordWikiBot
 		/// <returns>Is page title invalid.</returns>
 		public static bool IsInvalid(string str)
 		{
-			var anchor = str.Split('#');
+			string[] anchor = str.Split('#');
 			if (anchor.Length > 1)
 			{
 				str = anchor[0];

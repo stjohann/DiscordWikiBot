@@ -31,7 +31,6 @@
 	"configuring-changed-wiki": "Le wiki pour les liens sur ce serveur a été remplacé par **{0}**.",
 	"configuring-changed-reset": "Le valeur a été réinitialisé à défaut.",
 	
-	"configuring-required-channel": "Le canal sur lequel vous et le bot avez accès est requis.\nPour obtenir une aide complète, envoyez `{1}help {0}`.",
 	"configuring-required-value": "La valeur d'un paramètre est requise.\nPour obtenir une aide complète, envoyez `{1}help {0}`.",
 	"configuring-badvalue-lang": "Le bot ne reconnaît pas votre entrée en tant que code ISO 639 valide.",
 	"configuring-badvalue-wiki": "Il doit y avoir `{0}` à la fin de votre URL.",

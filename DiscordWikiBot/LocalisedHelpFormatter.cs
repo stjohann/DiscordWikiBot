@@ -153,7 +153,7 @@ namespace DiscordWikiBot
 					string descId = (xc.Name == "help" ? "help-command" : xc.Description);
 
 					string desc = Locale.GetMessage("separator", "en", Locale.GetMessage(descId, "en"));
-					return Locale.GetMessage("bullet", "en", $"`{Config.GetValue("prefix")}{comm}{desc}`");
+					return Locale.GetMessage("bullet", "en", $"`{Config.GetValue("prefix")}{comm}`{desc}");
 				}
 
 				return null;
