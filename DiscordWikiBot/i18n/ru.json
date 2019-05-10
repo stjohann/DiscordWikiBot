@@ -24,7 +24,7 @@
 	"help-command-command": "команда, по которой нужно дать помощь.",
 	
 	"configuring-status": ":information_source: Включён в розетку.",
-	"configuring-status-streaming": " Последний ответ трансляций: {0} {0:минута|минуты|минут} {1} {1:секунда|секунды|секунд} назад.",
+	"configuring-status-streaming": " Последний ответ трансляций: {0} {0:минута|минуты|минут} {1} {1:секунду|секунды|секунд} назад.",
 	"configuring-changed-domain": "Домен трансляции свежих правок на этом сервере изменён на **{0}**.",
 	"configuring-changed-lang": "Язык бота на этом сервере изменён на **{0}**.",
 	"configuring-changed-translatewiki": "В канале {0} включены уведомления о свежих правках на Translatewiki на языке **{1}**.",

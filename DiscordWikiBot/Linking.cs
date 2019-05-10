@@ -200,11 +200,19 @@ namespace DiscordWikiBot
 		/// <param name="e">Discord message information.</param>
 		static public async Task Delete(MessageDeleteEventArgs e)
 		{
-			// Ignore bots / DMs
-			if (e.Message.Author.IsBot || e.Guild == null) return;
+			// Ignore DMs
+			if (e.Guild == null) return;
+			ulong id = e.Message.Id;
+
+			// Clear cache if bot’s message was deleted
+			if (e.Message.Author.IsBot && Cache.ContainsValue(id))
+			{
+				ulong key = Cache.FirstOrDefault(x => x.Value == id).Key;
+				Cache.Remove(key);
+				return;
+			}
 
 			// Only update known messages
-			ulong id = e.Message.Id;
 			if (!Cache.ContainsKey(id)) return;
 
 			// Delete message
@@ -223,7 +231,7 @@ namespace DiscordWikiBot
 		{
 			// Remove code from the message
 			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
-			content = Regex.Replace(content, "`.*?`", string.Empty);
+			content = Regex.Replace(content, "`{1,2}.*?`{1,2}", string.Empty);
 
 			// Remove links from the message
 			content = Regex.Replace(content, "https?://[^\\s/$.?#].[^\\s]*", string.Empty);
@@ -372,6 +380,9 @@ namespace DiscordWikiBot
 				// Check if it’s a parser function
 				if (type == "{{" && str.StartsWith("#")) return "";
 
+				// Check if page title length is more than 255 bytes
+				if (Encoding.UTF8.GetByteCount(str) > 255) return "";
+
 				// Rewrite other text
 				if (str.Length > 0)
 				{
@@ -443,9 +454,6 @@ namespace DiscordWikiBot
 			{
 				str = anchor[0];
 			}
-
-			// Check if page title length is more than 255 bytes
-			if (Encoding.UTF8.GetByteCount(str) > 255) return true;
 
 			// Check if it is a MediaWiki-valid URL
 			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
