@@ -71,7 +71,7 @@ namespace DiscordWikiBot
 			Data = JObject.Parse(json);
 
 			// Check if default domain is a Wikimedia project
-			if (Config.GetDomain() != null && !WMProjects.Any(Config.GetDomain().Contains))
+			if (Config.GetDomain() != null && !WMProjects.Any(Config.GetDomain().EndsWith))
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", DateTime.Now);
 				return;
@@ -259,6 +259,10 @@ namespace DiscordWikiBot
 			if (change.Type == RecentChange.ChangeType.New)
 			{
 				status += Locale.GetMessage("eventstreams-new", lang);
+			}
+			if (change.Bot == true)
+			{
+				status += Locale.GetMessage("eventstreams-bot", lang);
 			}
 			if (change.Minor == true)
 			{
