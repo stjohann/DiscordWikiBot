@@ -18,7 +18,7 @@
 	"help-subcommands": "Sous-commandes",
 	"help-aliases": "Alias",
 	"help-arguments": "Arguments",
-	"help-default": "Par défaut: {0}.",
+	"help-default": "Par défaut: `{0}`.",
 	"help-optional": "optionnel",
 	"help-group-standalone": "Ce groupe est une commande autonome.",
 	"help-command": "Affiche l'aide pour la commande.",

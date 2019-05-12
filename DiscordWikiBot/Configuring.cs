@@ -93,7 +93,7 @@ namespace DiscordWikiBot
 			}
 
 			// Use new language in this command only
-			lang = value;
+			lang = (value == "-" ? Config.GetLang() : value);
 
 			// Do action and respond
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "lang", value);

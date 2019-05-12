@@ -125,9 +125,12 @@
     <None Include="eventStreams.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="i18n\be.json" />
     <None Include="i18n\en.json" />
     <None Include="i18n\fr.json" />
     <None Include="i18n\ru.json" />
+    <None Include="i18n\sr.json" />
+    <None Include="i18n\uk.json" />
     <None Include="overrides.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
