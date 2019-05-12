@@ -132,14 +132,7 @@ namespace DiscordWikiBot
 					JToken[] msgs = msgresult.ToArray();
 					if (msgs != null)
 					{
-						try
-						{
-							React(msgs, lang).Wait();
-						}
-						catch (Exception e)
-						{
-							Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Message could not be posted: {e.Message}", DateTime.Now);
-						}
+						React(msgs, lang).Wait();
 					}
 				}
 			}
@@ -224,8 +217,27 @@ namespace DiscordWikiBot
 					.WithFooter("translatewiki.net");
 
 				// Fetch info about channel
-				ulong chanId = ulong.Parse(chan);
-				DiscordChannel channel = await client.GetChannelAsync(chanId);
+				DiscordChannel channel = null;
+				try
+				{
+					ulong chanId = ulong.Parse(chan);
+					channel = await client.GetChannelAsync(chanId);
+				} catch (Exception ex) {
+					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Channel can’t be reached: {ex.Message}", DateTime.Now);
+
+					// Remove data if channel was deleted
+					if (ex is DSharpPlus.Exceptions.NotFoundException)
+					{
+						Remove(chan, lang);
+					}
+				}
+
+				// Stop if channel is not assigned
+				if (channel == null)
+				{
+					return;
+				}
+
 				string guildLang = Config.GetLang(channel.GuildId.ToString());
 
 				// Remember the key of first message

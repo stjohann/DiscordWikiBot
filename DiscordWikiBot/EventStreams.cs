@@ -138,30 +138,57 @@ namespace DiscordWikiBot
 			// React if there is server data for namespace
 			if (Data[$"<{ns}>"] != null)
 			{
-				React(Data[$"<{ns}>"], e.Change).Wait();
+				React($"<{ns}>", Data[$"<{ns}>"], e.Change).Wait();
 			}
 
 			// React if there is server data for title
 			if (Data[title] != null)
 			{
-				React(Data[title], e.Change).Wait();
+				React(title, Data[title], e.Change).Wait();
 			}
 		}
 
 		/// <summary>
 		/// React to a change in channels if it matches their parameters.
 		/// </summary>
+		/// <param name="goal">A page title or a namespace number.</param>
 		/// <param name="data">A list of Discord channels and their parameters.</param>
 		/// <param name="change">Recent change information.</param>
 		/// <returns></returns>
-		public static async Task React(JObject data, RecentChange change)
+		public static async Task React(string goal, JObject data, RecentChange change)
 		{
 			DiscordClient client = Program.Client;
 			foreach (KeyValuePair<string, JToken> item in data)
 			{
-				ulong channelID = ulong.Parse(item.Key);
-				DiscordChannel channel = await client.GetChannelAsync(channelID);
 				Dictionary<string, dynamic> args = item.Value.ToObject<Dictionary<string, dynamic>>();
+				DiscordChannel channel = null;
+				try
+				{
+					ulong channelID = ulong.Parse(item.Key);
+					channel = await client.GetChannelAsync(channelID);
+				} catch(Exception ex) {
+					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Channel can’t be reached: {ex.Message}", DateTime.Now);
+
+					// Remove data if channel was deleted
+					if (ex is DSharpPlus.Exceptions.NotFoundException)
+					{
+						goal = goal.Trim('<', '>');
+						if (goal != item.Key)
+						{
+							args["namespace"] = goal;
+						} else
+						{
+							args["title"] = goal;
+						}
+						RemoveData(item.Key, args);
+					}
+				}
+
+				// Stop if channel is not assigned
+				if (channel == null)
+				{
+					return;
+				}
 
 				// Check if domain is the same
 				string domain = Config.GetDomain();
