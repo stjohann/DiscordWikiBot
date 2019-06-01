@@ -21,19 +21,19 @@ namespace DiscordWikiBot
 	class Linking
 	{
 		// Link pattern: [[]], [[|, {{}} or {{|
-		private static string pattern = string.Format("(?:{0}|{1})",
+		private static readonly string pattern = string.Format("(?:{0}|{1})",
 			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
 			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
 
 		/// <summary>
 		/// Key of default configuration.
 		/// </summary>
-		private static string LANG_DEFAULT = "default";
+		private static readonly string LANG_DEFAULT = "default";
 
 		/// <summary>
 		/// Replacement string for long messages.
 		/// </summary>
-		private static string TOO_LONG = "TOO_LONG";
+		private static readonly string TOO_LONG = "TOO_LONG";
 
 		/// <summary>
 		/// Dictionary extension class to store a specified number of items.
@@ -60,7 +60,7 @@ namespace DiscordWikiBot
 		private static Buffer<ulong, ulong> Cache;
 
 		// Maximum cache length
-		private static int CACHE_LENGTH = 500;
+		private static readonly int CACHE_LENGTH = 500;
 
 		/// <summary>
 		/// Class to store needed wiki site information.
@@ -94,8 +94,10 @@ namespace DiscordWikiBot
 				IsCaseSensitive = new Dictionary<string, bool>();
 
 				// Create cache
-				Cache = new Buffer<ulong, ulong>();
-				Cache.MaxItems = CACHE_LENGTH;
+				Cache = new Buffer<ulong, ulong>
+				{
+					MaxItems = CACHE_LENGTH
+				};
 			}
 
 			// Fetch values for the goal
@@ -327,8 +329,8 @@ namespace DiscordWikiBot
 				while (type == "[[" && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
-					InterwikiMap latestIWList = (tempIWList != null ? tempIWList : defaultIWList);
-					NamespaceCollection latestNSList = (tempNSList != null ? tempNSList : defaultNSList);
+					InterwikiMap latestIWList = (tempIWList ?? defaultIWList);
+					NamespaceCollection latestNSList = (tempNSList ?? defaultNSList);
 					if (latestIWList.Contains(prefix) && !latestNSList.Contains(prefix))
 					{
 						string oldLinkFormat = linkFormat;

@@ -50,7 +50,7 @@ namespace DiscordWikiBot
 		};
 
 		// Path to JSON file
-		private static string JSON_PATH = @"eventStreams.json";
+		private static readonly string JSON_PATH = @"eventStreams.json";
 		
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
@@ -71,7 +71,7 @@ namespace DiscordWikiBot
 			Data = JObject.Parse(json);
 
 			// Check if default domain is a Wikimedia project
-			if (Config.GetDomain() != null && !WMProjects.Any(Config.GetDomain().EndsWith))
+			if (!CanBeUsed(Config.GetDomain()))
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", DateTime.Now);
 				return;
@@ -223,7 +223,7 @@ namespace DiscordWikiBot
 				if (args.ContainsKey("patrolled"))
 				{
 					bool patrolStatus = (args["patrolled"] == "only" ? true : false);
-					if (change.Patrolled == patrolStatus)
+					if (change.Patrolled != patrolStatus)
 					{
 						continue;
 					}
@@ -335,9 +335,8 @@ namespace DiscordWikiBot
 		public static string GetMessage(RecentChange change, string format, string lang)
 		{
 			// Parse length of the diff
-			string strLength = "";
 			int length = (change.LengthNew - change.LengthOld);
-			strLength = length.ToString();
+			string strLength = length.ToString();
 			if (length > 0)
 			{
 				strLength = "+" + strLength;
@@ -364,8 +363,7 @@ namespace DiscordWikiBot
 
 			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk", lang), talk);
 
-			IPAddress address;
-			if (IPAddress.TryParse(change.User, out address))
+			if (IPAddress.TryParse(change.User, out IPAddress address))
 			{
 				user = $"[{change.User}]({contribs}) ({talk})";
 			} else
@@ -580,6 +578,20 @@ namespace DiscordWikiBot
 			// Add italic and parentheses
 			comment = $" *({comment})*";
 			return comment;
+		}
+
+		/// <summary>
+		/// Check if a domain can use EventStreams.
+		/// </summary>
+		/// <param name="domain">EventStreams domain.</param>
+		public static bool CanBeUsed(string domain)
+		{
+			if (domain == null)
+			{
+				return false;
+			}
+
+			return WMProjects.Any(domain.EndsWith);
 		}
 
 		/// <summary>

@@ -5,8 +5,8 @@
 			"Zoranzoki21"
 		]
 	},
-	"bullet": "• {0}",
-	"separator": " – {0}",
+	"bullet": "— {0}",
+	"separator": " — {0}",
 	"yes-no": "{0:да|не}",
 	"help-title": "Помоћ",
 	"help-title-command": "{1}{0}{msg:separator}помоћ",
@@ -60,7 +60,7 @@
 	"streaming-edited-nothing": ":ok: {0} у каналу {1} није било промена.",
 	"streaming-closed": ":negative_squared_cross_mark: {0} је уклоњен са канала {1}.",
 	"streaming-list": ":information_source: {0} {0:активан ток|активна тока|активна токова} на овом серверу.\n{1}",
-	"streaming-list-streams": "**{0}**:",
+	"streaming-list-streams": "**{0}**:\n",
 	"streaming-list-nothing": ":ok: Нема отворених токова на овом серверу.",
 	"streaming-key-bot": "укључи ботовске измене",
 	"streaming-key-in-comment": "претражи у коментару",

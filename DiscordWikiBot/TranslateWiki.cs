@@ -323,7 +323,7 @@ namespace DiscordWikiBot
 			);
 
 			// Return a message collection
-			JToken rcmsgs = (result["query"] != null ? result["query"]["messagecollection"] : null);
+			JToken rcmsgs = result["query"]?["messagecollection"];
 			return rcmsgs;
 		}
 	}

@@ -41,7 +41,7 @@ namespace DiscordWikiBot
 			}
 
 			// Check if matches Wikimedia project
-			bool notWmProject = (value != "-" && !EventStreams.WMProjects.Any(value.EndsWith));
+			bool notWmProject = (value != "-" && !EventStreams.CanBeUsed(value));
 			if (notWmProject)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-domain", lang, "`" + string.Join("`, `", EventStreams.WMProjects) + "`"));

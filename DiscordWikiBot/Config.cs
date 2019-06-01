@@ -204,9 +204,8 @@ namespace DiscordWikiBot
 			{
 				JToken cfg = guild.Value;
 
-				JToken current;
 				JObject obj = cfg.ToObject<JObject>();
-				if (obj != null && obj.TryGetValue(key, out current))
+				if (obj != null && obj.TryGetValue(key, out JToken current))
 				{
 					if (current.ToString() == value)
 					{
@@ -240,8 +239,7 @@ namespace DiscordWikiBot
 			}
 
 			// Check if value is the same
-			JToken current;
-			if (goalObj.TryGetValue(key, out current))
+			if (goalObj.TryGetValue(key, out JToken current))
 			{
 				if (current.ToString() == value)
 				{

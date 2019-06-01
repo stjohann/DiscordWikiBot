@@ -194,17 +194,15 @@ namespace DiscordWikiBot
 			MatchCollection matches = Regex.Matches(args, pattern);
 			Dictionary<string, dynamic> result = matches.Cast<Match>().ToDictionary(m => m.Groups[1].Value, (m) => {
 				dynamic value = m.Groups[2].Value;
-				bool outBool;
-				int outInt;
 
 				// Normalise to boolean
-				if (Boolean.TryParse(value, out outBool))
+				if (Boolean.TryParse(value, out bool outBool))
 				{
 					return outBool;
 				}
 
 				// Normalise to integer
-				if (Int32.TryParse(value, out outInt))
+				if (Int32.TryParse(value, out int outInt))
 				{
 					return outInt;
 				}

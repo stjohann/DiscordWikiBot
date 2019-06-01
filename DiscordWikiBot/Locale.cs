@@ -24,7 +24,7 @@ namespace DiscordWikiBot
 		private static Dictionary<string, Dictionary<string, string>> Custom;
 
 		// Fallback language should always be English
-		private static string FALLBACK_LANG = "en";
+		private static readonly string FALLBACK_LANG = "en";
 
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides
@@ -43,14 +43,13 @@ namespace DiscordWikiBot
 		/// <seealso cref="LoadCustomLocale(string)"/>
 		private static Dictionary<string, string> LoadLocale(string lang)
 		{
-			string json = "";
 			string localePath = string.Format(@"i18n/{0}.json", lang);
 			if (!File.Exists(localePath))
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Warning, "DiscordWikiBot", $"Please create a file with {lang.ToUpper()} locale. Reverting to {FALLBACK_LANG.ToUpper()}.", DateTime.Now);
 				localePath = @"i18n/en.json";
 			}
-			json = File.ReadAllText(localePath, Encoding.Default);
+			string json = File.ReadAllText(localePath, Encoding.Default);
 
 			// Remove authors metadata for the dictionary
 			json = Regex.Replace(json, "\"@metadata\": {[^}]+},", String.Empty, RegexOptions.Multiline);
@@ -91,7 +90,6 @@ namespace DiscordWikiBot
 		/// <returns>A parsed message.</returns>
 		public static string GetMessage(string key, string lang, params dynamic[] args)
 		{
-			string str = "";
 			Dictionary<string, string> list = Default;
 
 			if (lang != Config.GetLang())
@@ -104,7 +102,7 @@ namespace DiscordWikiBot
 			}
 
 			// Return a MediaWiki-styled key-value pair if there is no message
-			if (!list.TryGetValue(key, out str))
+			if (!list.TryGetValue(key, out string str))
 			{
 				// Revert to fallback language first
 				if (lang != FALLBACK_LANG)
