@@ -66,7 +66,6 @@ namespace DiscordWikiBot
 				return;
 			}
 			json = File.ReadAllText(JSON_PATH, Encoding.Default);
-			json = ReformatData(json);
 
 			Data = JObject.Parse(json);
 
@@ -592,53 +591,6 @@ namespace DiscordWikiBot
 			}
 
 			return WMProjects.Any(domain.EndsWith);
-		}
-
-		/// <summary>
-		/// Reformat the old data format for the new storage system.
-		/// </summary>
-		/// <param name="json">Old JSON text.</param>
-		/// <returns>Reformatted JSON text.</returns>
-		private static string ReformatData(string json)
-		{
-			JObject oldData = JObject.Parse(json);
-			bool doNothing = false;
-			foreach (KeyValuePair<string, JToken> item in oldData)
-			{
-				if (item.Value.Type != JTokenType.Array)
-				{
-					doNothing = true;
-					break;
-				}
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Converting old \"{JSON_PATH}\" into our new format.", DateTime.Now);
-
-				// Convert values from array
-				JObject result = new JObject();
-				foreach (string entry in item.Value)
-				{
-					string[] info = entry.Split('|');
-					string channel = info[0];
-					int diffLength = (info.Length > 1 ? Convert.ToInt32(info[1]) : -1);
-
-					JObject obj = new JObject();
-					if (diffLength != -1)
-					{
-						obj.Add(new JProperty("diff-length", diffLength));
-					}
-					result[channel] = obj;
-				}
-
-				oldData[item.Key] = result;
-			}
-
-			if (doNothing)
-			{
-				return json;
-			}
-
-			// Rewrite the old data if needed
-			File.WriteAllText(JSON_PATH, oldData.ToString(), Encoding.Default);
-			return oldData.ToString();
 		}
 	}
 }

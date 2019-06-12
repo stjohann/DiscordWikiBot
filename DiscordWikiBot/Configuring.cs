@@ -210,7 +210,7 @@ namespace DiscordWikiBot
 				return;
 			}
 
-			if (!value.Contains("/wiki/$1"))
+			if (value != "-" && !value.Contains("/wiki/$1"))
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang));
 			}

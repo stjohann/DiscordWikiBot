@@ -1,14 +1,14 @@
 # DiscordWikiBot
 **DiscordWikiBot** [ˈdɪskɔːdˈwiːkibɒt] is a bot that can transform [[wiki]] and {{template}} links in Discord messages into actual links using MediaWiki APIs and can inform about recent changes in Wikimedia projects and on Translatewiki.net. It is developed for the Discord server of Russian Wikipedians. A private instance of the bot is run for Discord servers of Wikimedia communities and is available by request.
 
-DiscordWikiBot is built using [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus) and [XmlRcs](https://github.com/huggle/XMLRCS/tree/master/clients/c%23/XmlRcs) libraries. Its code is published under MIT licence.
+DiscordWikiBot is cross-platform console app built with .NET Core. It uses [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus), [WikiClientLibrary](https://github.com/CXuesong/WikiClientLibrary), and [XmlRcs](https://github.com/huggle/XMLRCS/tree/master/clients/c%23/XmlRcs) for most of heavy lifting. Its code is published under MIT licence.
 
 ## Installation
 1. Download the source files.
 2. Create `token.txt` in project folder with a private token for your Discord bot. If you haven’t created your own Discord bot, [create it first](https://discordapp.com/developers/applications/me). Do not share your private token.
 3. Change `config.json` to your needs according to instructions there.
 4. Add `eventStreams.json` file containing only `{}` to the folder with `config.json` if you intend to use recent changes streams (Wikimedia projects only).
-5. Compile the bot’s binaries using any C# compiler (easiest way is to use IDEs like Visual Studio or MonoDevelop).
+5. Compile the bot’s binaries using any compiler that supports .NET Core (use IDEs like Visual Studio or MonoDevelop or dotnet CLI).
 
 ## Configuration
 By default, the bot is configured for the usage in Russian Wikipedia. Your instance of the bot can use different options by changing `config.json`. Below is the documentation for every available variable (remove lines starting with `//` if you’re going to copy from here). Required parameters are marked.

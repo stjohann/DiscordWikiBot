@@ -174,7 +174,17 @@ namespace DiscordWikiBot
 				string description = Locale.GetMessage("help-all", "en");
 				if (Config.GetValue("repo") != null)
 				{
-					description = Locale.GetMessage("help-repo", "en", Config.GetValue("repo")) + description;
+					description = string.Format("{0} {1}\n\n{2}",
+						Locale.GetMessage("help-version", "en", Program.Version),
+						Locale.GetMessage("help-repo", "en", Config.GetValue("repo")),
+						description
+					);
+				} else
+				{
+					description = string.Format("{0}\n\n{1}",
+						Locale.GetMessage("help-version", "en", Program.Version),
+						description
+					);
 				}
 
 				EmbedBuilder

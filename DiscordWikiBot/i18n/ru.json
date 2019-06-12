@@ -4,7 +4,7 @@
 			"stjn"
 		]
 	},
-	
+
 	"bullet": "— {0}",
 	"separator": " — {0}",
 	"yes-no": "{0:да|нет}",
@@ -12,7 +12,8 @@
 	"help-title": "Справка",
 	"help-title-command": "{1}{0}{msg:separator}справка",
 	"help-all": "Перечислены все команды верхнего уровня и группы. Укажите команду, чтобы получить больше информации.",
-	"help-repo": "Исходный код: {0}\n\n",
+	"help-version": "Версия {0}.",
+	"help-repo": "Исходный код: {0}",
 	"help-commands": "Команды",
 	"help-subcommands": "Подкоманды",
 	"help-aliases": "Алиасы",
@@ -22,7 +23,7 @@
 	"help-group-standalone": "Эта группа — отдельная команда.",
 	"help-command": "Отображает справку по команде.",
 	"help-command-command": "команда, по которой нужно дать помощь.",
-	
+
 	"configuring-status": ":information_source: Включён в розетку.",
 	"configuring-status-streaming": " Последний ответ трансляций: {0} {0:минута|минуты|минут} {1} {1:секунду|секунды|секунд} назад.",
 	"configuring-changed-domain": "Домен трансляции свежих правок на этом сервере изменён на **{0}**.",
@@ -87,7 +88,7 @@
 	"streaming-help-list": "Перечислить действующие трансляции на этом сервере.",
 	"streaming-help-channel": "доступный боту канал трансляции.",
 	"streaming-help-args": "параметры трансляции:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	
+
 	"translatewiki-deadline": "Успейте проверить сообщения за неделю **до 00:00** четверга по UTC, чтобы избежать вандализма и плохого перевода.",
 	"translatewiki-header": "{0} {1:сообщение|сообщения|сообщений} от {2} {2:автора|авторов|авторов}"
 }

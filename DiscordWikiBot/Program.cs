@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -21,6 +22,11 @@ namespace DiscordWikiBot
 		/// An instance of Discord client.
 		/// </summary>
 		public static DiscordClient Client;
+
+		/// <summary>
+		/// DiscordWikiBot version.
+		/// </summary>
+		public static string Version;
 
 		/// <summary>
 		/// Available bot commands.
@@ -68,7 +74,8 @@ namespace DiscordWikiBot
 			});
 
 			// Initialise events
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Initialising events", DateTime.Now);
+			Version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion.ToString();
+			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"DiscordWikiBot, version {Version}", DateTime.Now);
 
 			// Get locale
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", string.Format("Loading {0} locale", Config.GetLang().ToUpper()), DateTime.Now);
@@ -129,6 +136,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Have the ability to stop the bot on Ctrl+C
 		/// </summary>
+		/// TODO: Fix this after porting to .NET Core
 		private static Task CtrlC()
 		{
 			var tcs = new TaskCompletionSource<object>();
@@ -182,9 +190,6 @@ namespace DiscordWikiBot
 		{
 			// Log the ready event
 			e.Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Ready!", DateTime.Now);
-
-			// Go offline since bot is supposed to run 24 hours a day
-			// Client.UpdateStatusAsync(null, DSharpPlus.Entities.UserStatus.Invisible).Wait();
 
 			return Task.FromResult(0);
 		}

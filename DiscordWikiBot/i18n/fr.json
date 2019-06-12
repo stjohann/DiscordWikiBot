@@ -13,7 +13,8 @@
 	"help-title": "Aide",
 	"help-title-command": "{1}{0} – aide",
 	"help-all": "Liste de toutes les commandes et groupes de niveau supérieur. Spécifiez une commande pour afficher plus d'informations.",
-	"help-repo": "Code source: {0}\n\n",
+	"help-version": "Version {0}.",
+	"help-repo": "Code source: {0}",
 	"help-commands": "Commandes",
 	"help-subcommands": "Sous-commandes",
 	"help-aliases": "Alias",
@@ -30,7 +31,7 @@
 	"configuring-changed-translatewiki-lang": "La langue pour laquelle les rapports sur les modifications récentes sur Translatewiki ont été compilées a été changée en **{0}**.",
 	"configuring-changed-wiki": "Le wiki pour les liens sur ce serveur a été remplacé par **{0}**.",
 	"configuring-changed-reset": "Le valeur a été réinitialisé à défaut.",
-	
+
 	"configuring-required-value": "La valeur d'un paramètre est requise.\nPour obtenir une aide complète, envoyez `{1}help {0}`.",
 	"configuring-badvalue-lang": "Le bot ne reconnaît pas votre entrée en tant que code ISO 639 valide.",
 	"configuring-badvalue-wiki": "Il doit y avoir `{0}` à la fin de votre URL.",
@@ -40,7 +41,7 @@
 
 	"configuring-help-lang": "Changer la langue du bot sur ce serveur.",
 	"configuring-help-lang-value": "la langue des réponses du bot. Utilisez `-` pour rétablir les valeurs par défaut.",
-	
+
 	"configuring-help-tw": "Démarrer ou terminer des rapports horaires sur les modifications récentes sur Translatewiki dans l'un des canaux.",
 	"configuring-help-tw-value": "langue disponible sur Translatewiki pour traduction (code de langue ISO 639). Remplissez `-` comme une langue pour mettre fin aux rapports.",
 
@@ -59,7 +60,7 @@
 	"linking-toolong": "Les liens vers le message ci-dessus ne sont pas affichés, car le message serait trop long pour Discord.",
 
 	"streaming-key-diff-length": "longueur minimale pour un diff",
-	
+
 	"translatewiki-deadline": "Vérifiez les traductions pour cette semaine **jusqu'à 00h00** jeudi UTC pour éviter les mauvaises traductions et le vandalisme.",
 	"translatewiki-header": "{1:Un message|{0} messages} de {2:un auteur|{} auteurs}"
 }
