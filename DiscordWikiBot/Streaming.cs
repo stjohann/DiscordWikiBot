@@ -128,7 +128,7 @@ namespace DiscordWikiBot
 				string goal = entry.Key.Trim('<', '>');
 				string goalMsg = "streaming-stream-" + (goal == entry.Key ? "page" : "namespace");
 				goalMsg = Locale.GetMessage(goalMsg, lang, goal, entry.Value.Count());
-				output += Locale.GetMessage("streaming-list-streams", lang, goalMsg);
+				output += $"**{goalMsg}**:\n";
 
 				// List each stream with an editing command
 				foreach (KeyValuePair<string, JToken> item in (JObject)entry.Value)

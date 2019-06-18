@@ -25,7 +25,7 @@
 	"help-command-command": "command to provide help for.",
 
 	"configuring-status": ":information_source: Plugged into the socket.",
-	"configuring-status-streaming": " Latest response from the streams: {0} {0:minute|minutes} {1} {1:second|seconds} ago.",
+	"configuring-status-streaming": "Latest response from the streams: {0} {0:minute|minutes} {1} {1:second|seconds} ago.",
 	"configuring-changed-domain": "Domain for recent changes streams on this server was changed to **{0}**.",
 	"configuring-changed-lang": "Language of the bot on this server was changed to **{0}**.",
 	"configuring-changed-translatewiki": "Reports about recent changes on Translatewiki are enabled in the channel {0} for language **{1}**.",
@@ -68,7 +68,6 @@
 	"streaming-edited-nothing": ":ok: {0} in the channel {1} had no changes.",
 	"streaming-closed": ":negative_squared_cross_mark: {0} was removed from the channel {1}.",
 	"streaming-list": ":information_source: {0} {0:active stream|active streams} on this server.\n{1}",
-	"streaming-list-streams": "**{0}**:\n",
 	"streaming-list-nothing": ":ok: There are no opened streams on this server.",
 
 	"streaming-key-bot": "include bot edits",

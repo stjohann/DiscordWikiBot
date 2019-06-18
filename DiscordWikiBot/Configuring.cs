@@ -213,6 +213,7 @@ namespace DiscordWikiBot
 			if (value != "-" && !value.Contains("/wiki/$1"))
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang));
+				return;
 			}
 
 			// Provide some changes
@@ -287,7 +288,7 @@ namespace DiscordWikiBot
 			if (streams.Count > 0)
 			{
 				TimeSpan timestamp = DateTime.UtcNow - EventStreams.LatestTimestamp;
-				streamingMsg = Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
+				streamingMsg = " " + Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
 			}
 
 			// Respond to message

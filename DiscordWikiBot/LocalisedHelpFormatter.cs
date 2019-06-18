@@ -168,30 +168,23 @@ namespace DiscordWikiBot
 		/// </summary>
 		public CommandHelpMessage Build()
 		{
+			string content = Locale.GetMessage("help-version", "en", Program.Version);
 			if (Command == null)
 			{
 				// Add a link to the source code repository
-				string description = Locale.GetMessage("help-all", "en");
 				if (Config.GetValue("repo") != null)
 				{
-					description = string.Format("{0} {1}\n\n{2}",
-						Locale.GetMessage("help-version", "en", Program.Version),
-						Locale.GetMessage("help-repo", "en", Config.GetValue("repo")),
-						description
-					);
-				} else
-				{
-					description = string.Format("{0}\n\n{1}",
-						Locale.GetMessage("help-version", "en", Program.Version),
-						description
+					content = string.Format("{0} {1}",
+						content,
+						Locale.GetMessage("help-repo", "en", Config.GetValue("repo"))
 					);
 				}
 
 				EmbedBuilder
 					.WithTitle(Locale.GetMessage("help-title", "en"))
-					.WithDescription(description);
+					.WithDescription(Locale.GetMessage("help-all", "en"));
 			}
-			return new CommandHelpMessage(embed: EmbedBuilder.Build());
+			return new CommandHelpMessage(content, EmbedBuilder.Build());
 		}
 	}
 }
