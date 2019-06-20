@@ -17,6 +17,7 @@ using System.IO;
 using System.Threading;
 using System.Xml;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace XmlRcs
 {
@@ -97,8 +98,7 @@ namespace XmlRcs
         private bool autoconn;
         public bool AutoResubscribe;
         private bool disconnecting = false;
-        private Thread ProviderThread = null;
-        private Thread Pinger = null;
+        private CancellationTokenSource close = new CancellationTokenSource();
 
         public delegate void EditHandler(object sender, EditEventArgs args);
         public delegate void TimeoutErrorHandler(object sender, EventArgs args);
@@ -155,8 +155,6 @@ namespace XmlRcs
         {
             // clean up some resources - this will ensure that all references to thread will be removed
             this.Disconnect();
-            ThreadPool.KillThread(this.ProviderThread);
-            ThreadPool.KillThread(this.Pinger);
         }
 
         private void ping()
@@ -322,24 +320,23 @@ namespace XmlRcs
             }
         }
 
-        private void Pinger_Exec()
+        private async Task Pinger_Exec()
         {
             try
             {
-                while (IsConnected)
+                while (IsConnected && !close.IsCancellationRequested)
                 {
                     this.ping();
-                    Thread.Sleep(Configuration.PingWait * 1000);
+                    await Task.Delay(TimeSpan.FromMilliseconds(Configuration.PingWait), close.Token);
                 }
             }
-            catch (ThreadAbortException)
+            catch (OperationCanceledException)
             {
             }
             catch (Exception fail)
             {
                 this.__evt_Exception(fail);
             }
-            ThreadPool.UnregisterThis();
         }
 
         /// <summary>
@@ -369,13 +366,8 @@ namespace XmlRcs
 						this.send("S " + item);
 					}
 				}
-				this.ProviderThread = new Thread(Provider_Exec);
-				this.ProviderThread.Name = "XmlRcs/Provider/" + Configuration.Server;
-				this.ProviderThread.Start();
-				this.Pinger = new Thread(Pinger_Exec);
-				this.Pinger.Start();
-				ThreadPool.RegisterThread(this.Pinger);
-				ThreadPool.RegisterThread(this.ProviderThread);
+                Task.Run(Provider_Exec);
+                Task.Run(Pinger_Exec);
 			}
 			catch
 			{
@@ -384,23 +376,19 @@ namespace XmlRcs
             return true;
         }
 
-        private void Provider_Exec()
+        private async Task Provider_Exec()
         {
             try
             {
-                while (!this.streamReader.EndOfStream && this.IsConnected)
+                while (!this.streamReader.EndOfStream && this.IsConnected && !close.IsCancellationRequested)
                 {
-                    this.processOutput(this.streamReader.ReadLine());
+                    this.processOutput(await this.streamReader.ReadLineAsync());
                 }
             }
-            catch (ThreadAbortException)
-            { }
             catch (Exception fail)
             {
                 __evt_Exception(fail);
             }
-            ThreadPool.UnregisterThis();
-            this.ProviderThread = null;
             this.kill();
 			// if we auto reconnect let's do that
 			if (this.autoconn && !this.disconnecting)
@@ -446,9 +434,7 @@ namespace XmlRcs
             this.streamReader = null;
             this.streamWriter = null;
             this.client = null;
-            ThreadPool.KillThread(this.ProviderThread);
-            ThreadPool.KillThread(this.Pinger);
-            this.ProviderThread = null;
+            close.Cancel();
         }
 
         /// <summary>

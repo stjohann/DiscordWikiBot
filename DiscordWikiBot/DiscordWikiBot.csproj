@@ -2,11 +2,11 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>netcoreapp2.1</TargetFramework>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<PackageLicenseFile>LICENCE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/stjohann/DiscordWikiBot</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>2.0.1</Version>
+		<Version>2.0.2</Version>
 		<Authors>stjn and others</Authors>
 		<Company />
 	</PropertyGroup>
@@ -133,6 +133,9 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
+		<None Update="i18n\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	  <None Update="config.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
@@ -150,7 +153,4 @@
 	    <PackagePath></PackagePath>
 	  </None>
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="XCOPY &quot;$(ProjectDir)i18n&quot; &quot;$(TargetDir)i18n&quot; /E /I /Y" />
-	</Target>
 </Project>
