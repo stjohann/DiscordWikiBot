@@ -327,7 +327,7 @@ namespace XmlRcs
                 while (IsConnected && !close.IsCancellationRequested)
                 {
                     this.ping();
-                    await Task.Delay(TimeSpan.FromMilliseconds(Configuration.PingWait), close.Token);
+                    await Task.Delay(TimeSpan.FromSeconds(Configuration.PingWait), close.Token);
                 }
             }
             catch (OperationCanceledException)
