@@ -24,7 +24,7 @@
 	"help-command": "Prikazuje pomoć za naredbe.",
 	"help-command-command": "naredba za pružanje pomoći.",
 
-	"configuring-status": ":information_source: priključeno.",
+	"configuring-status": ":information_source: Priključeno.",
 	"configuring-status-streaming": "Najnoviji odgovor iz struja: {0} prije {0:minute|minute|minuta} {1} {1:sekunde|sekunde|sekundi}.",
 	"configuring-changed-domain": "Domena za struje najnovijih izmjena na ovom poslužitelju promijenjena je u **{0}**.",
 	"configuring-changed-lang": "Jezik bota na ovom poslužitelju promijenjen je na **{0}**.",
@@ -34,7 +34,7 @@
 	"configuring-changed-wiki": "Wiki za poveznice na ovom poslužitelju promijenjena je na **{0}**.",
 	"configuring-changed-reset": "Vrijednost je vraćena na zadano.",
 
-	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili punu pomoć za naredbu, pošaljite `{1}pomoć {0}`.",
+	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili punu pomoć za naredbu, pošaljite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Struje su dostupne samo za Wikimedijine projekte.\nPopis dopuštenih domena: {0}.",
 	"configuring-badvalue-lang": "Bot ne prepoznaje Vaš unos kao valjani ISO 639 kôd.",
 	"configuring-badvalue-wiki": "Na kraju Vašeg URL-a mora se nalaziti `{0}`.",
@@ -63,10 +63,10 @@
 
 	"streaming-stream-namespace": "{1:Struja|Struje} iz imenskog prostora `{0}`",
 	"streaming-stream-page": "{1:Struja|Struje} sa stranice `{0}`",
-	"streaming-opened": ":white_check_mark: {0} je dodano u kanal {1}{2}",
-	"streaming-edited": ":eight_spoked_asterisk: {0} u kanalu {1} promijenio je sljedeće parametre:\n{2}",
+	"streaming-opened": ":white_check_mark: {0} je dodana u kanal {1}{2}",
+	"streaming-edited": ":eight_spoked_asterisk: {0} u kanalu {1} promijenila je sljedeće parametre:\n{2}",
 	"streaming-edited-nothing": ":ok: {0} u kanalu {1} nije bilo izmjena.",
-	"streaming-closed": ":negative_squared_cross_mark: {0} je uklonjeno iz kanala {1}.",
+	"streaming-closed": ":negative_squared_cross_mark: {0} je uklonjena iz kanala {1}.",
 	"streaming-list": ":information_source: {0} {0:aktivna struja|aktivne struje|aktivnih struja} na ovom poslužitelju.\n{1}",
 	"streaming-list-nothing": ":ok: Na ovom poslužitelju nema otvorenih struja.",
 
@@ -79,7 +79,7 @@
 	"streaming-key-title": "naslov stranice",
 	"streaming-key-type": "vrsta izmjene",
 
-	"streaming-required-goal": "Potrebno je navesti cilj struje (naslov stranice ili broj imenskog prostora).\nZa punu pomoć za ovu naredbu, pošaljite `{1}pomoć {0}`.",
+	"streaming-required-goal": "Potrebno je navesti cilj struje (naslov stranice ili broj imenskog prostora).\nZa punu pomoć za ovu naredbu, pošaljite `{1}help {0}`.",
 
 	"streaming-help-open": "Pokretanje struje nedavnih izmjena u ovom kanalu.",
 	"streaming-help-edit": "Uređivanje parametara struje nedavnih izmjena u kanalu.",
@@ -89,5 +89,5 @@
 	"streaming-help-args": "dostupni parametri struja:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 
 	"translatewiki-deadline": "Pronađite vrijeme za provjeru prijevoda za ovaj tjedan **do 00:00** u četvrtak po vremenskoj zoni UTC da biste izbjegli loše prijevode i vandalizme.",
-	"translatewiki-header": "{1:Jedna poruka|{0} poruke|{0} poruka} od {2:jednog autora|{} autora}"
+	"translatewiki-header": "{1:Jedna poruka|{0} poruke|{0} poruka} od {2} {2:autora|autora|autora}"
 }
