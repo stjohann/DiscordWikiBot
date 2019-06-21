@@ -10,6 +10,8 @@ DiscordWikiBot is cross-platform console app built with .NET Core. It uses [DSha
 4. Add `eventStreams.json` file containing only `{}` to the folder with `config.json` if you intend to use recent changes streams (Wikimedia projects only).
 5. Compile the bot’s binaries using any compiler that supports .NET Core (use IDEs like Visual Studio or MonoDevelop or dotnet CLI).
 
+**Important:** When developing or updating the bot, take care of the folder where the application is compiled. That’s where `eventStreams.json` and `overrides.json` are being stored when running it, and if you clean the folder accidentally, all the data will get lost.
+
 ## Configuration
 By default, the bot is configured for the usage in Russian Wikipedia. Your instance of the bot can use different options by changing `config.json`. Below is the documentation for every available variable (remove lines starting with `//` if you’re going to copy from here). Required parameters are marked.
 

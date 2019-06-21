@@ -25,7 +25,7 @@ namespace DiscordWikiBot
 		private static Provider Stream;
 
 		// EventSource stream translations
-		private static dynamic Data = null;
+		private static JObject Data = null;
 
 		/// <summary>
 		/// Latest message timestamp.
@@ -137,13 +137,13 @@ namespace DiscordWikiBot
 			// React if there is server data for namespace
 			if (Data[$"<{ns}>"] != null)
 			{
-				React($"<{ns}>", Data[$"<{ns}>"], e.Change).Wait();
+				React($"<{ns}>", Data.Value<JObject>($"<{ns}>"), e.Change).Wait();
 			}
 
 			// React if there is server data for title
 			if (Data[title] != null)
 			{
-				React(title, Data[title], e.Change).Wait();
+				React(title, Data.Value<JObject>(title), e.Change).Wait();
 			}
 		}
 
@@ -394,7 +394,7 @@ namespace DiscordWikiBot
 			JObject result = new JObject();
 
 			// Remove streams belonging to other servers
-			foreach (JProperty entry in Data)
+			foreach (JProperty entry in Data.Properties())
 			{
 				JObject value = (JObject)entry.Value;
 
@@ -450,16 +450,16 @@ namespace DiscordWikiBot
 			};
 
 			// Set data object if undefined
-			if (Data[goal] == null)
+			if (Data.Value<JObject>(goal) == null)
 			{
 				Data[goal] = new JObject();
 			}
 
 			// Add or append necessary data
 			JObject result = new JObject();
-			if (reset == false && Data[goal][channel] != null)
+			if (reset == false && (JObject)Data[goal][channel] != null)
 			{
-				result = Data[goal][channel];
+				result = (JObject)Data[goal][channel];
 			}
 
 			foreach (KeyValuePair<string, dynamic> item in args)
@@ -519,7 +519,7 @@ namespace DiscordWikiBot
 
 			// Change current data and remove an item if necessary
 			if (Data[goal] == null) return;
-			Data[goal].Property(channel)?.Remove();
+			Data.Value<JObject>(goal).Property(channel)?.Remove();
 
 			if (Data[goal].ToString() == "{}")
 			{
