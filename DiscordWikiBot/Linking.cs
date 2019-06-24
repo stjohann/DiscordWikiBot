@@ -179,20 +179,28 @@ namespace DiscordWikiBot
 			string lang = Config.GetLang(goal);
 
 			// Post a message if links were added in last one
-			if (isLastMessage && msg != "" && !Cache.ContainsKey(id))
+			if (isLastMessage)
 			{
-				bool isTooLong = (msg == TOO_LONG);
-				if (isTooLong)
+				if (msg != "")
 				{
-					msg = Locale.GetMessage("linking-toolong", lang);
+					bool isTooLong = (msg == TOO_LONG);
+					if (isTooLong)
+					{
+						msg = Locale.GetMessage("linking-toolong", lang);
+					}
+
+					DiscordMessage response = await e.Message.RespondAsync(msg);
+					if (!isTooLong)
+					{
+						Cache.Add(e.Message.Id, response.Id);
+					}
+					return;
 				}
 
-				DiscordMessage response = await e.Message.RespondAsync(msg);
-				if (!isTooLong)
+				if (!Cache.ContainsKey(id))
 				{
-					Cache.Add(e.Message.Id, response.Id);
+					return;
 				}
-				return;
 			}
 
 			// Update message
