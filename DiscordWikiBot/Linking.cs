@@ -178,8 +178,8 @@ namespace DiscordWikiBot
 			string msg = PrepareMessage(e.Message.Content, goal);
 			string lang = Config.GetLang(goal);
 
-			// Post a new message if last message is edited
-			if (!Cache.ContainsKey(id) && isLastMessage)
+			// Post a message if links were added in last one
+			if (isLastMessage && msg != "" && !Cache.ContainsKey(id))
 			{
 				bool isTooLong = (msg == TOO_LONG);
 				if (isTooLong)
