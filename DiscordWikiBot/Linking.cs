@@ -20,7 +20,9 @@ namespace DiscordWikiBot
 	/// </summary>
 	class Linking
 	{
-		// Link pattern: [[]], [[|, {{}} or {{|
+		/// <summary>
+		/// Link pattern: [[]], [[|, {{}} or {{|
+		/// </summary>
 		private static readonly string pattern = string.Format("(?:{0}|{1})",
 			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
 			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
@@ -56,11 +58,18 @@ namespace DiscordWikiBot
 			}
 		}
 
-		// Messages ID storage
-		private static Buffer<ulong, ulong> Cache;
-
-		// Maximum cache length
+		/// <summary>
+		/// Message cache length.
+		/// </summary>
 		private static readonly int CACHE_LENGTH = 500;
+
+		/// <summary>
+		/// Cache for messages IDs for which edits and deletions are tracked.
+		/// </summary>
+		private static Buffer<ulong, ulong> Cache = new Buffer<ulong, ulong>
+		{
+			MaxItems = CACHE_LENGTH
+		};
 
 		/// <summary>
 		/// Class to store needed wiki site information.
@@ -73,9 +82,9 @@ namespace DiscordWikiBot
 		}
 
 		// Permanent site information for main wikis
-		private static Dictionary<string, InterwikiMap> IWList;
-		private static Dictionary<string, NamespaceCollection> NSList;
-		private static Dictionary<string, bool> IsCaseSensitive;
+		private static Dictionary<string, InterwikiMap> IWList = new Dictionary<string, InterwikiMap>();
+		private static Dictionary<string, NamespaceCollection> NSList = new Dictionary<string, NamespaceCollection>();
+		private static Dictionary<string, bool> IsCaseSensitive = new Dictionary<string, bool>();
 
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
@@ -85,20 +94,6 @@ namespace DiscordWikiBot
 		{
 			string wiki = Config.GetWiki(goal);
 			if (goal != "" && wiki == Config.GetWiki()) return;
-
-			// Set defaults for first fetch
-			if (IWList == null)
-			{
-				IWList = new Dictionary<string, InterwikiMap>();
-				NSList = new Dictionary<string, NamespaceCollection>();
-				IsCaseSensitive = new Dictionary<string, bool>();
-
-				// Create cache
-				Cache = new Buffer<ulong, ulong>
-				{
-					MaxItems = CACHE_LENGTH
-				};
-			}
 
 			// Fetch values for the goal
 			if (!IWList.ContainsKey(goal))
@@ -171,16 +166,36 @@ namespace DiscordWikiBot
 			// Ignore bots / DMs
 			if (e.Message.Author.IsBot || e.Guild == null) return;
 
-			// Only update known messages
 			ulong id = e.Message.Id;
-			if (!Cache.ContainsKey(id)) return;
+			bool isLastMessage = (e.Message.Id == e.Channel.LastMessageId);
+
+			// Only update known messages
+			if (!Cache.ContainsKey(id) && !isLastMessage) return;
 
 			// Determine our goal (default for DMs)
 			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
 			Init(goal);
+			string msg = PrepareMessage(e.Message.Content, goal);
+			string lang = Config.GetLang(goal);
+
+			// Post a new message if last message is edited
+			if (!Cache.ContainsKey(id) && isLastMessage)
+			{
+				bool isTooLong = (msg == TOO_LONG);
+				if (isTooLong)
+				{
+					msg = Locale.GetMessage("linking-toolong", lang);
+				}
+
+				DiscordMessage response = await e.Message.RespondAsync(msg);
+				if (!isTooLong)
+				{
+					Cache.Add(e.Message.Id, response.Id);
+				}
+				return;
+			}
 
 			// Update message
-			string msg = PrepareMessage(e.Message.Content, goal);
 			if (msg != "")
 			{
 				bool isTooLong = (msg == TOO_LONG);
@@ -231,6 +246,11 @@ namespace DiscordWikiBot
 		/// <returns>A message with parsed wiki links or a response code.</returns>
 		static public string PrepareMessage(string content, string goal)
 		{
+			if (content == "" || content == null)
+			{
+				return "";
+			}
+
 			// Remove code from the message
 			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
 			content = Regex.Replace(content, "`{1,2}.*?`{1,2}", string.Empty);

@@ -21,14 +21,27 @@ namespace DiscordWikiBot
 	/// </summary>
 	class TranslateWiki
 	{
+		/// <summary>
+		/// List of MediaWiki/Wikimedia-related projects.
+		/// </summary>
+		static private readonly Dictionary<string, string> Projects = new Dictionary<string, string>()
+		{
+			{ "8", "MediaWiki" },
+			{ "1206", "Wikimedia" },
+			{ "1238", "Pywikibot" },
+			{ "1244", "Kiwix" },
+			{ "1248", "Huggle" },
+			{ "1274", "Phabricator" },
+		};
+
 		// List of used languages and guilds
-		private static List<string> Languages;
-		private static Dictionary<string, List<string>> Channels;
-		private static Dictionary<string, System.Timers.Timer> Timers;
+		private static List<string> Languages = new List<string>();
+		private static Dictionary<string, List<string>> Channels = new Dictionary<string, List<string>>();
+		private static Dictionary<string, System.Timers.Timer> Timers = new Dictionary<string, System.Timers.Timer>();
 
 		// Latest fetch time and revision
-		private static Dictionary<string, int> LatestFetchTime;
-		private static Dictionary<string, string> LatestFetchKey;
+		private static Dictionary<string, int> LatestFetchTime = new Dictionary<string, int>();
+		private static Dictionary<string, string> LatestFetchKey = new Dictionary<string, string>();
 
 		// Update deadline and whether info about it was already sent
 		private static bool UpdateDeadline = false;
@@ -41,17 +54,6 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Init(string channel = "", string lang = "")
 		{
-			// Set defaults for first fetch 
-			if (Languages == null)
-			{
-				Languages = new List<string>();
-				Channels = new Dictionary<string, List<string>>();
-				Timers = new Dictionary<string, System.Timers.Timer>();
-
-				LatestFetchTime = new Dictionary<string, int>();
-				LatestFetchKey = new Dictionary<string, string>();
-			}
-
 			// Start updates for new language
 			if (!Languages.Contains(lang))
 			{
@@ -145,33 +147,12 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static async Task React(JToken[] list, string lang)
 		{
-			// List of MediaWiki/Wikimedia-related projects
-			string[] twProjects = new string[]
-			{
-				"8", // MediaWiki
-				"1206", // Wikimedia
-				"1238", // Pywikibot
-				"1244", // Kiwix
-				"1248", // Huggle
-				"1274", // Phabricator
-			};
-
-			Dictionary<string, string> twNames = new Dictionary<string, string>()
-			{
-				{ "8", "MediaWiki" },
-				{ "1206", "Wikimedia" },
-				{ "1238", "Pywikibot" },
-				{ "1244", "Kiwix" },
-				{ "1248", "Huggle" },
-				{ "1274", "Phabricator" },
-			};
-
 			// Filter only translations from projects above
 			bool gotToLatest = false;
 			List<JToken> query = list.Where(jt => jt.Type == JTokenType.Object).Select(item =>
 			{
 				string key = item["key"].ToString();
-				if (twProjects.Where(x => key.StartsWith(x + ":")).ToList().Count > 0)
+				if (Projects.Keys.Where(x => key.StartsWith(x + ":")).ToList().Count > 0)
 				{
 					// Check if matches with latest fetch
 					if (key == LatestFetchKey[lang])
@@ -197,7 +178,7 @@ namespace DiscordWikiBot
 			foreach (var item in query)
 			{
 				string key = item["key"].ToString();
-				string ns = twProjects.Where(x => key.StartsWith(x + ":")).ToList().First().ToString();
+				string ns = Projects.Keys.Where(x => key.StartsWith(x + ":")).ToList().First().ToString();
 				string translator = item["properties"]["last-translator-text"].ToString();
 
 				if (!authors.ContainsKey(ns))
@@ -257,32 +238,12 @@ namespace DiscordWikiBot
 				string header = Locale.GetMessage("translatewiki-header", guildLang, headerCount, count, allAuthors.Count);
 				embed.WithAuthor(
 					header,
-					string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/ru", string.Join("%3B", twProjects)),
+					string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), lang),
 					"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/512px-Translatewiki.net_logo.svg.png"
 				);
 
-				// Check if authors list doesn’t exceed
-				string desc = string.Join("\n", authors.Select(ns => {
-					string str = twNames[ns.Key] + ": ";
-					str += string.Join(", ", ns.Value.Select(author =>
-					{
-						return string.Format("[{0}]({1})", author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contributions/$1", true));
-					}));
-
-					return str;
-				}));
-				if (desc.Length > 2000)
-				{
-					desc = string.Join("\n", authors.Select(ns => {
-						string str = twNames[ns.Key] + ": ";
-						str += string.Join(", ", ns.Value.Select(author =>
-						{
-							return author;
-						}));
-
-						return str;
-					}));
-				}
+				// Form authors list
+				string desc = FormDescription(authors);
 				embed.WithDescription(desc);
 
 				await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
@@ -293,11 +254,46 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Form embed description for the message.
+		/// </summary>
+		/// <param name="authors">List of authors in different namespaces.</param>
+		/// <returns>Embed description.</returns>
+		private static string FormDescription(Dictionary<string, List<string>> authors)
+		{
+			var list = authors.Select(ns =>
+			{
+				string str = Projects[ns.Key] + ": ";
+				str += string.Join(", ", ns.Value.Select(author =>
+				{
+					return string.Format("[{0}]({1})", author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contributions/$1", true));
+				}));
+
+				return str;
+			});
+			string result = string.Join("\n", list);
+
+			// Remove links if their length is too long
+			if (result.Length > 2000)
+			{
+				list = authors.Select(ns => {
+					string str = Projects[ns.Key] + ": ";
+					str += string.Join(", ", ns.Value.Select(author => author));
+
+					return str;
+				});
+
+				result = string.Join("\n", list);
+			}
+
+			return result;
+		}
+
+		/// <summary>
 		/// Perform an API request for latest messages in a specified language.
 		/// </summary>
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		/// <returns>A list of messages.</returns>
-		public static async Task<JToken> Fetch(string lang)
+		private static async Task<JToken> Fetch(string lang)
 		{
 			if (lang == null) return null;
 

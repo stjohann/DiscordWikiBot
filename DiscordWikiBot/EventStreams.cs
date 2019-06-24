@@ -35,7 +35,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// List of all allowed Wikimedia projects.
 		/// </summary>
-		public static string[] WMProjects = {
+		private static readonly string[] WMProjects = {
 			".wikipedia.org",
 			".wiktionary.org",
 			".wikibooks.org",
@@ -70,7 +70,7 @@ namespace DiscordWikiBot
 			Data = JObject.Parse(json);
 
 			// Check if default domain is a Wikimedia project
-			if (!CanBeUsed(Config.GetDomain()))
+			if (!CanBeUsed(Config.GetDomain(), out string[] temp))
 			{
 				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", DateTime.Now);
 				return;
@@ -583,14 +583,17 @@ namespace DiscordWikiBot
 		/// Check if a domain can use EventStreams.
 		/// </summary>
 		/// <param name="domain">EventStreams domain.</param>
-		public static bool CanBeUsed(string domain)
+		/// <param name="list">List of allowed projects.</param>
+		public static bool CanBeUsed(string domain, out string[] list)
 		{
 			if (domain == null)
 			{
+				list = null;
 				return false;
 			}
 
-			return WMProjects.Any(domain.EndsWith);
+			list = WMProjects;
+			return list.Any(domain.EndsWith);
 		}
 	}
 }

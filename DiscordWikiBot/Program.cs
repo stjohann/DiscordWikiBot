@@ -200,8 +200,8 @@ namespace DiscordWikiBot
 		/// <param name="e">Discord event information.</param>
 		private Task Client_ClientErrored(ClientErrorEventArgs e)
 		{
-			// Log the exception and its message
-			e.Client.DebugLogger.LogMessage(LogLevel.Error, "DiscordWikiBot", $"Exception occured: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
+			// Log the exception
+			e.Client.DebugLogger.LogMessage(LogLevel.Error, "DiscordWikiBot", $"Exception occurred: {e.Exception.ToString()}", DateTime.Now);
 
 			return Task.FromResult(0);
 		}
