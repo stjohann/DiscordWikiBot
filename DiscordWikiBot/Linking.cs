@@ -130,8 +130,8 @@ namespace DiscordWikiBot
 		/// <param name="e">Discord message information.</param>
 		static public async Task Answer(MessageCreateEventArgs e)
 		{
-			// Ignore bots
-			if (e.Message.Author.IsBot) return;
+			// Ignore empty messages / bots
+			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true) return;
 
 			// Determine our goal (default for DMs)
 			bool isServerMessage = (e.Guild != null);
@@ -163,9 +163,8 @@ namespace DiscordWikiBot
 		/// <param name="e">Discord message information.</param>
 		static public async Task Edit(MessageUpdateEventArgs e)
 		{
-			// Ignore bots / DMs
-			if (e.Message.Author.IsBot || e.Guild == null) return;
-
+			// Ignore empty messages / bots / DMs
+			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true || e.Guild == null) return;
 			ulong id = e.Message.Id;
 			bool isLastMessage = (e.Message.Id == e.Channel.LastMessageId);
 
@@ -225,20 +224,22 @@ namespace DiscordWikiBot
 		/// <param name="e">Discord message information.</param>
 		static public async Task Delete(MessageDeleteEventArgs e)
 		{
-			// Ignore DMs
-			if (e.Guild == null) return;
+			// Ignore other bots / DMs
+			bool isBot = (e.Message?.Author?.IsBot == true);
+			bool isOurBot = (isBot && e.Message?.Author == Program.Client.CurrentUser);
+			if (isBot && !isOurBot || e.Guild == null) return;
 			ulong id = e.Message.Id;
 
 			// Clear cache if bot’s message was deleted
-			if (e.Message.Author.IsBot && Cache.ContainsValue(id))
+			if (isOurBot && Cache.ContainsValue(id))
 			{
 				ulong key = Cache.FirstOrDefault(x => x.Value == id).Key;
 				Cache.Remove(key);
 				return;
 			}
 
-			// Only update known messages
-			if (!Cache.ContainsKey(id)) return;
+			// Ignore unknown messages / messages from our bot
+			if (isOurBot || !Cache.ContainsKey(id)) return;
 
 			// Delete message
 			DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
