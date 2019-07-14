@@ -1,7 +1,7 @@
 # DiscordWikiBot
 **DiscordWikiBot** [ˈdɪskɔːdˈwiːkibɒt] is a bot that can transform [[wiki]] and {{template}} links in Discord messages into actual links using MediaWiki APIs and can inform about recent changes in Wikimedia projects and on Translatewiki.net. It is developed for the Discord server of Russian Wikipedians. A private instance of the bot is run for Discord servers of Wikimedia communities and is available by request.
 
-DiscordWikiBot is cross-platform console app built with .NET Core. It uses [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus), [WikiClientLibrary](https://github.com/CXuesong/WikiClientLibrary), and [XmlRcs](https://github.com/huggle/XMLRCS/tree/master/clients/c%23/XmlRcs) for most of heavy lifting. Its code is published under MIT licence.
+DiscordWikiBot is cross-platform console app built with .NET Core. It uses [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus), [WikiClientLibrary](https://github.com/CXuesong/WikiClientLibrary), and [EvtSource](https://github.com/3ventic/EvtSource) for most of heavy lifting. Its code is published under MIT licence.
 
 ## Installation
 1. Download the source files.

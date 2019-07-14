@@ -7,11 +7,12 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DiscordWikiBot.Schemas;
+using EvtSource;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DSharpPlus;
 using DSharpPlus.Entities;
-using XmlRcs;
 
 namespace DiscordWikiBot
 {
@@ -22,7 +23,7 @@ namespace DiscordWikiBot
 	class EventStreams
 	{
 		// EventSource stream instance
-		private static Provider Stream;
+		private static EventSourceReader Stream;
 
 		// EventSource stream translations
 		private static JObject Data = null;
@@ -77,47 +78,23 @@ namespace DiscordWikiBot
 			}
 
 			// Open new EventStreams instance
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Connecting to huggle-rc.wmflabs.org", DateTime.Now);
-			Stream = new Provider(true, true);
+			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Connecting to stream.wikimedia.org", DateTime.Now);
+			Stream = new EventSourceReader(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
 			LatestTimestamp = DateTime.Now;
-			Stream.Subscribe(Config.GetDomain());
 
-			// Respond when server is ready
-			Stream.On_OK += new Provider.OKHandler((o, e) =>
-			{
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Ready!", DateTime.Now);
-			});
+			// Log any disconnects
+			Stream.Disconnected += async(object sender, DisconnectEventArgs e) => {
+				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", DateTime.Now);
 
-			// Log any exceptions
-			Stream.On_Exception += new Provider.ExceptionHandler((o, e) =>
-			{
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Stream returned the following exception: {e.Exception}", DateTime.Now);
-			});
+				// Reconnect to the same URL
+				await Task.Delay(e.ReconnectDelay);
+				Stream.Start();
+			};
 
 			// Start recording events
-			Stream.On_Change += Stream_On_Change;
+			Stream.MessageReceived += Stream_MessageReceived;
 
-			Stream.Connect();
-		}
-
-		/// <summary>
-		/// Subscribe to recent changes for a specified domain.
-		/// </summary>
-		/// <param name="domain">Wikimedia domain.</param>
-		public static void Subscribe(string domain)
-		{
-			if (domain == null || domain == Config.GetDomain()) return;
-			Stream.Subscribe(domain);
-		}
-
-		/// <summary>
-		/// Unsubscribe from recent changes to a specified domain.
-		/// </summary>
-		/// <param name="domain">Wikimedia domain.</param>
-		public static void Unsubscribe(string domain = null)
-		{
-			if (domain == null || domain == Config.GetDomain()) return;
-			Stream.Unsubscribe(domain);
+			Stream.Start();
 		}
 
 		/// <summary>
@@ -125,25 +102,30 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e">Recent change information.</param>
-		private static void Stream_On_Change(object sender, EditEventArgs e)
+		private static void Stream_MessageReceived(object sender, EventSourceMessageEventArgs e)
 		{
-			LatestTimestamp = e.Change.Timestamp.ToUniversalTime();
-			bool notEdit = (e.Change.Type != RecentChange.ChangeType.Edit && e.Change.Type != RecentChange.ChangeType.New);
+			if (e.Event != "message")
+			{
+				return;
+			}
+			RecentChange change = RecentChange.FromJson(e.Message);
+			LatestTimestamp = change.Metadata.DateTime.ToUniversalTime();
+			bool notEdit = (change.Type != "edit" && change.Type != "new");
 			if (notEdit) return;
 			
-			string ns = e.Change.Namespace.ToString();
-			string title = e.Change.Title;
+			string ns = change.Namespace.ToString();
+			string title = change.Title;
 
 			// React if there is server data for namespace
 			if (Data[$"<{ns}>"] != null)
 			{
-				React($"<{ns}>", Data.Value<JObject>($"<{ns}>"), e.Change).Wait();
+				React($"<{ns}>", Data.Value<JObject>($"<{ns}>"), change).Wait();
 			}
 
 			// React if there is server data for title
 			if (Data[title] != null)
 			{
-				React(title, Data.Value<JObject>(title), e.Change).Wait();
+				React(title, Data.Value<JObject>(title), change).Wait();
 			}
 		}
 
@@ -193,7 +175,7 @@ namespace DiscordWikiBot
 				string domain = Config.GetDomain();
 				if (channel != null)
 				{
-					domain = Config.GetDomain(channel.Guild.Id.ToString());
+					domain = Config.GetDomain(channel.GuildId.ToString());
 					if (domain != change.ServerName)
 					{
 						continue;
@@ -241,7 +223,7 @@ namespace DiscordWikiBot
 				if (args.ContainsKey("diff-length"))
 				{
 					int minLength = Convert.ToInt32(args["diff-length"]);
-					int revLength = (change.LengthNew - change.LengthOld);
+					long revLength = (change.Length.New - change.Length.Old);
 					
 					if (revLength < minLength)
 					{
@@ -252,7 +234,7 @@ namespace DiscordWikiBot
 				// Check string in comment text
 				if (args.ContainsKey("in-comment"))
 				{
-					string comment = change.Summary.ToString().ToLower();
+					string comment = change.Comment.ToLower();
 					if (!comment.Contains(args["in-comment"]))
 					{
 						continue;
@@ -260,7 +242,7 @@ namespace DiscordWikiBot
 				}
 
 				// Send the message
-				string lang = Config.GetLang(channel.Guild.Id.ToString());
+				string lang = Config.GetLang(channel.GuildId.ToString());
 				await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));
 			}
 		}
@@ -275,14 +257,14 @@ namespace DiscordWikiBot
 		public static DiscordEmbedBuilder GetEmbed(RecentChange change, string format, string lang)
 		{
 			DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
-				.WithTimestamp(change.Timestamp);
+				.WithTimestamp(change.Metadata.DateTime);
 
 			DiscordColor embedColor = new DiscordColor(0x72777d);
 			string embedIcon = "2/25/MobileFrontend_bytes-neutral.svg/512px-MobileFrontend_bytes-neutral.svg.png";
 
 			// Parse statuses from the diff
 			string status = "";
-			if (change.Type == RecentChange.ChangeType.New)
+			if (change.Type == "new")
 			{
 				status += Locale.GetMessage("eventstreams-new", lang);
 			}
@@ -301,7 +283,7 @@ namespace DiscordWikiBot
 			}
 
 			// Parse length of the diff
-			int length = (change.LengthNew - change.LengthOld);
+			long length = (change.Length.New - change.Length.Old);
 			if (length > 0)
 			{
 				embedColor = new DiscordColor(0x00af89);
@@ -334,7 +316,7 @@ namespace DiscordWikiBot
 		public static string GetMessage(RecentChange change, string format, string lang)
 		{
 			// Parse length of the diff
-			int length = (change.LengthNew - change.LengthOld);
+			long length = (change.Length.New - change.Length.Old);
 			string strLength = length.ToString();
 			if (length > 0)
 			{
@@ -348,7 +330,7 @@ namespace DiscordWikiBot
 			}
 
 			// Markdownify link
-			string link = format.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.OldID != 0 ? "diff=" : "oldid="), change.RevID));
+			string link = format.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.Revision.Old != 0 ? "diff=" : "oldid="), change.Revision.New));
 			link = string.Format("([{0}]({1}))", Locale.GetMessage("eventstreams-diff", lang), link);
 
 			// Markdownify user
@@ -372,11 +354,11 @@ namespace DiscordWikiBot
 			}
 
 			// Parse comment, adjusting for its length
-			string comment = ParseComment(change.Summary, format);
+			string comment = ParseComment(change.Comment, format);
 			string msg = $"{link} . . {strLength} . . {user}";
 			if (msg.Length + comment.Length > 2000)
 			{
-				comment = ParseComment(change.Summary, format, false);
+				comment = ParseComment(change.Comment, format, false);
 			}
 			msg += comment;
 

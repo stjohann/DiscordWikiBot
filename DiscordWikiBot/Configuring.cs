@@ -53,15 +53,7 @@ namespace DiscordWikiBot
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "domain", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				EventStreams.Subscribe(value);
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-domain", lang, value));
-			}
-			if (succeeds == Config.RESULT_RESET)
-			{
-				// Unsubscribe if this domain is not being used elsewhere
-				if (value != prevDomain && !Config.IsValuePresent("domain", prevDomain)) {
-					EventStreams.Unsubscribe(value);
-				}
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
 		}

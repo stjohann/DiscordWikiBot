@@ -174,11 +174,6 @@ namespace DiscordWikiBot
 				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
 			}
 
-			if (Config.GetDomain(guild) != null)
-			{
-				EventStreams.Subscribe(Config.GetDomain(guild));
-			}
-
 			return Task.FromResult(0);
 		}
 
