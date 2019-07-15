@@ -454,7 +454,7 @@ namespace DiscordWikiBot
 				// Connect with API if it is a wiki site
 				WikiClient wikiClient = new WikiClient
 				{
-					ClientUserAgent = "DiscordWikiBot/1.0",
+					ClientUserAgent = Program.UserAgent,
 				};
 				WikiSite site = new WikiSite(wikiClient, url.Replace(urlWiki, "/w/api.php"));
 				await site.Initialization;

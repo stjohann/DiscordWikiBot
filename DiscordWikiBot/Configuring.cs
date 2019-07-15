@@ -152,7 +152,7 @@ namespace DiscordWikiBot
 			{
 				// Different channel, same language
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-channel", lang, channel.Mention));
-				TranslateWiki.Remove(chanPrevId, value);
+				TranslateWiki.Remove(chanPrevId, chanPrevLang);
 				TranslateWiki.Init(chanId, value);
 			}
 
@@ -173,7 +173,7 @@ namespace DiscordWikiBot
 			{
 				// Reset both channel and language with -
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-reset", lang));
-				TranslateWiki.Remove(channel.Id.ToString(), value);
+				TranslateWiki.Remove(channel.Id.ToString(), chanPrevLang);
 			}
 
 			if (succeedsChan == Config.RESULT_STRANGE || succeedsLang == Config.RESULT_STRANGE)

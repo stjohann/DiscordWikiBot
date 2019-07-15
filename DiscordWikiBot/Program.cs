@@ -26,7 +26,14 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// DiscordWikiBot version.
 		/// </summary>
-		public static string Version;
+		public static string Version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+		/// <summary>
+		/// DiscordWikiBot user agent.
+		/// Please specify your own when modifying the bot.
+		/// <para>See https://meta.wikimedia.org/wiki/User-Agent_policy </para>
+		/// </summary>
+		public static string UserAgent = $"DiscordWikiBot/{Version}";
 
 		/// <summary>
 		/// Available bot commands.
@@ -74,7 +81,6 @@ namespace DiscordWikiBot
 			});
 
 			// Initialise events
-			Version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion.ToString();
 			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"DiscordWikiBot, version {Version}", DateTime.Now);
 
 			// Get locale
