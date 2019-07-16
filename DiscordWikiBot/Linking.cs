@@ -457,13 +457,20 @@ namespace DiscordWikiBot
 					ClientUserAgent = Program.UserAgent,
 				};
 				WikiSite site = new WikiSite(wikiClient, url.Replace(urlWiki, "/w/api.php"));
-				await site.Initialization;
+				try
+				{
+					await site.Initialization;
 
-				// Generate and return the info needed
-				result.iw = site.InterwikiMap;
-				result.ns = site.Namespaces;
+					// Generate and return the info needed
+					result.iw = site.InterwikiMap;
+					result.ns = site.Namespaces;
+					result.isCaseSensitive = site.SiteInfo.IsTitleCaseSensitive;
+				} catch (Exception ex)
+				{
+					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "Linking", $"Wiki ({url}) can’t be reached: {ex.InnerException}", DateTime.Now);
 
-				result.isCaseSensitive = site.SiteInfo.IsTitleCaseSensitive;
+					result.isCaseSensitive = true;
+				}
 			} else
 			{
 				result.isCaseSensitive = true;

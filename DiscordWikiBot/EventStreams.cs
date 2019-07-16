@@ -148,7 +148,7 @@ namespace DiscordWikiBot
 					ulong channelID = ulong.Parse(item.Key);
 					channel = await client.GetChannelAsync(channelID);
 				} catch(Exception ex) {
-					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Channel can’t be reached: {ex.Message}", DateTime.Now);
+					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Channel can’t be reached: {ex.InnerException}", DateTime.Now);
 
 					// Remove data if channel was deleted
 					if (ex is DSharpPlus.Exceptions.NotFoundException)

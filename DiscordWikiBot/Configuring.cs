@@ -78,6 +78,9 @@ namespace DiscordWikiBot
 				return;
 			}
 
+			// Set language to lowercase
+			value = value.ToLower();
+
 			// Check if it is a valid language
 			if (value != "-" && !IsValidLanguage(value))
 			{
@@ -128,6 +131,9 @@ namespace DiscordWikiBot
 				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
 				return;
 			}
+
+			// Set language to lowercase
+			value = value.ToLower();
 
 			// Do action and respond
 			int succeedsChan = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-channel", chanId);
