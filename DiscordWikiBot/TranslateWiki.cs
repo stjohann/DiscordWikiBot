@@ -63,7 +63,7 @@ namespace DiscordWikiBot
 					lang = Config.GetTWLang();
 				}
 
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Watching changes for {lang.ToUpper()}", DateTime.Now);
+				Program.LogMessage($"Watching changes for {lang.ToUpper()}", "TranslateWiki");
 				Languages.Add(lang);
 				if (!Channels.ContainsKey(lang))
 				{
@@ -204,7 +204,7 @@ namespace DiscordWikiBot
 					ulong chanId = ulong.Parse(chan);
 					channel = await client.GetChannelAsync(chanId);
 				} catch (Exception ex) {
-					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "TranslateWiki", $"Channel can’t be reached: {ex.Message}", DateTime.Now);
+					Program.LogMessage($"Channel can’t be reached: {ex.Message}", "TranslateWiki");
 
 					// Remove data if channel was deleted
 					if (ex is DSharpPlus.Exceptions.NotFoundException)
@@ -299,7 +299,7 @@ namespace DiscordWikiBot
 
 			WikiClient wikiClient = new WikiClient
 			{
-				ClientUserAgent = "DiscordWikiBot/1.0",
+				ClientUserAgent = Program.UserAgent,
 			};
 			WikiSite site = new WikiSite(wikiClient, "https://translatewiki.net/w/api.php");
 			await site.Initialization;

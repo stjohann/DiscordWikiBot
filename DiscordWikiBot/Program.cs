@@ -81,14 +81,13 @@ namespace DiscordWikiBot
 			});
 
 			// Initialise events
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"DiscordWikiBot, version {Version}", DateTime.Now);
+			LogMessage($"DiscordWikiBot, version {Version}");
 
-			// Get locale
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", string.Format("Loading {0} locale", Config.GetLang().ToUpper()), DateTime.Now);
+			// Get default locale
 			Locale.Init();
 
 			// Get site information and start linking bot
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Getting wiki site information", DateTime.Now);
+			LogMessage("Getting wiki site information");
 			Linking.Init();
 
 			// Methods for linking bot
@@ -114,7 +113,7 @@ namespace DiscordWikiBot
 			Client.ClientErrored += Client_ClientErrored;
 
 			// Initialise commands
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Setting up commands", DateTime.Now);
+			LogMessage("Setting up commands");
 			Commands = Client.UseCommandsNext(new CommandsNextConfiguration
 			{
 				StringPrefix = Config.GetValue("prefix"),
@@ -132,7 +131,7 @@ namespace DiscordWikiBot
 			Commands.SetHelpFormatter<LocalisedHelpFormatter>();
 
 			// Connect and start
-			Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Connecting...", DateTime.Now);
+			LogMessage("Connecting...");
 			await Client.ConnectAsync();
 
 			// Make sure not to close down automatically
@@ -166,14 +165,14 @@ namespace DiscordWikiBot
 		private Task Client_GuildAvailable(GuildCreateEventArgs e)
 		{
 			// Log the name of the guild that just became available
-			e.Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", $"Guild available: {e.Guild.Name}", DateTime.Now);
+			LogMessage($"Guild available: {e.Guild.Name}");
 
 			// Load custom values if needed
 			string guild = e.Guild.Id.ToString();
 
 			Linking.Init(guild);
 
-			Locale.LoadCustomLocale(Config.GetLang(guild));
+			Locale.Init(Config.GetLang(guild));
 
 			if (Config.GetTWChannel(guild) != null && Config.GetTWLang(guild) != null)
 			{
@@ -190,7 +189,7 @@ namespace DiscordWikiBot
 		private Task Client_Ready(ReadyEventArgs e)
 		{
 			// Log the ready event
-			e.Client.DebugLogger.LogMessage(LogLevel.Info, "DiscordWikiBot", "Ready!", DateTime.Now);
+			LogMessage("Ready!");
 
 			return Task.FromResult(0);
 		}
@@ -202,9 +201,20 @@ namespace DiscordWikiBot
 		private Task Client_ClientErrored(ClientErrorEventArgs e)
 		{
 			// Log the exception
-			e.Client.DebugLogger.LogMessage(LogLevel.Error, "DiscordWikiBot", $"Exception occurred: {e.Exception.ToString()}", DateTime.Now);
+			LogMessage($"Exception occurred: {e.Exception.ToString()}", level: LogLevel.Error);
 
 			return Task.FromResult(0);
+		}
+
+		/// <summary>
+		/// Log a message into console.
+		/// </summary>
+		/// <param name="message">Message.</param>
+		/// <param name="component">Component the message is from.</param>
+		/// <param name="level">Threat level.</param>
+		public static void LogMessage(string message, string component = "DiscordWikiBot", LogLevel level = LogLevel.Info)
+		{
+			Client.DebugLogger.LogMessage(level, component, message, DateTime.Now);
 		}
 	}
 }

@@ -467,7 +467,7 @@ namespace DiscordWikiBot
 					result.isCaseSensitive = site.SiteInfo.IsTitleCaseSensitive;
 				} catch (Exception ex)
 				{
-					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "Linking", $"Wiki ({url}) can’t be reached: {ex.InnerException}", DateTime.Now);
+					Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
 
 					result.isCaseSensitive = true;
 				}

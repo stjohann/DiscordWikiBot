@@ -82,7 +82,7 @@ namespace DiscordWikiBot
 			value = value.ToLower();
 
 			// Check if it is a valid language
-			if (value != "-" && !IsValidLanguage(value))
+			if (value != "-" && !Locale.IsValidLanguage(value))
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-lang", lang));
 				return;
@@ -95,7 +95,14 @@ namespace DiscordWikiBot
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "lang", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-lang", lang, value.ToUpper()));
+				// Get language name
+				string langName = Locale.GetLanguageName(value);
+				if (langName != value)
+				{
+					langName = $"{value} ({langName})";
+				}
+
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-lang", lang, langName));
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
@@ -134,6 +141,13 @@ namespace DiscordWikiBot
 
 			// Set language to lowercase
 			value = value.ToLower();
+
+			// Check if it is a valid language
+			if (value != "-" && !Locale.IsValidLanguage(value))
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-lang", lang));
+				return;
+			}
 
 			// Do action and respond
 			int succeedsChan = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-channel", chanId);
@@ -254,13 +268,6 @@ namespace DiscordWikiBot
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-error-strange", lang));
 			}
-		}
-
-		private bool IsValidLanguage(string name)
-		{
-			return CultureInfo
-				.GetCultures(CultureTypes.NeutralCultures)
-				.Any(c => c.Name == name);
 		}
 	}
 	

@@ -228,7 +228,7 @@ namespace DiscordWikiBot
 		{
 			if (Overrides == null) return RESULT_STRANGE;
 			if (goal == null || goal == "") return RESULT_STRANGE;
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "Config", $"Changing a server override ({key}) after a command was fired.", DateTime.Now);
+			Program.LogMessage($"Changing a server override ({key}) after a command was fired.");
 
 			// Change current data
 			JObject goalObj = (JObject)Overrides[goal];

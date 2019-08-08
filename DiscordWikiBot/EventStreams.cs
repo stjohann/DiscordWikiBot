@@ -59,11 +59,11 @@ namespace DiscordWikiBot
 		public static void Init()
 		{
 			// Get JSON
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Reading JSON config", DateTime.Now);
+			Program.LogMessage($"Reading JSON config", "EventStreams");
 			string json = "";
 			if (!File.Exists(JSON_PATH))
 			{
-				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Please create a JSON file called \"{JSON_PATH}\" before trying to use EventStreams.", DateTime.Now);
+				Program.LogMessage($"Please create a JSON file called \"{JSON_PATH}\" before trying to use EventStreams.", "EventStreams", LogLevel.Error);
 				return;
 			}
 			json = File.ReadAllText(JSON_PATH, Encoding.Default);
@@ -73,18 +73,18 @@ namespace DiscordWikiBot
 			// Check if default domain is a Wikimedia project
 			if (!CanBeUsed(Config.GetDomain(), out string[] temp))
 			{
-				Program.Client.DebugLogger.LogMessage(LogLevel.Error, "EventStreams", $"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", DateTime.Now);
+				Program.LogMessage($"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", "EventStreams", LogLevel.Error);
 				return;
 			}
 
 			// Open new EventStreams instance
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Connecting to stream.wikimedia.org", DateTime.Now);
+			Program.LogMessage($"Connecting to stream.wikimedia.org", "EventStreams");
 			Stream = new EventSourceReader(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
 			LatestTimestamp = DateTime.Now;
 
 			// Log any disconnects
 			Stream.Disconnected += async(object sender, DisconnectEventArgs e) => {
-				Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", DateTime.Now);
+				Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", LogLevel.Warning);
 
 				// Reconnect to the same URL
 				await Task.Delay(e.ReconnectDelay);
@@ -148,7 +148,7 @@ namespace DiscordWikiBot
 					ulong channelID = ulong.Parse(item.Key);
 					channel = await client.GetChannelAsync(channelID);
 				} catch(Exception ex) {
-					Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Channel can’t be reached: {ex.InnerException}", DateTime.Now);
+					Program.LogMessage($"Channel can’t be reached: {ex.InnerException}", "EventStreams");
 
 					// Remove data if channel was deleted
 					if (ex is DSharpPlus.Exceptions.NotFoundException)
@@ -408,7 +408,7 @@ namespace DiscordWikiBot
 		{
 			if (Data == null) return null;
 			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after a command was fired", DateTime.Now);
+			Program.LogMessage($"Changing JSON config after a command was fired", "EventStreams");
 			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
 
 			// List of allowed keys
@@ -497,7 +497,7 @@ namespace DiscordWikiBot
 		{
 			if (Data == null) return;
 			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
-			Program.Client.DebugLogger.LogMessage(LogLevel.Info, "EventStreams", $"Changing JSON config after the command was fired", DateTime.Now);
+			Program.LogMessage($"Changing JSON config after the command was fired", "EventStreams");
 
 			// Change current data and remove an item if necessary
 			if (Data[goal] == null) return;
