@@ -41,12 +41,12 @@
 
 	"configuring-help-status": "Provjera funkcionalnosti bota.",
 	"configuring-help-domain": "Promjena domene za koju se odašilju nedavne izmjene na ovaj poslužitelj. Funkcionira samo za Wikimedijine projekte.",
-	"configuring-help-domain-value": "domena Wikimedijinog projekta (u formatu ru.wikipedia.org). Koristite `-` za vraćanje na zadano.",
+	"configuring-help-domain-value": "domena Wikimedijinog projekta (u formatu hr.wikipedia.org). Koristite `-` za vraćanje na zadano.",
 	"configuring-help-lang": "Promjena jezika bota na ovom poslužitelju.",
 	"configuring-help-lang-value": "jezik bota kojeg želite. Koristite `-` za vraćanje na zadano.",
-	"configuring-help-tw": "Pokretanje ili zaustavljanje izvješćivanja po satu o nedavnim promjenama na Translatewikiju u jednom od kanala.",
-	"configuring-help-tw-channel": "kanal koji je dostupan botu.",
-	"configuring-help-tw-value": "jezik koji je dostupan na Translatewikiju za prevođenje (jezični kôd iz ISO 639). Koristite `-` za zaustavljanje izvješćivanja.",
+	"configuring-help-translatewiki": "Pokretanje ili zaustavljanje izvješćivanja po satu o nedavnim promjenama na Translatewikiju u jednom od kanala.",
+	"configuring-help-translatewiki-channel": "kanal koji je dostupan botu.",
+	"configuring-help-translatewiki-value": "jezik koji je dostupan na Translatewikiju za prevođenje (jezični kôd iz ISO 639). Koristite `-` za zaustavljanje izvješćivanja.",
 	"configuring-help-wiki": "Promjena glavne wiki za poveznice na ovom poslužitelju. Potrebno je dodati /wiki/$1 na kraj.",
 	"configuring-help-wiki-value": "wiki koji želite (u formatu <https://en.wikipedia.org/wiki/$1>). Koristite `-` za vraćanje na zadano.",
 

@@ -306,10 +306,10 @@ namespace DiscordWikiBot
 		{
 			if (LanguageData == null)
 			{
-				return lang.ToUpper();
+				return lang;
 			}
 
-			return (LanguageData[lang]?["autonym"].ToString() ?? LanguageData[lang]?["*"].ToString() ?? lang.ToUpper());
+			return (LanguageData[lang]?["autonym"].ToString() ?? LanguageData[lang]?["*"].ToString() ?? lang);
 		}
 	}
 }

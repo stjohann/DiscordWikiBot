@@ -189,6 +189,8 @@ namespace DiscordWikiBot
 				if (!allAuthors.Contains(translator)) allAuthors.Add(translator);
 			}
 
+			Dictionary<string, string> badServers = new Dictionary<string, string>();
+
 			// Send Discord messages to guilds
 			DiscordClient client = Program.Client;
 			foreach (string chan in Channels[lang])
@@ -204,12 +206,12 @@ namespace DiscordWikiBot
 					ulong chanId = ulong.Parse(chan);
 					channel = await client.GetChannelAsync(chanId);
 				} catch (Exception ex) {
-					Program.LogMessage($"Channel can’t be reached: {ex.Message}", "TranslateWiki");
+					Program.LogMessage($"Channel can’t be reached: {ex.Message}", "TranslateWiki", LogLevel.Warning);
 
-					// Remove data if channel was deleted
-					if (ex is DSharpPlus.Exceptions.NotFoundException)
+					// Remove data if channel is deleted or unavailable
+					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
 					{
-						Remove(chan, lang);
+						badServers.Add(chan, lang);
 					}
 				}
 
@@ -246,7 +248,25 @@ namespace DiscordWikiBot
 				string desc = FormDescription(authors);
 				embed.WithDescription(desc);
 
-				await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
+				try
+				{
+					await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
+				} catch (Exception ex)
+				{
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex.Message}", "TranslateWiki", LogLevel.Warning);
+
+					// Remove data if channel is deleted or unavailable
+					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					{
+						badServers.Add(chan, lang);
+					}
+				}
+			}
+
+			// Remove language from bad servers
+			foreach (KeyValuePair<string, string> entry in badServers)
+			{
+				Remove(entry.Key, entry.Value);
 			}
 
 			// Write down new first key

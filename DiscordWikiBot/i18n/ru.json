@@ -44,9 +44,9 @@
 	"configuring-help-domain-value": "домен проекта Викимедиа (в формате ru.wikipedia.org). Укажите `-`, чтобы вернуть к значению по умолчанию.",
 	"configuring-help-lang": "Изменить язык ответов бота на этом сервере.",
 	"configuring-help-lang-value": "желаемый язык ответов бота (языковой код ISO 639). Укажите `-`, чтобы вернуть к значению по умолчанию.",
-	"configuring-help-tw": "Начать или завершить ежечасное слежение за свежими правками на Translatewiki в одном из каналов.",
-	"configuring-help-tw-channel": "канал, доступный боту.",
-	"configuring-help-tw-value": "язык, доступный на Translatewiki (языковой код ISO 639). Укажите `-` в качестве языка, чтобы завершить слежение.",
+	"configuring-help-translatewiki": "Начать или завершить ежечасное слежение за свежими правками на Translatewiki в одном из каналов.",
+	"configuring-help-translatewiki-channel": "канал, доступный боту.",
+	"configuring-help-translatewiki-value": "язык, доступный на Translatewiki (языковой код ISO 639). Укажите `-` в качестве языка, чтобы завершить слежение.",
 	"configuring-help-wiki": "Изменить главную вики ссылок на этом сервере. Окончание формата /wiki/$1 обязательно.",
 	"configuring-help-wiki-value": "желаемая вики ссылок (в формате <https://ru.wikipedia.org/wiki/$1>). Укажите `-`, чтобы вернуть к значению по умолчанию.",
 

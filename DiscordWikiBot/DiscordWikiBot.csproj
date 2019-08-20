@@ -6,7 +6,7 @@
 		<PackageLicenseFile>LICENCE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/stjohann/DiscordWikiBot</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>2.3.0</Version>
+		<Version>2.3.1</Version>
 		<Authors>stjn and others</Authors>
 		<Company />
 	</PropertyGroup>
@@ -37,7 +37,6 @@
 		<PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
 		<PackageReference Include="System.Reflection.Primitives" Version="4.3.0" />
 		<PackageReference Include="System.Resources.ResourceManager" Version="4.3.0" />
-		<PackageReference Include="System.Runtime" Version="4.3.1" />
 		<PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
 		<PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
 		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
@@ -50,8 +49,6 @@
 		<PackageReference Include="System.Threading" Version="4.3.0" />
 		<PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
 		<PackageReference Include="System.Threading.Timer" Version="4.3.0" />
-		<PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
-		<PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Update="i18n\*">

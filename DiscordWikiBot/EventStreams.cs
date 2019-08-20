@@ -22,6 +22,11 @@ namespace DiscordWikiBot
 	/// </summary>
 	class EventStreams
 	{
+		/// <summary>
+		/// Flag for whether EventStreams was enabled or not.
+		/// </summary>
+		public static bool Enabled = false;
+
 		// EventSource stream instance
 		private static EventSourceReader Stream;
 
@@ -78,6 +83,7 @@ namespace DiscordWikiBot
 			}
 
 			// Open new EventStreams instance
+			Enabled = true;
 			Program.LogMessage($"Connecting to stream.wikimedia.org", "EventStreams");
 			Stream = new EventSourceReader(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
 			LatestTimestamp = DateTime.Now;
@@ -139,6 +145,8 @@ namespace DiscordWikiBot
 		public static async Task React(string goal, JObject data, RecentChange change)
 		{
 			DiscordClient client = Program.Client;
+			Dictionary<string, Dictionary<string, dynamic>> badChannels = new Dictionary<string, Dictionary<string, dynamic>>();
+
 			foreach (KeyValuePair<string, JToken> item in data)
 			{
 				Dictionary<string, dynamic> args = item.Value.ToObject<Dictionary<string, dynamic>>();
@@ -147,11 +155,18 @@ namespace DiscordWikiBot
 				{
 					ulong channelID = ulong.Parse(item.Key);
 					channel = await client.GetChannelAsync(channelID);
-				} catch(Exception ex) {
-					Program.LogMessage($"Channel can’t be reached: {ex.InnerException}", "EventStreams");
+				} catch(Exception ex)
+				{
+					string goalInfo = $"title={goal}";
+					goal = goal.Trim('<', '>');
+					if (goal != item.Key)
+					{
+						goalInfo = $"namespace={goal}";
+					}
+					Program.LogMessage($"Channel {item.Key} ({goalInfo}) can’t be reached: {ex.StackTrace}", "EventStreams", LogLevel.Warning);
 
-					// Remove data if channel was deleted
-					if (ex is DSharpPlus.Exceptions.NotFoundException)
+					// Remove data if channel is deleted or unavailable
+					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
 					{
 						goal = goal.Trim('<', '>');
 						if (goal != item.Key)
@@ -161,7 +176,7 @@ namespace DiscordWikiBot
 						{
 							args["title"] = goal;
 						}
-						RemoveData(item.Key, args);
+						badChannels.Add(item.Key, args);
 					}
 				}
 
@@ -243,7 +258,39 @@ namespace DiscordWikiBot
 
 				// Send the message
 				string lang = Config.GetLang(channel.GuildId.ToString());
-				await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));
+				try
+				{
+					await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));
+				} catch(Exception ex)
+				{
+					string goalInfo = $"title={goal}";
+					goal = goal.Trim('<', '>');
+					if (goal != item.Key)
+					{
+						goalInfo = $"namespace={goal}";
+					}
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {item.Key}; {goalInfo}) could not be posted: {ex.Message}", "EventStreams", LogLevel.Warning);
+
+					// Remove data if channel is deleted or unavailable
+					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					{
+						if (goal != item.Key)
+						{
+							args["namespace"] = goal;
+						}
+						else
+						{
+							args["title"] = goal;
+						}
+						badChannels.Add(item.Key, args);
+					}
+				}
+			}
+
+			// Remove streams from bad channels
+			foreach (KeyValuePair<string, Dictionary<string, dynamic>> entry in badChannels)
+			{
+				RemoveData(entry.Key, entry.Value);
 			}
 		}
 		

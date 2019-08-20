@@ -42,8 +42,8 @@
 	"configuring-help-lang": "Changer la langue du bot sur ce serveur.",
 	"configuring-help-lang-value": "la langue des réponses du bot. Utilisez `-` pour rétablir les valeurs par défaut.",
 
-	"configuring-help-tw": "Démarrer ou terminer des rapports horaires sur les modifications récentes sur Translatewiki dans l'un des canaux.",
-	"configuring-help-tw-value": "langue disponible sur Translatewiki pour traduction (code de langue ISO 639). Remplissez `-` comme une langue pour mettre fin aux rapports.",
+	"configuring-help-translatewiki": "Démarrer ou terminer des rapports horaires sur les modifications récentes sur Translatewiki dans l'un des canaux.",
+	"configuring-help-translatewiki-value": "langue disponible sur Translatewiki pour traduction (code de langue ISO 639). Remplissez `-` comme une langue pour mettre fin aux rapports.",
 
 	"configuring-help-wiki": "Changer le wiki principal pour les liens sur ce serveur. /wiki/$1 à la fin est requis.",
 	"configuring-help-wiki-value": "le wiki de votre choix (au format <https://fr.wikipedia.org/wiki/$1>). Utilisez `-` pour rétablir les valeurs par défaut.",

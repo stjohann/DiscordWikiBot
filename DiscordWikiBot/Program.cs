@@ -125,7 +125,10 @@ namespace DiscordWikiBot
 
 			Commands.RegisterCommands<Configuring>();
 
-			Commands.RegisterCommands<Streaming>();
+			if (EventStreams.Enabled)
+			{
+				Commands.RegisterCommands<Streaming>();
+			}
 
 			// Set up custom formatter
 			Commands.SetHelpFormatter<LocalisedHelpFormatter>();
