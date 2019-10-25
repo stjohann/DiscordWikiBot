@@ -455,7 +455,7 @@ namespace DiscordWikiBot
 		{
 			if (Data == null) return null;
 			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
-			Program.LogMessage($"Changing JSON config after a command was fired", "EventStreams");
+			Program.LogMessage($"Adding data ({goal}) to JSON config", "EventStreams");
 			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
 
 			// List of allowed keys
@@ -544,7 +544,7 @@ namespace DiscordWikiBot
 		{
 			if (Data == null) return;
 			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
-			Program.LogMessage($"Changing JSON config after the command was fired", "EventStreams");
+			Program.LogMessage($"Removing data ({goal}) from JSON config", "EventStreams");
 
 			// Change current data and remove an item if necessary
 			if (Data[goal] == null) return;

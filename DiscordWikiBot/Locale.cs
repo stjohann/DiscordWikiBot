@@ -99,7 +99,6 @@ namespace DiscordWikiBot
 		private static async Task InitLanguages()
 		{
 			LanguageData = await GetLanguageData();
-			Console.WriteLine(LanguageData.Count);
 		}
 
 		/// <summary>
@@ -216,18 +215,10 @@ namespace DiscordWikiBot
 						result.Add(fallbackCode);
 					}
 				}
-
-				// Check for other language fallbacks until we hit English
-				string lastFallback = fallbacks.LastOrDefault();
-				if (lastFallback != null && lastFallback != FALLBACK_LANG)
-				{
-					result.AddRange(GetFallbackChain(lastFallback));
-				}
 			}
 
 			// Add English and return the list
 			result.Add(FALLBACK_LANG);
-			result = result.Distinct().ToList();
 			LanguageFallbacks.Add(lang, result);
 			return result;
 		}

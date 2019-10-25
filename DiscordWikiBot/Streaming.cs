@@ -34,9 +34,8 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments);
-				bool isTitle = arguments.ContainsKey("title");
-				string goal = "streaming-stream-" + (isTitle ? "page" : "namespace");
-				goal = Locale.GetMessage(goal, lang, (isTitle ? arguments["title"] : arguments["namespace"]), 1);
+				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				string desc = ListArguments(temp, lang);
 				desc = (desc.Length > 0 ? $":\n{desc}" : ".");
@@ -59,9 +58,8 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments, false);
-				bool isTitle = arguments.ContainsKey("title");
-				string goal = "streaming-stream-" + (isTitle ? "page" : "namespace");
-				goal = Locale.GetMessage(goal, lang, (isTitle ? arguments["title"] : arguments["namespace"]), 1);
+				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				// Return a specific message if nothing was changed
 				if (temp.Count == 0)
@@ -90,9 +88,8 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				EventStreams.RemoveData(channel.Id.ToString(), arguments);
-				bool isTitle = arguments.ContainsKey("title");
-				string goal = "streaming-stream-" + (isTitle ? "page" : "namespace");
-				goal = Locale.GetMessage(goal, lang, (isTitle ? arguments["title"] : arguments["namespace"]), 1);
+				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				await ctx.RespondAsync(Locale.GetMessage("streaming-closed", lang, goal, channel.Mention));
 			});
@@ -126,9 +123,8 @@ namespace DiscordWikiBot
 			{
 				string output = "";
 				string goal = entry.Key.Trim('<', '>');
-				string goalMsg = "streaming-stream-" + (goal == entry.Key ? "page" : "namespace");
-				goalMsg = Locale.GetMessage(goalMsg, lang, goal, entry.Value.Count());
-				output += $"**{goalMsg}**:\n";
+				string goalMsg = GetGoalMessage(lang, (goal == entry.Key ? "title" : "namespace"), goal);
+				output += Locale.GetMessage("streaming-list-stream", lang, goalMsg, entry.Value.Count()) + "\n";
 
 				// List each stream with an editing command
 				foreach (KeyValuePair<string, JToken> item in (JObject)entry.Value)
@@ -299,6 +295,20 @@ namespace DiscordWikiBot
 			}
 			
 			return result;
+		}
+
+		/// <summary>
+		/// Format a localised message with goal.
+		/// </summary>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <param name="type">Type of the goal.</param>
+		/// <param name="goal">Streaming goal.</param>
+		/// <returns></returns>
+		private static string GetGoalMessage(string lang, string type, string goal)
+		{
+			// * streaming-stream-namespace
+			// * streaming-stream-title
+			return Locale.GetMessage("streaming-stream-" + type, lang, goal.ToString());
 		}
 
 		/// <summary>
