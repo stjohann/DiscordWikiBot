@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"Acamicamacaraca",
@@ -7,7 +7,8 @@
 	},
 	"bullet": "— {0}",
 	"separator": " — {0}",
-	"yes-no": "{0:да|не}",
+	"yes": "да",
+	"no": "не",
 	"help-title": "Помоћ",
 	"help-title-command": "{1}{0}{msg:separator}помоћ",
 	"help-all": "Навођење свих команди и групâ. Наведите команду да бисте видели још информација.",

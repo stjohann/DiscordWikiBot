@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"Meiræ",
@@ -8,7 +8,8 @@
 
 	"bullet": "• {0}",
 	"separator": " – {0}",
-	"yes-no": "{0:oui|non}",
+	"yes": "oui",
+	"no": "non",
 
 	"help-title": "Aide",
 	"help-title-command": "{1}{0} – aide",

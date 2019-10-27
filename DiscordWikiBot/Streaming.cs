@@ -326,7 +326,7 @@ namespace DiscordWikiBot
 				string value = x.Value.ToString();
 				if (x.Value is bool)
 				{
-					value = Locale.GetMessage("yes-no", lang, x.Value);
+					value = Locale.GetMessage((x.Value ? "yes" : "no"), lang);
 				}
 
 				return Locale.GetMessage("bullet", lang, Locale.GetMessage($"streaming-key-{x.Key}", lang) + Locale.GetMessage("separator", lang, $"`{value}`"));

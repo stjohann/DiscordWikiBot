@@ -135,12 +135,20 @@ namespace DiscordWikiBot
 
 			// Determine our goal (default for DMs)
 			bool isServerMessage = (e.Guild != null);
-			string goal = (isServerMessage ? e.Guild.Id.ToString() : LANG_DEFAULT);
-			string lang = Config.GetLang(goal);
-			if (isServerMessage) Init(goal);
+			string goal = LANG_DEFAULT;
+			string lang = Config.GetLang();
+
+			if (isServerMessage)
+			{
+				string guildID = e.Guild.Id.ToString();
+				goal = GetGoal(guildID, e.Channel.Id.ToString());
+				lang = Config.GetLang(guildID);
+
+				Init(goal);
+			}
 
 			// Send message
-			string msg = PrepareMessage(e.Message.Content, goal);
+			string msg = PrepareMessage(e.Message.Content, lang, goal);
 			if (msg != "")
 			{
 				bool isTooLong = (msg == TOO_LONG);
@@ -172,10 +180,21 @@ namespace DiscordWikiBot
 			if (!Cache.ContainsKey(id) && !isLastMessage) return;
 
 			// Determine our goal (default for DMs)
-			string goal = (e.Guild != null ? e.Guild.Id.ToString() : LANG_DEFAULT);
-			Init(goal);
-			string msg = PrepareMessage(e.Message.Content, goal);
-			string lang = Config.GetLang(goal);
+			bool isServerMessage = (e.Guild != null);
+			string goal = LANG_DEFAULT;
+			string lang = Config.GetLang();
+
+			if (isServerMessage)
+			{
+				string guildID = e.Guild.Id.ToString();
+				goal = GetGoal(guildID, e.Channel.Id.ToString());
+				lang = Config.GetLang(guildID);
+
+				Init(goal);
+			}
+
+			// Get a message
+			string msg = PrepareMessage(e.Message.Content, lang, goal);
 
 			// Post a message if links were added in last one
 			if (isLastMessage)
@@ -251,9 +270,10 @@ namespace DiscordWikiBot
 		/// Parse a Discord message.
 		/// </summary>
 		/// <param name="content">Discord message content.</param>
-		/// <param name="goal">Discord server ID.</param>
+		/// <param name="lang">MediaWiki-compatible language code.</param>
+		/// <param name="goal">Discord server or channel ID.</param>
 		/// <returns>A message with parsed wiki links or a response code.</returns>
-		static public string PrepareMessage(string content, string goal)
+		static public string PrepareMessage(string content, string lang, string goal)
 		{
 			if (content == "" || content == null)
 			{
@@ -270,9 +290,6 @@ namespace DiscordWikiBot
 			// Start digging for links
 			MatchCollection matches = Regex.Matches(content, pattern);
 			List<string> links = new List<string>();
-
-			// Get language from the goal
-			string lang = Config.GetLang(goal);
 
 			if (matches.Count > 0)
 			{
@@ -539,6 +556,24 @@ namespace DiscordWikiBot
 
 			title = EncodePageTitle(title, escapePar);
 			return format.Replace("$1", title);
+		}
+
+		/// <summary>
+		/// Test if channel override exists for the channel.
+		/// </summary>
+		/// <param name="guild">Discord server ID.</param>
+		/// <param name="channel">Discord guild ID.</param>
+		/// <returns>Goal ID compatible with data.</returns>
+		private static string GetGoal(string guild, string channel)
+		{
+			string goal = "#" + channel;
+			string channelWiki = Config.GetWiki(goal, false);
+			if (channelWiki == null)
+			{
+				return guild;
+			}
+
+			return goal;
 		}
 
 		/// <summary>

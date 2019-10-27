@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"stjn"
@@ -7,7 +7,8 @@
 
 	"bullet": "• {0}",
 	"separator": " – {0}",
-	"yes-no": "{0:yes|no}",
+	"yes": "yes",
+	"no": "no",
 
 	"help-title": "Help",
 	"help-title-command": "{1}{0}{msg:separator}help",
@@ -32,8 +33,11 @@
 	"configuring-changed-translatewiki-channel": "The channel for reports about recent changes on Translatewiki was changed to {0}.",
 	"configuring-changed-translatewiki-lang": "The language for which the reports about recent changes on Translatewiki are compiled was changed to **{0}**.",
 	"configuring-changed-wiki": "Wiki for links on this server was changed to **{0}**.",
+	"configuring-changed-wiki-channel": "Wiki for links on this channel was changed to **{0}**.",
 	"configuring-changed-reset": "The value was reset back to default.",
 
+	"configuring-error-same": "The value you entered is the same as the current one.",
+	"configuring-error-strange": "Your command failed due to some strange error.",
 	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{1}help {0}`.",
 	"configuring-badvalue-domain": "Streams are available only for Wikimedia projects.\nList of allowed domains: {0}.",
 	"configuring-badvalue-lang": "The bot doesn’t recognise your input as a valid ISO 639 code.",
@@ -48,6 +52,7 @@
 	"configuring-help-translatewiki-channel": "a channel that’s available to the bot.",
 	"configuring-help-translatewiki-value": "language that’s available on Translatewiki for translation (language code in ISO 639). Fill `-` as a language to end reporting.",
 	"configuring-help-wiki": "Change the main wiki for links on this server. /wiki/$1 at the end is required.",
+	"configuring-help-wiki-channel": "Change the wiki for links on this channel. /wiki/$1 at the end is required.",
 	"configuring-help-wiki-value": "the wiki you want (in <https://en.wikipedia.org/wiki/$1> format). Use `-` to reset to default.",
 
 	"eventstreams-diff": "diff",

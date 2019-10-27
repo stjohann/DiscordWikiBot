@@ -99,8 +99,9 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="key">Configuration key.</param>
 		/// <param name="goal">Discord channel or Discord guild ID.</param>
+		/// <param name="useDefault">Use default value if none exists for the goal.</param>
 		/// <returns>A value of a configuration variable.</returns>
-		static public string GetValue(string key, string goal = "")
+		static public string GetValue(string key, string goal = "", bool useDefault = true)
 		{
 			JObject source;
 			JToken value;
@@ -119,7 +120,7 @@ namespace DiscordWikiBot
 
 			// Return default value
 			value = Default.GetValue(key);
-			if (value != null) {
+			if (useDefault && value != null) {
 				string val = value.ToString();
 				if (val != "")
 				{
@@ -185,10 +186,11 @@ namespace DiscordWikiBot
 		/// Get a standard wiki link in a server.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
+		/// <param name="useDefault">Use default value if none exists for the goal.</param>
 		/// <returns>Wiki URL.</returns>
-		static public string GetWiki(string goal = "")
+		static public string GetWiki(string goal = "", bool useDefault = true)
 		{
-			return GetValue("wiki", goal);
+			return GetValue("wiki", goal, useDefault);
 		}
 
 		/// <summary>
@@ -228,7 +230,7 @@ namespace DiscordWikiBot
 		{
 			if (Overrides == null) return RESULT_STRANGE;
 			if (goal == null || goal == "") return RESULT_STRANGE;
-			Program.LogMessage($"Changing a server override ({key}) after a command was fired.");
+			Program.LogMessage($"Changing an override ({goal}: {key}) after a command was fired.");
 
 			// Change current data
 			JObject goalObj = (JObject)Overrides[goal];
@@ -252,7 +254,7 @@ namespace DiscordWikiBot
 
 			// Reset data if it matches defaults
 			int code = RESULT_CHANGE;
-			if (value == "-" || value == GetValue(key))
+			if (value == "-" || (!goal.StartsWith('#') && value == GetValue(key)))
 			{
 				(Overrides.Property(goal).Value as JObject).Property(key).Remove();
 				code = RESULT_RESET;

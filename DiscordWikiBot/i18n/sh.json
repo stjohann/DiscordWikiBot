@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"Nesmir Kudilovic"
@@ -6,7 +6,8 @@
 	},
 	"bullet": "• {0}",
 	"separator": " – {0}",
-	"yes-no": "{0:da|ne}",
+	"yes": "da",
+	"no": "ne",
 	"help-title": "Pomoć",
 	"help-title-command": "{1}{0}{msg:separator}pomoć",
 	"help-all": "Izlistavanje svih glavnih naredbi i grupa. Navedite naredbu da biste vidjeli više informacija.",

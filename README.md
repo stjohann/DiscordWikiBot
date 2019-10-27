@@ -32,7 +32,7 @@ By default, the bot is configured for the usage in Russian Wikipedia. Your insta
 	// Channel for recent changes reports from Translatewiki.net
 	"translatewiki-channel": "448985285603098624",
 	// Language for which recent changes reports from Translatewiki.net should be sent
-	"translatewiki-language": "ru"
+	"translatewiki-lang": "ru"
 }
 ```
 

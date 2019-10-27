@@ -218,7 +218,7 @@ namespace DiscordWikiBot
 
 			if (value != "-" && !value.Contains("/wiki/$1"))
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));
 				return;
 			}
 
@@ -238,7 +238,51 @@ namespace DiscordWikiBot
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
-		
+
+		[Command("channelWiki")]
+		[Description("configuring-help-wiki-channel")]
+		public async Task SetChannelWiki(CommandContext ctx,
+			[Description("configuring-help-wiki-value"), RemainingText] string value)
+		{
+			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+			await ctx.TriggerTypingAsync();
+
+			// Check for required parameters
+			if (value.ToString() == "")
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
+				return;
+			}
+
+			if (value != "-" && !value.Contains("/wiki/$1"))
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));
+				return;
+			}
+
+			// Provide some changes
+			value = value.Replace("<", String.Empty).Replace(">", String.Empty);
+
+			// Reset to default server value if necessary
+			if (value == Config.GetWiki(ctx.Guild.Id.ToString()))
+			{
+				value = "-";
+			}
+
+			// Do action and respond
+			int succeeds = Config.SetOverride($"#{ctx.Channel.Id.ToString()}", "wiki", value);
+			if (succeeds == Config.RESULT_CHANGE)
+			{
+				Linking.Init($"#{ctx.Channel.Id.ToString()}");
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-wiki-channel", lang, value));
+			}
+			if (succeeds == Config.RESULT_RESET)
+			{
+				Linking.Remove($"#{ctx.Channel.Id.ToString()}");
+			}
+			await RespondOnErrors(succeeds, ctx, lang);
+		}
+
 		/// <summary>
 		/// Common responses to error response codes.
 		/// </summary>

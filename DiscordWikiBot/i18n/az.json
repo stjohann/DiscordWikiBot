@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"NMW03"
@@ -6,7 +6,8 @@
 	},
 	"bullet": "• {0}",
 	"separator": " – {0}",
-	"yes-no": "{0:hə|yox}",
+	"yes": "hə",
+	"no": "yox",
 	"help-title": "Kömək",
 	"help-title-command": "{1}{0}{msg:separator}kömək",
 	"help-all": "Bütün yuxarı səviyyəli əmr və qrupların siyahısı. Daha çox məlumat görmək üçün bir əmr göstərin.",

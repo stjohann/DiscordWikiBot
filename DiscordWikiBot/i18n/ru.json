@@ -1,4 +1,4 @@
-﻿{
+{
 	"@metadata": {
 		"authors": [
 			"stjn"
@@ -7,7 +7,8 @@
 
 	"bullet": "— {0}",
 	"separator": " — {0}",
-	"yes-no": "{0:да|нет}",
+	"yes": "да",
+	"no": "нет",
 
 	"help-title": "Справка",
 	"help-title-command": "{1}{0}{msg:separator}справка",
@@ -32,8 +33,11 @@
 	"configuring-changed-translatewiki-channel": "Канал для уведомлений о свежих правках на Translatewiki изменён на {0}.",
 	"configuring-changed-translatewiki-lang": "Язык, для которого идут уведомления о свежих правках на Translatewiki, изменён на **{0}**.",
 	"configuring-changed-wiki": "Вики для ссылок на этом сервере изменена на **{0}**.",
+	"configuring-changed-wiki-channel": "Вики для ссылок на этом канале изменена на **{0}**.",
 	"configuring-changed-reset": "Возвращено значение по умолчанию.",
 
+	"configuring-error-same": "Введённое вами значение совпадает с текущим.",
+	"configuring-error-strange": "Ваша команда не может быть выполнена по непонятной причине.",
 	"configuring-required-value": "Требуется значение параметра.\nЧтобы получить полную справку, введите `{1}help {0}`.",
 	"configuring-badvalue-domain": "Потоки доступны только для проектов Викимедиа.\nСписок допустимых доменов: {0}.",
 	"configuring-badvalue-lang": "Бот не считает введённое вами корректным языковым кодом ISO 639.",
@@ -48,6 +52,7 @@
 	"configuring-help-translatewiki-channel": "канал, доступный боту.",
 	"configuring-help-translatewiki-value": "язык, доступный на Translatewiki (языковой код ISO 639). Укажите `-` в качестве языка, чтобы завершить слежение.",
 	"configuring-help-wiki": "Изменить главную вики ссылок на этом сервере. Окончание формата /wiki/$1 обязательно.",
+	"configuring-help-wiki-channel": "Изменить вики ссылок на этом канале. Окончание формата /wiki/$1 обязательно.",
 	"configuring-help-wiki-value": "желаемая вики ссылок (в формате <https://ru.wikipedia.org/wiki/$1>). Укажите `-`, чтобы вернуть к значению по умолчанию.",
 
 	"eventstreams-diff": "разн.",
