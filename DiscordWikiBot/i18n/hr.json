@@ -4,12 +4,10 @@
 			"Hmxhmx"
 		]
 	},
-
 	"bullet": "• {0}",
 	"separator": " – {0}",
 	"yes": "da",
 	"no": "ne",
-
 	"help-title": "Pomoć",
 	"help-title-command": "{1}{0}{msg:separator}pomoć",
 	"help-all": "Navođenje svih glavnih naredbi i grupa. Navedite naredbu da biste vidjeli više informacija.",
@@ -24,7 +22,6 @@
 	"help-group-standalone": "Ova je grupa samostalna naredba.",
 	"help-command": "Prikazuje pomoć za naredbe.",
 	"help-command-command": "naredba za pružanje pomoći.",
-
 	"configuring-status": ":information_source: Priključeno.",
 	"configuring-status-streaming": "Najnoviji odgovor iz struja: prije {0} {0:minute|minute|minuta} i {1} {1:sekunde|sekunde|sekundi}.",
 	"configuring-changed-domain": "Domena za struje najnovijih izmjena na ovom poslužitelju promijenjena je u **{0}**.",
@@ -34,12 +31,10 @@
 	"configuring-changed-translatewiki-lang": "Jezik za koji se generiraju izvješća o nedavnim promjena na Translatewikiju promijenjen je na **{0}**.",
 	"configuring-changed-wiki": "Wiki za poveznice na ovom poslužitelju promijenjena je na **{0}**.",
 	"configuring-changed-reset": "Vrijednost je vraćena na zadano.",
-
 	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili punu pomoć za naredbu, pošaljite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Struje su dostupne samo za Wikimedijine projekte.\nPopis dopuštenih domena: {0}.",
 	"configuring-badvalue-lang": "Bot ne prepoznaje Vaš unos kao valjani ISO 639 kôd.",
 	"configuring-badvalue-wiki": "Na kraju Vašeg URL-a mora se nalaziti `{0}`.",
-
 	"configuring-help-status": "Provjera funkcionalnosti bota.",
 	"configuring-help-domain": "Promjena domene za koju se odašilju nedavne izmjene na ovaj poslužitelj. Funkcionira samo za Wikimedijine projekte.",
 	"configuring-help-domain-value": "domena Wikimedijinog projekta (u formatu hr.wikipedia.org). Koristite `-` za vraćanje na zadano.",
@@ -50,18 +45,15 @@
 	"configuring-help-translatewiki-value": "jezik koji je dostupan na Translatewikiju za prevođenje (jezični kôd iz ISO 639). Koristite `-` za zaustavljanje izvješćivanja.",
 	"configuring-help-wiki": "Promjena glavne wiki za poveznice na ovom poslužitelju. Potrebno je dodati /wiki/$1 na kraj.",
 	"configuring-help-wiki-value": "wiki koji želite (u formatu <https://en.wikipedia.org/wiki/$1>). Koristite `-` za vraćanje na zadano.",
-
 	"eventstreams-diff": "razl",
 	"eventstreams-talk": "razgovor",
 	"eventstreams-contribs": "doprinosi",
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-
 	"linking-link": "Poveznica:",
 	"linking-links": "Poveznice:",
 	"linking-toolong": "Poveznice na gornju poruku nisu dohvaćene jer bi poruka bila preduga za Discord.",
-
 	"streaming-stream-namespace": "iz imenskog prostora `{0}`",
 	"streaming-stream-title": "sa stranice `{0}`",
 	"streaming-opened": ":white_check_mark: Struja {0} je dodana u kanal {1}{2}",
@@ -71,7 +63,6 @@
 	"streaming-list": ":information_source: {0} {0:aktivna struja|aktivne struje|aktivnih struja} na ovom poslužitelju.\n{1}",
 	"streaming-list-nothing": ":ok: Na ovom poslužitelju nema otvorenih struja.",
 	"streaming-list-stream": "**{1:Struja|Struje} {0}:**",
-
 	"streaming-key-bot": "uključi izmjene botova",
 	"streaming-key-in-comment": "traži u komentaru",
 	"streaming-key-diff-length": "minimalna veličina razlike",
@@ -80,16 +71,13 @@
 	"streaming-key-patrolled": "filtriraj po statusu ophoditelja",
 	"streaming-key-title": "naslov stranice",
 	"streaming-key-type": "vrsta izmjene",
-
 	"streaming-required-goal": "Potrebno je navesti cilj struje (naslov stranice ili broj imenskog prostora).\nZa punu pomoć za ovu naredbu, pošaljite `{1}help {0}`.",
-
 	"streaming-help-open": "Pokretanje struje nedavnih izmjena u ovom kanalu.",
 	"streaming-help-edit": "Uređivanje parametara struje nedavnih izmjena u kanalu.",
 	"streaming-help-close": "Zaustavljanje struje nedavnih izmjena u kanalu.",
 	"streaming-help-list": "Popis svih otvorenih struja na ovom poslužitelju.",
 	"streaming-help-channel": "kanal koji je dostupan botu.",
 	"streaming-help-args": "dostupni parametri struja:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-
 	"translatewiki-deadline": "Pronađite vrijeme za provjeru prijevoda za ovaj tjedan **do 00:00** u četvrtak po vremenskoj zoni UTC da biste izbjegli loše prijevode i vandalizme.",
 	"translatewiki-header": "{1:Jedna poruka|{0} poruke|{0} poruka} od {2} {2:autora|autora|autora}"
 }

@@ -24,7 +24,7 @@
 	"help-command-command": "naredba za dobivanje pomoći.",
 	"configuring-status": ":information_source: Uključeno u priključnicu.",
 	"configuring-status-streaming": "Najnoviji odgovor iz tokova: prije {0} {0:minute|minute|minuta} i {1} {1:sekunde|sekunde|sekundi}.",
-	"configuring-changed-domain": "Domena za tokove skorašnjih izmjena na ovom serveru promijenjena je u **{0}**.\n",
+	"configuring-changed-domain": "Domena za tokove skorašnjih izmjena na ovom serveru promijenjena je u **{0}**.",
 	"configuring-changed-lang": "Jezik bota na ovom serveru promijenjen je na **{0}**.",
 	"configuring-changed-translatewiki": "Izvještaji o skorašnjim izmjenama na Translatewikiju omogućeni su u kanalu {0} za jezik **{1}**.",
 	"configuring-changed-translatewiki-channel": "Kanal za izvještaje o skorašnjim izmjenama na Translatewikiju promijenjen je u {0}.",

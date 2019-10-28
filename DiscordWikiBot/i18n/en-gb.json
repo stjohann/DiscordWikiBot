@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"RhinosF1"
+		]
+	},
+	"yes": "yes",
+	"no": "no",
+	"help-title": "Help",
+	"help-title-command": "{1}{0}{msg:separator}help",
+	"help-all": "Listing all top-level commands and groups. Specify a command to see more information.",
+	"help-version": "Version {0}.",
+	"help-repo": "Source code: {0}",
+	"help-commands": "Commands",
+	"help-subcommands": "Subcommands",
+	"help-aliases": "Aliases",
+	"help-arguments": "Arguments",
+	"help-default": "By default: `{0}`.",
+	"help-optional": "Optional",
+	"help-group-standalone": "This group is a standalone command.",
+	"help-command": "Displays command help.",
+	"help-command-command": "command to provide help for.",
+	"configuring-status": ":information_source: Plugged into the power socket.",
+	"configuring-status-streaming": "Latest response from the streams: {0} {0:minute|minutes} {1} {1:second|seconds} ago.",
+	"configuring-changed-domain": "Domain for recent changes streams on this server was changed to **{0}**.",
+	"configuring-changed-lang": "Language of the bot on this server was changed to **{0}**.",
+	"configuring-changed-translatewiki": "Reports about recent changes on Translatewiki are enabled in the channel {0} for language **{1}**.",
+	"configuring-changed-translatewiki-channel": "The channel for reports about recent changes on Translatewiki was changed to {0}.",
+	"configuring-changed-translatewiki-lang": "The language for which the reports about recent changes on Translatewiki are compiled was changed to **{0}**."
+}
