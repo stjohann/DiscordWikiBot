@@ -1,7 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Nesmir Kudilovic"
+			"Nesmir Kudilovic",
+			"Bugoslav",
+			"Stjn"
 		]
 	},
 	"bullet": "• {0}",
@@ -30,7 +32,10 @@
 	"configuring-changed-translatewiki-channel": "Kanal za izvještaje o skorašnjim izmjenama na Translatewikiju promijenjen je u {0}.",
 	"configuring-changed-translatewiki-lang": "Jezik za koji se generiraju izvještaji o skorašnjim izmjenama na Translatewikiju promijenjen je u **{0}**.",
 	"configuring-changed-wiki": "Wiki za linkove na ovom serveru promijenjen je na **{0}**.",
+	"configuring-changed-wiki-channel": "Wiki za linkove na ovom kanalu promijenjen je na **{0}**.",
 	"configuring-changed-reset": "Vrijednost je resetirana na predodređenu.",
+	"configuring-error-same": "Vrijednost koju ste unijeli ista je kao i trenutačno postavljena.",
+	"configuring-error-strange": "Vaša zadana naredba nije izvršena zbog neke neidentificirane greške.",
 	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili potpunu pomoć za naredbu, pošaljite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Tokovi su dostupni samo za wikimedijine projekte.\nLista dozvoljenih domena: {0}.",
 	"configuring-badvalue-lang": "Bot ne prepoznaje vaš unos kao validan kôd po ISO 639.",
@@ -44,6 +49,7 @@
 	"configuring-help-translatewiki-channel": "kanal koji je dostupan botu.",
 	"configuring-help-translatewiki-value": "jezik koji je dostupan za prevođenje na Translatewikiju (jezički kôd prema ISO 639). Koristite `-` za zaustavljanje izvještavanja.",
 	"configuring-help-wiki": "Promjena glavnog wikija, a za poveznice na ovom serveru. Potrebno je dodati /wiki/$1 na kraj.",
+	"configuring-help-wiki-channel": "Mijenjanje wikija za linkove na ovom kanalu. Na završetku je neophodno potreban dio URL-a: /wiki/$1",
 	"configuring-help-wiki-value": "wiki koji želite (u formatu <https://en.wikipedia.org/wiki/$1>). Koristite `-` za vraćanje na predodređeno.",
 	"eventstreams-diff": "razl-разл",
 	"eventstreams-talk": "razgovor",

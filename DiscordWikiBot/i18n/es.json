@@ -1,0 +1,35 @@
+{
+	"@metadata": {
+		"authors": [
+			"Fitoschido",
+			"Ihojose"
+		]
+	},
+	"yes": "sí",
+	"no": "no",
+	"help-title": "Ayuda",
+	"help-title-command": "{1}{0}{msg:separator}ayuda",
+	"help-version": "Versión {0}.",
+	"help-repo": "Código fuente: {0}",
+	"help-commands": "Comandos",
+	"help-subcommands": "Subórdenes",
+	"help-aliases": "Alias",
+	"help-arguments": "Argumentos",
+	"help-default": "Por defecto: `{0}`.",
+	"help-optional": "opcional",
+	"help-command": "Muestra ayuda sobre la orden.",
+	"configuring-badvalue-lang": "El robot no reconoce la entrada como un código ISO 639 válido.",
+	"eventstreams-diff": "difs.",
+	"eventstreams-new": "N",
+	"eventstreams-minor": "m",
+	"linking-link": "Enlace:",
+	"linking-links": "Enlaces:",
+	"streaming-stream-namespace": "desde el espacio de nombres  `{0}`",
+	"streaming-stream-title": "Desde la página `{0}`",
+	"streaming-key-in-comment": "buscar en el comentario",
+	"streaming-key-diff-length": "longitud de diferencias mínima",
+	"streaming-key-minor": "incluir ediciones menores",
+	"streaming-key-namespace": "número de espacio de nombres",
+	"streaming-help-channel": "un canal que está disponible para el bot.",
+	"translatewiki-header": "{0} {1:mensaje|mensajes} de {2} {2:autor|autores}"
+}

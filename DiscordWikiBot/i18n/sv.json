@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"WikiPhoenix"
+		]
+	},
+	"yes": "ja",
+	"no": "nej",
+	"help-title": "Hjälp",
+	"help-title-command": "{1}{0}{msg:separator}hjälp",
+	"help-version": "Version {0}.",
+	"help-repo": "Källkod: {0}",
+	"help-commands": "Kommandon",
+	"help-subcommands": "Underkommandon",
+	"help-aliases": "Alias",
+	"help-default": "Som standard: `{0}`.",
+	"help-optional": "valfri",
+	"configuring-help-lang": "Ändra språket för roboten på denna server.",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "diskussion",
+	"eventstreams-contribs": "bidrag",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m",
+	"linking-link": "Länk:",
+	"linking-links": "Länkar:",
+	"streaming-stream-namespace": "från namnrymden `{0}`",
+	"streaming-stream-title": "från sidan `{0}`",
+	"streaming-opened": ":white_check_mark: Strömmen {0} lade till i kanalen {1}{2}",
+	"streaming-edited": ":eight_spoked_asterisk: Strömmen {0} i kanalen {1} har ändrat följande parametrar:\n{2}",
+	"streaming-closed": ":negative_squared_cross_mark: Strömmen {0} togs bort från kanelen {1}.",
+	"streaming-list": ":information_source: {0} {0:aktiv ström|aktiva strömmar} på denna server.\n{1}",
+	"streaming-key-in-comment": "sök i kommentar",
+	"streaming-key-diff-length": "minimal diff-längd",
+	"streaming-key-minor": "inkludera mindre redigeringar",
+	"streaming-key-namespace": "namnrymdsnummer",
+	"streaming-key-title": "sidtitel",
+	"streaming-help-channel": "en kanal som är tillgänglig för roboten.",
+	"translatewiki-deadline": "Hitta tiden att kontrollera översättningar för denna vecka **fram tills 00:00** UTC på torsdag för att undvika dåliga översättningar och vandalism ska komma med.",
+	"translatewiki-header": "{0} {1:meddelande|meddelanden} från {2} {2:författare|författare}"
+}

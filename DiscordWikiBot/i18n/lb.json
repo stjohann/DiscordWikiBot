@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"yes": "jo",
+	"no": "neen",
+	"help-title": "Hëllef",
+	"help-version": "Versioun {0}.",
+	"help-repo": "Quellcode: {0}",
+	"help-aliases": "Aliasen",
+	"help-arguments": "Argumenter",
+	"help-default": "Als Standard: '{0}'.",
+	"help-optional": "fakultativ",
+	"configuring-help-lang": "D'Sprooch vum Bot op dësem Server änneren.",
+	"eventstreams-diff": "Ënnerscheed",
+	"eventstreams-contribs": "Kontributiounen",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "B",
+	"eventstreams-minor": "k",
+	"linking-link": "Link:",
+	"linking-links": "Linken:",
+	"streaming-stream-namespace": "vum Nummraum '{0}'",
+	"streaming-stream-title": "vun der Säit '{0}'",
+	"streaming-key-namespace": "Nummraum-Zuel",
+	"streaming-key-title": "Titel vun der Säit",
+	"streaming-key-type": "Typ vun der Ännerung"
+}

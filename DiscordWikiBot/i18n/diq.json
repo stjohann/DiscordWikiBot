@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mirzali",
+			"Orbot707"
+		]
+	},
+	"yes": "eya",
+	"no": "nê",
+	"help-title": "Peşti",
+	"help-title-command": "{1}{0}{msg:separator}peşti",
+	"help-version": "Version {0}.",
+	"help-repo": "Kodê çımey : {0}",
+	"help-commands": "Mışewreyi",
+	"help-subcommands": "Emırê bınêni",
+	"help-aliases": "Nameyê bini",
+	"help-arguments": "Argumani",
+	"help-default": "Hesabyaye `{0}`.",
+	"help-optional": "keyfi",
+	"help-group-standalone": "Ena yew emora xosera",
+	"help-command": "Peştiya emıri bımocne",
+	"help-command-command": "Emırê peşti gırotışi",
+	"configuring-status": ":information_source: Neyaya soket.",
+	"configuring-changed-reset": "Erc hesabyayena biyo reset",
+	"configuring-error-same": "Ercê şım u ercê biniya zey pê yê",
+	"eventstreams-diff": "ferq",
+	"eventstreams-talk": "werênayış",
+	"eventstreams-contribs": "iştıraki",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "q",
+	"linking-link": "Link",
+	"linking-links": "Linki",
+	"streaming-key-bot": "Vurnayışanê boti zi tewr ke",
+	"streaming-key-in-comment": "Werênan dê cıgeyrayış",
+	"streaming-key-diff-length": "Minimum ferqê derganiye",
+	"streaming-key-minor": "Vurnayışanê qıcıkan tewr ke",
+	"streaming-key-namespace": "Numrey caynamey",
+	"streaming-key-patrolled": "Gorey weziyetê dewriyan parzûn ke",
+	"streaming-key-title": "sernamey pele",
+	"streaming-key-type": "Tewrê vurnayışi"
+}

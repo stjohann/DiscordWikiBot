@@ -1,0 +1,34 @@
+{
+	"@metadata": {
+		"authors": [
+			"Borichèt"
+		]
+	},
+	"yes": "é!",
+	"no": "nò",
+	"help-title": "Agiut",
+	"help-title-command": "{1}{0}{msg:separator}agiut",
+	"help-all": "Lista ëd tuti ij comand e le partìe ëd livel superior. Ch'a spessìfica un comand për vëdde pi d'anformassion.",
+	"help-version": "Version {0}.",
+	"help-repo": "Còdes sorgiss: {0}",
+	"help-commands": "Comand",
+	"help-subcommands": "Sot-comand",
+	"help-aliases": "Sobrichet",
+	"help-arguments": "Argoment",
+	"help-default": "Për stàndard: `{0}`.",
+	"help-optional": "facoltativ",
+	"help-group-standalone": "Sa partìa a l'é un comand autònom.",
+	"help-command": "A smon l'agiut për ël comand.",
+	"help-command-command": "comand për ël qual a-i é da dé l'agiut.",
+	"configuring-status": ":information_source: Tacà a la prèisa.",
+	"configuring-status-streaming": "Ùltima rispòsta dai fluss: {0} {0:minuta|minute} {1} {1:second|second} fa.",
+	"configuring-changed-domain": "Ël domini për ij fluss ëd modìfiche recente su cost servent a l'é stàit modificà a **{0}**.",
+	"configuring-changed-lang": "La lenga dël trigomiro su cost servent a l'é stàita modificà a **{0}**.",
+	"configuring-changed-translatewiki": "Ij rapòrt an sle modìfiche recente su Translatewiki a son ativà ant ël canal {0} për la lenga **{1}**.",
+	"configuring-changed-translatewiki-channel": "Ël canal për ij rapòrt an sle modifiche recente su Translatewiki a l'é stàit cangià a {0}.",
+	"configuring-changed-translatewiki-lang": "La lenga për la qual a son ëstàit compilà ij rapòrt an sle modìfiche recente su Translatewiki a l'é stàita cangià an **{0}**.",
+	"configuring-changed-wiki": "La wiki për le liure su cost servent a l'é stàita rampiassà da **{0}**.",
+	"configuring-changed-wiki-channel": "La wiki për le liure su cost canal a l'é stàita cangià an **{0}**.",
+	"configuring-changed-reset": "Ël valor a l'é stàit butà torna a col dë stàndard.",
+	"configuring-error-same": "Ël valor ch'a l'ha butà a l'é l'istess ëd col ch'a-i é già."
+}

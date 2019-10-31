@@ -21,6 +21,7 @@
 	"help-group-standalone": "הקבוצה הזאת היא פקודה נפרדת.",
 	"help-command": "הצגת עזרה עבור הפקודה.",
 	"help-command-command": "פקודה הדורשת הצגת עזרה.",
+	"configuring-status": ":information_source מחובר לשקע.",
 	"configuring-status-streaming": "התגובה האחרונה מהסטרימים: {0} {0:דקה|דקות} {1} {1:שניה|שניות} מוקדם יותר.",
 	"configuring-changed-domain": "הדומיין לסטרימים של השינויים האחרונים בשרת הזה הפך להיות **{0}**.",
 	"configuring-changed-lang": "השפה של הבוט בשרת הזה הפכה להיות **{0}**.",

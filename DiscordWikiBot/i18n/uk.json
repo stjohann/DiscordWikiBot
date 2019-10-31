@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"SerDIDG",
-			"Хтосьці"
+			"Хтосьці",
+			"Serhio Magpie"
 		]
 	},
 	"bullet": "— {0}",
@@ -31,7 +32,10 @@
 	"configuring-changed-translatewiki-channel": "Канал для повідомлень про нові редагування на Translatewiki змінений на {0}.",
 	"configuring-changed-translatewiki-lang": "Мова, для якої йдуть повідомлення про нові редагування на Translatewiki, змінена на **{0}**.",
 	"configuring-changed-wiki": "Вікі для посилань на цьому сервері змінена на **{0}**.",
+	"configuring-changed-wiki-channel": "Вікі для посилань на цьому каналі змінена на **{0}**.",
 	"configuring-changed-reset": "Значення було повернуто за замовчуванням.",
+	"configuring-error-same": "Введене вами значення співпадає з поточним.",
+	"configuring-error-strange": "Ваша команда не може бути виконана з незрозумілої причини.",
 	"configuring-required-value": "Потрібно вказати значення параметра.\nЩоб отримати повну довідку, введіть `{1}help {0}`.",
 	"configuring-badvalue-domain": "Трансляції доступні тільки для проектів Вікімедіа.\nСписок існуючих доменів: {0}.",
 	"configuring-badvalue-lang": "Бот не розпізнає введене вами дійсним мовним кодом ISO 639.",
@@ -45,6 +49,7 @@
 	"configuring-help-translatewiki-channel": "канал, доступний боту.",
 	"configuring-help-translatewiki-value": "мова, доступна на Translatewiki (мовний код ISO 639). Вкажіть `-` в якості мови, щоб завершити спостереження.",
 	"configuring-help-wiki": "Змінити головну вікі посилань на цьому сервері. Закінчення формату на /wiki/$1 обов'язково.",
+	"configuring-help-wiki-channel": "Змінити вікі посилань на цьому каналі. Закінчення формату на /wiki/$1 обов'язково.",
 	"configuring-help-wiki-value": "бажана вікі посилань (в форматі <https://uk.wikipedia.org/wiki/$1>). Вкажіть `-`, щоб повернути до значення за замовчуванням.",
 	"eventstreams-diff": "різн.",
 	"eventstreams-talk": "обговорення",
