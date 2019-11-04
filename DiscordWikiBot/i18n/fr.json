@@ -27,7 +27,7 @@
 	"help-command": "Affiche l’aide pour la commande.",
 	"help-command-command": "commande pour laquelle l’aide est à fournir.",
 	"configuring-status": ":information_source: Branché sur la prise.",
-	"configuring-status-streaming": "Dernière réponse des flux : il y a {0} minute{0:|s} {1} seconde{1:|s}.",
+	"configuring-status-streaming": "Dernière réponse des flux : il y a {0} {0:minute|minutes} {1} {1:seconde|secondes}.",
 	"configuring-changed-domain": "Le domaine pour les flux de modifications récentes sur ce serveur a été modifié par **{0}**.",
 	"configuring-changed-lang": "La langue du bot sur ce serveur a été modifiée et est maintenant **{0}**.",
 	"configuring-changed-translatewiki": "Les rapports concernant les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",
@@ -86,6 +86,6 @@
 	"streaming-help-list": "Lister tous les flux ouverts sur ce serveur.",
 	"streaming-help-channel": "un canal qui est disponible pour le robot.",
 	"streaming-help-args": "paramètres disponibles pour le flux :\n{msg:bullet}`--title` (*chaîne*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*entier*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*booléen*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*chaîne*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*entier*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*booléen*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Vérifiez les traductions pour cette semaine **jusqu’à jeudi à 00h00** UTC pour éviter les mauvaises traductions et le vandalisme.",
+	"translatewiki-deadline": "Vérifiez les traductions pour cette semaine **jusqu’à jeudi à 00 h 00** UTC pour éviter les mauvaises traductions et le vandalisme.",
 	"translatewiki-header": "{1:Un message|{0} messages} {2:d’un auteur|de {2} auteurs}"
 }

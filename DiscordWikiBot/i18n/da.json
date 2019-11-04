@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saederup92"
+		]
+	},
+	"yes": "ja",
+	"no": "nej",
+	"help-title": "Hjælp",
+	"help-version": "Version {0}.",
+	"help-repo": "Kildekode: {0}",
+	"help-commands": "Kommandoer",
+	"help-subcommands": "Underkommandoer",
+	"help-aliases": "Aliasser",
+	"help-arguments": "Argumenter",
+	"help-default": "Som standard: `{0}`.",
+	"help-optional": "valgfri",
+	"help-command": "Viser hjælp til kommando.",
+	"configuring-changed-lang": "Sproget på botten på denne server er blevet ændret til **{0}**.",
+	"configuring-changed-reset": "Værdien blev nulstillet tilbage til standarden.",
+	"configuring-error-same": "Værdien du angav er den samme som den nuværende.",
+	"configuring-help-translatewiki-channel": "en kanal der er tilgængelig for botten.",
+	"eventstreams-talk": "diskussion",
+	"eventstreams-contribs": "bidrag",
+	"streaming-stream-title": "fra siden `{0}`",
+	"streaming-key-bot": "inkluder redigeringer udført af botter",
+	"streaming-key-minor": "inkluder mindre redigeringer",
+	"streaming-key-title": "sidetitel",
+	"streaming-key-type": "ændringstype"
+}

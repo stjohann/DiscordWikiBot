@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ykhwong"
+		]
+	},
+	"yes": "예",
+	"no": "아니오",
+	"help-title": "도움말",
+	"help-title-command": "{1}{0}{msg:separator}help",
+	"help-version": "버전 {0}.",
+	"help-repo": "소스 코드: {0}",
+	"help-commands": "명령",
+	"help-subcommands": "하위 명령",
+	"help-aliases": "다른 이름",
+	"help-default": "기본값: `{0}`.",
+	"configuring-changed-reset": "이 값은 기본값으로 다시 초기화되었습니다.",
+	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
+	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
+	"configuring-badvalue-lang": "봇은 입력을 유효한 ISO 639 코드로 인식하지 못합니다.",
+	"configuring-badvalue-wiki": "URL 끝에 `{0}`가 있어야 합니다.",
+	"configuring-help-status": "봇이 동작하는지 확인합니다.",
+	"configuring-help-lang": "이 서버의 봇의 언어를 변경합니다.",
+	"eventstreams-diff": "차이",
+	"eventstreams-talk": "토론",
+	"eventstreams-contribs": "기여",
+	"eventstreams-new": "새글",
+	"eventstreams-bot": "봇",
+	"eventstreams-minor": "잔글",
+	"linking-link": "링크:",
+	"linking-links": "링크:",
+	"streaming-stream-namespace": "`{0}` 이름공간에서",
+	"streaming-list-nothing": ":ok: 이 서버에 열려 있는 스트림이 없습니다.",
+	"streaming-key-bot": "봇 편집 포함",
+	"streaming-key-minor": "사소한 편집 포함",
+	"streaming-key-namespace": "이름공간 번호",
+	"streaming-key-title": "문서 제목",
+	"streaming-key-type": "편집 유형",
+	"streaming-help-open": "채널에 최근 바뀜의 스트리밍을 시작합니다.",
+	"streaming-help-close": "채널에 최근 바뀜의 스트리밍을 중지합니다.",
+	"streaming-help-list": "이 서버에 열려 있는 모든 스트림을 나열합니다."
+}
