@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"IKhitron",
-			"דגש חזק"
+			"דגש חזק",
+			"YaronSh"
 		]
 	},
 	"yes": "כן",
@@ -60,6 +61,12 @@
 	"streaming-stream-namespace": "ממרחב השם '{0}'",
 	"streaming-stream-title": "מהעמוד '{0}'",
 	"streaming-opened": ":white_check_mark: זרם {0} התווסף לערוץ {1} {2}",
+	"streaming-edited": ":eight_spoked_asterisk: לתזרים {0} בערוץ {1} השתנו המשתנים הבאים:\n{2}",
+	"streaming-edited-nothing": ":ok: לתזרים {0} שבערוץ {1} לא היו שינויים.",
+	"streaming-closed": ":negative_squared_cross_mark: התזרים {0} הוסר מהערוץ {1}.",
+	"streaming-list": ":information_source: {0} {0:תזרים פעיל|תזרימים פעילים} בשרת הזה.\n{1}",
+	"streaming-list-nothing": ":ok: אין תזרימים פתוחים בשרת הזה.",
+	"streaming-list-stream": "**{1:תזרים|תזרימים} {0}:**",
 	"streaming-key-bot": "לכלול עריכות בוטים",
 	"streaming-key-in-comment": "חיפוש בהערה",
 	"streaming-key-diff-length": "אורך השוואה מינימלי",

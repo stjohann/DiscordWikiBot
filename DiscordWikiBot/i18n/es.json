@@ -20,6 +20,7 @@
 	"help-command": "Muestra ayuda sobre la orden.",
 	"configuring-badvalue-lang": "El robot no reconoce la entrada como un código ISO 639 válido.",
 	"eventstreams-diff": "difs.",
+	"eventstreams-contribs": "contribs.",
 	"eventstreams-new": "N",
 	"eventstreams-minor": "m",
 	"linking-link": "Enlace:",

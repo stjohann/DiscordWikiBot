@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Hmxhmx"
+			"Hmxhmx",
+			"Bugoslav"
 		]
 	},
 	"bullet": "• {0}",
@@ -68,7 +69,7 @@
 	"streaming-key-diff-length": "minimalna veličina razlike",
 	"streaming-key-minor": "uključi manje izmjene",
 	"streaming-key-namespace": "broj imenskog prostora",
-	"streaming-key-patrolled": "filtriraj po statusu ophoditelja",
+	"streaming-key-patrolled": "filtriraj po statusu ophođenosti",
 	"streaming-key-title": "naslov stranice",
 	"streaming-key-type": "vrsta izmjene",
 	"streaming-required-goal": "Potrebno je navesti cilj struje (naslov stranice ili broj imenskog prostora).\nZa punu pomoć za ovu naredbu, pošaljite `{1}help {0}`.",
