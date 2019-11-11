@@ -16,7 +16,7 @@
 	"help-title-command": "{1}{0}{msg:separator}aide",
 	"help-all": "Liste de toutes les commandes et groupes de niveau supérieur. Spécifiez une commande pour afficher plus d’informations.",
 	"help-version": "Version {0}.",
-	"help-repo": "Code source : {0}",
+	"help-repo": "Code source : {0}",
 	"help-commands": "Commandes",
 	"help-subcommands": "Sous-commandes",
 	"help-aliases": "Alias",

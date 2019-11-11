@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"ToJack"
+		]
+	},
+	"yes": "бале",
+	"no": "на",
+	"help-title": "Кӯмак",
+	"help-title-command": "{1}{0}{msg:separator}кӯмак",
+	"help-version": "Нусхаи {0}.",
+	"help-arguments": "Аргументҳо",
+	"help-optional": "ихтиёрӣ",
+	"eventstreams-diff": "тафовут",
+	"eventstreams-talk": "баҳс",
+	"eventstreams-contribs": "саҳмгузориҳо",
+	"eventstreams-new": "Ҷадид",
+	"eventstreams-bot": "бот",
+	"eventstreams-minor": "х",
+	"linking-link": "Пайванд:",
+	"linking-links": "Пайвандҳо",
+	"streaming-stream-namespace": "аз фазои номи `{0}`",
+	"streaming-key-bot": "бо вироишоти ботҳо",
+	"streaming-key-in-comment": "кофтан дар шарҳҳо/тавзеҳот",
+	"streaming-key-diff-length": "дарозии фарқ. камттарин",
+	"streaming-key-namespace": "рақами фазои ном",
+	"streaming-key-title": "номи саҳифа",
+	"streaming-key-type": "намуди вироишот",
+	"translatewiki-header": "{0} {1:паём|паёмҳо} аз {2} {2:муаллиф|муаллифон}"
+}
