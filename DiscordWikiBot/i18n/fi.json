@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nike",
+			"Pyscowicz"
+		]
+	},
+	"yes": "kyllä",
+	"no": "ei",
+	"help-title": "Ohje",
+	"help-title-command": "{1}{0}{msg:separator}ohje",
+	"help-version": "Versio {0}.",
+	"help-repo": "Lähdekoodi: {0}",
+	"help-commands": "Komennot",
+	"help-subcommands": "Alakomennot",
+	"help-aliases": "Aliakset",
+	"help-optional": "valinnainen",
+	"eventstreams-diff": "ero",
+	"eventstreams-talk": "keskustelu",
+	"eventstreams-contribs": "muokkaukset",
+	"eventstreams-new": "U",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "p",
+	"linking-link": "Linkki:",
+	"linking-links": "Linkit:",
+	"streaming-stream-title": "sivulta `{0}`",
+	"streaming-key-namespace": "nimiavaruuden numero",
+	"streaming-key-title": "sivun otsikko"
+}
