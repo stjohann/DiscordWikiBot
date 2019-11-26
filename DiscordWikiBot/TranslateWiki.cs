@@ -206,7 +206,7 @@ namespace DiscordWikiBot
 					ulong chanId = ulong.Parse(chan);
 					channel = await client.GetChannelAsync(chanId);
 				} catch (Exception ex) {
-					Program.LogMessage($"Channel can’t be reached: {ex.Message}", "TranslateWiki", LogLevel.Warning);
+					Program.LogMessage($"Channel can’t be reached: {ex}", "TranslateWiki", LogLevel.Warning);
 
 					// Remove data if channel is deleted or unavailable
 					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
@@ -218,7 +218,7 @@ namespace DiscordWikiBot
 				// Stop if channel is not assigned
 				if (channel == null)
 				{
-					return;
+					continue;
 				}
 
 				string guildLang = Config.GetLang(channel.GuildId.ToString());
@@ -253,7 +253,7 @@ namespace DiscordWikiBot
 					await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
 				} catch (Exception ex)
 				{
-					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex.Message}", "TranslateWiki", LogLevel.Warning);
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex}", "TranslateWiki", LogLevel.Warning);
 
 					// Remove data if channel is deleted or unavailable
 					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)

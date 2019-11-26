@@ -110,6 +110,8 @@ namespace DiscordWikiBot
 			// Set some events for logging the information
 			Client.Ready += Client_Ready;
 			Client.GuildAvailable += Client_GuildAvailable;
+			Client.GuildCreated += Client_GuildCreated;
+			Client.GuildDeleted += Client_GuildDeleted;
 			Client.ClientErrored += Client_ClientErrored;
 
 			// Initialise commands
@@ -168,7 +170,7 @@ namespace DiscordWikiBot
 		private Task Client_GuildAvailable(GuildCreateEventArgs e)
 		{
 			// Log the name of the guild that just became available
-			LogMessage($"Guild available: {e.Guild.Name}");
+			LogMessage($"Server is loaded: {e.Guild.Name}");
 
 			// Load custom values if needed
 			string guild = e.Guild.Id.ToString();
@@ -181,6 +183,28 @@ namespace DiscordWikiBot
 			{
 				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
 			}
+
+			return Task.FromResult(0);
+		}
+		
+		/// <summary>
+		/// Log message when the bot is added to new guilds.
+		/// </summary>
+		/// <param name="e">Discord event information.</param>
+		private Task Client_GuildCreated(GuildCreateEventArgs e)
+		{
+			LogMessage($"Bot was added to a server: {e.Guild.Name}");
+
+			return Task.FromResult(0);
+		}
+
+		/// <summary>
+		/// Log message when the bot is removed from guilds.
+		/// </summary>
+		/// <param name="e">Discord event information.</param>
+		private Task Client_GuildDeleted(GuildDeleteEventArgs e)
+		{
+			LogMessage($"Bot was removed from a server: {e.Guild.Name}");
 
 			return Task.FromResult(0);
 		}

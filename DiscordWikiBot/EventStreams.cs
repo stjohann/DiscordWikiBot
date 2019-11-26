@@ -158,23 +158,22 @@ namespace DiscordWikiBot
 				} catch(Exception ex)
 				{
 					string goalInfo = $"title={goal}";
-					goal = goal.Trim('<', '>');
-					if (goal != item.Key)
+					string rawGoal = goal.Trim('<', '>');
+					if (rawGoal != goal)
 					{
-						goalInfo = $"namespace={goal}";
+						goalInfo = $"namespace={rawGoal}";
 					}
-					Program.LogMessage($"Channel {item.Key} ({goalInfo}) can’t be reached: {ex.StackTrace}", "EventStreams", LogLevel.Warning);
+					Program.LogMessage($"Channel {item.Key} ({goalInfo}) can’t be reached: {ex}", "EventStreams", LogLevel.Warning);
 
 					// Remove data if channel is deleted or unavailable
 					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
 					{
-						goal = goal.Trim('<', '>');
-						if (goal != item.Key)
+						if (rawGoal != goal)
 						{
-							args["namespace"] = goal;
+							args["namespace"] = rawGoal;
 						} else
 						{
-							args["title"] = goal;
+							args["title"] = rawGoal;
 						}
 						badChannels.Add(item.Key, args);
 					}
@@ -183,7 +182,7 @@ namespace DiscordWikiBot
 				// Stop if channel is not assigned
 				if (channel == null)
 				{
-					return;
+					continue;
 				}
 
 				// Check if domain is the same
@@ -264,23 +263,23 @@ namespace DiscordWikiBot
 				} catch(Exception ex)
 				{
 					string goalInfo = $"title={goal}";
-					goal = goal.Trim('<', '>');
-					if (goal != item.Key)
+					string rawGoal = goal.Trim('<', '>');
+					if (rawGoal != item.Key)
 					{
-						goalInfo = $"namespace={goal}";
+						goalInfo = $"namespace={rawGoal}";
 					}
-					Program.LogMessage($"Message in channel #{channel.Name} (ID {item.Key}; {goalInfo}) could not be posted: {ex.Message}", "EventStreams", LogLevel.Warning);
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {item.Key}; {goalInfo}) could not be posted: {ex}", "EventStreams", LogLevel.Warning);
 
 					// Remove data if channel is deleted or unavailable
 					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
 					{
-						if (goal != item.Key)
+						if (rawGoal != item.Key)
 						{
-							args["namespace"] = goal;
+							args["namespace"] = rawGoal;
 						}
 						else
 						{
-							args["title"] = goal;
+							args["title"] = rawGoal;
 						}
 						badChannels.Add(item.Key, args);
 					}

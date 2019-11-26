@@ -132,6 +132,13 @@ namespace DiscordWikiBot
 		{
 			// Ignore empty messages / bots
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true) return;
+			string content = e.Message.Content;
+
+			// Ignore messages without wiki syntax
+			if (!content.Contains("[[") && !content.Contains("{{"))
+			{
+				return;
+			}
 
 			// Determine our goal (default for DMs)
 			bool isServerMessage = (e.Guild != null);
@@ -148,7 +155,7 @@ namespace DiscordWikiBot
 			}
 
 			// Send message
-			string msg = PrepareMessage(e.Message.Content, lang, goal);
+			string msg = PrepareMessage(content, lang, goal);
 			if (msg != "")
 			{
 				bool isTooLong = (msg == TOO_LONG);
@@ -349,6 +356,9 @@ namespace DiscordWikiBot
 			InterwikiMap tempIWList = null;
 			NamespaceCollection tempNSList = null;
 			bool tempIsCaseSensitive = true;
+
+			// Trim : from the start (nuisance)
+			str = str.TrimStart(':');
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
