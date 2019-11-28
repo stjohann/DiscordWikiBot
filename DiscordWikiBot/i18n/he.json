@@ -49,7 +49,7 @@
 	"configuring-help-translatewiki-value": "שפה זמינה ב־translatewiki לתרגום (תקן קוד שפה ISO 639). יש להשתמש בסימן `-` לעצירת הדיווח.",
 	"configuring-help-wiki": "החלפת אתר ויקי ראשי לקישורים על השרת הנוכחי. חובה לרשום /wiki/$1 בסוף.",
 	"configuring-help-wiki-channel": "החלפת אתר ויקי ראשי לקישורים על הערוץ הנוכחי. חובה לרשום /wiki/$1 בסוף.",
-	"configuring-help-wiki-value": "אתר ויקי הרצוי (בפורמט <https://he.wikipedia.org/wiki/$1>). יש להשתמש בסימן `-` לאיפוס לברירת מחדל.",
+	"configuring-help-wiki-value": "אתר הוויקי הרצוי (בפורמט <https://he.wikipedia.org/wiki/$1>). יש להשתמש בסימן `-` לאיפוס לברירת מחדל.",
 	"eventstreams-diff": "השוואה",
 	"eventstreams-talk": "שיחה",
 	"eventstreams-contribs": "תרומות",

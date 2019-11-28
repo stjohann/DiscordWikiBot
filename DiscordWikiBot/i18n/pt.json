@@ -1,21 +1,22 @@
 {
 	"@metadata": {
 		"authors": [
-			"Mansil alfalb"
+			"Mansil alfalb",
+			"Hamilton Abreu"
 		]
 	},
 	"yes": "sim",
 	"no": "não",
 	"help-title": "Ajuda",
 	"help-version": "Versão {0}.",
-	"help-repo": "Código fonte: {0}",
+	"help-repo": "Código-fonte: {0}",
 	"help-commands": "Comandos",
 	"help-subcommands": "Subcomandos",
 	"help-aliases": "Nomes alternativos",
 	"help-arguments": "Argumentos",
-	"help-default": "Por predefinição: `{0}`.",
+	"help-default": "Por omissão: `{0}`.",
 	"help-optional": "opcional",
-	"configuring-changed-lang": "O idioma do robô neste servidor foi alterado para **{0}**.",
+	"configuring-changed-lang": "A língua do robô neste servidor foi alterada para **{0}**.",
 	"eventstreams-diff": "diferenças",
 	"eventstreams-contribs": "contribuições",
 	"eventstreams-new": "N",
@@ -28,5 +29,5 @@
 	"streaming-key-in-comment": "procurar no comentário",
 	"streaming-key-title": "título da página",
 	"streaming-key-type": "tipo de edição",
-	"translatewiki-header": "{0} {1:mensagem|mesagens} de {2} {2:autor|autores}"
+	"translatewiki-header": "{0} {1:mensagem|mensagens} de {2} {2:autor|autores}"
 }
