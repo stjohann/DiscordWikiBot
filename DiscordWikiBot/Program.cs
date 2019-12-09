@@ -94,6 +94,7 @@ namespace DiscordWikiBot
 			Client.MessageCreated += Linking.Answer;
 			Client.MessageUpdated += Linking.Edit;
 			Client.MessageDeleted += Linking.Delete;
+			Client.MessagesBulkDeleted += Linking.BulkDelete;
 
 			// Start EventStreams
 			if (Config.GetDomain() != null)

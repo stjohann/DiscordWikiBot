@@ -274,6 +274,37 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Respond to bulk deletion by bulk deleting the bot’s messages.
+		/// </summary>
+		/// <param name="e">Discord information.</param>
+		static public async Task BulkDelete(MessageBulkDeleteEventArgs e)
+		{
+			// Ignore bots / DMs
+			if (e.Messages?[0]?.Author?.IsBot == true || e.Channel?.Guild == null) return;
+
+			foreach (var item in e.Messages)
+			{
+				// Ignore messages not in cache
+				if (!Cache.ContainsKey(item.Id))
+				{
+					continue;
+				}
+				ulong id = item.Id;
+
+				// Delete bot’s message if possible
+				try
+				{
+					DiscordMessage message = await e.Channel.GetMessageAsync(Cache[id]);
+					Cache.Remove(id);
+					await message.DeleteAsync();
+				} catch(Exception ex)
+				{
+					Program.LogMessage($"Deleting the bot’s message {Cache[id]} returned an exception: {ex}");
+				}
+			}
+		}
+
+		/// <summary>
 		/// Parse a Discord message.
 		/// </summary>
 		/// <param name="content">Discord message content.</param>
