@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"NMW03"
+			"NMW03",
+			"BaRaN6161 TURK"
 		]
 	},
 	"bullet": "• {0}",
@@ -30,7 +31,10 @@
 	"configuring-changed-translatewiki-channel": "Translatewiki-də son dəyişikliklər barədə hesabatlar üçün kanal {0} olaraq dəyişdirildi.",
 	"configuring-changed-translatewiki-lang": "Translatewiki-də son dəyişikliklər barədə hesabatların tərtib olunduğu dil **{0}** olaraq dəyişdirildi.",
 	"configuring-changed-wiki": "Bu serverdəki bağlantılar üçün viki **{0}** olaraq dəyişdirildi.",
+	"configuring-changed-wiki-channel": "Bu kanaldakı bağlantılar üçün viki **{0}** olaraq dəyişdirildi.",
 	"configuring-changed-reset": "Dəyər standart versiyaya sıfırlandı.",
+	"configuring-error-same": "Girdiyiniz dəyər cari ilə eynidir.",
+	"configuring-error-strange": "Qəribə bir səhv səbəbindən əmriniz uğursuz oldu.",
 	"configuring-required-value": "Bir parametr üçün dəyər tələb olunur.\nKomanda üçün tam kömək almaq üçün `{1}help {0}` yazın.",
 	"configuring-badvalue-domain": "Yayımlar yalnız Vikimedia layihələri üçün mövcuddur.\nİcazə verilən domenlərin siyahısı: {0}.",
 	"configuring-badvalue-lang": "Bot girişinizi etibarlı ISO 639 kodu kimi tanımır.",
@@ -44,6 +48,7 @@
 	"configuring-help-translatewiki-channel": "bot üçün mövcud olan bir kanal.",
 	"configuring-help-translatewiki-value": "Tərcümə üçün Translatewiki-də mövcud olan dil (ISO 639-da dil kodu). Hesabatı bitirmək üçün dili `-` olaraq yazın.",
 	"configuring-help-wiki": "Bu serverdəki bağlantılar üçün əsas vikini dəyişdirin. Sonda /wiki/$1 olaraq yazılması tələb olunur.",
+	"configuring-help-wiki-channel": "Bu kanaldakı bağlantılar üçün viki dəyişdirin. Sonunda /wiki/$1 tələb olunur.",
 	"configuring-help-wiki-value": "istədiyiniz viki (<https://az.wikipedia.org/wiki/$1> formatda). Defolt olaraq yenidən qurmaq üçün `-` istifadə edin.",
 	"eventstreams-diff": "fərq",
 	"eventstreams-talk": "Müzakirə",
