@@ -70,6 +70,7 @@
 	"streaming-key-diff-length": "ελάχιστο μέγεδος διαφοράς",
 	"streaming-key-minor": "Συμπερίληψη μικρών συνεισφορών",
 	"streaming-key-namespace": "\nαριθμός ονοματοχώρου",
+	"streaming-key-patrolled": "Φίλτραρε με επίπεδο ελέγχου",
 	"streaming-key-title": "Τίτλος σελίδας",
 	"streaming-key-type": "Τύπος συνεισφοράς",
 	"streaming-required-goal": "Ο στόχος της ρολης (όνομα σελίδας ή αριθμός ονοματοχώρου) είναι απαραίτητος. Για να πάρετε πλήρη βοήθεια για την οδηγία, στείλτε `{1}help {0}`.",
@@ -79,6 +80,6 @@
 	"streaming-help-list": "Βάλε σε λίστα όλλες τις ανοιχτές ροές σε αυτόν τον διακομιστή.",
 	"streaming-help-channel": "ένα κανάλι που είναι διαθέσημο στο ρομπότ.",
 	"streaming-help-args": "διαθέσημες παράμετροι ροής:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "\nΒρές χρόνο να ελέγκξεις μεταφράσεις αυτής της ευδομάδος **μέχρι τις 00:00** Πέμπτη UTC για αποφυγή κακών μεταφράσεων και για εντοπισμό βανδαλισμών.",
+	"translatewiki-deadline": "\nΒρές χρόνο να ελέγξεις μεταφράσεις αυτής της ευδομάδος **μέχρι τις 00:00** Πέμπτη UTC για αποφυγή κακών μεταφράσεων και για εντοπισμό βανδαλισμών.",
 	"translatewiki-header": "{0}{1:μήνυμα|μηνύματα} απο {2}{2:χρήστης|χρήστες}"
 }
