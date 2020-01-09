@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"GhotuoIncubator"
+			"GhotuoIncubator",
+			"Babispan"
 		]
 	},
 	"yes": "ναι",
@@ -36,7 +37,7 @@
 	"configuring-badvalue-domain": "Τα κανάλια είναι διαθέσημα μόνο για πρότζεκτ της Wikimedia. Λίστα των διαθέσημων διευθύνσεων: {0}",
 	"configuring-badvalue-lang": "Το ρομπότ δέν αναγνωρίζει αυτά που ησάγατε σαν εναν έγκυρο κωδικό ISO 639.",
 	"configuring-badvalue-wiki": "Πρέπει να υπάρχει ένα '{0}΄στο τέλος του URL που δώσατε.",
-	"configuring-help-status": "Έλεγκξε άν το ρομπότ είναι λείτουργεικό",
+	"configuring-help-status": "Ελέγξτε αν το bot λειτουργεί.",
 	"configuring-help-domain": "Άλλαξε την διεύθυνση απο την οποία οι πρόσφατες αλλαγές μεταδίδονται σε αυτόν τον διακομιστή. Μόνο για πρότζεκτ της Wikimedia.",
 	"configuring-help-domain-value": "Η διεύθυνση ενότ πρότζεκτ της Wikimedia (π.χ. en.wikipedia.org).  Χρησημοποίησε το `-` για επιστροφή στο προκαθορισμένο.",
 	"configuring-help-lang": "Αλλαγή της γλώσσας του ρομπότ σε αυτόν τον διακομιστή.",
