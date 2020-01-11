@@ -204,7 +204,11 @@ namespace DiscordWikiBot
 
 			// Compile a list of fallbacks with locales
 			List<string> result = new List<string>();
-			string[] fallbacks = LanguageData[lang]?["fallbacks"].Select(jt => (string)jt).ToArray();
+			string[] fallbacks = null;
+			try
+			{
+				fallbacks = LanguageData[lang]?["fallbacks"].Select(jt => (string)jt).ToArray();
+			} catch (Exception) { }
 			if (fallbacks != null)
 			{
 				foreach (var fallbackCode in fallbacks)
@@ -300,7 +304,7 @@ namespace DiscordWikiBot
 				return false;
 			}
 
-			return (LanguageData[lang] != null);
+			return (LanguageData?[lang] != null);
 		}
 
 		/// <summary>
@@ -314,7 +318,7 @@ namespace DiscordWikiBot
 				return lang;
 			}
 
-			return (LanguageData[lang]?["autonym"].ToString() ?? LanguageData[lang]?["*"].ToString() ?? lang);
+			return (LanguageData?[lang]?["autonym"] ?? LanguageData?[lang]?["*"] ?? lang).ToString();
 		}
 	}
 }
