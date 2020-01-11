@@ -239,40 +239,54 @@ namespace DiscordWikiBot
 			await site.Initialization;
 
 			// Fetch languages using new API (MediaWiki 1.34+)
-			JToken result = await site.InvokeMediaWikiApiAsync(
-				new MediaWikiFormRequestMessage(new
-				{
-					action = "query",
-					meta = "languageinfo",
-					liprop = "code|autonym|name|fallbacks|variants"
-				}),
-				new CancellationToken()
-			);
-
-			if (result?["warnings"] == null)
+			try
 			{
-				JObject languageinfo = (JObject)result["query"]?["languageinfo"];
-				return languageinfo;
+				JToken newRequest = await site.InvokeMediaWikiApiAsync(
+					new MediaWikiFormRequestMessage(new
+					{
+						action = "query",
+						meta = "languageinfo",
+						liprop = "code|autonym|name|fallbacks|variants"
+					}),
+					new CancellationToken()
+				);
+
+				if (newRequest?["warnings"] == null)
+				{
+					JObject languageinfo = (JObject)newRequest["query"]?["languageinfo"];
+					return languageinfo;
+				}
+			} catch (Exception ex)
+			{
+				Program.LogMessage($"Fetching language list (1.34+) returned an error: {ex}", level: LogLevel.Warning);
 			}
 
 			// Fetch languages using old API
-			result = await site.InvokeMediaWikiApiAsync(
-				new MediaWikiFormRequestMessage(new
-				{
-					action = "query",
-					meta = "siteinfo",
-					siprop = "languages"
-				}),
-				new CancellationToken()
-			);
+			try
+			{
+				JToken oldRequest = await site.InvokeMediaWikiApiAsync(
+					new MediaWikiFormRequestMessage(new
+					{
+						action = "query",
+						meta = "siteinfo",
+						siprop = "languages"
+					}),
+					new CancellationToken()
+				);
 
-			// Convert the old format to new one
-			JToken temp = result["query"]?["languages"];
-			JObject languages = new JObject(
-				temp.Select(jt => new JProperty((string)jt["code"], jt))
-			);
+				// Convert the old format to new one
+				JToken temp = oldRequest["query"]?["languages"];
+				JObject languages = new JObject(
+					temp.Select(jt => new JProperty((string)jt["code"], jt))
+				);
 
-			return languages;
+				return languages;
+			} catch (Exception ex)
+			{
+				Program.LogMessage($"Fetching language list (<1.34) returned an error: {ex}", level: LogLevel.Error);
+			}
+
+			return null;
 		}
 
 		/// <summary>
