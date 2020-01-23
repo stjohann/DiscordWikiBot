@@ -1,0 +1,41 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joris Darlington Quarshie"
+		]
+	},
+	"yes": "ja",
+	"no": "nee",
+	"help-title": "Hulp",
+	"help-title-command": "{1}{0}{msg:separator}hulp",
+	"help-all": "Lys alle opdragte en groepe op die hoogste vlak. Spesifiseer 'n opdrag om meer inligting te sien.",
+	"help-version": "Weergawe {0}.",
+	"help-repo": "Bronkode:{0}",
+	"help-commands": "opdragte",
+	"help-subcommands": "Vervolgopdrachten",
+	"help-aliases": "Aliasse",
+	"help-arguments": "Argumente",
+	"help-default": "By verstek:`{0}`.",
+	"help-optional": "opsioneel",
+	"help-group-standalone": "Hierdie groep is 'n selfstandige opdrag.",
+	"help-command": "Toon opdraghulp.",
+	"help-command-command": "opdrag om hulp te verleen.",
+	"configuring-status": ": information_source: Steek in die socket.",
+	"configuring-status-streaming": "Laaste antwoord vanaf die strome:{0}{0:minuut|minute}{1}{1:sekonde|sekondes} gelede.",
+	"configuring-changed-domain": "Domein vir onlangse veranderingsstrome op hierdie bediener is verander na **{0}**.",
+	"configuring-changed-lang": "Die taal van die bot op hierdie bediener is verander na **{0}**.",
+	"configuring-changed-translatewiki": "Verslae oor onlangse veranderings op Translatewiki is op die kanaal {0} vir taal **{1}** aangeskakel.",
+	"configuring-changed-translatewiki-channel": "Die kanaal vir berigte oor onlangse veranderings op Translatewiki is verander na {0}.",
+	"configuring-changed-translatewiki-lang": "Die taal waarvoor die verslae oor onlangse wysigings op Translatewiki saamgestel is, is verander na **{0}**.",
+	"configuring-changed-wiki": "Wiki vir skakels op hierdie bediener is verander na **{0}**.",
+	"configuring-changed-wiki-channel": "Wiki vir skakels op hierdie kanaal is verander na **{0}**.",
+	"configuring-changed-reset": "Die waarde is teruggestel na standaard.",
+	"configuring-error-same": "Die waarde wat u ingevoer het, is dieselfde as die huidige.",
+	"configuring-error-strange": "U opdrag het misluk as gevolg van 'n vreemde fout.",
+	"configuring-required-value": "Die waarde vir 'n parameter word benodig.\nStuur `{1} hulp {0}` om volledige hulp vir die opdrag te kry.",
+	"configuring-badvalue-domain": "Strome is slegs beskikbaar vir Wikimedia-projekte.\nLys met toegelate domeine:{0}.",
+	"configuring-badvalue-lang": "Die bot herken nie jou invoer as 'n geldige ISO 639-kode nie.",
+	"configuring-badvalue-wiki": "Daar moet '{0}' aan die einde van u URL wees.",
+	"configuring-help-status": "Kyk of die bot in werking is.",
+	"configuring-help-domain": "Verander die domein waaruit onlangse wysigings op hierdie bediener uitgesaai is. Werk slegs vir Wikimedia-projekte."
+}
