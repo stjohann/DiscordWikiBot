@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"佛壁灯",
+			"沈澄心"
+		]
+	},
+	"yes": "是",
+	"no": "否",
+	"help-title": "帮助",
+	"help-title-command": "{1}{0}{msg:separator}说明",
+	"help-version": "版本 {0}。",
+	"help-repo": "源代码：{0}",
+	"help-commands": "命令",
+	"help-subcommands": "子命令",
+	"help-aliases": "别名",
+	"help-arguments": "参数",
+	"help-default": "默认值：`{0}`.",
+	"help-optional": "可选",
+	"help-command": "显示命令帮助。",
+	"configuring-status": ":information_source: 已接入插座。",
+	"configuring-changed-lang": "此服务器上的机器人使用语言已更改至 **{0}**。",
+	"configuring-help-status": "检查机器人是否可用。",
+	"configuring-help-lang": "更改在此服务器上机器人使用的语言。",
+	"eventstreams-diff": "差异",
+	"eventstreams-talk": "讨论",
+	"eventstreams-contribs": "贡献",
+	"eventstreams-new": "新",
+	"eventstreams-bot": "机",
+	"eventstreams-minor": "小",
+	"streaming-key-bot": "包含机器人编辑",
+	"streaming-key-type": "编辑类型"
+}
