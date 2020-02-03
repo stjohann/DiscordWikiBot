@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mirzali",
-			"Orbot707"
+			"Orbot707",
+			"1917 Ekim Devrimi"
 		]
 	},
 	"yes": "eya",
@@ -23,6 +24,7 @@
 	"configuring-status": ":information_source: Neyaya soket.",
 	"configuring-changed-reset": "Erc hesabyayena biyo reset",
 	"configuring-error-same": "Ercê şım u ercê biniya zey pê yê",
+	"configuring-help-status": "Guriyayışê Boti kontrol kerê.",
 	"eventstreams-diff": "ferq",
 	"eventstreams-talk": "werênayış",
 	"eventstreams-contribs": "iştıraki",
@@ -31,6 +33,7 @@
 	"eventstreams-minor": "q",
 	"linking-link": "Link",
 	"linking-links": "Linki",
+	"streaming-list-stream": "**{1:Ganın|Ganıni} {0}:**",
 	"streaming-key-bot": "Vurnayışanê boti zi tewr ke",
 	"streaming-key-in-comment": "werênayışi de cı geyre",
 	"streaming-key-diff-length": "ferqê derganiyeyo minimum",
