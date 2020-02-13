@@ -3,7 +3,8 @@
 		"authors": [
 			"SerDIDG",
 			"Хтосьці",
-			"Serhio Magpie"
+			"Serhio Magpie",
+			"Piramidion"
 		]
 	},
 	"bullet": "— {0}",
@@ -34,7 +35,7 @@
 	"configuring-changed-wiki": "Вікі для посилань на цьому сервері змінена на **{0}**.",
 	"configuring-changed-wiki-channel": "Вікі для посилань на цьому каналі змінена на **{0}**.",
 	"configuring-changed-reset": "Значення було повернуто за замовчуванням.",
-	"configuring-error-same": "Введене вами значення співпадає з поточним.",
+	"configuring-error-same": "Введене вами значення збігається з поточним.",
 	"configuring-error-strange": "Ваша команда не може бути виконана з незрозумілої причини.",
 	"configuring-required-value": "Потрібно вказати значення параметра.\nЩоб отримати повну довідку, введіть `{1}help {0}`.",
 	"configuring-badvalue-domain": "Трансляції доступні тільки для проектів Вікімедіа.\nСписок існуючих доменів: {0}.",
