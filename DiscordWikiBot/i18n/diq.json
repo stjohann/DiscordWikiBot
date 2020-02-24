@@ -24,7 +24,11 @@
 	"configuring-status": ":information_source: Neyaya soket.",
 	"configuring-changed-reset": "Erc hesabyayena biyo reset",
 	"configuring-error-same": "Ercê şım u ercê biniya zey pê yê",
+	"configuring-badvalue-wiki": "Peyê URL dê şıma de wa `{0}` bıbo .",
 	"configuring-help-status": "Guriyayışê Boti kontrol kerê.",
+	"configuring-help-lang": "Eno server de zıwanê boti bıvurnê",
+	"configuring-help-translatewiki-channel": "Seba boti yew kenala hewla.",
+	"configuring-help-wiki-value": "Wikiya ke wazenê (terzê <https://diq.wikipedia.org/wiki/$1> ya). Hesabyaya reset kerdışi rê `-` bıkarnê .",
 	"eventstreams-diff": "ferq",
 	"eventstreams-talk": "werênayış",
 	"eventstreams-contribs": "iştıraki",
@@ -47,5 +51,9 @@
 	"streaming-key-namespace": "numrey canamey",
 	"streaming-key-patrolled": "gorey weziyetê dewriyan ra parzûn ke",
 	"streaming-key-title": "sernameyê pele",
-	"streaming-key-type": "tewrê vurnayışi"
+	"streaming-key-type": "tewrê vurnayışi",
+	"streaming-help-close": "Kenal sero vurnayışanê peyêna çapnayışi vındarne.",
+	"streaming-help-list": "Eno server de çapnayanê akerdeya pêroyın liste kerên",
+	"streaming-help-channel": "Seba boti yew kenala hewla.",
+	"streaming-help-args": "Karneyaye parametrey rodışi :\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}"
 }
