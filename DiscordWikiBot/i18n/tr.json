@@ -47,7 +47,7 @@
 	"configuring-help-translatewiki-value": "Translatewiki'de çeviri için mevcut olan dil (ISO 639'da dil kodu). Raporlamayı bitirmek için bir dil olarak `-` yazınız.",
 	"configuring-help-wiki": "Bu sunucudaki bağlantılar için ana vikiyi değiştirin. /wiki/$1 sonunda gereklidir.",
 	"configuring-help-wiki-channel": "Bu kanaldaki bağlantılar için vikiyi değiştirin. /wiki/$1 sonunda gereklidir.",
-	"configuring-help-wiki-value": "istediğiniz wiki (<https://tr.wikipedia.org/wiki/$1> biçiminde). Varsayılana sıfırlamak için `-` kullanın.",
+	"configuring-help-wiki-value": "istediğiniz viki (<https://tr.wikipedia.org/wiki/$1> biçiminde). Varsayılana sıfırlamak için `-` kullanın.",
 	"eventstreams-diff": "fark",
 	"eventstreams-talk": "tartışma",
 	"eventstreams-contribs": "katkılar",
