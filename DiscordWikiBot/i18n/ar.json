@@ -1,9 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
-			"ديفيد"
+			"ديفيد",
+			"Meno25"
 		]
 	},
+	"bullet": "• {0}",
+	"separator": " – {0}",
 	"yes": "نعم",
 	"no": "لا",
 	"help-title": "مساعدة",
