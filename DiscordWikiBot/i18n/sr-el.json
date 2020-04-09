@@ -1,5 +1,9 @@
 {
-	"@metadata": [],
+	"@metadata": {
+		"authors": [
+			"Srdjan m"
+		]
+	},
 	"bullet": "— {0}",
 	"separator": " — {0}",
 	"yes": "da",
@@ -19,7 +23,7 @@
 	"help-command": "Prikazuje pomoć za komande.",
 	"help-command-command": "komanda za pružanje pomoći.",
 	"configuring-status": ":information_source: Uključeno u priključak.",
-	"configuring-status-streaming": "Najnoviji odgovor iz tokova: {0} pre {0:minut|minuta} {1} {1:sekund|sekunde|sekundi}.",
+	"configuring-status-streaming": "Najnoviji odgovor iz tokova: pre {0} {0:minut|minuta} {1} {1:sekund|sekunde|sekundi}.",
 	"configuring-changed-domain": "Domen za tokove skorašnjih izmena na ovom serveru promenjen je na **{0}**.",
 	"configuring-changed-lang": "Jezik bota na ovom serveru promenjen je na **{0}**.",
 	"configuring-changed-translatewiki": "Izveštaji o skorašnjim izmenama na Translatewiki-ju su omogućeni u kanalu {0} za jezik **{1}**.",

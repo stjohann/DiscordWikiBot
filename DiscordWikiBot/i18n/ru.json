@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Pacha Tchernof",
 			"stjn"
 		]
 	},
@@ -11,14 +12,14 @@
 	"help-title": "Справка",
 	"help-title-command": "{1}{0}{msg:separator}справка",
 	"help-all": "Перечислены все команды верхнего уровня и группы. Укажите команду, чтобы получить больше информации.",
-	"help-version": "Версия {0}.",
+	"help-version": "{0}-я версия.",
 	"help-repo": "Исходный код: {0}",
 	"help-commands": "Команды",
 	"help-subcommands": "Подкоманды",
 	"help-aliases": "Алиасы",
 	"help-arguments": "Аргументы",
 	"help-default": "По умолчанию: `{0}`.",
-	"help-optional": "необязательно",
+	"help-optional": "по желанию",
 	"help-group-standalone": "Эта группа — отдельная команда.",
 	"help-command": "Отображает справку по команде.",
 	"help-command-command": "команда, по которой нужно дать помощь.",
@@ -51,7 +52,7 @@
 	"configuring-help-wiki-value": "желаемая вики ссылок (в формате <https://ru.wikipedia.org/wiki/$1>). Укажите `-`, чтобы вернуть к значению по умолчанию.",
 	"eventstreams-diff": "разн.",
 	"eventstreams-talk": "обсуждение",
-	"eventstreams-contribs": "вклад",
+	"eventstreams-contribs": "вклады",
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "м",
@@ -82,6 +83,6 @@
 	"streaming-help-list": "Перечислить действующие трансляции на этом сервере.",
 	"streaming-help-channel": "доступный боту канал трансляции.",
 	"streaming-help-args": "параметры трансляции:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Успейте проверить сообщения за неделю **до 00:00** четверга по UTC, чтобы избежать вандализма и плохого перевода.",
+	"translatewiki-deadline": "Найдите время проверить переводы за эту неделю **до 00:00** четверга по UTC, чтобы избежать плохих переводов и поймать вандализм.",
 	"translatewiki-header": "{0} {1:сообщение|сообщения|сообщений} от {2} {2:автора|авторов|авторов}"
 }

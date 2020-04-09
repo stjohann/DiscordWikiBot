@@ -21,7 +21,7 @@
 	"help-command": "Prikazuje pomoć za naredbe.",
 	"help-command-command": "naredba za pružanje pomoći.",
 	"configuring-status": ":information_source: Priključeno.",
-	"configuring-status-streaming": "Najnoviji odgovor tokova: {0} prije {0:min.|min.|min.} {1} {1:sek.|sek.|sek.}",
+	"configuring-status-streaming": "Najnoviji odgovor tokova: prije {0} {0:min.|min.|min.} i {1} {1:sek.|sek.|sek.}",
 	"configuring-changed-domain": "Domen za tokove nedavnih izmjena na ovom serveru promijenjen je u **{0}**.",
 	"configuring-changed-lang": "Jezika bota na ovom serveru promijenjen je na **{0}**.",
 	"configuring-changed-translatewiki": "Izvještaji o nedavnim izmjenama na Translatewikiju za jezik **{1}** omogućeni su u kanalu {0}.",

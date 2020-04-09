@@ -2,8 +2,9 @@
 	"@metadata": {
 		"authors": [
 			"Acamicamacaraca",
-			"Zoranzoki21",
-			"BadDog"
+			"BadDog",
+			"Srdjan m",
+			"Zoranzoki21"
 		]
 	},
 	"bullet": "— {0}",
@@ -25,7 +26,7 @@
 	"help-command": "Приказује помоћ за команде.",
 	"help-command-command": "команда за пружање помоћи.",
 	"configuring-status": ":information_source: Прикључено.",
-	"configuring-status-streaming": "Најновији одговор токова: {0} пре {0:минут|минута} {1} {1:секунд|секунде|секунди}.",
+	"configuring-status-streaming": "Најновији одговор токова: пре {0} {0:минут|минута} {1} {1:секунд|секунде|секунди}.",
 	"configuring-changed-domain": "Домен за токове недавних промена на серверу промењен је у **{0}**.",
 	"configuring-changed-lang": "Језик бота на серверу промењен је на **{0}**.",
 	"configuring-changed-translatewiki": "Извештаји о недавним променама на Транслејтвикију омогућени су за језик **{1}** у каналу {0}.",
