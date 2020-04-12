@@ -24,8 +24,8 @@ namespace DiscordWikiBot
 		/// Link pattern: [[]], [[|, {{}} or {{|
 		/// </summary>
 		private static readonly string pattern = string.Format("(?:{0}|{1})",
-			"(\\[{2})([^\\[\\]{}\\|\n]+)(?:\\|[^\\[\\]{}\\|\n]*)?]{2}",
-			"({{2})([^#][^\\[\\]{}\\|\n]*)(?:\\|*[^\\[\\]{}\n]*)?}{2}");
+			@"(\[{2})([^\[\]{}\|\n]+)(?:\|[^\[\]{}\|\n]*)?]{2}",
+			@"({{2})([^#][^\[\]{}\|\n]*)(?:\|*[^\[\]{}\n]*)?}{2}");
 
 		/// <summary>
 		/// Key of default configuration.
@@ -319,11 +319,10 @@ namespace DiscordWikiBot
 			}
 
 			// Remove code from the message
-			content = Regex.Replace(content, "```(.|\n)*?```", string.Empty);
-			content = Regex.Replace(content, "`{1,2}.*?`{1,2}", string.Empty);
+			content = Regex.Replace(content, @"(`{1,3}).*?\1", string.Empty, RegexOptions.Singleline);
 
 			// Remove links from the message
-			content = Regex.Replace(content, "https?://[^\\s/$.?#].[^\\s]*", string.Empty);
+			content = Regex.Replace(content, @"https?://[^\s/$.?#].[^\s]*", string.Empty);
 
 			// Start digging for links
 			MatchCollection matches = Regex.Matches(content, pattern);
@@ -393,7 +392,7 @@ namespace DiscordWikiBot
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
-			str = str.Replace("\\", "");
+			str = str.Replace(@"\", "");
 
 			// Check for invalid page titles
 			if (IsInvalid(str)) return "";
@@ -469,8 +468,8 @@ namespace DiscordWikiBot
 				// Check if it’s a parser function
 				if (type == "{{" && str.StartsWith("#")) return "";
 
-				// Check if page title length is more than 255 bytes
-				if (Encoding.UTF8.GetByteCount(str) > 255) return "";
+				// Check for invalid page title length
+				if (IsInvalid(str, true)) return "";
 
 				// Rewrite other text
 				if (str.Length > 0)
@@ -542,14 +541,18 @@ namespace DiscordWikiBot
 		/// Check if a page title is invalid according to MediaWiki restrictions.
 		/// </summary>
 		/// <param name="str">Page title.</param>
+		/// <param name="checkLength">Whether to check page title length.</param>
 		/// <returns>Is page title invalid.</returns>
-		public static bool IsInvalid(string str)
+		public static bool IsInvalid(string str, bool checkLength = false)
 		{
 			string[] anchor = str.Split('#');
 			if (anchor.Length > 1)
 			{
 				str = anchor[0];
 			}
+
+			// Check if page title length is more than 255 bytes
+			if (checkLength && Encoding.UTF8.GetByteCount(str) > 255) return true;
 
 			// Check if it is a MediaWiki-valid URL
 			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
@@ -565,12 +568,12 @@ namespace DiscordWikiBot
 			// https://www.mediawiki.org/wiki/Manual:Page_title
 			string[] illegalExprs =
 			{
-				"\\<", "\\>",
-				"\\[", "\\]",
-				"\\{", "\\}",
-				"\\|",
-				"~{3,}",
-				"&(?:[a-z]+|#x?\\d+);"
+				@"\<", @"\>",
+				@"\[", @"\]",
+				@"\{", @"\}",
+				@"\|",
+				@"~{3,}",
+				@"&(?:[a-z]+|#x?\d+);"
 			};
 
 			foreach(string expr in illegalExprs)
@@ -676,7 +679,7 @@ namespace DiscordWikiBot
 			};
 			
 			// Replace all spaces to underscores
-			str = Regex.Replace(str, "\\s{1,}", "_");
+			str = Regex.Replace(str, @"\s{1,}", "_");
 
 			// Decode percent-encoded symbols before encoding
 			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
@@ -690,7 +693,7 @@ namespace DiscordWikiBot
 			// Escape ) in embeds to not break links
 			if (escapePar)
 			{
-				str = str.Replace(")", "\\)");
+				str = str.Replace(")", @"\)");
 			}
 
 			return str;

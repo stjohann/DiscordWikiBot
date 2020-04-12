@@ -149,7 +149,7 @@ namespace DiscordWikiBot
 			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_CHANGE)
 			{
 				// Different channel and language
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, GetLanguageInfo(lang)));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, GetLanguageInfo(value)));
 				TranslateWiki.Init(chanId, value);
 			}
 
@@ -177,7 +177,7 @@ namespace DiscordWikiBot
 			)
 			{
 				// Same or default channel, different language
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-lang", lang, GetLanguageInfo(lang)));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-lang", lang, GetLanguageInfo(value)));
 				TranslateWiki.Remove(chanId, chanPrevLang);
 				TranslateWiki.Init(chanId, value);
 			}
@@ -313,13 +313,7 @@ namespace DiscordWikiBot
 		/// <param name="code">MediaWiki-compatible language code.</param>
 		private static string GetLanguageInfo(string code)
 		{
-			string langName = Locale.GetLanguageName(code);
-			if (langName == code)
-			{
-				return code;
-			}
-
-			return $"{code} ({langName})";
+			return Locale.GetLanguageName(code, "{1} ({0})");
 		}
 	}
 	

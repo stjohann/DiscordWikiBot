@@ -12,6 +12,7 @@ using WikiClientLibrary.Generators;
 using WikiClientLibrary.Sites;
 using System.Threading;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace DiscordWikiBot
 {
@@ -33,6 +34,11 @@ namespace DiscordWikiBot
 			{ "1248", "Huggle" },
 			{ "1274", "Phabricator" },
 		};
+
+		/// <summary>
+		/// Maximum embed length allowed by Discord.
+		/// </summary>
+		static private readonly int MAX_EMBED_LENGTH = 1024;
 
 		// List of used languages and guilds
 		private static List<string> Languages = new List<string>();
@@ -73,7 +79,7 @@ namespace DiscordWikiBot
 
 				// To start fetching ASAP
 				LatestFetchTime[lang] = -1;
-				LatestFetchKey[lang] = Config.GetInternal("translatewiki-key", channel);
+				LatestFetchKey[lang] = GetLegacyKey(channel);
 				
 				Timers[lang] = new System.Timers.Timer(20000);
 				Timers[lang].Elapsed += (sender, args) => RequestOnTimer(sender, lang);
@@ -95,7 +101,7 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Remove(string channel = "", string lang = "")
 		{
-			Config.SetInternal(channel, "translatewiki-key", null);
+			Config.SetChannelOverride(channel, "translatewiki-key", null);
 			Channels[lang].Remove(channel);
 			if (Channels[lang].Count == 0)
 			{
@@ -116,7 +122,7 @@ namespace DiscordWikiBot
 			if (LatestFetchTime[lang] < now.Hour || (LatestFetchTime[lang] == 23 && now.Hour == 0))
 			{
 				// Inform about update deadline after Wednesday 6:00 UTC
-				if (now.DayOfWeek == DayOfWeek.Wednesday && now.Hour > 6) {
+				if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour > 6) {
 					if (!UpdateDeadlineDone) UpdateDeadline = true;
 				} else
 				{
@@ -171,33 +177,43 @@ namespace DiscordWikiBot
 			}).Where(i => i != null).ToList();
 			if (query.Count == 0) return;
 
-			// Fetch every author for future message
+			// Sort authors and messages by groups
 			int count = query.Count;
-			Dictionary<string, List<string>> authors = new Dictionary<string, List<string>>();
-			List<string> allAuthors = new List<string>();
-			foreach (var item in query)
+			Dictionary<string, Dictionary<string, List<string>>> groups = new Dictionary<string, Dictionary<string, List<string>>>();
+			HashSet<string> authors = new HashSet<string>();
+
+			foreach(var item in query)
 			{
 				string key = item["key"].ToString();
-				string ns = Projects.Keys.Where(x => key.StartsWith(x + ":")).ToList().First().ToString();
+				string ns = Regex.Match(key, @"^\d+:").ToString().TrimEnd(':');
 				string translator = item["properties"]["last-translator-text"].ToString();
+				key = key.Replace(ns + ":", string.Empty);
 
-				if (!authors.ContainsKey(ns))
+				if (!groups.ContainsKey(ns))
 				{
-					authors[ns] = new List<string>();
+					groups[ns] = new Dictionary<string, List<string>>();
 				}
-				if (!authors[ns].Contains(translator)) authors[ns].Add(translator);
-				if (!allAuthors.Contains(translator)) allAuthors.Add(translator);
+				if (!groups[ns].ContainsKey(translator))
+				{
+					groups[ns][translator] = new List<string>();
+				}
+
+				groups[ns][translator].Add(key);
+				authors.Add(translator);
 			}
 
-			Dictionary<string, string> badServers = new Dictionary<string, string>();
-
 			// Send Discord messages to guilds
+			Dictionary<string, string> badServers = new Dictionary<string, string>();
 			DiscordClient client = Program.Client;
 			foreach (string chan in Channels[lang])
 			{
 				DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+					.WithTimestamp(DateTime.UtcNow)
 					.WithColor(new DiscordColor(0x013467))
-					.WithFooter("translatewiki.net");
+					.WithFooter(
+						"translatewiki.net • " + Locale.GetLanguageName(lang, "{0} ({1})"),
+						"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/512px-Translatewiki.net_logo.svg.png"
+					);
 
 				// Fetch info about channel
 				DiscordChannel channel = null;
@@ -223,9 +239,6 @@ namespace DiscordWikiBot
 
 				string guildLang = Config.GetLang(channel.GuildId.ToString());
 
-				// Remember the key of first message
-				Config.SetInternal(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
-
 				// Inform about deadline if needed
 				string deadlineInfo = null;
 				if (UpdateDeadline)
@@ -237,20 +250,24 @@ namespace DiscordWikiBot
 
 				// Build messages
 				string headerCount = (gotToLatest ? count.ToString() : count.ToString() + "+");
-				string header = Locale.GetMessage("translatewiki-header", guildLang, headerCount, count, allAuthors.Count);
-				embed.WithAuthor(
-					header,
-					string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), lang),
-					"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/512px-Translatewiki.net_logo.svg.png"
-				);
+				string header = Locale.GetMessage("translatewiki-header", guildLang, headerCount, count, authors.Count);
+				embed.WithTitle(header)
+					.WithUrl(string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), lang));
 
-				// Form authors list
-				string desc = FormDescription(authors);
-				embed.WithDescription(desc);
+				// Form message lists for groups
+				foreach(var groupList in groups)
+				{
+					// Do not display message IDs for Phabricator messages
+					string desc = FormDescription(groupList.Value, (groupList.Key != "1274"));
+					embed.AddField(Projects[groupList.Key], desc);
+				}
 
 				try
 				{
 					await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
+
+					// Remember the key of first message
+					Config.SetChannelOverride(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
 				} catch (Exception ex)
 				{
 					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex}", "TranslateWiki", LogLevel.Warning);
@@ -274,35 +291,132 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Form embed description for the message.
+		/// Form description of the changes for the project.
 		/// </summary>
-		/// <param name="authors">List of authors in different namespaces.</param>
-		/// <returns>Embed description.</returns>
-		private static string FormDescription(Dictionary<string, List<string>> authors)
+		/// <param name="authors">List of authors with their messages.</param>
+		/// <param name="includeIds">Whether to include message IDs in the result.</param>
+		/// <returns>Changes in the project.</returns>
+		private static string FormDescription(Dictionary<string, List<string>> authors, bool includeIds = true)
 		{
-			var list = authors.Select(ns =>
+			if (!includeIds)
 			{
-				string str = Projects[ns.Key] + ": ";
-				str += string.Join(", ", ns.Value.Select(author =>
+				return FormSimpleDescription(authors);
+			}
+			Dictionary<string, string[]> storage = new Dictionary<string, string[]>();
+
+			// Calculate how much links cost
+			int authorLinkLength = 0;
+			int authorNameLength = 0;
+			foreach (var item in authors)
+			{
+				var arr = new string[3];
+				arr[0] = string.Format("[{0}]({1})", item.Key, Linking.GetLink(item.Key, "https://translatewiki.net/wiki/Special:Contribs/$1", true));
+				arr[1] = item.Value.Count.ToString();
+				arr[2] = "";
+
+				authorLinkLength += arr[0].Length;
+				authorNameLength += item.Key.Length;
+				storage.Add(item.Key, arr);
+			}
+
+			// Add as many message IDs as we can
+			int msgLength = 0;
+			bool useLinks = (authorLinkLength < (MAX_EMBED_LENGTH / 2));
+			Dictionary<string, int> msgNumbers = new Dictionary<string, int>();
+			Dictionary<string, bool> finished = new Dictionary<string, bool>();
+			while (msgLength < MAX_EMBED_LENGTH)
+			{
+				foreach (var item in authors) {
+					if (msgLength > MAX_EMBED_LENGTH || item.Key == "1274") break;
+					if (!msgNumbers.ContainsKey(item.Key))
+					{
+						msgNumbers[item.Key] = 0;
+					}
+
+					var num = msgNumbers[item.Key];
+					if (finished.ContainsKey(item.Key) || num >= item.Value.Count) {
+						if (!finished.ContainsKey(item.Key))
+						{
+							finished[item.Key] = true;
+						}
+						continue;
+					};
+
+					var arr = storage[item.Key];
+					if (num == 0)
+					{
+						arr[0] = string.Format(" ({0})\n", (useLinks ? arr[0] : item.Key));
+						msgLength += arr[0].Length;
+						msgLength += arr[1].Length;
+					}
+
+					string str = (arr[2].Length > 0 ? ", " : "") + item.Value[num];
+					if (msgLength + str.Length + arr[0].Length <= MAX_EMBED_LENGTH)
+					{
+						arr[2] += str;
+						msgLength += str.Length;
+					} else
+					{
+						finished[item.Key] = true;
+						continue;
+					}
+
+					msgNumbers[item.Key]++;
+				}
+
+				// Break if foreach has ended for all elements
+				if (finished.Values.Select(x => x).ToList().Count == msgNumbers.Count)
 				{
-					return string.Format("[{0}]({1})", author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contributions/$1", true));
-				}));
+					break;
+				}
+			}
 
-				return str;
-			});
-			string result = string.Join("\n", list);
-
-			// Remove links if their length is too long
-			if (result.Length > 2000)
+			// Build the resulting string while accounting for unknown problems
+			StringBuilder result = new StringBuilder();
+			foreach (var item in storage)
 			{
-				list = authors.Select(ns => {
-					string str = Projects[ns.Key] + ": ";
-					str += string.Join(", ", ns.Value.Select(author => author));
+				int trim = (authors[item.Key].Count - msgNumbers[item.Key]);
+				string trimmed = (trim > 0 ? $" + {trim}" : "");
 
-					return str;
-				});
+				result.Append(item.Value[2]);
+				result.Append(trimmed);
+				if (useLinks)
+				{
+					result.Append((result.Length + item.Value[0].Length > MAX_EMBED_LENGTH ? $" ({item.Key})\n" : item.Value[0]));
+				} else
+				{
+					result.Append(item.Value[0]);
+				}
+			}
 
-				result = string.Join("\n", list);
+			return result.ToString().TrimEnd('\n');
+		}
+
+		/// <summary>
+		/// Form description of the changes for the project.
+		/// </summary>
+		/// <param name="authors">List of authors with their messages.</param>
+		/// <returns>Changes in the project.</returns>
+		private static string FormSimpleDescription(Dictionary<string, List<string>> authors)
+		{
+			var keys = authors.Keys.ToList();
+			var list = keys.Select(author =>
+			{
+				return string.Format("{0} ([{1}]({2}))", authors[author].Count, author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contribs/$1", true));
+			});
+			string result = string.Join(", ", list);
+
+			if (result.Length > MAX_EMBED_LENGTH)
+			{
+				result = string.Join(", ", keys.Select(author =>
+				{
+					return $"{authors[author].Count} ({author})";
+				}));
+				if (result.Length > MAX_EMBED_LENGTH)
+				{
+					string ellipsis = " […]";
+					result = result.Substring(0, MAX_EMBED_LENGTH - ellipsis.Length) + ellipsis;
+				}
 			}
 
 			return result;
@@ -332,8 +446,9 @@ namespace DiscordWikiBot
 					mcgroup = "!recent",
 					mclanguage = lang,
 					mclimit = 500,
-					mcfilter = "",
-					mcprop = "properties|tags"
+					// Ignore FuzzyBot (ID 646)
+					mcfilter = "!last-translator:646",
+					mcprop = "properties"
 				} ),
 				new CancellationToken()
 			);
@@ -341,6 +456,25 @@ namespace DiscordWikiBot
 			// Return a message collection
 			JToken rcmsgs = result["query"]?["messagecollection"];
 			return rcmsgs;
+		}
+
+		/// <summary>
+		/// Get key via legacy way and convert it to new format.
+		/// </summary>
+		/// <param name="channel">Discord channel ID.</param>
+		private static string GetLegacyKey(string channel)
+		{
+			var oldValue = Config.GetValue("_translatewiki-key", channel);
+			if (oldValue != null)
+			{
+				Program.LogMessage("Converting internal key into the new format.", "TranslateWiki");
+				Config.SetOverride(channel, "_translatewiki-key", null);
+				Config.SetChannelOverride(channel, "translatewiki-key", oldValue);
+
+				return oldValue;
+			}
+
+			return Config.GetChannelOverride("translatewiki-key", channel);
 		}
 	}
 }

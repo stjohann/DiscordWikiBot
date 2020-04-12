@@ -141,18 +141,6 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Get an internal value by key from configuration.
-		/// </summary>
-		/// <param name="key">Internal configuration key.</param>
-		/// <param name="goal">Discord channel or Discord server ID.</param>
-		/// <returns>An internal value of a key.</returns>
-		static public string GetInternal(string key, string goal = "")
-		{
-			if (key == null) return "";
-			return GetValue("_" + key, goal);
-		}
-
-		/// <summary>
 		/// Get language of the bot in a server.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
@@ -191,6 +179,18 @@ namespace DiscordWikiBot
 		static public string GetWiki(string goal = "", bool useDefault = true)
 		{
 			return GetValue("wiki", goal, useDefault);
+		}
+
+		/// <summary>
+		/// Get an internal value by key from configuration.
+		/// </summary>
+		/// <param name="key">Internal configuration key.</param>
+		/// <param name="goal">Discord channel or Discord server ID.</param>
+		/// <returns>An internal value of a key.</returns>
+		static public string GetChannelOverride(string key, string goal = "")
+		{
+			if (key == null) return "";
+			return GetValue(key, $"#{goal}");
 		}
 
 		/// <summary>
@@ -250,14 +250,24 @@ namespace DiscordWikiBot
 			}
 
 			// Set the new value
+			if (value == "-")
+			{
+				value = null;
+			}
 			Overrides[goal][key] = value;
 
 			// Reset data if it matches defaults
 			int code = RESULT_CHANGE;
-			if (value == "-" || (!goal.StartsWith('#') && value == GetValue(key)))
+			if (value == null || (!goal.StartsWith('#') && value == GetValue(key)))
 			{
 				(Overrides.Property(goal).Value as JObject).Property(key).Remove();
 				code = RESULT_RESET;
+			}
+
+			// Clean up the key without any values
+			if (Overrides?[goal].Count() == 0)
+			{
+				Overrides.Property(goal).Remove();
 			}
 
 			// Write it to JSON file
@@ -266,16 +276,16 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Set an internal variable on a specified goal.
+		/// Set an override for a channel.
 		/// </summary>
 		/// <param name="goal">Discord channel or Discord server ID.</param>
-		/// <param name="key">Internal configuration key.</param>
-		/// <param name="value">Internal value.</param>
+		/// <param name="key">Configuration key.</param>
+		/// <param name="value">Override value.</param>
 		/// <returns>Response code with a specified result.</returns>
-		static public int SetInternal(string goal, string key, string value)
+		static public int SetChannelOverride(string goal, string key, string value)
 		{
 			if (key == null) return RESULT_STRANGE;
-			return SetOverride(goal, "_" + key, value);
+			return SetOverride($"#{goal}", key, value);
 		}
 	}
 }

@@ -572,12 +572,12 @@ namespace DiscordWikiBot
 				return "";
 			}
 
-			string linkPattern = "\\[{2}([^\\[\\]\\|\n]+)\\]{2}";
-			string linkPatternPipe = "\\[{2}([^\\[\\]\\|\n]+)\\|([^\\[\\]\n]+)\\]{2}";
+			string linkPattern = @"\[{2}([^\[\]\|\n]+)\]{2}";
+			string linkPatternPipe = @"\[{2}([^\[\]\|\n]+)\|([^\[\]\n]+)\]{2}";
 
 			// Transform code for section to simpler version
 			string comment = summary.ToString().Replace("/* ", "→");
-			comment = Regex.Replace(comment, " \\*/$", string.Empty).Replace(" */", ":");
+			comment = Regex.Replace(comment, @" \*/$", string.Empty).Replace(" */", ":");
 			
 			if (linkify)
 			{

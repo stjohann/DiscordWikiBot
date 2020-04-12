@@ -152,7 +152,7 @@ namespace DiscordWikiBot
 			}
 
 			// Go through a MediaWiki-style language fallback chain
-			if (!list.TryGetValue(key, out string str))
+			if (!list.TryGetValue(key, out string str) || str.StartsWith("!!FUZZY!!"))
 			{
 				// Revert to nearest fallback language if it exis
 				if (lang != FALLBACK_LANG)
@@ -311,14 +311,25 @@ namespace DiscordWikiBot
 		/// Get a language name in the language.
 		/// </summary>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
-		public static string GetLanguageName(string lang)
+		/// <param name="str">Formatting string.</param>
+		public static string GetLanguageName(string lang, string str = "")
 		{
 			if (LanguageData == null)
 			{
 				return lang;
 			}
 
-			return (LanguageData?[lang]?["autonym"] ?? LanguageData?[lang]?["*"] ?? lang).ToString();
+			string name = (LanguageData?[lang]?["autonym"] ?? LanguageData?[lang]?["*"] ?? lang).ToString();
+			if (name == lang)
+			{
+				return lang;
+			}
+			if (str == "")
+			{
+				return name;
+			}
+
+			return string.Format(str, name, lang);
 		}
 	}
 }
