@@ -26,5 +26,6 @@
 	"streaming-stream-title": "vun der Säit '{0}'",
 	"streaming-key-namespace": "Nummraum-Zuel",
 	"streaming-key-title": "Titel vun der Säit",
-	"streaming-key-type": "Typ vun der Ännerung"
+	"streaming-key-type": "Typ vun der Ännerung",
+	"translatewiki-header": "{0} {1:Message|Message} vum {2} {2:Auteur|Auteuren}"
 }

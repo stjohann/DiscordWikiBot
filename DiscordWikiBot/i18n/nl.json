@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Elroy",
+			"Jeroen N",
+			"PonkoSasuke"
+		]
+	},
+	"yes": "ja",
+	"no": "nee",
+	"help-title": "Hulp",
+	"help-commands": "Opdrachten",
+	"help-subcommands": "Vervolgopdrachten",
+	"help-arguments": "Argumenten",
+	"help-optional": "optioneel",
+	"configuring-changed-lang": "De taal van de bot is op deze server naar het **{0}** gewijzigd.",
+	"configuring-error-strange": "De opdracht is vanwege een vreemde fout mislukt.",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "overleg",
+	"eventstreams-contribs": "bijdragen",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m",
+	"linking-link": "Koppeling:",
+	"linking-links": "Koppelingen:",
+	"streaming-stream-namespace": "uit de naamruimte {0}",
+	"streaming-key-in-comment": "in opmerking zoeken",
+	"translatewiki-deadline": "Vind tijd om de vertalingen van deze week na te kijken **tot 00:00** Maandag UTC om te vermijden dat slechte vertalingen en vandalisme zich verspreiden.",
+	"translatewiki-header": "{0} {1:boodschap|boodschappen} door {2} {2:auteur|auteurs}"
+}

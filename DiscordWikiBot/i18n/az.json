@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"BaRaN6161 TURK",
-			"NMW03"
+			"NMW03",
+			"Stjn"
 		]
 	},
 	"bullet": "• {0}",
@@ -83,6 +84,6 @@
 	"streaming-help-list": "Bu serverdəki bütün açıq yayımlar.",
 	"streaming-help-channel": "bot üçün mövcud olan bir kanal.",
 	"streaming-help-args": "mövcud yayım parametrləri:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Pis tərcümələrin və vandalizmin qarşısını almaq üçün bu həftənin cümə axşamı UTC saatı ilə **00:00-dək** tərcümələrin yoxlanılması üçün vaxt tapın.",
+	"translatewiki-deadline": "Pis tərcümələrin və vandalizmin qarşısını almaq üçün bu həftənin bazar ertəsi UTC saatı ilə **00:00-dək** tərcümələrin yoxlanılması üçün vaxt tapın.",
 	"translatewiki-header": "{2} {2:müəllifdən} {0} {1:mesaj}"
 }

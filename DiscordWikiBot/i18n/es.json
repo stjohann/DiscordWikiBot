@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Fitoschido",
-			"Ihojose"
+			"Ihojose",
+			"MartaEgea"
 		]
 	},
 	"yes": "sí",
@@ -32,5 +33,6 @@
 	"streaming-key-minor": "incluir ediciones menores",
 	"streaming-key-namespace": "número de espacio de nombres",
 	"streaming-help-channel": "un canal que está disponible para el bot.",
+	"translatewiki-deadline": "Reserve un tiempo para revisar las traducciones de esta semana **hasta las 00:00** UTC del lunes para evitar traducciones incorrectas y vandalismo.",
 	"translatewiki-header": "{0} {1:mensaje|mensajes} de {2} {2:autor|autores}"
 }
