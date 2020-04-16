@@ -121,7 +121,7 @@ namespace DiscordWikiBot
 			DateTime now = DateTime.UtcNow;
 			if (LatestFetchTime[lang] < now.Hour || (LatestFetchTime[lang] == 23 && now.Hour == 0))
 			{
-				// Inform about update deadline after Wednesday 6:00 UTC
+				// Inform about update deadline after Sunday 6:00 UTC
 				if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour > 6) {
 					if (!UpdateDeadlineDone) UpdateDeadline = true;
 				} else

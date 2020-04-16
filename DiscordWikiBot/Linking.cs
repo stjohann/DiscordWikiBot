@@ -322,7 +322,7 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"(`{1,3}).*?\1", string.Empty, RegexOptions.Singleline);
 
 			// Remove links from the message
-			content = Regex.Replace(content, @"https?://[^\s/$.?#].[^\s]*", string.Empty);
+			content = Regex.Replace(content, @"https?://[^\s/$.?#].[^\s\[\]\{\}]*", string.Empty);
 
 			// Start digging for links
 			MatchCollection matches = Regex.Matches(content, pattern);
@@ -675,7 +675,10 @@ namespace DiscordWikiBot
 				'\\',
 				'^',
 				'`',
-				'~'
+				'~',
+				// Added: Causes problems in anchors
+				'<',
+				'>'
 			};
 			
 			// Replace all spaces to underscores

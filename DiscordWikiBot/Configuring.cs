@@ -341,6 +341,12 @@ namespace DiscordWikiBot
 			{
 				TimeSpan timestamp = DateTime.UtcNow - EventStreams.LatestTimestamp;
 				streamingMsg = " " + Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
+
+				// Restart the stream if it is offline for five minutes
+				if (timestamp.TotalMinutes > 5)
+				{
+					EventStreams.Init();
+				}
 			}
 
 			// Respond to message

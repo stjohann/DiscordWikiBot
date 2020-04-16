@@ -63,6 +63,13 @@ namespace DiscordWikiBot
 		/// </summary>
 		public static void Init()
 		{
+			// Restart the stream if everything is initialised
+			if (Enabled)
+			{
+				Stream.Start();
+				return;
+			}
+
 			// Get JSON
 			Program.LogMessage($"Reading JSON config", "EventStreams");
 			string json = "";
@@ -400,11 +407,11 @@ namespace DiscordWikiBot
 			}
 
 			// Parse comment, adjusting for its length
-			string comment = ParseComment(change.Comment, format);
+			string comment = ParseComment(change.Comment, format, change.Title);
 			string msg = $"{link} . . {strLength} . . {user}";
 			if (msg.Length + comment.Length > 2000)
 			{
-				comment = ParseComment(change.Comment, format, false);
+				comment = ParseComment(change.Comment, format, change.Title, false);
 			}
 			msg += comment;
 
@@ -563,9 +570,10 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="summary">Comment text.</param>
 		/// <param name="format">Wiki link URL.</param>
+		/// <param name="page">Page title.</param>
 		/// <param name="linkify">Should links be linkified or just removed.</param>
 		/// <returns>Parsed comment with styling.</returns>
-		private static string ParseComment(string summary, string format, bool linkify = true)
+		private static string ParseComment(string summary, string format, string page, bool linkify = true)
 		{
 			if (summary.Length == 0)
 			{
@@ -574,37 +582,52 @@ namespace DiscordWikiBot
 
 			string linkPattern = @"\[{2}([^\[\]\|\n]+)\]{2}";
 			string linkPatternPipe = @"\[{2}([^\[\]\|\n]+)\|([^\[\]\n]+)\]{2}";
-
-			// Transform code for section to simpler version
-			string comment = summary.ToString().Replace("/* ", "→");
-			comment = Regex.Replace(comment, @" \*/$", string.Empty).Replace(" */", ":");
 			
 			if (linkify)
 			{
+				// Linkify the code for sections
+				summary = Regex.Replace(summary, @"/\* (.*?) \*/(.?)", m =>
+				{
+					string section = m.Groups[1].Value;
+					string link = string.Format("[→{0}]({1})", section, Linking.GetLink(page + "#" + section, format, true));
+
+					if (m.Groups?[2].Value != "")
+					{
+						return $"{link}:{m.Groups[2].Value}";
+					}
+
+					return link;
+				});
+
 				// Linkify every wiki link in comment text
-				comment = Regex.Replace(comment, linkPattern, m => {
+				summary = Regex.Replace(summary, linkPattern, m => {
 					string title = m.Groups[1].Value;
 					string link = string.Format("[{0}]({1})", title, Linking.GetLink(title, format, true));
 
 					return link;
 				});
 
-				comment = Regex.Replace(comment, linkPatternPipe, m => {
+				summary = Regex.Replace(summary, linkPatternPipe, m => {
 					string title = m.Groups[1].Value;
 					string text = m.Groups[2].Value;
 					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
 
 					return link;
 				});
-			} else {
+			} else
+			{
+				// Transform code for sections to simpler version
+				string comment = summary.ToString().Replace("/* ", "→");
+				comment = Regex.Replace(comment, @" \*/$", string.Empty).Replace(" */", ":");
+
 				// Display wiki links as plain text
-				comment = Regex.Replace(comment, linkPattern, "$1");
-				comment = Regex.Replace(comment, linkPatternPipe, "$2");
+				summary = Regex.Replace(summary, linkPattern, "$1");
+				summary = Regex.Replace(summary, linkPatternPipe, "$2");
 			}
 
 			// Add italic and parentheses
-			comment = $" *({comment})*";
-			return comment;
+			summary = $" *({summary})*";
+			return summary;
 		}
 
 		/// <summary>
