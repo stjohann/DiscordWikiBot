@@ -80,6 +80,6 @@
 	"streaming-help-list": "Список на сите отворени доводи на овој опслужувач.",
 	"streaming-help-channel": "канал кој му е достапен на ботот.",
 	"streaming-help-args": "достапни параметри на доводот:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Најдете време да ги проверите преводите за оваа недела **до 00:00 ч.** во четврток по UTC за да избегнете лоши преводи и вандализми.",
+	"translatewiki-deadline": "Најдете време да ги проверите преводите за оваа недела **до полноќ** во понеделник по UTC за да избегнете лоши преводи и вандализми.",
 	"translatewiki-header": "{0} {1:порака|пораки} од {2} {2:автор|автори}"
 }
