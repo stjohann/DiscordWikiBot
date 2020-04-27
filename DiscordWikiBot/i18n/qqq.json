@@ -11,7 +11,7 @@
 	"no": "Used to indicate that true/false value is false.\n{{Identical|No}}",
 	"help-title": "The header of <code>!help</code> command without parameters.\n{{Identical|Help}}",
 	"help-title-command": "Title of the <code>!help</code> command in the bot.\n* <code>{0}</code> – command name (<code>help</code>).\n* <code>{1}</code> – command prefix (<code>!</code>).\nLeave <code>{msg:separator}</code> untranslated.",
-	"help-version": "Version of the bot, displayed in <code>!help</code> command. <code>{0}</code> is the version. Example: <code>2.4.0</code>.",
+	"help-version": "Version of the bot, displayed in <code>!help</code> command. <code>{0}</code> is the version. Example: <code>2.4.0</code>.\n{{Identical|Version}}",
 	"help-repo": "Link to [[w:Source code|source code]] of the bot. <code>{0}</code> is the link text.",
 	"help-default": "The default value of a parameter. <code>{0}</code> is the default value.\nThe message to translate is formatted using the Markdown syntax.",
 	"help-optional": "{{Identical|Optional}}",

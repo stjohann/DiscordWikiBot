@@ -3,6 +3,7 @@
 		"authors": [
 			"Amire80",
 			"IKhitron",
+			"Steeve815",
 			"YaronSh",
 			"דגש חזק"
 		]
@@ -83,6 +84,6 @@
 	"streaming-help-list": "רשימת כל הסטרימים הפתוחים בערוץ.",
 	"streaming-help-channel": "ערוץ אשר זמין לבוט.",
 	"streaming-help-args": "הפרמטרים הזמינים עבור סטרים:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "יש למצוא זמן פנוי לבדיקת התרגומים שהצטברו השבוע **לא יאוחר מ־0:00** ביום חמישי שעון UTC למניעת תרגומים רעים ותפיסת משחיתים.",
+	"translatewiki-deadline": "יש למצוא זמן פנוי לבדיקת התרגומים שהצטברו השבוע **לא יאוחר מ־0:00** ביום שני שעון UTC למניעת תרגומים רעים ותפיסת משחיתים.",
 	"translatewiki-header": "{0}{1:הודעה|הודעות|הודעות|הודעות} מאת {2}{2:עורך|עורכים|עורכים|עורכים}"
 }
