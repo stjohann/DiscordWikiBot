@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"yes": "sìne",
+	"no": "none",
+	"help-title": "Aijute",
+	"help-title-command": "{1}{0}{msg:separator}aijute",
+	"help-version": "Versione {0}.",
+	"help-commands": "Comande",
+	"help-aliases": "Alias",
+	"help-optional": "facoltative",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "'ngazzamende",
+	"eventstreams-contribs": "condrebbute",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m",
+	"linking-link": "Collegamende:",
+	"linking-links": "Collegaminde:",
+	"streaming-stream-namespace": "da 'u namespace `{0}`",
+	"streaming-key-in-comment": "cirche jndr'à 'u commende",
+	"streaming-key-diff-length": "lunghezze minime de differenze",
+	"streaming-help-channel": "'nu canale ca jè disponibbele a 'u bot.",
+	"translatewiki-header": "{0} {1:messàgge|messàgge} da {2} {2:autore|auture}"
+}
