@@ -58,7 +58,7 @@
 	"linking-toolong": "Odkazy na výše uvedenou zprávu nejsou k dispozici, protože by zpráva byla pro Discord příliš dlouhá.",
 	"streaming-stream-namespace": "z jmenného prostoru `{0}`",
 	"streaming-stream-title": "ze stránky `{0}`",
-	"streaming-opened": ":white_check_mark: Stream {0} je přidán do kanálu {1}{2}",
+	"streaming-opened": ":white_check_mark: Stream {0} byl přidán do kanálu {1}{2}",
 	"streaming-edited": ":eight_spoked_asterisk: Stream {0} v kanále {1} změnil následující parametry:\n{2}",
 	"streaming-edited-nothing": ":ok: Stream {0} v kanále {1} nezaznamenal žádné změny.",
 	"streaming-closed": ":negative_squared_cross_mark: Stream {0} byl odstraněn z kanálu {1}.",
