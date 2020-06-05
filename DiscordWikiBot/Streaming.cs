@@ -144,7 +144,32 @@ namespace DiscordWikiBot
 				msg.Add(output);
 			}
 
-			await ctx.RespondAsync(Locale.GetMessage("streaming-list", lang, result.Count, string.Join("\n", msg)));
+			string response = Locale.GetMessage("streaming-list", lang, result.Count, string.Join("\n", msg));
+			if (response.Length <= 2000)
+			{
+				await ctx.RespondAsync(response);
+			} else
+			{
+				// Split long lists of streams into multiple messages
+				response = Locale.GetMessage("streaming-list", lang, result.Count, "");
+				foreach (var stream in msg)
+				{
+					string output = stream + "\n";
+					if (response.Length + output.Length <= 2000)
+					{
+						response += output;
+					} else
+					{
+						await ctx.RespondAsync(response);
+						response = "";
+					}
+				}
+
+				if (response.Length > 0)
+				{
+					await ctx.RespondAsync(response);
+				}
+			}
 		}
 
 		/// <summary>

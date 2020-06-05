@@ -589,7 +589,7 @@ namespace DiscordWikiBot
 				summary = Regex.Replace(summary, @"/\* (.*?) \*/(.?)", m =>
 				{
 					string section = m.Groups[1].Value;
-					string link = string.Format("[→{0}]({1})", section, Linking.GetLink(page + "#" + section, format, true));
+					string link = string.Format("[→{0}]({1})", section.Trim(), Linking.GetLink(page + "#" + section.Trim(), format));
 
 					if (m.Groups?[2].Value != "")
 					{
