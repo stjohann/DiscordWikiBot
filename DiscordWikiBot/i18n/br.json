@@ -22,7 +22,7 @@
 	"help-command": "Diskouez skoazell an urzhiad.",
 	"help-command-command": "urzhiad a zo ezhomm sikour evitañ.",
 	"configuring-status": ":information_source: Luget el lugell.",
-	"configuring-status-streaming": "Respont diwezhañ ar froud: {0} {0:munutenn|a vunutennoù|a vunutennoù|a vunutennoù|a vunutennoù} {1} {1:segondenn|a segondennoù|a segondennoù|a segondennoù|a segondennoù} 'zo.",
+	"configuring-status-streaming": "Respont diwezhañ ar froud: {0} {0:munutenn|vunutenn|munutenn|munutenn|munutenn} {1} {1:eilenn|eilenn|eilenn|eilenn|eilenn} zo.",
 	"configuring-changed-domain": "Domani froud ar c'hemmoù diwezhañ war ar servijer-mañ a zo bet kemmet da ziwezhañ gant **{0}**.",
 	"configuring-changed-lang": "Yezh robot ar servijer-mañ a zo bet lakaet da **{0}**.",
 	"configuring-changed-translatewiki": "An danevelloù o tennañ d'ar cheñchamantoù fresk-nevez war Translatewiki a vez enaouet war ar ganol anvet {0} evit ar yezh **{1}**.",
