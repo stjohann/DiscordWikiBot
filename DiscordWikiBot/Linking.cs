@@ -325,8 +325,8 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"https?://[^\s/$.?#].[^\s\[\]\{\}]*", string.Empty);
 
 			// Remove quotes from the message
-			content = Regex.Replace(content, @">>> [^$]+$", string.Empty);
-			content = Regex.Replace(content, @"> .+", string.Empty);
+			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
+			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
 
 			// Start digging for links
 			MatchCollection matches = Regex.Matches(content, pattern);
