@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Shuiwater",
 			"佛壁灯",
 			"沈澄心"
 		]
@@ -18,16 +19,30 @@
 	"help-default": "默认值：`{0}`.",
 	"help-optional": "可选",
 	"help-command": "显示命令帮助。",
+	"help-command-command": "提供帮助的命令",
 	"configuring-status": ":information_source: 已接入插座。",
 	"configuring-changed-lang": "此服务器上的机器人使用语言已更改至 **{0}**。",
+	"configuring-changed-reset": "该值被重新设置为默认值。",
+	"configuring-error-strange": "你的命令出现了一些奇怪的错误。",
+	"configuring-badvalue-lang": "机器人无法识别您的输入是否是有效的ISO 639 代码。",
+	"configuring-badvalue-wiki": "在你的URL结束位置必须要有'{0}'。",
 	"configuring-help-status": "检查机器人是否可用。",
 	"configuring-help-lang": "更改在此服务器上机器人使用的语言。",
+	"configuring-help-lang-value": "如果机器人的语言不是你想要的。用'-'重设回默认值。",
+	"configuring-help-translatewiki-channel": "机器人可用的频道。",
 	"eventstreams-diff": "差异",
 	"eventstreams-talk": "讨论",
 	"eventstreams-contribs": "贡献",
 	"eventstreams-new": "新",
 	"eventstreams-bot": "机",
 	"eventstreams-minor": "小",
+	"linking-link": "链接：",
+	"linking-links": "链接：",
 	"streaming-key-bot": "包含机器人编辑",
-	"streaming-key-type": "编辑类型"
+	"streaming-key-in-comment": "在评论里搜索",
+	"streaming-key-diff-length": "最小长度差异",
+	"streaming-key-namespace": "命名空间数",
+	"streaming-key-title": "页面标题",
+	"streaming-key-type": "编辑类型",
+	"streaming-help-channel": "机器人可用的频道。"
 }
