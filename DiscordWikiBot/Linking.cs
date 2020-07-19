@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using DiscordWikiBot.Schemas;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
-using WikiClientLibrary;
-using WikiClientLibrary.Client;
 using WikiClientLibrary.Sites;
-using Newtonsoft.Json;
 using DSharpPlus.Entities;
+using WikiClientLibrary.Pages;
 
 namespace DiscordWikiBot
 {
@@ -38,27 +37,6 @@ namespace DiscordWikiBot
 		private static readonly string TOO_LONG = "TOO_LONG";
 
 		/// <summary>
-		/// Dictionary extension class to store a specified number of items.
-		/// </summary>
-		public class Buffer<TKey, TValue> : Dictionary<TKey, TValue>
-		{
-			public int MaxItems { get; set; }
-
-			private Queue<TKey> orderedKeys = new Queue<TKey>();
-
-			public new void Add(TKey key, TValue value)
-			{
-				orderedKeys.Enqueue(key);
-				if (this.MaxItems != 0 && this.Count >= MaxItems)
-				{
-					this.Remove(orderedKeys.Dequeue());
-				}
-
-				base.Add(key, value);
-			}
-		}
-
-		/// <summary>
 		/// Message cache length.
 		/// </summary>
 		private static readonly int CACHE_LENGTH = 500;
@@ -71,20 +49,8 @@ namespace DiscordWikiBot
 			MaxItems = CACHE_LENGTH
 		};
 
-		/// <summary>
-		/// Class to store needed wiki site information.
-		/// </summary>
-		public class SiteInfo
-		{
-			public InterwikiMap iw;
-			public NamespaceCollection ns;
-			public bool isCaseSensitive;
-		}
-
 		// Permanent site information for main wikis
-		private static Dictionary<string, InterwikiMap> IWList = new Dictionary<string, InterwikiMap>();
-		private static Dictionary<string, NamespaceCollection> NSList = new Dictionary<string, NamespaceCollection>();
-		private static Dictionary<string, bool> IsCaseSensitive = new Dictionary<string, bool>();
+		private static Dictionary<string, WikiSite> WikiSiteInfo = new Dictionary<string, WikiSite>();
 
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
@@ -93,21 +59,12 @@ namespace DiscordWikiBot
 		static public void Init(string goal = "")
 		{
 			string wiki = Config.GetWiki(goal);
-			if (goal != "" && wiki == Config.GetWiki()) return;
 
-			// Fetch values for the goal
-			if (!IWList.ContainsKey(goal))
+			// Fetch values for the goal’s wiki
+			if (!WikiSiteInfo.ContainsKey(wiki))
 			{
-				// Fetch site information for default wiki
-				SiteInfo data = FetchSiteInfo(wiki).Result;
-				if (goal == "" || goal == null)
-				{
-					goal = LANG_DEFAULT;
-				}
-
-				IWList.Add(goal, data.iw);
-				NSList.Add(goal, data.ns);
-				IsCaseSensitive.Add(goal, data.isCaseSensitive);
+				WikiSite data = FetchSiteInfo(wiki).Result;
+				WikiSiteInfo.Add(wiki, data);
 			}
 		}
 
@@ -117,11 +74,10 @@ namespace DiscordWikiBot
 		/// <param name="goal">Discord server ID.</param>
 		static public void Remove(string goal = "")
 		{
-			if (goal == "" || goal == null) return;
+			//if (goal == "" || goal == null) return;
+			return;
 
-			IWList.Remove(goal);
-			NSList.Remove(goal);
-			IsCaseSensitive.Remove(goal);
+			// TODO: Reimplement removal mechanism for wiki info
 		}
 
 		/// <summary>
@@ -383,16 +339,16 @@ namespace DiscordWikiBot
 			string str = ( groups[2].Value.Length == 0 ? groups[4].Value : groups[2].Value ).Trim();
 
 			// Default site info
-			InterwikiMap defaultIWList = GetList(goal, "iw");
-			NamespaceCollection defaultNSList = GetList(goal, "ns");
+			WikiSite defaultSiteInfo = WikiSiteInfo[Config.GetWiki(goal)];
 
-			// Temporary site info for other wikis
-			InterwikiMap tempIWList = null;
-			NamespaceCollection tempNSList = null;
-			bool tempIsCaseSensitive = true;
+			// Temporary site info storage for other wikis
+			WikiSite tempSiteInfo = null;
 
 			// Trim : from the start (nuisance)
-			str = str.TrimStart(':');
+			if (type != "{{")
+			{
+				str = str.TrimStart(':');
+			}
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
@@ -410,17 +366,24 @@ namespace DiscordWikiBot
 				// Add template namespace for template links and remove substitution
 				if (type == "{{")
 				{
-					ns = defaultNSList["template"].CustomName;
-					str = Regex.Replace(str, "^(?:subst|подст):", "");
+					if (!str.StartsWith(':'))
+					{
+						ns = defaultSiteInfo.Namespaces["template"].CustomName;
+						str = Regex.Replace(str, "^:?(?:subst|подст):", "");
+					}
+					str = str.TrimStart(':');
 				}
+
+				WikiSite latestSiteInfo = defaultSiteInfo;
 
 				// Check if link contains interwikis
 				Match iwMatch = Regex.Match(str, "^:?([A-Za-z-]+):");
 				while (type == "[[" && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
-					InterwikiMap latestIWList = (tempIWList ?? defaultIWList);
-					NamespaceCollection latestNSList = (tempNSList ?? defaultNSList);
+					latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
+					InterwikiMap latestIWList = latestSiteInfo.InterwikiMap;
+					NamespaceCollection latestNSList = latestSiteInfo.Namespaces;
 					if (latestIWList.Contains(prefix) && !latestNSList.Contains(prefix))
 					{
 						string oldLinkFormat = linkFormat;
@@ -429,10 +392,9 @@ namespace DiscordWikiBot
 						// Fetch temporary site information if necessary and store new prefix
 						if (iw != "" || oldLinkFormat.Replace(iw, prefix) != linkFormat)
 						{
-							SiteInfo data = FetchSiteInfo(linkFormat).Result;
-							tempIWList = data.iw;
-							tempNSList = data.ns;
-							tempIsCaseSensitive = data.isCaseSensitive;
+							WikiSite data = FetchSiteInfo(linkFormat).Result;
+							tempSiteInfo = data;
+							latestSiteInfo = tempSiteInfo;
 						}
 						iw = prefix;
 
@@ -452,17 +414,21 @@ namespace DiscordWikiBot
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
-					NamespaceCollection latestNSList = defaultNSList;
-					if (linkFormat != Config.GetWiki(goal) && tempNSList != null)
-					{
-						latestNSList = tempNSList;
-					}
-
+					NamespaceCollection latestNSList = latestSiteInfo.Namespaces;
 					if (latestNSList.Contains(prefix))
 					{
-						ns = latestNSList[prefix].CustomName;
-						Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
-						str = only.Replace(str, "", 1).Trim();
+						var namespaceInfo = latestNSList[prefix];
+						if ((namespaceInfo.Id == 2 || namespaceInfo.Id == 3) && namespaceInfo.Aliases.Count > 0)
+						{
+							// Get title according to gender for User namespaces
+							str = GetNormalisedTitle(str, linkFormat).Result;
+						}
+						else
+						{
+							ns = namespaceInfo.CustomName;
+							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+							str = only.Replace(str, "", 1).Trim();
+						}
 					}
 				}
 
@@ -479,15 +445,10 @@ namespace DiscordWikiBot
 				if (str.Length > 0)
 				{
 					// Capitalise first letter if wiki does not allow lowercase titles
-					if ((linkFormat == Config.GetWiki(goal) && !GetList(goal)) || (linkFormat != Config.GetWiki(goal) && !tempIsCaseSensitive))
+					if (latestSiteInfo?.SiteInfo?.IsTitleCaseSensitive == false)
 					{
 						str = str[0].ToString().ToUpper() + str.Substring(1);
 					}
-
-					// Clear temporary site info
-					tempIWList = null;
-					tempNSList = null;
-					tempIsCaseSensitive = false;
 
 					// Add namespace before any transformations
 					if (ns != "")
@@ -506,39 +467,65 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
 		/// <returns>Site information from the wiki site.</returns>
-		public static async Task<SiteInfo> FetchSiteInfo(string url)
+		public static async Task<WikiSite> FetchSiteInfo(string url)
 		{
-			string urlWiki = "/wiki/$1";
-			SiteInfo result = new SiteInfo();
-			if (url.Contains(urlWiki))
+			string wikiUrlPattern = "/wiki/$1";
+			if (!url.EndsWith(wikiUrlPattern))
 			{
-				// Connect with API if it is a wiki site
-				WikiClient wikiClient = new WikiClient
-				{
-					ClientUserAgent = Program.UserAgent,
-				};
-				WikiSite site = new WikiSite(wikiClient, url.Replace(urlWiki, "/w/api.php"));
-				try
-				{
-					await site.Initialization;
+				return null;
+			}
 
-					// Generate and return the info needed
-					result.iw = site.InterwikiMap;
-					result.ns = site.Namespaces;
-					result.isCaseSensitive = site.SiteInfo.IsTitleCaseSensitive;
-				} catch (Exception ex)
-				{
-					Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
-
-					result.isCaseSensitive = true;
-				}
-			} else
+			string apiUrl = url.Replace(wikiUrlPattern, "/w/api.php");
+			WikiSite result = new WikiSite(Program.WikiClient, apiUrl);
+			try
 			{
-				result.isCaseSensitive = true;
+				await result.Initialization;
+			}
+			catch (Exception ex)
+			{
+				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
 			}
 
 			await Task.FromResult(0);
 			return result;
+		}
+
+		/// <summary>
+		/// Get normalised page title from API.
+		/// </summary>
+		/// <param name="title">Page title.</param>
+		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
+		public static async Task<string> GetNormalisedTitle(string title, string url)
+		{
+			string pageTitle = null;
+			string wikiUrlPattern = "/wiki/$1";
+			string apiUrl = url.Replace(wikiUrlPattern, "/w/api.php");
+
+			WikiSite site = null;
+			bool siteWasInitialised = WikiSiteInfo.ContainsKey(url);
+			if (siteWasInitialised)
+			{
+				site = WikiSiteInfo[url];
+			} else
+			{
+				site = new WikiSite(Program.WikiClient, apiUrl);
+			}
+
+			try
+			{
+				if (!siteWasInitialised) await site.Initialization;
+
+				var page = new WikiPage(site, title);
+				await page.RefreshAsync();
+				pageTitle = page.Title;
+			}
+			catch (Exception ex)
+			{
+				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
+			}
+
+			await Task.FromResult(0);
+			return pageTitle;
 		}
 
 		/// <summary>
@@ -603,6 +590,12 @@ namespace DiscordWikiBot
 			}
 
 			title = EncodePageTitle(title, escapePar);
+
+			// TODO: Remove the hack when Discord fixes its Android client
+			if (!escapePar && title.EndsWith(")") && !title.Contains("#"))
+			{
+				title += "_";
+			}
 			return format.Replace("$1", title);
 		}
 
@@ -622,39 +615,6 @@ namespace DiscordWikiBot
 			}
 
 			return goal;
-		}
-
-		/// <summary>
-		/// Get site information for a specified goal.
-		/// </summary>
-		/// <param name="goal">Discord server ID.</param>
-		/// <param name="key">Short key for needed information.</param>
-		/// <returns>A list or a boolean value.</returns>
-		private static dynamic GetList(string goal, string key = "")
-		{
-			if (key == "iw")
-			{
-				if (IWList.ContainsKey(goal))
-				{
-					return IWList[goal];
-				}
-				return IWList[LANG_DEFAULT];
-			}
-
-			if (key == "ns")
-			{
-				if (NSList.ContainsKey(goal))
-				{
-					return NSList[goal];
-				}
-				return NSList[LANG_DEFAULT];
-			}
-
-			if (IsCaseSensitive.ContainsKey(goal))
-			{
-				return IsCaseSensitive[goal];
-			}
-			return IsCaseSensitive[LANG_DEFAULT];
 		}
 
 		/// <summary>

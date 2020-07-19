@@ -97,7 +97,10 @@ namespace DiscordWikiBot
 
 			// Log any disconnects
 			Stream.Disconnected += async(object sender, DisconnectEventArgs e) => {
-				Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", LogLevel.Warning);
+				// See https://phabricator.wikimedia.org/T242767 for why IOExceptions are ignored
+				if (!(e.Exception is IOException)) {
+					Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", LogLevel.Warning);
+				}
 
 				// Reconnect to the same URL
 				await Task.Delay(e.ReconnectDelay);

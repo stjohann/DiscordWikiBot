@@ -345,6 +345,7 @@ namespace DiscordWikiBot
 				// Restart the stream if it is offline for five minutes
 				if (timestamp.TotalMinutes > 5)
 				{
+					Program.LogMessage("EventStreams restart was requested from !status command.", "EventStreams");
 					EventStreams.Init();
 				}
 			}

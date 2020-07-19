@@ -350,7 +350,7 @@ namespace DiscordWikiBot
 						msgLength += arr[1].Length;
 					}
 
-					string str = (arr[2].Length > 0 ? ", " : "") + item.Value[num];
+					string str = (arr[2].Length > 0 ? ", " : "") + item.Value[num].Replace("_", @"\_");
 					if (msgLength + str.Length + arr[0].Length <= MAX_EMBED_LENGTH)
 					{
 						arr[2] += str;
@@ -431,11 +431,7 @@ namespace DiscordWikiBot
 		{
 			if (lang == null) return null;
 
-			WikiClient wikiClient = new WikiClient
-			{
-				ClientUserAgent = Program.UserAgent,
-			};
-			WikiSite site = new WikiSite(wikiClient, "https://translatewiki.net/w/api.php");
+			WikiSite site = new WikiSite(Program.WikiClient, "https://translatewiki.net/w/api.php");
 			await site.Initialization;
 
 			JToken result = await site.InvokeMediaWikiApiAsync(

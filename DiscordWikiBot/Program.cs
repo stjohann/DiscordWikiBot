@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.EventArgs;
+using WikiClientLibrary.Client;
 
 namespace DiscordWikiBot
 {
@@ -22,6 +23,14 @@ namespace DiscordWikiBot
 		/// An instance of Discord client.
 		/// </summary>
 		public static DiscordClient Client;
+
+		/// <summary>
+		/// An instance of MediaWiki client with necessary useragent.
+		/// </summary>
+		public static WikiClient WikiClient = new WikiClient
+		{
+			ClientUserAgent = UserAgent,
+		};
 
 		/// <summary>
 		/// DiscordWikiBot version.
