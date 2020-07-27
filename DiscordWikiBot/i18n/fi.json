@@ -25,6 +25,7 @@
 	"linking-links": "Linkit:",
 	"streaming-stream-namespace": "nimiavaruudesta `{0}`",
 	"streaming-stream-title": "sivulta `{0}`",
+	"streaming-key-bot": "sisällytä bottimuokkaukset",
 	"streaming-key-minor": "sisällytä pienet muutokset",
 	"streaming-key-namespace": "nimiavaruuden numero",
 	"streaming-key-title": "sivun otsikko"

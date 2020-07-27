@@ -83,5 +83,5 @@
 	"streaming-help-channel": "kanal koji je dostupan botu.",
 	"streaming-help-args": "dostupni parametri za tok:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	"translatewiki-deadline": "Odvojite nešto vremena za provjeru ovosedmičnih prevoda **do 00:00** u ponedjeljak po vremenskoj zoni UTC da bismo izbjegli loše prevode i vandalizme.",
-	"translatewiki-header": "{0} {1:poruka|poruke|poruka} od {2} {2:autora|autora|autora}"
+	"translatewiki-header": "{0} {1:poruka|poruke|poruka} {2} {2:autora|autora|autora}"
 }
