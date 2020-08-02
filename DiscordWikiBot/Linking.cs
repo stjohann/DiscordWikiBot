@@ -344,12 +344,6 @@ namespace DiscordWikiBot
 			// Temporary site info storage for other wikis
 			WikiSite tempSiteInfo = null;
 
-			// Trim : from the start (nuisance)
-			if (type != "{{")
-			{
-				str = str.TrimStart(':');
-			}
-
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
 			str = str.Replace(@"\", "");
@@ -371,7 +365,6 @@ namespace DiscordWikiBot
 						ns = defaultSiteInfo.Namespaces["template"].CustomName;
 						str = Regex.Replace(str, "^:?(?:subst|подст):", "");
 					}
-					str = str.TrimStart(':');
 				}
 
 				WikiSite latestSiteInfo = defaultSiteInfo;
@@ -444,6 +437,9 @@ namespace DiscordWikiBot
 				// Rewrite other text
 				if (str.Length > 0)
 				{
+					// Trim : from the start (nuisance)
+					str = str.TrimStart(':');
+
 					// Capitalise first letter if wiki does not allow lowercase titles
 					if (latestSiteInfo?.SiteInfo?.IsTitleCaseSensitive == false)
 					{
@@ -524,6 +520,12 @@ namespace DiscordWikiBot
 				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
 			}
 
+			// Restore the anchor from original title
+			if (title.Contains('#'))
+			{
+				pageTitle += "#" + EncodePageTitle(title.Split('#')?[1], false);
+			}
+
 			await Task.FromResult(0);
 			return pageTitle;
 		}
@@ -554,6 +556,9 @@ namespace DiscordWikiBot
 				"svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:", "//"
 			};
 			if (uriProtocols.Any(str.StartsWith)) return true;
+
+			// Check if it has two : or more
+			if (Regex.IsMatch(str, "^:{2,}")) return true;
 
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title

@@ -235,11 +235,7 @@ namespace DiscordWikiBot
 		{
 			string url = Config.GetWiki();
 			string urlWiki = "/wiki/$1";
-			WikiClient wikiClient = new WikiClient
-			{
-				ClientUserAgent = Program.UserAgent,
-			};
-			WikiSite site = new WikiSite(wikiClient, url.Replace(urlWiki, "/w/api.php"));
+			WikiSite site = new WikiSite(Program.WikiClient, url.Replace(urlWiki, "/w/api.php"));
 			await site.Initialization;
 
 			// Fetch languages using new API (MediaWiki 1.34+)
