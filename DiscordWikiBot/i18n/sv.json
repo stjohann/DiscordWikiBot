@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Sabelöga",
 			"WikiPhoenix"
 		]
 	},
@@ -38,7 +39,7 @@
 	"configuring-help-translatewiki-channel": "en kanal som är tillgänglig för boten.",
 	"configuring-help-wiki-channel": "Ändra wikin för länkar på denna kanal. /wiki/$1 i slutet är nödvändigt.",
 	"configuring-help-wiki-value": "wikin du vill ha (i formatet <https://en.wikipedia.org/wiki/$1>). Använd `-` för att återställa till standardvärdet.",
-	"eventstreams-diff": "diff",
+	"eventstreams-diff": "skillnad",
 	"eventstreams-talk": "diskussion",
 	"eventstreams-contribs": "bidrag",
 	"eventstreams-new": "N",
@@ -58,7 +59,7 @@
 	"streaming-list-stream": "**{1:Ström|Strömmar} {0}:**",
 	"streaming-key-bot": "inkludera botredigeringar",
 	"streaming-key-in-comment": "sök i kommentar",
-	"streaming-key-diff-length": "minimal diff-längd",
+	"streaming-key-diff-length": "minimal skillnads-längd",
 	"streaming-key-minor": "inkludera mindre redigeringar",
 	"streaming-key-namespace": "namnrymdsnummer",
 	"streaming-key-patrolled": "filtrera efter patrulleringsstatus",
@@ -67,6 +68,6 @@
 	"streaming-help-list": "Lista upp alla öppnade strömmar på denna server.",
 	"streaming-help-channel": "en kanal som är tillgänglig för boten.",
 	"streaming-help-args": "tillgängliga strömparametrar:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Hitta tiden att kontrollera översättningar för denna vecka **fram tills 00:00** UTC på torsdag för att undvika dåliga översättningar och vandalism ska komma med.",
-	"translatewiki-header": "{0} {1:meddelande|meddelanden} från {2} {2:författare|författare}"
+	"translatewiki-deadline": "Hitta tiden att kontrollera översättningar för denna vecka **fram tills 00:00** UTC på måndag för att undvika dåliga översättningar och vandalism ska komma med.",
+	"translatewiki-header": "{0} {1:meddelande|meddelanden} av {2} {2:författare|författare}"
 }
