@@ -6,7 +6,7 @@
 		<PackageLicenseFile>LICENCE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/stjohann/DiscordWikiBot</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>2.7.1</Version>
+		<Version>2.7.2</Version>
 		<Authors>stjn and others</Authors>
 		<Company />
 	</PropertyGroup>

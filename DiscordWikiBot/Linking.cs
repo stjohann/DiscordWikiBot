@@ -364,6 +364,13 @@ namespace DiscordWikiBot
 					{
 						ns = defaultSiteInfo.Namespaces["template"].CustomName;
 						str = Regex.Replace(str, "^:?(?:subst|подст):", "");
+
+						// MediaWiki page transclusion
+						if (str.StartsWith("int:"))
+						{
+							ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
+							str = Regex.Replace(str, "^int:", "");
+						}
 					}
 				}
 
@@ -601,7 +608,7 @@ namespace DiscordWikiBot
 			{
 				title += "_";
 			}
-			return format.Replace("$1", title);
+			return format.Replace("$1", title.Trim());
 		}
 
 		/// <summary>
