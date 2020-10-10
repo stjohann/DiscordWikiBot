@@ -75,7 +75,7 @@ namespace DiscordWikiBot
 			string json = "";
 			if (!File.Exists(JSON_PATH))
 			{
-				Program.LogMessage($"Please create a JSON file called \"{JSON_PATH}\" before trying to use EventStreams.", "EventStreams", LogLevel.Error);
+				Program.LogMessage($"Please create a JSON file called \"{JSON_PATH}\" before trying to use EventStreams.", "EventStreams", "error");
 				return;
 			}
 			json = File.ReadAllText(JSON_PATH, Encoding.Default);
@@ -85,7 +85,7 @@ namespace DiscordWikiBot
 			// Check if default domain is a Wikimedia project
 			if (!CanBeUsed(Config.GetDomain(), out string[] temp))
 			{
-				Program.LogMessage($"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", "EventStreams", LogLevel.Error);
+				Program.LogMessage($"Default stream domain should be a Wikimedia project.\nList of available projects: {string.Join(", ", WMProjects)}", "EventStreams", "error");
 				return;
 			}
 
@@ -99,7 +99,7 @@ namespace DiscordWikiBot
 			Stream.Disconnected += async(object sender, DisconnectEventArgs e) => {
 				// See https://phabricator.wikimedia.org/T242767 for why IOExceptions are ignored
 				if (!(e.Exception is IOException)) {
-					Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", LogLevel.Warning);
+					Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", "warning");
 				}
 
 				// Reconnect to the same URL
@@ -173,10 +173,10 @@ namespace DiscordWikiBot
 					{
 						goalInfo = $"namespace={rawGoal}";
 					}
-					Program.LogMessage($"Channel {item.Key} ({goalInfo}) can’t be reached: {ex}", "EventStreams", LogLevel.Warning);
+					Program.LogMessage($"Channel {item.Key} ({goalInfo}) can’t be reached: {ex}", "EventStreams", "warning");
 
 					// Remove data if channel is deleted or unavailable
-					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					if (Program.IsChannelInvalid(ex))
 					{
 						if (rawGoal != goal)
 						{
@@ -278,10 +278,10 @@ namespace DiscordWikiBot
 					{
 						goalInfo = $"namespace={rawGoal}";
 					}
-					Program.LogMessage($"Message in channel #{channel.Name} (ID {item.Key}; {goalInfo}) could not be posted: {ex}", "EventStreams", LogLevel.Warning);
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {item.Key}; {goalInfo}) could not be posted: {ex}", "EventStreams", "warning");
 
 					// Remove data if channel is deleted or unavailable
-					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					if (Program.IsChannelInvalid(ex))
 					{
 						if (rawGoal != item.Key)
 						{

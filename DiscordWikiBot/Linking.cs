@@ -84,7 +84,7 @@ namespace DiscordWikiBot
 		/// React to a Discord message containing wiki links.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Answer(MessageCreateEventArgs e)
+		static public async Task Answer(DiscordClient sender, MessageCreateEventArgs e)
 		{
 			// Ignore empty messages / bots
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true) return;
@@ -132,7 +132,7 @@ namespace DiscordWikiBot
 		/// Edit or delete the bot’s message if one of the messages in cache was edited.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Edit(MessageUpdateEventArgs e)
+		static public async Task Edit(DiscordClient sender, MessageUpdateEventArgs e)
 		{
 			// Ignore empty messages / bots / DMs
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true || e.Guild == null) return;
@@ -204,7 +204,7 @@ namespace DiscordWikiBot
 		/// Delete the bot’s message if one of the messages in cache was deleted.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Delete(MessageDeleteEventArgs e)
+		static public async Task Delete(DiscordClient sender, MessageDeleteEventArgs e)
 		{
 			// Ignore other bots / DMs
 			bool isBot = (e.Message?.Author?.IsBot == true);
@@ -233,7 +233,7 @@ namespace DiscordWikiBot
 		/// Respond to bulk deletion by bulk deleting the bot’s messages.
 		/// </summary>
 		/// <param name="e">Discord information.</param>
-		static public async Task BulkDelete(MessageBulkDeleteEventArgs e)
+		static public async Task BulkDelete(DiscordClient sender, MessageBulkDeleteEventArgs e)
 		{
 			// Ignore bots / DMs
 			if (e.Messages?[0]?.Author?.IsBot == true || e.Channel?.Guild == null) return;
@@ -486,7 +486,7 @@ namespace DiscordWikiBot
 			}
 			catch (Exception ex)
 			{
-				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
+				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", "warning");
 			}
 
 			await Task.FromResult(0);
@@ -524,7 +524,7 @@ namespace DiscordWikiBot
 			}
 			catch (Exception ex)
 			{
-				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", LogLevel.Warning);
+				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", "warning");
 			}
 
 			// Restore the anchor from original title

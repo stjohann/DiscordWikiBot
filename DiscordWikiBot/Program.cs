@@ -8,7 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Exceptions;
 using DSharpPlus.EventArgs;
+using Microsoft.Extensions.Logging;
 using WikiClientLibrary.Client;
 
 namespace DiscordWikiBot
@@ -47,7 +50,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Available bot commands.
 		/// </summary>
-		private CommandsNextModule Commands { get; set; }
+		private CommandsNextExtension Commands { get; set; }
 
 		/// <summary>
 		/// Discord developer token.
@@ -83,10 +86,9 @@ namespace DiscordWikiBot
 			{
 				AutoReconnect = true,
 				LargeThreshold = 250,
-				LogLevel = LogLevel.Info,
+				MinimumLogLevel = LogLevel.Information,
 				Token = Token,
 				TokenType = TokenType.Bot,
-				UseInternalLogHandler = true,
 			});
 
 			// Initialise events
@@ -100,8 +102,24 @@ namespace DiscordWikiBot
 			Linking.Init();
 
 			// Methods for linking bot
-			Client.MessageCreated += Linking.Answer;
-			Client.MessageUpdated += Linking.Edit;
+			Client.MessageCreated += (s, e) =>
+			{
+				Task.Run(async () =>
+				{
+					await Linking.Answer(s, e);
+				});
+
+				return Task.CompletedTask;
+			};
+			Client.MessageUpdated += (s, e) =>
+			{
+				Task.Run(async () =>
+				{
+					await Linking.Edit(s, e);
+				});
+
+				return Task.CompletedTask;
+			};
 			Client.MessageDeleted += Linking.Delete;
 			Client.MessagesBulkDeleted += Linking.BulkDelete;
 
@@ -128,7 +146,7 @@ namespace DiscordWikiBot
 			LogMessage("Setting up commands");
 			Commands = Client.UseCommandsNext(new CommandsNextConfiguration
 			{
-				StringPrefix = Config.GetValue("prefix"),
+				StringPrefixes = new[] { Config.GetValue("prefix") },
 				EnableDms = false,
 				EnableMentionPrefix = true,
 			});
@@ -177,7 +195,7 @@ namespace DiscordWikiBot
 		/// Initialise the common functions for every server.
 		/// </summary>
 		/// <param name="e">Discord event information.</param>
-		private Task Client_GuildAvailable(GuildCreateEventArgs e)
+		private Task Client_GuildAvailable(DiscordClient sender, GuildCreateEventArgs e)
 		{
 			// Log the name of the guild that just became available
 			LogMessage($"Server is loaded: {e.Guild.Name}");
@@ -201,7 +219,7 @@ namespace DiscordWikiBot
 		/// Log message when the bot is added to new guilds.
 		/// </summary>
 		/// <param name="e">Discord event information.</param>
-		private Task Client_GuildCreated(GuildCreateEventArgs e)
+		private Task Client_GuildCreated(DiscordClient sender, GuildCreateEventArgs e)
 		{
 			LogMessage($"Bot was added to a server: {e.Guild.Name}");
 
@@ -212,7 +230,7 @@ namespace DiscordWikiBot
 		/// Log message when the bot is removed from guilds.
 		/// </summary>
 		/// <param name="e">Discord event information.</param>
-		private Task Client_GuildDeleted(GuildDeleteEventArgs e)
+		private Task Client_GuildDeleted(DiscordClient sender, GuildDeleteEventArgs e)
 		{
 			LogMessage($"Bot was removed from a server: {e.Guild.Name}");
 
@@ -223,7 +241,7 @@ namespace DiscordWikiBot
 		/// Log the ready state of the bot.
 		/// </summary>
 		/// <param name="e">Discord event information.</param>
-		private Task Client_Ready(ReadyEventArgs e)
+		private Task Client_Ready(DiscordClient sender, ReadyEventArgs e)
 		{
 			// Log the ready event
 			LogMessage("Ready!");
@@ -235,12 +253,27 @@ namespace DiscordWikiBot
 		/// Log the errors from the bot.
 		/// </summary>
 		/// <param name="e">Discord event information.</param>
-		private Task Client_ClientErrored(ClientErrorEventArgs e)
+		private Task Client_ClientErrored(DiscordClient sender, ClientErrorEventArgs e)
 		{
 			// Log the exception
-			LogMessage($"Exception occurred: {e.Exception.ToString()}", level: LogLevel.Error);
+			LogMessage($"Exception occurred: {e.Exception.ToString()}", level: "error");
 
 			return Task.FromResult(0);
+		}
+
+		/// <summary>
+		/// Check the exception on whether the channel is invalid or not.
+		/// </summary>
+		/// <param name="ex">Exception provided to to the bot.</param>
+		public static bool IsChannelInvalid(Exception ex)
+		{
+			// Channel is deleted
+			if (ex is NotFoundException) return true;
+
+			// Token is valid and channel is just private
+			if (ex is UnauthorizedException && ex.Message.Contains("403")) return true;
+
+			return false;
 		}
 
 		/// <summary>
@@ -249,9 +282,27 @@ namespace DiscordWikiBot
 		/// <param name="message">Message.</param>
 		/// <param name="component">Component the message is from.</param>
 		/// <param name="level">Threat level.</param>
-		public static void LogMessage(string message, string component = "DiscordWikiBot", LogLevel level = LogLevel.Info)
+		public static void LogMessage(string message, string component = "DiscordWikiBot", string level = "info")
 		{
-			Client.DebugLogger.LogMessage(level, component, message, DateTime.Now);
+			EventId eventId = new EventId(-1, component);
+			switch (level)
+			{
+				case "debug":
+					Client.Logger.LogDebug(eventId, message, DateTime.Now);
+					break;
+				case "info":
+					Client.Logger.LogInformation(eventId, message, DateTime.Now);
+					break;
+				case "warning":
+					Client.Logger.LogWarning(eventId, message, DateTime.Now);
+					break;
+				case "error":
+					Client.Logger.LogError(eventId, message, DateTime.Now);
+					break;
+				default:
+					Client.Logger.LogInformation(eventId, message, DateTime.Now);
+					break;
+			}
 		}
 	}
 }

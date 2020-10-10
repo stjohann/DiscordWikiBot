@@ -17,7 +17,7 @@ namespace DiscordWikiBot
 	/// <para>Adds commands for overriding bot settings per server.</para>
 	/// </summary>
 	[RequireUserPermissions(Permissions.ManageGuild)]
-	class Configuring
+	class Configuring : BaseCommandModule
 	{
 		/// <summary>
 		/// Set EventStreams domain for a Discord server.
@@ -317,7 +317,7 @@ namespace DiscordWikiBot
 		}
 	}
 	
-	class Pinging
+	class Pinging : BaseCommandModule
 	{
 		/// <summary>
 		/// Check if the bot’s functions are operational.

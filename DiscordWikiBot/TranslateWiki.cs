@@ -222,10 +222,10 @@ namespace DiscordWikiBot
 					ulong chanId = ulong.Parse(chan);
 					channel = await client.GetChannelAsync(chanId);
 				} catch (Exception ex) {
-					Program.LogMessage($"Channel can’t be reached: {ex}", "TranslateWiki", LogLevel.Warning);
+					Program.LogMessage($"Channel can’t be reached: {ex}", "TranslateWiki", "warning");
 
 					// Remove data if channel is deleted or unavailable
-					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					if (Program.IsChannelInvalid(ex))
 					{
 						badServers.Add(chan, lang);
 					}
@@ -270,10 +270,10 @@ namespace DiscordWikiBot
 					Config.SetChannelOverride(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
 				} catch (Exception ex)
 				{
-					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex}", "TranslateWiki", LogLevel.Warning);
+					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex}", "TranslateWiki", "warning");
 
 					// Remove data if channel is deleted or unavailable
-					if (ex is DSharpPlus.Exceptions.NotFoundException || ex is DSharpPlus.Exceptions.UnauthorizedException)
+					if (Program.IsChannelInvalid(ex))
 					{
 						badServers.Add(chan, lang);
 					}

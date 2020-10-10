@@ -59,7 +59,7 @@ namespace DiscordWikiBot
 				// Revert to English if default language does not exist
 				if (Default == null)
 				{
-					Program.LogMessage($"Please create a file with {lang.ToUpper()} locale. Reverting to {FALLBACK_LANG.ToUpper()}.", level: LogLevel.Warning);
+					Program.LogMessage($"Please create a file with {lang.ToUpper()} locale. Reverting to {FALLBACK_LANG.ToUpper()}.", level: "warning");
 					Default = LoadLocale(FALLBACK_LANG);
 				}
 				return;
@@ -258,7 +258,7 @@ namespace DiscordWikiBot
 				}
 			} catch (Exception ex)
 			{
-				Program.LogMessage($"Fetching language list (1.34+) returned an error: {ex}", level: LogLevel.Warning);
+				Program.LogMessage($"Fetching language list (1.34+) returned an error: {ex}", level: "warning");
 			}
 
 			// Fetch languages using old API
@@ -283,7 +283,7 @@ namespace DiscordWikiBot
 				return languages;
 			} catch (Exception ex)
 			{
-				Program.LogMessage($"Fetching language list (<1.34) returned an error: {ex}", level: LogLevel.Error);
+				Program.LogMessage($"Fetching language list (<1.34) returned an error: {ex}", level: "error");
 			}
 
 			return null;

@@ -13,12 +13,14 @@ namespace DiscordWikiBot
 	/// <summary>
 	/// Provide customised help with proper localisation abilities.
 	/// </summary>
-	class LocalisedHelpFormatter : IHelpFormatter
+	class LocalisedHelpFormatter : BaseHelpFormatter
 	{
 		/// <summary>
 		/// Name of a command that’s being executed.
 		/// </summary>
 		private string Command;
+
+		private string Lang = "en";
 
 		/// <summary>
 		/// Discord embed.
@@ -28,19 +30,21 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Initialise the Discord embed.
 		/// </summary>
-		public LocalisedHelpFormatter()
+		public LocalisedHelpFormatter(CommandContext ctx) : base(ctx)
 		{
 			EmbedBuilder = new DiscordEmbedBuilder().WithColor(new DiscordColor(0x72777d));
+
+			Lang = Config.GetLang(ctx.Channel.Id.ToString());
 		}
 
 		/// <summary>
 		/// Remember the command name and add a title to the embed.
 		/// </summary>
 		/// <param name="name">Command name.</param>
-		public IHelpFormatter WithCommandName(string name)
+		public override BaseHelpFormatter WithCommand(Command command)
 		{
-			Command = name;
-			EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", "en", name, Config.GetValue("prefix")));
+			Command = command.Name;
+			EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", Lang, Command, Config.GetValue("prefix")));
 
 			return this;
 		}
@@ -49,7 +53,7 @@ namespace DiscordWikiBot
 		/// Provide a localised description to the embed.
 		/// </summary>
 		/// <param name="description">Description key.</param>
-		public IHelpFormatter WithDescription(string description)
+		public BaseHelpFormatter WithDescription(string description)
 		{
 			// Override help command
 			if (this.Command == "help")
@@ -57,16 +61,16 @@ namespace DiscordWikiBot
 				description = "help-command";
 			}
 
-			EmbedBuilder.WithDescription(Locale.GetMessage(description, "en"));
+			EmbedBuilder.WithDescription(Locale.GetMessage(description, Lang));
 			return this;
 		}
 
 		/// <summary>
 		/// Add information to the embed if the command is a standalone group.
 		/// </summary>
-		public IHelpFormatter WithGroupExecutable()
+		public BaseHelpFormatter WithGroupExecutable()
 		{
-			EmbedBuilder.WithFooter(Locale.GetMessage("help-group-standalone", "en"));
+			EmbedBuilder.WithFooter(Locale.GetMessage("help-group-standalone", Lang));
 
 			return this;
 		}
@@ -75,9 +79,9 @@ namespace DiscordWikiBot
 		/// Add the aliases information to the embed.
 		/// </summary>
 		/// <param name="aliases">List of aliases.</param>
-		public IHelpFormatter WithAliases(IEnumerable<string> aliases)
+		public BaseHelpFormatter WithAliases(IEnumerable<string> aliases)
 		{
-			EmbedBuilder.AddField(Locale.GetMessage("help-aliases", "en"), string.Join(", ", aliases.Select(xa => $"`{Config.GetValue("prefix")}{xa}`")));
+			EmbedBuilder.AddField(Locale.GetMessage("help-aliases", Lang), string.Join(", ", aliases.Select(xa => $"`{Config.GetValue("prefix")}{xa}`")));
 
 			return this;
 		}
@@ -86,7 +90,7 @@ namespace DiscordWikiBot
 		/// List arguments with localised information in the embed.
 		/// </summary>
 		/// <param name="arguments">List of arguments</param>
-		public IHelpFormatter WithArguments(IEnumerable<CommandArgument> arguments)
+		public BaseHelpFormatter WithArguments(IEnumerable<CommandArgument> arguments)
 		{
 			string args = string.Join("\n",
 				arguments.Select(xarg =>
@@ -104,22 +108,22 @@ namespace DiscordWikiBot
 					// Provide optional information
 					if (xarg.Description.Length > 0)
 					{
-						desc = Locale.GetMessage("separator", "en", Locale.GetMessage(desc, "en"));
+						desc = Locale.GetMessage("separator", Lang, Locale.GetMessage(desc, Lang));
 					}
 
 					if (xarg.DefaultValue != null && xarg.DefaultValue.ToString() != "")
 					{
-						def = " " + Locale.GetMessage("help-default", "en", xarg.DefaultValue.ToString());
+						def = " " + Locale.GetMessage("help-default", Lang, xarg.DefaultValue.ToString());
 
 						if (xarg.IsOptional)
 						{
-							optional = ", " + Locale.GetMessage("help-optional", "en");
+							optional = ", " + Locale.GetMessage("help-optional", Lang);
 						}
 					}
 
 					return string.Format("`{0}` (_{1}{2}_){3}{4}",
 						xarg.Name,
-						xarg.Type.ToUserFriendlyName(),
+						xarg.Type,
 						optional,
 						desc,
 						def
@@ -127,7 +131,7 @@ namespace DiscordWikiBot
 				})
 			);
 
-			EmbedBuilder.AddField(Locale.GetMessage("help-arguments", "en"), args);
+			EmbedBuilder.AddField(Locale.GetMessage("help-arguments", Lang), args);
 			return this;
 		}
 
@@ -135,12 +139,12 @@ namespace DiscordWikiBot
 		/// List commands with localised information in the embed.
 		/// </summary>
 		/// <param name="subcommands">List of commands</param>
-		public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
+		public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
 		{
-			string header = Locale.GetMessage("help-subcommands", "en");
+			string header = Locale.GetMessage("help-subcommands", Lang);
 			if (Command == null)
 			{
-				header = Locale.GetMessage("help-commands", "en");
+				header = Locale.GetMessage("help-commands", Lang);
 			}
 			string list = string.Join("\n", subcommands.Select(xc => {
 				if (!xc.IsHidden)
@@ -152,8 +156,8 @@ namespace DiscordWikiBot
 					}
 					string descId = (xc.Name == "help" ? "help-command" : xc.Description);
 
-					string desc = Locale.GetMessage("separator", "en", Locale.GetMessage(descId, "en"));
-					return Locale.GetMessage("bullet", "en", $"`{Config.GetValue("prefix")}{comm}`{desc}");
+					string desc = Locale.GetMessage("separator", Lang, Locale.GetMessage(descId, Lang));
+					return Locale.GetMessage("bullet", Lang, $"`{Config.GetValue("prefix")}{comm}`{desc}");
 				}
 
 				return null;
@@ -166,9 +170,9 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Respond with a Discord embed.
 		/// </summary>
-		public CommandHelpMessage Build()
+		public override CommandHelpMessage Build()
 		{
-			string content = Locale.GetMessage("help-version", "en", Program.Version);
+			string content = Locale.GetMessage("help-version", Lang, Program.Version);
 			if (Command == null)
 			{
 				// Add a link to the source code repository
@@ -176,13 +180,13 @@ namespace DiscordWikiBot
 				{
 					content = string.Format("{0} {1}",
 						content,
-						Locale.GetMessage("help-repo", "en", Config.GetValue("repo"))
+						Locale.GetMessage("help-repo", Lang, Config.GetValue("repo"))
 					);
 				}
 
 				EmbedBuilder
-					.WithTitle(Locale.GetMessage("help-title", "en"))
-					.WithDescription(Locale.GetMessage("help-all", "en"));
+					.WithTitle(Locale.GetMessage("help-title", Lang))
+					.WithDescription(Locale.GetMessage("help-all", Lang));
 			}
 			return new CommandHelpMessage(content, EmbedBuilder.Build());
 		}
