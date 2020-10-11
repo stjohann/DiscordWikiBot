@@ -202,17 +202,19 @@ namespace DiscordWikiBot
 
 			// Load custom values if needed
 			string guild = e.Guild.Id.ToString();
-
-			Linking.Init(guild);
-
-			Locale.Init(Config.GetLang(guild));
-
-			if (Config.GetTWChannel(guild) != null && Config.GetTWLang(guild) != null)
+			Task.Run(async () =>
 			{
-				TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
-			}
+				Linking.Init(guild);
 
-			return Task.FromResult(0);
+				Locale.Init(Config.GetLang(guild));
+
+				if (Config.GetTWChannel(guild) != null && Config.GetTWLang(guild) != null)
+				{
+					TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
+				}
+			});
+
+			return Task.CompletedTask;
 		}
 		
 		/// <summary>
@@ -223,7 +225,7 @@ namespace DiscordWikiBot
 		{
 			LogMessage($"Bot was added to a server: {e.Guild.Name}");
 
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -234,7 +236,7 @@ namespace DiscordWikiBot
 		{
 			LogMessage($"Bot was removed from a server: {e.Guild.Name}");
 
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -246,7 +248,7 @@ namespace DiscordWikiBot
 			// Log the ready event
 			LogMessage("Ready!");
 
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>
@@ -258,7 +260,7 @@ namespace DiscordWikiBot
 			// Log the exception
 			LogMessage($"Exception occurred: {e.Exception.ToString()}", level: "error");
 
-			return Task.FromResult(0);
+			return Task.CompletedTask;
 		}
 
 		/// <summary>

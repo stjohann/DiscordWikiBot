@@ -489,7 +489,7 @@ namespace DiscordWikiBot
 				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", "warning");
 			}
 
-			await Task.FromResult(0);
+			await Task.CompletedTask;
 			return result;
 		}
 
@@ -533,7 +533,7 @@ namespace DiscordWikiBot
 				pageTitle += "#" + EncodePageTitle(title.Split('#')?[1], false);
 			}
 
-			await Task.FromResult(0);
+			await Task.CompletedTask;
 			return pageTitle;
 		}
 
