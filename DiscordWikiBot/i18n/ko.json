@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Revi",
 			"Ykhwong"
 		]
 	},
@@ -13,7 +14,9 @@
 	"help-commands": "명령",
 	"help-subcommands": "하위 명령",
 	"help-aliases": "다른 이름",
+	"help-arguments": "변수",
 	"help-default": "기본값: `{0}`.",
+	"help-optional": "선택 사항",
 	"configuring-changed-reset": "이 값은 기본값으로 다시 초기화되었습니다.",
 	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
 	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
