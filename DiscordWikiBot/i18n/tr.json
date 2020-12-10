@@ -3,6 +3,7 @@
 		"authors": [
 			"BaRaN6161 TURK",
 			"Grkn gll",
+			"MuratTheTurkish",
 			"Stonecy"
 		]
 	},
@@ -50,7 +51,7 @@
 	"configuring-help-wiki-channel": "Bu kanaldaki bağlantılar için vikiyi değiştirin. /wiki/$1 sonunda gereklidir.",
 	"configuring-help-wiki-value": "istediğiniz viki (<https://tr.wikipedia.org/wiki/$1> biçiminde). Varsayılana sıfırlamak için `-` kullanın.",
 	"eventstreams-diff": "fark",
-	"eventstreams-talk": "tartışma",
+	"eventstreams-talk": "mesaj",
 	"eventstreams-contribs": "katkılar",
 	"eventstreams-new": "Y",
 	"eventstreams-bot": "b",
