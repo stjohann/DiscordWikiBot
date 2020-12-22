@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Bergrübe",
 			"DraconicDark",
 			"Stjn"
 		]
@@ -33,8 +34,10 @@
 	"configuring-changed-reset": "Der Wert wurde auf den Standardwert zurückgesetzt.",
 	"configuring-error-same": "Der von dir eingegebene Wert ist derselbe wie der aktuelle.",
 	"configuring-error-strange": "Ihr Kommando ist aufgrund eines seltsamen Fehlers fehlgeschlagen.",
+	"configuring-required-value": "Angabe er Variabel erforderlich.\nUm ausführliche Hilfe zu diesem Command zu erhalten, sende {1}Hilfe {0}",
 	"configuring-badvalue-domain": "Streams sind nur für Wikimedia-Projekte verfügbar.\nListe der erlaubten Domänen: {0}.",
 	"configuring-badvalue-lang": "Der Bot erkennt deine Eingabe nicht als gültigen ISO 639-Code.",
+	"configuring-badvalue-wiki": "Da muss \"{0}\" am ende der URL sein.",
 	"configuring-help-status": "Prüfe, ob der Bot betriebsbereit ist.",
 	"configuring-help-domain": "Ändere die Domäne, von der die letzten Änderungen auf diesem Server übertragen werden. Funktioniert nur für Wikimedia-Projekte.",
 	"configuring-help-lang": "Ändere die Sprache des Bot auf diesem Server.",
