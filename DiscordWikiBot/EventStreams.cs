@@ -125,10 +125,18 @@ namespace DiscordWikiBot
 				return;
 			}
 			RecentChange change = RecentChange.FromJson(e.Message);
-			LatestTimestamp = change.Metadata.DateTime.ToUniversalTime();
+			var changeTimestamp = change.Metadata.DateTime.ToUniversalTime();
+			LatestTimestamp = changeTimestamp;
 			bool notEdit = (change.Type != "edit" && change.Type != "new");
 			if (notEdit) return;
 			
+			// Do not post anything if it is an edit older than a day
+			// TODO: Investigate the proper fix
+			if (DateTime.UtcNow > changeTimestamp.AddHours(24))
+			{
+				return;
+			}
+
 			string ns = change.Namespace.ToString();
 			string title = change.Title;
 
