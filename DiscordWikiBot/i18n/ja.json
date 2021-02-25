@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"LaMagiaaa",
+			"Linuxmetel"
+		]
+	},
+	"yes": "はい",
+	"no": "いいえ",
+	"help-title": "ヘルプ",
+	"help-title-command": "{1}{0}{msg:separator}ヘルプ",
+	"help-version": "バージョン {0}。",
+	"help-repo": "ソースコード：{0}",
+	"help-commands": "コマンド",
+	"help-subcommands": "サブコマンド",
+	"help-aliases": "別名",
+	"help-optional": "省略可能",
+	"eventstreams-diff": "差分",
+	"eventstreams-talk": "トーク",
+	"eventstreams-contribs": "投稿記録",
+	"eventstreams-new": "新",
+	"eventstreams-bot": "ボ",
+	"eventstreams-minor": "細",
+	"linking-link": "リンク:",
+	"linking-links": "リンク：",
+	"streaming-key-namespace": "名前空間ナンバー",
+	"streaming-key-title": "ページ名",
+	"streaming-key-type": "編集の種類"
+}
