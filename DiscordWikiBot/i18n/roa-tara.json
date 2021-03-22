@@ -9,6 +9,7 @@
 	"help-title": "Aijute",
 	"help-title-command": "{1}{0}{msg:separator}aijute",
 	"help-version": "Versione {0}.",
+	"help-repo": "Codece sorgende: {0}",
 	"help-commands": "Comande",
 	"help-aliases": "Alias",
 	"help-optional": "facoltative",
