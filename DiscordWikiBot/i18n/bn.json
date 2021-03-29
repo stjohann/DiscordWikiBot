@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Md. Golam Mukit Khan",
+			"Tahmid02016",
+			"আফতাবুজ্জামান"
+		]
+	},
+	"yes": "হ্যাঁ",
+	"no": "না",
+	"help-title": "সাহায্য",
+	"help-title-command": "{1}{0}{msg:separator}সাহায্য",
+	"help-all": "সকল উচ্চ-পর্যায়ের কমান্ড এবং গ্রুপের তালিকা করা হচ্ছে। আরও তথ্য দেখতে একটি কমান্ড নির্দিষ্ট করুন।",
+	"help-version": "সংস্করণ {0}।",
+	"help-repo": "উৎস কোড: {0}",
+	"help-commands": "কমান্ড",
+	"help-subcommands": "সাবকমান্ড",
+	"help-aliases": "উপনাম",
+	"help-optional": "ঐচ্ছিক",
+	"eventstreams-diff": "পার্থক্য",
+	"eventstreams-talk": "আলাপ",
+	"eventstreams-contribs": "অবদান",
+	"eventstreams-new": "ন",
+	"eventstreams-bot": "ব",
+	"streaming-stream-namespace": "`{0}` নামস্থান থেকে",
+	"streaming-stream-title": "`{0}` পাতাটি থেকে",
+	"streaming-key-in-comment": "মন্তব্যে অনুসন্ধান করুন",
+	"streaming-key-title": "পাতার শিরোনাম",
+	"streaming-key-type": "সম্পাদনার ধরন",
+	"translatewiki-header": "{2} জন {2:লেখক|লেখক} কর্তৃক {0}টি {1:বার্তা|বার্তা}"
+}
