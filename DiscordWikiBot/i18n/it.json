@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf",
+			"Beta16",
+			"Yacine Boussoufa"
+		]
+	},
+	"yes": "sì",
+	"no": "no",
+	"help-title": "Aiuto",
+	"help-version": "Versione {0}.",
+	"help-commands": "Comandi",
+	"help-aliases": "Alias",
+	"help-arguments": "Argomenti",
+	"help-optional": "facoltativo",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "discussione",
+	"eventstreams-contribs": "contributi",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m",
+	"linking-link": "Collegamento:",
+	"linking-links": "Collegamenti:",
+	"streaming-stream-namespace": "dal namespace `{0}`",
+	"streaming-key-title": "titolo della pagina",
+	"streaming-key-type": "tipologia di modifica",
+	"translatewiki-header": "{0} {1:messaggio|messaggi} da {2} {2:autore|autori}"
+}
