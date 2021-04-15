@@ -23,7 +23,7 @@
 	"help-default": "পূর্বনির্ধারিত হল: `{0}`।",
 	"help-optional": "ঐচ্ছিক",
 	"help-group-standalone": "এই গ্রুপটি হল একটি স্বতন্ত্র কমান্ড।",
-	"help-command": "কমান্ড সাহায্য প্রদর্শন করে।",
+	"help-command": "কমান্ড সাহায্য দেখুন।",
 	"help-command-command": "সাহায্য প্রদানের জন্য কমান্ড।",
 	"configuring-status": ":information_source: বট চালু আছে।",
 	"configuring-status-streaming": "স্ট্রিম থেকে সর্বশেষ প্রতিক্রিয়া: {0} {0:মিনিট|মিনিট} {1} {1:সেকেন্ড|সেকেন্ড} আগে।",
