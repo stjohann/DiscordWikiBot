@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Joquliina",
 			"Nike",
 			"Pyscowicz"
 		]
@@ -14,7 +15,19 @@
 	"help-commands": "Komennot",
 	"help-subcommands": "Alakomennot",
 	"help-aliases": "Aliakset",
+	"help-arguments": "Argumentit",
+	"help-default": "Oletuksena: `{0}`.",
 	"help-optional": "valinnainen",
+	"configuring-status": ":information_source: Kytketty pistorasiaan.",
+	"configuring-changed-lang": "Botin kieli tällä palvelimella on nyt **{0}**.",
+	"configuring-error-same": "Antamasi arvo on sama kuin nykyinen arvo.",
+	"configuring-error-strange": "Komentosi epäonnistui jonkin oudon ongelman vuoksi.",
+	"configuring-required-value": "Arvo on parametrissa välttämätön.\nSaadaksesi täyden ohjeen komentoon, lähetä `{1}help {0}`.",
+	"configuring-badvalue-lang": "Botti ei tunnista syötettäsi kelvolliseksi ISO 639 -koodiksi.",
+	"configuring-badvalue-wiki": "URL-osoitteesi lopussa täytyy olla `{0}`.",
+	"configuring-help-lang": "Vaihda botin kieli tällä palvelimella.",
+	"configuring-help-translatewiki-channel": "kanava, jonne botilla on pääsy.",
+	"configuring-help-wiki-value": "haluamasi wiki (muodossa <https://en.wikipedia.org/wiki/$1>). Käytä `-` palauttaaksesi oletukseen.",
 	"eventstreams-diff": "ero",
 	"eventstreams-talk": "keskustelu",
 	"eventstreams-contribs": "muokkaukset",
@@ -23,10 +36,14 @@
 	"eventstreams-minor": "p",
 	"linking-link": "Linkki:",
 	"linking-links": "Linkit:",
+	"linking-toolong": "Linkkejä ylläolevaan viestiin anneta, koska viesti olisi liian pitkä Discordille.",
 	"streaming-stream-namespace": "nimiavaruudesta `{0}`",
 	"streaming-stream-title": "sivulta `{0}`",
 	"streaming-key-bot": "sisällytä bottimuokkaukset",
 	"streaming-key-minor": "sisällytä pienet muutokset",
 	"streaming-key-namespace": "nimiavaruuden numero",
-	"streaming-key-title": "sivun otsikko"
+	"streaming-key-title": "sivun otsikko",
+	"streaming-key-type": "muokkauksen tyyppi",
+	"streaming-help-channel": "kanava, jonne botilla on pääsy.",
+	"translatewiki-header": "{0} {1:viesti|viestiä} {2} {2:käyttäjältä|käyttäjältä}"
 }
