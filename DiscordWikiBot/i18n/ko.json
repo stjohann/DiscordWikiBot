@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Revi",
-			"Ykhwong"
+			"Ykhwong",
+			"그냥기여자"
 		]
 	},
 	"yes": "예",
@@ -19,6 +20,8 @@
 	"help-optional": "선택 사항",
 	"help-group-standalone": "이 그룹의 메시지는 독립적인 명령입니다.",
 	"help-command": "명령어 도움말을 표시합니다.",
+	"help-command-command": "도움말을 제공하는 명령어입니다.",
+	"configuring-status": ":information_source: 전원이 꽂혀 있습니다.",
 	"configuring-changed-reset": "이 값은 기본값으로 다시 초기화되었습니다.",
 	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
 	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
@@ -41,6 +44,7 @@
 	"streaming-list-nothing": ":ok: 이 서버에 열려 있는 스트림이 없습니다.",
 	"streaming-list-stream": "**스트림 {0}:**",
 	"streaming-key-bot": "봇 편집 포함",
+	"streaming-key-in-comment": "댓글에서 검색",
 	"streaming-key-minor": "사소한 편집 포함",
 	"streaming-key-namespace": "이름공간 번호",
 	"streaming-key-title": "문서 제목",
