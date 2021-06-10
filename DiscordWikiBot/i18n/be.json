@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Baccy",
+			"Maksim L.",
 			"Хтосьці"
 		]
 	},
@@ -31,7 +32,10 @@
 	"configuring-changed-translatewiki-channel": "Канал для паведамленняў аб апошніх зменах на Translatewiki зменены на {0}.",
 	"configuring-changed-translatewiki-lang": "Мова, для якой ідуць паведамленні аб апошніх зменах на Translatewiki, зменена на **{0}**.",
 	"configuring-changed-wiki": "Вікі для спасылак на гэтым серверы зменена на **{0}**.",
+	"configuring-changed-wiki-channel": "Вікі для спасылак на гэтым канале зменена на **{0}**.",
 	"configuring-changed-reset": "Вернута значэнне па змаўчанні.",
+	"configuring-error-same": "Уведзенае вамі значэнне супадае з бягучым.",
+	"configuring-error-strange": "Ваша каманда не прайшла праз невядомую памылку.",
 	"configuring-required-value": "Патрабуецца значэнне параметру.\nКаб атрымаць поўную даведку, увядзіце `{1}help {0}`.",
 	"configuring-badvalue-domain": "Патоки даступны толькі для праектаў Вікімедыя.\nСпіс дапушчальных даменаў: {0}.",
 	"configuring-badvalue-lang": "Бот не лічыць уведзенае вамі карэктным моўным кодам ISO 639.",
@@ -45,6 +49,7 @@
 	"configuring-help-translatewiki-channel": "канал, даступны боту.",
 	"configuring-help-translatewiki-value": "мова, даступная на Translatewiki (моўны код ISO 639). Зазначце `-` у якасці мовы, каб завяршыць сачэнне.",
 	"configuring-help-wiki": "Змяніць галоўную вікі для спасылак на гэтым серверы. Канчатак фармату /wiki/$1 абавязковы.",
+	"configuring-help-wiki-channel": "Змяніце вікі для спасылак на гэтым канале. Канчатак фармату /wiki/$1 абавязковы.",
 	"configuring-help-wiki-value": "пажаданая вікі (у фармаце <https://be.wikipedia.org/wiki/$1>). Зазначце `-`, каб вернуць да значэння па змаўчанні.",
 	"eventstreams-diff": "розн.",
 	"eventstreams-talk": "размовы",
@@ -79,6 +84,6 @@
 	"streaming-help-list": "Пералічыць дзеючыя трансляцыі на гэтым серверы.",
 	"streaming-help-channel": "даступны боту канал трансляцыі.",
 	"streaming-help-args": "параметры трансляцыі:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Паспейце праверыць паведамленні за тыдзень **да 00:00** чацверга па UTC, каб пазбегчы вандалізму ды дрэннага перакладу.",
-	"translatewiki-header": "{0} {1:паведамленне|паведамлення|паведамленняў} от {2} {2:аўтара|аўтараў|аўтараў}"
+	"translatewiki-deadline": "Знайдзіце час праверыць пераклады гэтага тыдня **да 00:00** панядзелка паводле UTC, каб пазбегнуць благіх перакладаў і вандалізма.",
+	"translatewiki-header": "{0} {1:паведамленне|паведамленні|паведамленняў|паведамленняў} ад {2} {2:аўтара|аўтараў|аўтараў|аўтараў}"
 }
