@@ -9,7 +9,7 @@
 	"no": "tidak",
 	"help-title": "Bantuan",
 	"help-title-command": "{1}{0}{msg:separator}bantuan",
-	"help-all": "Mencantumkan semua perintah dan grup tingkat tinggi. Tentukan perintah untuk melihat informasi lebih lanjut.",
+	"help-all": "Mencantumkan semua perintah dan grup tingkat tinggi. Rincikan perintah untuk melihat informasi lebih lanjut.",
 	"help-version": "Versi {0}.",
 	"help-repo": "Kode sumber: {0}",
 	"help-commands": "Perintah",

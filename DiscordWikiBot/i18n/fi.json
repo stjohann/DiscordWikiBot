@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"01miki10",
 			"Joquliina",
 			"Nike",
 			"Pyscowicz"
@@ -36,7 +37,7 @@
 	"eventstreams-minor": "p",
 	"linking-link": "Linkki:",
 	"linking-links": "Linkit:",
-	"linking-toolong": "Linkkejä ylläolevaan viestiin anneta, koska viesti olisi liian pitkä Discordille.",
+	"linking-toolong": "Linkkejä ylläolevaan viestiin ei anneta, koska viesti olisi liian pitkä Discordille.",
 	"streaming-stream-namespace": "nimiavaruudesta `{0}`",
 	"streaming-stream-title": "sivulta `{0}`",
 	"streaming-key-bot": "sisällytä bottimuokkaukset",
