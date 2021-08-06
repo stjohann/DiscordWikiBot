@@ -27,6 +27,18 @@ namespace DiscordWikiBot
 			@"({{2})([^#][^\[\]{}\|\n]*)(?:\|*[^\[\]{}\n]*)?}{2}");
 
 		/// <summary>
+		/// See https://www.mediawiki.org/wiki/Manual:$wgCapitalLinks
+		/// </summary>
+		private static readonly int[] capitalisedNamespaces = {
+			// Special
+			-1,
+			// User
+			2, 3,
+			// MediaWiki
+			8, 9,
+		};
+
+		/// <summary>
 		/// Key of default configuration.
 		/// </summary>
 		private static readonly string LANG_DEFAULT = "default";
@@ -284,6 +296,9 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
 			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
 
+			// Replace emojis (e. g. <:meta:873203055804436513>) in the message
+			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
+
 			// Start digging for links
 			MatchCollection matches = Regex.Matches(content, pattern);
 			List<string> links = new List<string>();
@@ -354,12 +369,16 @@ namespace DiscordWikiBot
 			// Storages for prefix and namespace data
 			string iw = "%%%%%";
 			string ns = "";
+			bool capitalised = false;
 
 			if (str.Length > 0)
 			{
 				// Add template namespace for template links and remove substitution
 				if (type == "{{")
 				{
+					// Check if it’s a parser function
+					if (str.StartsWith("#")) return "";
+
 					if (!str.StartsWith(':'))
 					{
 						ns = defaultSiteInfo.Namespaces["template"].CustomName;
@@ -370,6 +389,7 @@ namespace DiscordWikiBot
 						{
 							ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
 							str = Regex.Replace(str, "^int:", "");
+							capitalised = true;
 						}
 					}
 				}
@@ -377,10 +397,12 @@ namespace DiscordWikiBot
 				WikiSite latestSiteInfo = defaultSiteInfo;
 
 				// Check if link contains interwikis
-				Match iwMatch = Regex.Match(str, "^:?([A-Za-z-]+):");
+				string iwRegex = "^ *:? *([A-Za-z-]+) *: *";
+				Match iwMatch = Regex.Match(str, iwRegex);
 				while (type == "[[" && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
+
 					latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
 					InterwikiMap latestIWList = latestSiteInfo.InterwikiMap;
 					NamespaceCollection latestNSList = latestSiteInfo.Namespaces;
@@ -390,7 +412,7 @@ namespace DiscordWikiBot
 						linkFormat = latestIWList[prefix].Url;
 
 						// Fetch temporary site information if necessary and store new prefix
-						if (iw != "" || oldLinkFormat.Replace(iw, prefix) != linkFormat)
+						if (iw != "" || prefix != iw || oldLinkFormat.Replace(iw, prefix) != linkFormat)
 						{
 							WikiSite data = FetchSiteInfo(linkFormat).Result;
 							tempSiteInfo = data;
@@ -398,10 +420,10 @@ namespace DiscordWikiBot
 						}
 						iw = prefix;
 
-						Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+						Regex only = new Regex($" *:? *{prefix} *: *", RegexOptions.IgnoreCase);
 						str = only.Replace(str, "", 1).Trim();
 
-						iwMatch = Regex.Match(str, "^:?([A-Za-z-]+):");
+						iwMatch = Regex.Match(str, iwRegex);
 					} else
 					{
 						// Return the regex that can’t be matched
@@ -410,7 +432,7 @@ namespace DiscordWikiBot
 				}
 
 				// Check if link contains namespace
-				Match nsMatch = Regex.Match(str, "^:?([^:]+):");
+				Match nsMatch = Regex.Match(str, "^ *:? *([^:]+) *: *");
 				if (nsMatch.Length > 0)
 				{
 					string prefix = nsMatch.Groups[1].Value.ToUpper();
@@ -429,14 +451,23 @@ namespace DiscordWikiBot
 							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
 							str = only.Replace(str, "", 1).Trim();
 						}
+
+						if (capitalisedNamespaces.Contains(namespaceInfo.Id))
+						{
+							capitalised = true;
+						}
 					}
+				}
+
+				// Capitalise only if
+				capitalised = !latestSiteInfo.SiteInfo.IsTitleCaseSensitive;
+				if (iw != "%%%%%" && latestSiteInfo == defaultSiteInfo)
+				{
+					capitalised = false;
 				}
 
 				// If there is only namespace, return nothing
 				if (ns != "" && str.Length == 0) return "";
-
-				// Check if it’s a parser function
-				if (type == "{{" && str.StartsWith("#")) return "";
 
 				// Check for invalid page title length
 				if (IsInvalid(str, true)) return "";
@@ -448,7 +479,7 @@ namespace DiscordWikiBot
 					str = str.TrimStart(':');
 
 					// Capitalise first letter if wiki does not allow lowercase titles
-					if (latestSiteInfo?.SiteInfo?.IsTitleCaseSensitive == false)
+					if (capitalised == true)
 					{
 						str = str[0].ToString().ToUpper() + str.Substring(1);
 					}
@@ -565,7 +596,7 @@ namespace DiscordWikiBot
 			if (uriProtocols.Any(str.StartsWith)) return true;
 
 			// Check if it has two : or more
-			if (Regex.IsMatch(str, "^:{2,}")) return true;
+			if (Regex.IsMatch(str, "^ *:{2,}")) return true;
 
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title
@@ -654,14 +685,16 @@ namespace DiscordWikiBot
 				'~',
 				// Added: Causes problems in anchors
 				'<',
-				'>'
+				'>',
+				// Added: Soft hyphen (difficult to see in copied text)
+				'\u00ad',
 			};
-			
-			// Replace all spaces to underscores
-			str = Regex.Replace(str, @"\s{1,}", "_");
 
 			// Decode percent-encoded symbols before encoding
 			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
+
+			// Replace all spaces to underscores
+			str = Regex.Replace(str, @"\s{1,}", "_");
 
 			// Percent encoding for special characters
 			foreach (var ch in specialChars)

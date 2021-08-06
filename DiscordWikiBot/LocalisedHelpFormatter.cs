@@ -83,7 +83,11 @@ namespace DiscordWikiBot
 			// List the command arguments
 			if (command.Overloads?.Any() == true)
 			{
-				EmbedBuilder.AddField(Locale.GetMessage("help-arguments", Lang), ListArguments(command));
+				string arguments = ListArguments(command);
+				if (arguments.Length > 0)
+				{
+					EmbedBuilder.AddField(Locale.GetMessage("help-arguments", Lang), arguments);
+				}
 			}
 
 			return this;

@@ -138,7 +138,7 @@ namespace DiscordWikiBot
 					string argsMsg = ListArguments(args, lang);
 					argsMsg = (argsMsg.Length > 0 ? $":\n{argsMsg}" : "");
 
-					output += $"{channel.Mention}{argsMsg}\n`!editStream #{channel.Name}{editGoal}`";
+					output += $"{channel.Mention}{argsMsg}\n`!editStream #{channel.Name}{editGoal}`\n";
 				}
 
 				msg.Add(output);
