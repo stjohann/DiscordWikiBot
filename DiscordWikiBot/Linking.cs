@@ -369,7 +369,7 @@ namespace DiscordWikiBot
 			// Storages for prefix and namespace data
 			string iw = "%%%%%";
 			string ns = "";
-			bool capitalised = false;
+			bool? capitalised = null;
 
 			if (str.Length > 0)
 			{
@@ -416,7 +416,7 @@ namespace DiscordWikiBot
 						{
 							WikiSite data = FetchSiteInfo(linkFormat).Result;
 							tempSiteInfo = data;
-							latestSiteInfo = tempSiteInfo;
+							latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
 						}
 						iw = prefix;
 
@@ -459,11 +459,10 @@ namespace DiscordWikiBot
 					}
 				}
 
-				// Capitalise only if
-				capitalised = !latestSiteInfo.SiteInfo.IsTitleCaseSensitive;
-				if (iw != "%%%%%" && latestSiteInfo == defaultSiteInfo)
+				// Pass standard capitalisation rules
+				if (capitalised == null && tempSiteInfo != null)
 				{
-					capitalised = false;
+					capitalised = !latestSiteInfo.SiteInfo.IsTitleCaseSensitive;
 				}
 
 				// If there is only namespace, return nothing
