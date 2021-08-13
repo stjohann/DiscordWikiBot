@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordWikiBot", "DiscordWikiBot\DiscordWikiBot.csproj", "{69C72A8D-B48D-4DDD-8C79-B7AB2CF84778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordWikiBot", "DiscordWikiBot\DiscordWikiBot.csproj", "{69C72A8D-B48D-4DDD-8C79-B7AB2CF84778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiscordWikiBot.Tests", "DiscordWikiBot.Tests\DiscordWikiBot.Tests.csproj", "{10CBB9EC-8156-4A31-88E1-4857B262E7FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{69C72A8D-B48D-4DDD-8C79-B7AB2CF84778}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69C72A8D-B48D-4DDD-8C79-B7AB2CF84778}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69C72A8D-B48D-4DDD-8C79-B7AB2CF84778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10CBB9EC-8156-4A31-88E1-4857B262E7FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10CBB9EC-8156-4A31-88E1-4857B262E7FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10CBB9EC-8156-4A31-88E1-4857B262E7FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10CBB9EC-8156-4A31-88E1-4857B262E7FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E15986D-8B0D-4550-B735-6410259E1793}
 	EndGlobalSection
 EndGlobal

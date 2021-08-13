@@ -20,7 +20,7 @@ namespace DiscordWikiBot
 	/// Main class of the bot.
 	/// <para>Provides functions for bot’s initialisation.</para>
 	/// </summary>
-	class Program
+	public class Program
 	{
 		/// <summary>
 		/// An instance of Discord client.
@@ -62,7 +62,8 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Initialise the bot and keep it running
 		/// </summary>
-		public async Task Run()
+		/// <param name="runAlways">Enable or disable Ctrl+C handler.</param>
+		public async Task Run(bool runAlways = true)
 		{
 			// Set proper TLS settings
 			ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
@@ -168,13 +169,12 @@ namespace DiscordWikiBot
 			await Client.ConnectAsync();
 
 			// Make sure not to close down automatically
-			await CtrlC();
+			if (runAlways) await CtrlC();
 		}
 
 		/// <summary>
 		/// Have the ability to stop the bot on Ctrl+C
 		/// </summary>
-		/// TODO: Fix this after porting to .NET Core
 		private static Task CtrlC()
 		{
 			var tcs = new TaskCompletionSource<object>();
