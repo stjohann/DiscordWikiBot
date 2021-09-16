@@ -8,8 +8,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void BasicLink()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[test link]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Test_link>";
 			Assert.AreEqual(expected, actual);
@@ -18,8 +16,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void BasicLinkWithHack()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[test (disambiguation)]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Test_(disambiguation)_>";
 			Assert.AreEqual(expected, actual);
@@ -28,8 +24,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void MultipleLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[Кот]]о[[пёс]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://ru.wikipedia.org/wiki/Кот>
@@ -40,8 +34,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void GenderedUserLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage(@"
 				[[user:stjn]]
 				[[user:Udacha]]
@@ -57,18 +49,20 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void TemplateLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage(@"
 				{{С отвратительным дизайном}}
 				{{int:lang}}
+				{{#invoke:Math}}
 				{{subst:тест}}
+				{{подст:тест 2}}
 				{{:тест}}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://ru.wikipedia.org/wiki/Шаблон:С_отвратительным_дизайном>
 <https://ru.wikipedia.org/wiki/MediaWiki:Lang>
+<https://ru.wikipedia.org/wiki/Модуль:Math>
 <https://ru.wikipedia.org/wiki/Шаблон:Тест>
+<https://ru.wikipedia.org/wiki/Шаблон:Тест_2>
 <https://ru.wikipedia.org/wiki/Тест>";
 			Assert.AreEqual(expected, actual);
 		}
@@ -76,8 +70,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void NamespaceAliasLink()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[ВП:Страшное место]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Википедия:Страшное_место>";
 			Assert.AreEqual(expected, actual);
@@ -86,8 +78,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void NonCapitalisedLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[wikt:пёс]] [[wikt:mediawiki:common.js]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://ru.wiktionary.org/wiki/пёс>
@@ -96,20 +86,18 @@ namespace DiscordWikiBot.Tests
 		}
 
 		[TestMethod]
-		public void BasicInterwikiLink()
+		public void BasicInterwikiLinks()
 		{
-			DiscordSetup();
-
-			string actual = Linking.PrepareMessage("[[en:wikipedia:sandbox]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://en.wikipedia.org/wiki/Wikipedia:Sandbox>";
+			string actual = Linking.PrepareMessage("[[en:wikipedia:sandbox]] [[fr:]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected = @"Ссылки:
+<https://en.wikipedia.org/wiki/Wikipedia:Sandbox>
+<https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal>";
 			Assert.AreEqual(expected, actual);
 		}
 
 		[TestMethod]
 		public void NonWikiInterwikiLink()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[google:lmgtfy]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = "Ссылка: <https://www.google.com/search?q=lmgtfy>";
 			Assert.AreEqual(expected, actual);
@@ -118,8 +106,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void NestedInterwikiLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage("[[en:wikt:test]] [[en:wikt:mediawiki:common.js]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://en.wiktionary.org/wiki/test>
@@ -130,18 +116,35 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void EmojiInterwikiLink()
 		{
-			DiscordSetup();
+			string actual = Linking.PrepareMessage("[[<:meta:873203055804436513>Discord]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected = "Ссылка: <https://meta.wikimedia.org/wiki/Discord>";
+			Assert.AreEqual(expected, actual);
+		}
 
-			string actual = Linking.PrepareMessage("[[<:meta:873203055804436513>]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://meta.wikimedia.org/wiki/>";
+		[TestMethod]
+		public void WeirdlyAdjacentLinks()
+		{
+			string actual = Linking.PrepareMessage(@"
+				[[[каждый]]
+				[[охотник]]]
+				{{желает}}}
+				{{{знать}}
+				{{{где}}}
+				{{{{сидит}}}}
+				{{{{{{фазан}}
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected = @"Ссылки:
+<https://ru.wikipedia.org/wiki/Каждый>
+<https://ru.wikipedia.org/wiki/Охотник>
+<https://ru.wikipedia.org/wiki/Шаблон:Желает>
+<https://ru.wikipedia.org/wiki/Шаблон:Знать>
+<https://ru.wikipedia.org/wiki/Шаблон:Фазан>";
 			Assert.AreEqual(expected, actual);
 		}
 
 		[TestMethod]
 		public void WeirdLinks()
 		{
-			DiscordSetup();
-
 			string actual1 = Linking.PrepareMessage("[[:Test#One%20Two]]", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected1 = "Ссылка: <https://ru.wikipedia.org/wiki/Test#One_Two>";
 			Assert.AreEqual(expected1, actual1);
@@ -158,13 +161,20 @@ namespace DiscordWikiBot.Tests
 <https://ru.wiktionary.org/wiki/Gift>
 <https://ja.wikipedia.org/wiki/おちんちん>";
 			Assert.AreEqual(expected3, actual3);
+
+			string actual4 = Linking.PrepareMessage(@"
+				[[foo|bar|baz]]
+				[[nested|[pipes]]]
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected4 = @"Ссылки:
+<https://ru.wikipedia.org/wiki/Foo>
+<https://ru.wikipedia.org/wiki/Nested>";
+			Assert.AreEqual(expected4, actual4);
 		}
 
 		[TestMethod]
 		public void InvalidLinks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage(@"
 				[[ ]]
 				{{ }}
@@ -181,8 +191,6 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void LinksInIgnoredBlocks()
 		{
-			DiscordSetup();
-
 			string actual = Linking.PrepareMessage(@"
 				`[[one-liner]]`
 				`[[multiline 1]]
@@ -204,7 +212,8 @@ namespace DiscordWikiBot.Tests
 			Assert.AreEqual("", actual);
 		}
 
-		private void DiscordSetup()
+		[ClassInitialize]
+		public static void DiscordSetup(TestContext ctx)
 		{
 			if (Program.Client == null)
 			{

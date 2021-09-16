@@ -20,11 +20,20 @@ namespace DiscordWikiBot
 	public class Linking
 	{
 		/// <summary>
-		/// Link pattern: [[]], [[|, {{}} or {{|
+		/// Link pattern: [[]], [[|, {{}} or {{| (+ false positives)
 		/// </summary>
-		private static readonly string pattern = string.Format("(?:{0}|{1})",
-			@"(\[{2})([^\[\]{}\|\n]+)(?:\|[^\[\]{}\|\n]*)?]{2}",
-			@"({{2})([^#][^\[\]{}\|\n]*)(?:\|*[^\[\]{}\n]*)?}{2}");
+		private static readonly Regex linkPattern = new Regex(@"
+			( \[\[ | \{{2,} )
+
+			( [^\[\]{}\|\n\r]+ )
+			(?:
+				\|
+				(?!\[\[)
+				[^{}\n\r]*?
+			)?
+
+			( \]\] | \}{2,} )
+		", RegexOptions.IgnorePatternWhitespace);
 
 		/// <summary>
 		/// See https://www.mediawiki.org/wiki/Manual:$wgCapitalLinks
@@ -297,7 +306,7 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
 
 			// Start digging for links
-			MatchCollection matches = Regex.Matches(content, pattern);
+			MatchCollection matches = linkPattern.Matches(content);
 			List<string> links = new List<string>();
 
 			if (matches.Count > 0)
@@ -346,8 +355,19 @@ namespace DiscordWikiBot
 		static public string AddLink(Match link, string linkFormat)
 		{
 			GroupCollection groups = link.Groups;
-			string type = ( groups[1].Value.Length == 0 ? groups[3].Value : groups[1].Value).Trim();
-			string str = ( groups[2].Value.Length == 0 ? groups[4].Value : groups[2].Value ).Trim();
+			string type = groups[1].Value.Trim();
+			string str = groups[2].Value.Trim();
+			string endBrackets = groups[3].Value.Trim();
+
+			bool isLink = type == "[[";
+			bool isTemplate = type.StartsWith("{{");
+
+			// Check for matching brackets
+			if (isLink && !endBrackets.StartsWith("]")) return "";
+			if (isTemplate && !endBrackets.StartsWith("}")) return "";
+
+			// Check for parameter syntax
+			if (type.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return "";
 
 			// Default site info
 			WikiSite defaultSiteInfo = WikiSiteInfo[linkFormat];
@@ -369,33 +389,41 @@ namespace DiscordWikiBot
 
 			if (str.Length > 0)
 			{
-				// Add template namespace for template links and remove substitution
-				if (type == "{{")
+				// Add namespaces for template links and remove substitution
+				if (isTemplate && !str.StartsWith(':'))
 				{
-					if (!str.StartsWith(':'))
+					ns = defaultSiteInfo.Namespaces["template"].CustomName;
+					str = Regex.Replace(str, "^:?(?:subst|подст):", "");
+
+					// Scribunto modules / parser functions
+					if (str.StartsWith("#invoke:"))
 					{
-						ns = defaultSiteInfo.Namespaces["template"].CustomName;
-						str = Regex.Replace(str, "^:?(?:subst|подст):", "");
-
-						// Check if it’s a parser function
-						if (str.StartsWith("#")) return "";
-
-						// MediaWiki page transclusion
-						if (str.StartsWith("int:"))
+						ns = defaultSiteInfo.Namespaces?["module"]?.CustomName;
+						if (ns != null)
 						{
-							ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
-							str = Regex.Replace(str, "^int:", "");
-							capitalised = true;
+							str = Regex.Replace(str, "^#invoke:", "");
 						}
+					}
+					else if (str.StartsWith("#"))
+					{
+						return "";
+					}
+
+					// MediaWiki page transclusion
+					if (str.StartsWith("int:"))
+					{
+						ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
+						str = Regex.Replace(str, "^int:", "");
+						capitalised = true;
 					}
 				}
 
 				WikiSite latestSiteInfo = defaultSiteInfo;
 
 				// Check if link contains interwikis
-				string iwRegex = "^ *:? *([A-Za-z-]+) *: *";
+				string iwRegex = "^ *:? *([^ :]+?) *: *";
 				Match iwMatch = Regex.Match(str, iwRegex);
-				while (type == "[[" && iwMatch.Length > 0)
+				while (isLink && iwMatch.Length > 0)
 				{
 					string prefix = iwMatch.Groups[1].Value.ToLower();
 
@@ -430,6 +458,12 @@ namespace DiscordWikiBot
 					{
 						// Return the regex that can’t be matched
 						iwMatch = Regex.Match(str, "^\b$");
+					}
+
+					// Add main page title if needed
+					if (str.Length == 0 && tempSiteInfo != null)
+					{
+						str = tempSiteInfo.SiteInfo.MainPage;
 					}
 				}
 
@@ -580,6 +614,12 @@ namespace DiscordWikiBot
 			// Check if page title length is more than 255 bytes
 			if (checkLength && Encoding.UTF8.GetByteCount(str) > 255) return true;
 
+			// Check if it contains illegal sequences
+			if (str == "." || str == "..") return true;
+			if (str.StartsWith("./") || str.StartsWith("../")) return true;
+			if (str.Contains("/./") || str.Contains("/../")) return true;
+			if (str.EndsWith("/.") || str.EndsWith("/..")) return true;
+
 			// Check if it is a MediaWiki-valid URL
 			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
 			string[] uriProtocols = {
@@ -683,6 +723,9 @@ namespace DiscordWikiBot
 				'>',
 				// Added: Soft hyphen (difficult to see in copied text)
 				'\u00ad',
+				// Added: LTR/RTL marks (difficult to see in copied text)
+				'\u200e',
+				'\u200f',
 			};
 
 			// Decode percent-encoded symbols before encoding
