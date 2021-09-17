@@ -124,9 +124,8 @@ namespace DiscordWikiBot
 
 			if (isServerMessage)
 			{
-				string guildID = e.Guild.Id.ToString();
-				goal = GetGoal(guildID, e.Channel.Id.ToString());
-				lang = Config.GetLang(guildID);
+				goal = GetConfigGoal(e.Channel);
+				lang = Config.GetLang(e.Guild.Id.ToString());
 
 				Init(goal);
 			}
@@ -163,25 +162,16 @@ namespace DiscordWikiBot
 			// Only update known messages
 			if (!Cache.ContainsKey(id) && !isLastMessage) return;
 
-			// Determine our goal (default for DMs)
-			bool isServerMessage = (e.Guild != null);
-			string goal = LANG_DEFAULT;
-			string lang = Config.GetLang();
-
-			if (isServerMessage)
-			{
-				string guildID = e.Guild.Id.ToString();
-				goal = GetGoal(guildID, e.Channel.Id.ToString());
-				lang = Config.GetLang(guildID);
-
-				Init(goal);
-			}
+			// Determine our goal
+			string goal = GetConfigGoal(e.Channel);
+			string lang = Config.GetLang(e.Guild.Id.ToString());
+			Init(goal);
 
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
 
 			// Post a message if links were added in last one
-			if (isLastMessage)
+			if (isLastMessage && !Cache.ContainsKey(id))
 			{
 				if (msg != "")
 				{
@@ -244,10 +234,16 @@ namespace DiscordWikiBot
 			// Ignore unknown messages / messages from our bot
 			if (isOurBot || !Cache.ContainsKey(id)) return;
 
-			// Delete message
-			DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
-			Cache.Remove(id);
-			await response.DeleteAsync();
+			// Delete bot’s message if possible
+			try
+			{
+				DiscordMessage response = await e.Message.Channel.GetMessageAsync(Cache[id]);
+				Cache.Remove(id);
+				await response.DeleteAsync();
+			} catch (Exception ex)
+			{
+				Program.LogMessage($"Deleting the bot’s message {Cache[id]} returned an exception: {ex}");
+			}
 		}
 
 		/// <summary>
@@ -271,7 +267,7 @@ namespace DiscordWikiBot
 				// Delete bot’s message if possible
 				try
 				{
-					DiscordMessage message = await e.Channel.GetMessageAsync(Cache[id]);
+					DiscordMessage message = await item.Channel.GetMessageAsync(Cache[id]);
 					Cache.Remove(id);
 					await message.DeleteAsync();
 				} catch(Exception ex)
@@ -678,21 +674,25 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Test if channel override exists for the channel.
+		/// Test if a channel override exists for the channel.
 		/// </summary>
-		/// <param name="guild">Discord server ID.</param>
-		/// <param name="channel">Discord guild ID.</param>
+		/// <param name="channel">Discord channel information.</param>
 		/// <returns>Goal ID compatible with data.</returns>
-		private static string GetGoal(string guild, string channel)
+		private static string GetConfigGoal(DiscordChannel channel)
 		{
-			string goal = "#" + channel;
-			string channelWiki = Config.GetWiki(goal, false);
-			if (channelWiki == null)
+			var goal = "#" + channel.Id;
+			if (channel.IsThread)
 			{
-				return guild;
+				goal = "#" + channel.ParentId;
 			}
 
-			return goal;
+			string channelWiki = Config.GetWiki(goal.ToString(), false);
+			if (channelWiki != null)
+			{
+				return goal;
+			}
+
+			return channel.GuildId.ToString();
 		}
 
 		/// <summary>
