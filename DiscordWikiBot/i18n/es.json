@@ -4,6 +4,7 @@
 			"Agent",
 			"Fitoschido",
 			"Ihojose",
+			"Jack30",
 			"MartaEgea"
 		]
 	},
@@ -30,6 +31,7 @@
 	"configuring-changed-translatewiki": "Informes sobre los cambios recientes en Translatewiki están habilitado en el canal {0} para el lenguaje **{1}**.",
 	"configuring-changed-translatewiki-channel": "El canal para informes sobre cambios recientes en Translatewiki fue cambiado a {0}.",
 	"configuring-changed-translatewiki-lang": "El lenguaje para el cual los reportes de cambios recientes en Translatewiki son compilados fue cambiado a **{0}**.",
+	"configuring-changed-reset": "El valor se restableció al de defecto.",
 	"configuring-error-same": "El valor que introdujiste es el mismo que el actual.",
 	"configuring-error-strange": "Tu comando falló debido a un error extraño.",
 	"configuring-required-value": "El valor para un parámetro es requerido.\nPara conseguir la ayuda completa para este comando, manda `{1}ayuda{0}`.",
