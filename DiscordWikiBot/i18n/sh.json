@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"BadDog",
 			"Bugoslav",
 			"Nesmir Kudilovic",
 			"Stjn"
@@ -55,8 +56,8 @@
 	"eventstreams-talk": "razgovor",
 	"eventstreams-contribs": "doprinosi",
 	"eventstreams-new": "N/Н",
-	"eventstreams-bot": "b/б",
-	"eventstreams-minor": "m/м",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m",
 	"linking-link": "Link:",
 	"linking-links": "Linkovi:",
 	"linking-toolong": "Linkovi na gornju poruku nisu dohvaćeni, jer bi poruka bila preduga za Diskord.",
