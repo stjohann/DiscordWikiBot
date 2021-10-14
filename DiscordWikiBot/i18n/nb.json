@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Jon Harald Søby",
-			"Premeditated"
+			"Premeditated",
+			"VukAnd12"
 		]
 	},
 	"yes": "ja",
@@ -26,5 +27,11 @@
 	"configuring-changed-lang": "Språket til botten på denne tjeneren ble endret til **{0}**.",
 	"configuring-changed-translatewiki": "Rapporter om siste endringer på Translatewiki er slått på i kanalen {0} for språket **{1}**.",
 	"configuring-changed-translatewiki-channel": "Kanalen for rapporter om siste endringer på Translatewiki ble endret til {0}.",
-	"configuring-help-status": "Kontroller om boten kan kjøres."
+	"configuring-help-status": "Kontroller om boten kan kjøres.",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "diskusjon",
+	"eventstreams-contribs": "bidrag",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "m"
 }
