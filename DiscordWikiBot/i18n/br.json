@@ -13,7 +13,7 @@
 	"help-version": "Stumm {0}.",
 	"help-repo": "Kod mammenn: {0}",
 	"help-commands": "Urzhiadoù",
-	"help-subcommands": "Eil-urzhiadoù",
+	"help-subcommands": "Issurzhiadoù",
 	"help-aliases": "Aliasoù",
 	"help-arguments": "Arguzennoù",
 	"help-default": "Dre ziouer: `{0}`.",
