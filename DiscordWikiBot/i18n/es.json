@@ -6,6 +6,7 @@
 			"Fitoschido",
 			"Ihojose",
 			"Jack30",
+			"Jakeukalane",
 			"MartaEgea"
 		]
 	},
@@ -32,8 +33,8 @@
 	"configuring-changed-translatewiki": "Informes sobre los cambios recientes en Translatewiki están habilitado en el canal {0} para el lenguaje **{1}**.",
 	"configuring-changed-translatewiki-channel": "El canal para informes sobre cambios recientes en Translatewiki fue cambiado a {0}.",
 	"configuring-changed-translatewiki-lang": "El lenguaje para el cual los reportes de cambios recientes en Translatewiki son compilados fue cambiado a **{0}**.",
-	"configuring-changed-wiki": "El Wiki para los enlaces en este servidor ha cambiado a **{0}**.",
-	"configuring-changed-wiki-channel": "El Wiki para enlaces en este canal ha cambiado a **{0}**.",
+	"configuring-changed-wiki": "La Wiki para los enlaces en este servidor ha cambiado a **{0}**.",
+	"configuring-changed-wiki-channel": "La Wiki para enlaces en este canal ha cambiado a **{0}**.",
 	"configuring-changed-reset": "El valor se restableció de vuelta al predeterminado.",
 	"configuring-error-same": "El valor que introdujiste es el mismo que el actual.",
 	"configuring-error-strange": "Tu comando falló debido a un error extraño.",
