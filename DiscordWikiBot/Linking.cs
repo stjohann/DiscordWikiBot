@@ -157,10 +157,10 @@ namespace DiscordWikiBot
 			// Ignore empty messages / bots / DMs
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true || e.Guild == null) return;
 			ulong id = e.Message.Id;
-			bool isLastMessage = (e.Message.Id == e.Channel.LastMessageId);
+			bool isRecentMessage = (DateTime.UtcNow - e.Message.CreationTimestamp).TotalMinutes <= 5;
 
-			// Only update known messages
-			if (!Cache.ContainsKey(id) && !isLastMessage) return;
+			// Only update known or recent messages
+			if (!Cache.ContainsKey(id) && !isRecentMessage) return;
 
 			// Determine our goal
 			string goal = GetConfigGoal(e.Channel);
@@ -170,29 +170,23 @@ namespace DiscordWikiBot
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
 
-			// Post a message if links were added in last one
-			if (isLastMessage && !Cache.ContainsKey(id))
+			// Post a reply to a recent message if it is without links
+			if (!Cache.ContainsKey(id) && isRecentMessage)
 			{
-				if (msg != "")
-				{
-					bool isTooLong = (msg == TOO_LONG);
-					if (isTooLong)
-					{
-						msg = Locale.GetMessage("linking-toolong", lang);
-					}
+				if (msg == "") return;
 
-					DiscordMessage response = await e.Message.RespondAsync(msg);
-					if (!isTooLong)
-					{
-						Cache.Add(e.Message.Id, response.Id);
-					}
-					return;
+				bool isTooLong = (msg == TOO_LONG);
+				if (isTooLong)
+				{
+					msg = Locale.GetMessage("linking-toolong", lang);
 				}
 
-				if (!Cache.ContainsKey(id))
+				DiscordMessage response = await e.Message.RespondAsync(msg);
+				if (!isTooLong)
 				{
-					return;
+					Cache.Add(e.Message.Id, response.Id);
 				}
+				return;
 			}
 
 			// Update message
@@ -389,7 +383,7 @@ namespace DiscordWikiBot
 				if (isTemplate && !str.StartsWith(':'))
 				{
 					ns = defaultSiteInfo.Namespaces["template"].CustomName;
-					str = Regex.Replace(str, "^:?(?:subst|подст):", "");
+					str = Regex.Replace(str, "^:? *(?:subst|подст): *", "");
 
 					// Scribunto modules / parser functions
 					if (str.StartsWith("#invoke:"))
@@ -397,7 +391,7 @@ namespace DiscordWikiBot
 						ns = defaultSiteInfo.Namespaces?["module"]?.CustomName;
 						if (ns != null)
 						{
-							str = Regex.Replace(str, "^#invoke:", "");
+							str = Regex.Replace(str, "^#invoke: *", "");
 						}
 					}
 					else if (str.StartsWith("#"))
@@ -409,7 +403,7 @@ namespace DiscordWikiBot
 					if (str.StartsWith("int:"))
 					{
 						ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
-						str = Regex.Replace(str, "^int:", "");
+						str = Regex.Replace(str, "^int: *", "");
 						capitalised = true;
 					}
 				}
@@ -480,7 +474,7 @@ namespace DiscordWikiBot
 						else
 						{
 							ns = namespaceInfo.CustomName;
-							Regex only = new Regex($":?{prefix}:", RegexOptions.IgnoreCase);
+							Regex only = new Regex($" *:? *{prefix} *: *", RegexOptions.IgnoreCase);
 							str = only.Replace(str, "", 1).Trim();
 						}
 
@@ -534,6 +528,14 @@ namespace DiscordWikiBot
 				return null;
 			}
 
+			// Return stored site data if it exists
+			if (WikiSiteInfo.ContainsKey(url))
+			{
+				await Task.CompletedTask;
+				return WikiSiteInfo[url];
+			}
+
+			// Fetch site data from API
 			string apiUrl = url.Replace(wikiUrlPattern, "/w/api.php");
 			WikiSite result = new WikiSite(Program.WikiClient, apiUrl);
 			try

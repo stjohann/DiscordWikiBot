@@ -156,10 +156,15 @@ namespace DiscordWikiBot.Tests
 			string actual3 = Linking.PrepareMessage(@"
 				[[wikt::Gift]]
 				[[:ja : おちんちん]]
+				[[: Википедия:ЗЛВ]]
+				[[Википедия: ЗЛВ]]
+				{{ int: mainpage }}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected3 = @"Ссылки:
 <https://ru.wiktionary.org/wiki/Gift>
-<https://ja.wikipedia.org/wiki/おちんちん>";
+<https://ja.wikipedia.org/wiki/おちんちん>
+<https://ru.wikipedia.org/wiki/Википедия:ЗЛВ>
+<https://ru.wikipedia.org/wiki/MediaWiki:Mainpage>";
 			Assert.AreEqual(expected3, actual3);
 
 			string actual4 = Linking.PrepareMessage(@"

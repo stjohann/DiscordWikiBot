@@ -636,9 +636,11 @@ namespace DiscordWikiBot
 				summary = Regex.Replace(summary, linkPatternPipe, "$2");
 			}
 
-			// Add italic and parentheses
-			summary = $" *({summary})*";
-			return summary;
+			// Escape * inside summaries
+			summary = summary.Replace("*", @"\*");
+
+			// Add italics and parentheses
+			return $" *({summary})*";
 		}
 
 		/// <summary>

@@ -23,7 +23,7 @@ namespace DiscordWikiBot
 	class TranslateWiki
 	{
 		/// <summary>
-		/// List of MediaWiki/Wikimedia-related projects.
+		/// List of MediaWiki/Wikimedia-related project namespaces.
 		/// </summary>
 		static private readonly Dictionary<string, string> Projects = new Dictionary<string, string>()
 		{
@@ -89,8 +89,9 @@ namespace DiscordWikiBot
 				// Only add new channel into the list
 				if (!Channels.ContainsKey(lang))
 				{
-					Channels[lang].Add(channel);
+					Channels[lang] = new List<string>();
 				}
+				Channels[lang].Add(channel);
 			}
 		}
 
