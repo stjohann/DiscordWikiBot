@@ -232,7 +232,7 @@ namespace DiscordWikiBot
 			// Check if a wiki was passed
 			if (value != "-")
 			{
-				var data = Linking.FetchWikiInfo(value).Result;
+				var data = Linking.GetWikiSite(value).Result;
 				if (data == null)
 				{
 					await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));
@@ -292,7 +292,7 @@ namespace DiscordWikiBot
 			// Check if a wiki was passed
 			if (value != "-")
 			{
-				var data = Linking.FetchWikiInfo(value).Result;
+				var data = Linking.GetWikiSite(value).Result;
 				if (data == null)
 				{
 					await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));

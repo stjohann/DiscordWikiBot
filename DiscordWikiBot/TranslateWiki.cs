@@ -432,8 +432,7 @@ namespace DiscordWikiBot
 		{
 			if (lang == null) return null;
 
-			WikiSite site = new WikiSite(Program.WikiClient, "https://translatewiki.net/w/api.php");
-			await site.Initialization;
+			WikiSite site = Linking.GetWikiSite("https://translatewiki.net/w/api.php").Result;
 
 			JToken result = await site.InvokeMediaWikiApiAsync(
 				new MediaWikiFormRequestMessage(new

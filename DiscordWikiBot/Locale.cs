@@ -234,9 +234,12 @@ namespace DiscordWikiBot
 		private static async Task<JObject> GetLanguageData()
 		{
 			string url = Config.GetWiki();
-			string urlWiki = "/wiki/$1";
-			WikiSite site = new WikiSite(Program.WikiClient, url.Replace(urlWiki, "/w/api.php"));
-			await site.Initialization;
+			var site = Linking.GetWikiSite(url).Result;
+			if (site == null)
+			{
+				Program.LogMessage($"Fetching language data from {url} failed. Please set a different default wiki URL.", "Locale", "error");
+				return null;
+			}
 
 			// Fetch languages using new API (MediaWiki 1.34+)
 			try

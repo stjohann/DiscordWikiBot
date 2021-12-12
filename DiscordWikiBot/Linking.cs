@@ -84,7 +84,7 @@ namespace DiscordWikiBot
 			// Fetch values for the goal’s wiki
 			if (!WikiSiteInfo.ContainsKey(wiki))
 			{
-				WikiSite data = FetchWikiInfo(wiki).Result;
+				WikiSite data = GetWikiSite(wiki).Result;
 				if (data != null) WikiSiteInfo.Add(wiki, data);
 			}
 		}
@@ -428,7 +428,7 @@ namespace DiscordWikiBot
 						// Fetch temporary site information if necessary and store new prefix
 						if (iw != "" || prefix != iw || oldLinkFormat.Replace(iw, prefix) != linkFormat)
 						{
-							WikiSite data = FetchWikiInfo(linkFormat).Result;
+							WikiSite data = GetWikiSite(linkFormat).Result;
 							tempSiteInfo = data;
 							latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
 
@@ -518,12 +518,13 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Get wiki site information.
 		/// </summary>
-		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
+		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> or <code>https://ru.wikipedia.org/w/api.php</code> format.</param>
 		/// <returns>Wiki site information or null.</returns>
-		public static async Task<WikiSite> FetchWikiInfo(string url)
+		public static async Task<WikiSite> GetWikiSite(string url)
 		{
 			string wikiUrlPattern = "/wiki/$1";
-			if (!url.EndsWith(wikiUrlPattern))
+			string apiUrlPattern = "/api.php";
+			if (!url.EndsWith(wikiUrlPattern) && !url.EndsWith(apiUrlPattern))
 			{
 				return null;
 			}
@@ -570,31 +571,19 @@ namespace DiscordWikiBot
 		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
 		public static async Task<string> GetNormalisedTitle(string title, string url)
 		{
-			string pageTitle = null;
-			string wikiUrlPattern = "/wiki/$1";
-			string apiUrl = url.Replace(wikiUrlPattern, "/w/api.php");
-
-			WikiSite site = null;
-			bool siteWasInitialised = WikiSiteInfo.ContainsKey(url);
-			if (siteWasInitialised)
-			{
-				site = WikiSiteInfo[url];
-			} else
-			{
-				site = new WikiSite(Program.WikiClient, apiUrl);
-			}
+			string pageTitle = title;
+			WikiSite site = GetWikiSite(url).Result;
+			if (site == null) return pageTitle;
 
 			try
 			{
-				if (!siteWasInitialised) await site.Initialization;
-
 				var page = new WikiPage(site, title);
 				await page.RefreshAsync();
 				pageTitle = page.Title;
 			}
 			catch (Exception ex)
 			{
-				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", "warning");
+				Program.LogMessage($"Wiki at {url} can’t be reached: {ex.InnerException}", "Linking", "warning");
 			}
 
 			// Restore the anchor from original title
