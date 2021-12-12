@@ -613,13 +613,24 @@ namespace DiscordWikiBot
 				// Linkify every wiki link in comment text
 				summary = Regex.Replace(summary, linkPattern, m => {
 					string title = m.Groups[1].Value;
-					string link = string.Format("[{0}]({1})", title, Linking.GetLink(title, format, true));
+					string text = title;
+					// TODO: Implement proper link parsing, see #16
+					if (title.Contains(":"))
+					{
+						title = $"Special:GoToInterwiki/{title}";
+					}
+					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
 
 					return link;
 				});
 
 				summary = Regex.Replace(summary, linkPatternPipe, m => {
 					string title = m.Groups[1].Value;
+					// TODO: Implement proper link parsing, see #16
+					if (title.Contains(":"))
+					{
+						title = $"Special:GoToInterwiki/{title}";
+					}
 					string text = m.Groups[2].Value;
 					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
 

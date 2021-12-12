@@ -41,7 +41,7 @@
 	"configuring-required-value": "The value for a parameter is required.\nTo get full help for the command, send `{1}help {0}`.",
 	"configuring-badvalue-domain": "Streams are available only for Wikimedia projects.\nList of allowed domains: {0}.",
 	"configuring-badvalue-lang": "The bot doesn’t recognise your input as a valid ISO 639 code.",
-	"configuring-badvalue-wiki": "There must be `{0}` at the end of your URL.",
+	"configuring-badvalue-wiki": "The bot cannot get API information for this wiki. There must be `{0}` at the end of your URL.",
 
 	"configuring-help-status": "Check if the bot is operational.",
 	"configuring-help-domain": "Change the domain from which recent changes are broadcasted on this server. Works only for Wikimedia projects.",

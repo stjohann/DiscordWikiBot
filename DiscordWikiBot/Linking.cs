@@ -84,8 +84,8 @@ namespace DiscordWikiBot
 			// Fetch values for the goal’s wiki
 			if (!WikiSiteInfo.ContainsKey(wiki))
 			{
-				WikiSite data = FetchSiteInfo(wiki).Result;
-				WikiSiteInfo.Add(wiki, data);
+				WikiSite data = FetchWikiInfo(wiki).Result;
+				if (data != null) WikiSiteInfo.Add(wiki, data);
 			}
 		}
 
@@ -428,7 +428,7 @@ namespace DiscordWikiBot
 						// Fetch temporary site information if necessary and store new prefix
 						if (iw != "" || prefix != iw || oldLinkFormat.Replace(iw, prefix) != linkFormat)
 						{
-							WikiSite data = FetchSiteInfo(linkFormat).Result;
+							WikiSite data = FetchWikiInfo(linkFormat).Result;
 							tempSiteInfo = data;
 							latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
 
@@ -519,8 +519,8 @@ namespace DiscordWikiBot
 		/// Get wiki site information.
 		/// </summary>
 		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
-		/// <returns>Site information from the wiki site.</returns>
-		public static async Task<WikiSite> FetchSiteInfo(string url)
+		/// <returns>Wiki site information or null.</returns>
+		public static async Task<WikiSite> FetchWikiInfo(string url)
 		{
 			string wikiUrlPattern = "/wiki/$1";
 			if (!url.EndsWith(wikiUrlPattern))
@@ -535,20 +535,32 @@ namespace DiscordWikiBot
 				return WikiSiteInfo[url];
 			}
 
-			// Fetch site data from API
+			// Fetch site data from /w/api.php
 			string apiUrl = url.Replace(wikiUrlPattern, "/w/api.php");
-			WikiSite result = new WikiSite(Program.WikiClient, apiUrl);
 			try
 			{
+				var result = new WikiSite(Program.WikiClient, apiUrl);
 				await result.Initialization;
+				return result;
+			}
+			catch (Exception) { }
+
+			// Try fetching from /api.php if it failed before
+			apiUrl = apiUrl.Replace("/w/", "/");
+			try
+			{
+				var result = new WikiSite(Program.WikiClient, apiUrl);
+				await result.Initialization;
+				return result;
 			}
 			catch (Exception ex)
 			{
-				Program.LogMessage($"Wiki ({url}) can’t be reached: {ex.InnerException}", "Linking", "warning");
+				Program.LogMessage($"Wiki at {url} can’t be reached: {ex.Message}", "Linking", "warning");
 			}
 
+			// Assume this is not a MediaWiki site
 			await Task.CompletedTask;
-			return result;
+			return null;
 		}
 
 		/// <summary>

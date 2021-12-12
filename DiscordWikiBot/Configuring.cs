@@ -24,7 +24,8 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="ctx">Discord information.</param>
 		/// <param name="value">New EventStreams domain.</param>
-		[Command("guildDomain")]
+		[Command("serverDomain")]
+		[Aliases("guildDomain")]
 		[Description("configuring-help-domain")]
 		public async Task SetDomain(CommandContext ctx,
 			[Description("configuring-help-domain-value"), RemainingText] string value)
@@ -63,7 +64,8 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="ctx">Discord information.</param>
 		/// <param name="value">Language code in ISO 639 format.</param>
-		[Command("guildLang")]
+		[Command("serverLang")]
+		[Aliases("guildLang")]
 		[Description("configuring-help-lang")]
 		public async Task SetLanguage(CommandContext ctx,
 			[Description("configuring-help-lang-value")] string value)
@@ -106,7 +108,8 @@ namespace DiscordWikiBot
 		/// <param name="ctx">Discord information.</param>
 		/// <param name="channel">Discord channel.</param>
 		/// <param name="value">Language code in ISO 639 format.</param>
-		[Command("guildTW")]
+		[Command("serverTW")]
+		[Aliases("guildTW")]
 		[Description("configuring-help-translatewiki")]
 		public async Task SetTranslateWiki(CommandContext ctx,
 			[Description("configuring-help-translatewiki-channel")] DiscordChannel channel,
@@ -197,11 +200,12 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Set wiki link URL for a Discord server.
+		/// Set default wiki link URL for a Discord server.
 		/// </summary>
 		/// <param name="ctx">Discord information.</param>
 		/// <param name="value">Wiki link URL.</param>
-		[Command("guildWiki")]
+		[Command("serverWiki")]
+		[Aliases("guildWiki")]
 		[Description("configuring-help-wiki")]
 		public async Task SetWiki(CommandContext ctx,
 			[Description("configuring-help-wiki-value"), RemainingText] string value)
@@ -223,7 +227,18 @@ namespace DiscordWikiBot
 			}
 
 			// Provide some changes
-			value = value.Replace("<", String.Empty).Replace(">", String.Empty);
+			value = value.Trim('<', '>');
+
+			// Check if a wiki was passed
+			if (value != "-")
+			{
+				var data = Linking.FetchWikiInfo(value).Result;
+				if (data == null)
+				{
+					await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));
+					return;
+				}
+			}
 
 			// Do action and respond
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "wiki", value);
@@ -239,6 +254,11 @@ namespace DiscordWikiBot
 			await RespondOnErrors(succeeds, ctx, lang);
 		}
 
+		/// <summary>
+		/// Set default wiki link URL for a Discord channel.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="value">Wiki link URL.</param>
 		[Command("channelWiki")]
 		[Description("configuring-help-wiki-channel")]
 		public async Task SetChannelWiki(CommandContext ctx,
@@ -261,12 +281,23 @@ namespace DiscordWikiBot
 			}
 
 			// Provide some changes
-			value = value.Replace("<", String.Empty).Replace(">", String.Empty);
+			value = value.Trim('<', '>');
 
 			// Reset to default server value if necessary
 			if (value == Config.GetWiki(ctx.Guild.Id.ToString()))
 			{
 				value = "-";
+			}
+			
+			// Check if a wiki was passed
+			if (value != "-")
+			{
+				var data = Linking.FetchWikiInfo(value).Result;
+				if (data == null)
+				{
+					await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-wiki", lang, "/wiki/$1"));
+					return;
+				}
 			}
 
 			// Do action and respond
