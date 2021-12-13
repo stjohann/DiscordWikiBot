@@ -48,6 +48,7 @@
 	"configuring-help-lang-value": "die von dir gewünschte Sprache. Benutze `-`, um auf die Standardeinstellungen zurückzusetzen.",
 	"configuring-help-translatewiki": "Starte oder beende stündlich die Berichterstattung über die letzten Änderungen in Translatewiki in einem der Kanäle.",
 	"configuring-help-translatewiki-channel": "einen Kanal, der dem Bot zur Verfügung steht.",
+	"configuring-help-translatewiki-value": "Sprache, die auf Translatewiki für die Übersetzung verfügbar ist (Sprachcode in ISO 639). Gib „-“ als Sprache ein, um die Berichterstattung zu beenden.",
 	"configuring-help-wiki": "Ändere das Hauptwiki für Links auf diesem Server. /wiki/$1 am Ende ist erforderlich.",
 	"configuring-help-wiki-channel": "Ändere das Wiki für Links auf diesem Kanal. /wiki/$1 am Ende ist erforderlich.",
 	"configuring-help-wiki-value": "Das Wiki, das du willst (im Format <https://en.wikipedia.org/wiki/$1>). Benutze `-`, um die Einstellung auf den Standard zurückzusetzen.",
@@ -77,11 +78,13 @@
 	"streaming-key-patrolled": "Nach Überprüfungs-Status filtern",
 	"streaming-key-title": "Seitentitel",
 	"streaming-key-type": "Bearbeitungstyp",
+	"streaming-required-goal": "Das Streamziel (Seitentitel oder Namensraum-Nummer) ist erforderlich.\nUm die vollständige Hilfe für den Befehl zu erhalten, sende `{1}help {0}`.",
 	"streaming-help-open": "Mit dem Streaming der letzten Änderungen im Kanal beginnen.",
 	"streaming-help-edit": "Die Parameter eines Streams der letzten Änderungen im Kanal bearbeiten.",
 	"streaming-help-close": "Das Streaming der letzten Änderungen im Kanal beenden.",
 	"streaming-help-list": "Alle geöffneten Streams auf diesem Server auflisten.",
 	"streaming-help-channel": "einen Kanal, der dem Bot zur Verfügung steht.",
 	"streaming-help-args": "Verfügbare Stream-Parameter:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"translatewiki-deadline": "Nimm dir die Zeit, die Übersetzungen für diese Woche **bis 00:00** Montag UTC zu überprüfen, um zu vermeiden, dass sich schlechte Übersetzungen und Vandalismus einschleichen.",
 	"translatewiki-header": "{0} {1:Nachricht|Nachrichten} von {2} {2:Autor|Autoren}"
 }
