@@ -4,6 +4,7 @@
 			"BaRaN6161 TURK",
 			"Grkn gll",
 			"MuratTheTurkish",
+			"SaldırganSincap",
 			"Stonecy"
 		]
 	},
@@ -16,7 +17,7 @@
 	"help-repo": "Kaynak kodu: {0}",
 	"help-commands": "Komutlar",
 	"help-subcommands": "Alt komutlar",
-	"help-aliases": "Takma adlar",
+	"help-aliases": "Diğer adlar",
 	"help-arguments": "Argümanlar",
 	"help-default": "Varsayılan olarak: `{0}`.",
 	"help-optional": "isteğe bağlı",
