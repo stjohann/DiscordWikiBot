@@ -610,12 +610,19 @@ namespace DiscordWikiBot
 					return link;
 				});
 
+				bool IsLikelyInterwikiLink(string title) {
+					// See https://gerrit.wikimedia.org/g/mediawiki/core/+/master/includes/specials/SpecialGoToInterwiki.php#55
+					return title.Contains(":")
+						&& char.IsLower(title[0])
+						&& !title.StartsWith("special:");
+				}
+
 				// Linkify every wiki link in comment text
 				summary = Regex.Replace(summary, linkPattern, m => {
 					string title = m.Groups[1].Value;
 					string text = title;
 					// TODO: Implement proper link parsing, see #16
-					if (title.Contains(":"))
+					if (IsLikelyInterwikiLink(title))
 					{
 						title = $"Special:GoToInterwiki/{title}";
 					}
@@ -627,7 +634,7 @@ namespace DiscordWikiBot
 				summary = Regex.Replace(summary, linkPatternPipe, m => {
 					string title = m.Groups[1].Value;
 					// TODO: Implement proper link parsing, see #16
-					if (title.Contains(":"))
+					if (IsLikelyInterwikiLink(title))
 					{
 						title = $"Special:GoToInterwiki/{title}";
 					}
