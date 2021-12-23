@@ -3,6 +3,7 @@
 		"authors": [
 			"BaRaN6161 TURK",
 			"Grkn gll",
+			"Hedda",
 			"MuratTheTurkish",
 			"SaldırganSincap",
 			"Stonecy"
@@ -39,7 +40,7 @@
 	"configuring-required-value": "Bir parametrenin değeri gereklidir.\nKomuta tam yardım almak için, `{1}help {0}` gönderin.",
 	"configuring-badvalue-domain": "Akışlar yalnızca Wikimedia projeleri için kullanılabilir.\nİzin verilen alanların listesi: {0}.",
 	"configuring-badvalue-lang": "Bot, girişinizi geçerli bir ISO 639 kodu olarak tanımıyor.",
-	"configuring-badvalue-wiki": "URL’nizin sonunda `{0}` olmalı.",
+	"configuring-badvalue-wiki": "Bot, bu wiki için API bilgilerini alamıyor. URL'nizin sonunda `{0}` olmalıdır.",
 	"configuring-help-status": "Botun çalışıp çalışmadığını kontrol edin.",
 	"configuring-help-domain": "Bu sunucuda son değişikliklerin yayınlandığı etki alanını değiştirin. Sadece Wikimedia projeleri için çalışıyor.",
 	"configuring-help-domain-value": "Wikimedia projesinin alanı (tr.wikipedia.org formatında). Varsayılana sıfırlamak için `-` kullanın.",
