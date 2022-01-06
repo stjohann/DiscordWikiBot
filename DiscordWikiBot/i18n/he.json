@@ -21,7 +21,7 @@
 	"help-aliases": "כינויים",
 	"help-arguments": "ארגומנטים",
 	"help-default": "ברירת המחדל: `{0}`.",
-	"help-optional": "אופציונלי",
+	"help-optional": "לא חובה",
 	"help-group-standalone": "הקבוצה הזאת היא פקודה נפרדת.",
 	"help-command": "הצגת עזרה עבור הפקודה.",
 	"help-command-command": "פקודה הדורשת הצגת עזרה.",
