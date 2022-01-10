@@ -5,7 +5,8 @@
 			"Elroy",
 			"Jeroen N",
 			"PonkoSasuke",
-			"Romaine"
+			"Romaine",
+			"Rots61"
 		]
 	},
 	"yes": "ja",
@@ -39,7 +40,7 @@
 	"configuring-required-value": "Een waarde voor een parameter is verplicht.\nOm de volledige help-informatie voor dit commando te krijgen, typ `{1}help {0}`.",
 	"configuring-badvalue-domain": "Streams zijn alleen beschikbaar voor Wikimedia-projecten.\nLijst met toegestane domeinen: {0}.",
 	"configuring-badvalue-lang": "De bot herkent jouw imput niet als een geldige ISO 639-code.",
-	"configuring-badvalue-wiki": "Er moet een `{0}` aan het einde van de URL zijn.",
+	"configuring-badvalue-wiki": "De bot krijg geen informatie van de API voor deze wiki. Er moet een `{0}` aan het einde van de URL zijn.",
 	"configuring-help-status": "Controleer of de bot actief is.",
 	"configuring-help-domain": "Verander het domein vanwaar recente wijzigingen worden getoond op deze server. Werkt alleen voor Wikimedia-projecten.",
 	"configuring-help-domain-value": "domein van een Wikimedia-project (in en.wikipedia.org-formaat). Gebruik `-` om de standaardwaarden terug te zetten.",
