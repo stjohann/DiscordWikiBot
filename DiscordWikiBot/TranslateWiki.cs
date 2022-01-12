@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Timers;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
-using WikiClientLibrary;
 using WikiClientLibrary.Client;
-using WikiClientLibrary.Generators;
 using WikiClientLibrary.Sites;
 using System.Threading;
 using Newtonsoft.Json.Linq;
@@ -35,23 +32,30 @@ namespace DiscordWikiBot
 			{ "1274", "Phabricator" },
 		};
 
+		private static readonly Dictionary<string, TranslateWiki> Wikis = new Dictionary<string, TranslateWiki>();
+
 		/// <summary>
 		/// Maximum embed length allowed by Discord.
 		/// </summary>
 		static private readonly int MAX_EMBED_LENGTH = 1024;
 
-		// List of used languages and guilds
-		private static List<string> Languages = new List<string>();
-		private static Dictionary<string, List<string>> Channels = new Dictionary<string, List<string>>();
-		private static Dictionary<string, System.Timers.Timer> Timers = new Dictionary<string, System.Timers.Timer>();
+		// List of used channels
+		private List<string> Channels = new List<string>();
 
-		// Latest fetch time and revision
-		private static Dictionary<string, int> LatestFetchTime = new Dictionary<string, int>();
-		private static Dictionary<string, string> LatestFetchKey = new Dictionary<string, string>();
+		// Latest fetch revision
+		private string LatestFetchKey;
+
+		private readonly CancellationTokenSource _cancellation = new CancellationTokenSource();
+		private readonly string _lang;
 
 		// Update deadline and whether info about it was already sent
 		private static bool UpdateDeadline = false;
 		private static bool UpdateDeadlineDone = false;
+
+		private TranslateWiki(string lang)
+		{
+			_lang = lang;
+		}
 
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
@@ -60,8 +64,8 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Init(string channel = "", string lang = "")
 		{
-			// Start updates for new language
-			if (!Languages.Contains(lang))
+			var run = false;
+			if (!Wikis.TryGetValue(lang, out var wiki))
 			{
 				if (lang == "" || lang == null)
 				{
@@ -70,29 +74,25 @@ namespace DiscordWikiBot
 				}
 
 				Program.LogMessage($"Watching changes for {lang.ToUpper()}", "TranslateWiki");
-				Languages.Add(lang);
-				if (!Channels.ContainsKey(lang))
-				{
-					Channels[lang] = new List<string>();
-				}
-				Channels[lang].Add(channel);
 
-				// To start fetching ASAP
-				LatestFetchTime[lang] = -1;
-				LatestFetchKey[lang] = GetLegacyKey(channel);
-				
-				Timers[lang] = new System.Timers.Timer(20000);
-				Timers[lang].Elapsed += (sender, args) => RequestOnTimer(sender, lang);
-				Timers[lang].Enabled = true;
-			} else
-			{
-				// Only add new channel into the list
-				if (!Channels.ContainsKey(lang))
-				{
-					Channels[lang] = new List<string>();
-				}
-				Channels[lang].Add(channel);
+				Wikis[lang] = wiki = new TranslateWiki(lang);
+				run = true;
 			}
+
+			wiki.Channels.Add(channel);
+			wiki.LatestFetchKey = GetLegacyKey(channel);
+			if (run)
+			{
+				wiki.Run();
+			}
+		}
+
+		/// <summary>
+		/// Run task to fetch new Translatewiki changes.
+		/// </summary>
+		private void Run()
+		{
+			Task.Run(FetchPeriodically);
 		}
 
 		/// <summary>
@@ -103,12 +103,24 @@ namespace DiscordWikiBot
 		public static void Remove(string channel = "", string lang = "")
 		{
 			Config.SetChannelOverride(channel, "translatewiki-key", null);
-			Channels[lang].Remove(channel);
-			if (Channels[lang].Count == 0)
+
+			if (!Wikis.TryGetValue(lang, out var wiki))
+				return;
+
+			wiki.RemoveChannel(channel);
+		}
+
+		/// <summary>
+		/// Remove channel data from all storage.
+		/// </summary>
+		/// <param name="channel">Discord channel ID.</param>
+		private void RemoveChannel(string channel)
+		{
+			Channels.Remove(channel);
+			if (Channels.Count == 0)
 			{
-				Languages.Remove(lang);
-				Channels.Remove(lang);
-				Timers[lang].Stop();
+				Wikis.Remove(_lang);
+				_cancellation.Cancel();
 			}
 		}
 
@@ -117,33 +129,42 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="lang">Language code in ISO 639 format.</param>
-		private static void RequestOnTimer(object source, string lang)
+		private async Task FetchPeriodically()
 		{
-			DateTime now = DateTime.UtcNow;
-			if (LatestFetchTime[lang] < now.Hour || (LatestFetchTime[lang] == 23 && now.Hour == 0))
+			while (!_cancellation.Token.IsCancellationRequested)
 			{
+				var now = DateTime.UtcNow;
 				// Inform about update deadline after Sunday 6:00 UTC
-				if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour > 6) {
+				if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour >= 6)
+				{
 					if (!UpdateDeadlineDone) UpdateDeadline = true;
-				} else
+				}
+				else
 				{
 					UpdateDeadline = false;
 					UpdateDeadlineDone = false;
 				}
 
-				// Remember new hour
-				LatestFetchTime[lang] = now.Hour;
-
 				// React to all channels about any new changes
-				var msgresult = Fetch(lang).Result;
+				var msgresult = await Fetch(_lang);
 				if (msgresult != null)
 				{
 					JToken[] msgs = msgresult.ToArray();
 					if (msgs != null)
 					{
-						React(msgs, lang).Wait();
+						await React(msgs);
 					}
 				}
+
+				now = DateTime.UtcNow;
+				var nextTime = now
+					.AddMilliseconds(-now.Millisecond)
+					.AddSeconds(-now.Second)
+					.AddMinutes(-now.Minute)
+					.AddHours(1)
+					.AddSeconds(3 * Array.IndexOf(Wikis.Keys.ToArray(), _lang));
+
+				await Task.Delay(nextTime - now, _cancellation.Token);
 			}
 		}
 
@@ -152,7 +173,7 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="list">List of all fetched messages.</param>
 		/// <param name="lang">Language code in ISO 639 format.</param>
-		public static async Task React(JToken[] list, string lang)
+		private async Task React(JToken[] list)
 		{
 			// Filter only translations from projects above
 			bool gotToLatest = false;
@@ -162,7 +183,7 @@ namespace DiscordWikiBot
 				if (Projects.Keys.Where(x => key.StartsWith(x + ":")).ToList().Count > 0)
 				{
 					// Check if matches with latest fetch
-					if (key == LatestFetchKey[lang])
+					if (key == LatestFetchKey)
 					{
 						gotToLatest = true;
 					}
@@ -183,7 +204,7 @@ namespace DiscordWikiBot
 			Dictionary<string, Dictionary<string, List<string>>> groups = new Dictionary<string, Dictionary<string, List<string>>>();
 			HashSet<string> authors = new HashSet<string>();
 
-			foreach(var item in query)
+			foreach (var item in query)
 			{
 				string key = item["key"].ToString();
 				string ns = Regex.Match(key, @"^\d+:").ToString().TrimEnd(':');
@@ -206,13 +227,13 @@ namespace DiscordWikiBot
 			// Send Discord messages to guilds
 			Dictionary<string, string> badServers = new Dictionary<string, string>();
 			DiscordClient client = Program.Client;
-			foreach (string chan in Channels[lang])
+			foreach (string chan in Channels)
 			{
 				DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
 					.WithTimestamp(DateTime.UtcNow)
 					.WithColor(new DiscordColor(0x013467))
 					.WithFooter(
-						"translatewiki.net • " + Locale.GetLanguageName(lang, "{0} ({1})"),
+						"translatewiki.net • " + Locale.GetLanguageName(_lang, "{0} ({1})"),
 						"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/512px-Translatewiki.net_logo.svg.png"
 					);
 
@@ -222,13 +243,15 @@ namespace DiscordWikiBot
 				{
 					ulong chanId = ulong.Parse(chan);
 					channel = await client.GetChannelAsync(chanId);
-				} catch (Exception ex) {
+				}
+				catch (Exception ex)
+				{
 					Program.LogMessage($"Channel can’t be reached: {ex}", "TranslateWiki", "warning");
 
 					// Remove data if channel is deleted or unavailable
 					if (Program.IsChannelInvalid(ex))
 					{
-						badServers.Add(chan, lang);
+						badServers.Add(chan, _lang);
 					}
 				}
 
@@ -253,10 +276,10 @@ namespace DiscordWikiBot
 				string headerCount = (gotToLatest ? count.ToString() : count.ToString() + "+");
 				string header = Locale.GetMessage("translatewiki-header", guildLang, headerCount, count, authors.Count);
 				embed.WithTitle(header)
-					.WithUrl(string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), lang));
+					.WithUrl(string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), _lang));
 
 				// Form message lists for groups
-				foreach(var groupList in groups)
+				foreach (var groupList in groups)
 				{
 					// Do not display message IDs for Phabricator messages
 					string desc = FormDescription(groupList.Value, (groupList.Key != "1274"));
@@ -269,14 +292,15 @@ namespace DiscordWikiBot
 
 					// Remember the key of first message
 					Config.SetChannelOverride(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
-				} catch (Exception ex)
+				}
+				catch (Exception ex)
 				{
 					Program.LogMessage($"Message in channel #{channel.Name} (ID {chan}) could not be posted: {ex}", "TranslateWiki", "warning");
 
 					// Remove data if channel is deleted or unavailable
 					if (Program.IsChannelInvalid(ex))
 					{
-						badServers.Add(chan, lang);
+						badServers.Add(chan, _lang);
 					}
 				}
 			}
@@ -288,7 +312,7 @@ namespace DiscordWikiBot
 			}
 
 			// Write down new first key
-			LatestFetchKey[lang] = query.First()["key"].ToString();
+			LatestFetchKey = query.First()["key"].ToString();
 		}
 
 		/// <summary>
@@ -327,7 +351,8 @@ namespace DiscordWikiBot
 			Dictionary<string, bool> finished = new Dictionary<string, bool>();
 			while (msgLength < MAX_EMBED_LENGTH)
 			{
-				foreach (var item in authors) {
+				foreach (var item in authors)
+				{
 					if (msgLength > MAX_EMBED_LENGTH || item.Key == "1274") break;
 					if (!msgNumbers.ContainsKey(item.Key))
 					{
@@ -335,7 +360,8 @@ namespace DiscordWikiBot
 					}
 
 					var num = msgNumbers[item.Key];
-					if (finished.ContainsKey(item.Key) || num >= item.Value.Count) {
+					if (finished.ContainsKey(item.Key) || num >= item.Value.Count)
+					{
 						if (!finished.ContainsKey(item.Key))
 						{
 							finished[item.Key] = true;
@@ -356,7 +382,8 @@ namespace DiscordWikiBot
 					{
 						arr[2] += str;
 						msgLength += str.Length;
-					} else
+					}
+					else
 					{
 						finished[item.Key] = true;
 						continue;
@@ -384,7 +411,8 @@ namespace DiscordWikiBot
 				if (useLinks)
 				{
 					result.Append((result.Length + item.Value[0].Length > MAX_EMBED_LENGTH ? $" ({item.Key})\n" : item.Value[0]));
-				} else
+				}
+				else
 				{
 					result.Append(item.Value[0]);
 				}
@@ -445,7 +473,7 @@ namespace DiscordWikiBot
 					// Ignore FuzzyBot (ID 646)
 					mcfilter = "!last-translator:646",
 					mcprop = "properties"
-				} ),
+				}),
 				new CancellationToken()
 			);
 
