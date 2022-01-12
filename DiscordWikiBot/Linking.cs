@@ -77,14 +77,14 @@ namespace DiscordWikiBot
 		/// Initialise the default settings and setup things for overrides.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
-		static public void Init(string goal = "")
+		static public async Task Init(string goal = "")
 		{
 			string wiki = Config.GetWiki(goal);
 
 			// Fetch values for the goal’s wiki
 			if (!WikiSiteInfo.ContainsKey(wiki))
 			{
-				WikiSite data = GetWikiSite(wiki).Result;
+				WikiSite data = await GetWikiSite(wiki);
 				if (data != null) WikiSiteInfo.Add(wiki, data);
 			}
 		}
@@ -127,7 +127,7 @@ namespace DiscordWikiBot
 				goal = GetConfigGoal(e.Channel);
 				lang = Config.GetLang(e.Guild.Id.ToString());
 
-				Init(goal);
+				await Init(goal);
 			}
 
 			// Send message
@@ -165,7 +165,7 @@ namespace DiscordWikiBot
 			// Determine our goal
 			string goal = GetConfigGoal(e.Channel);
 			string lang = Config.GetLang(e.Guild.Id.ToString());
-			Init(goal);
+			await Init(goal);
 
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));

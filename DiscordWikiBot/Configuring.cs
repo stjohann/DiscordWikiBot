@@ -244,7 +244,7 @@ namespace DiscordWikiBot
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "wiki", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				Linking.Init(ctx.Guild.Id.ToString());
+				await Linking.Init(ctx.Guild.Id.ToString());
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-wiki", lang, value));
 			}
 			if (succeeds == Config.RESULT_RESET)
@@ -301,15 +301,15 @@ namespace DiscordWikiBot
 			}
 
 			// Do action and respond
-			int succeeds = Config.SetOverride($"#{ctx.Channel.Id.ToString()}", "wiki", value);
+			int succeeds = Config.SetOverride($"#{ctx.Channel.Id}", "wiki", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				Linking.Init($"#{ctx.Channel.Id.ToString()}");
+				await Linking.Init($"#{ctx.Channel.Id}");
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-wiki-channel", lang, value));
 			}
 			if (succeeds == Config.RESULT_RESET)
 			{
-				Linking.Remove($"#{ctx.Channel.Id.ToString()}");
+				Linking.Remove($"#{ctx.Channel.Id}");
 			}
 			await RespondOnErrors(succeeds, ctx, lang);
 		}

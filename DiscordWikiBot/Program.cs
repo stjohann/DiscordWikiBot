@@ -96,11 +96,12 @@ namespace DiscordWikiBot
 			LogMessage($"DiscordWikiBot, version {Version}");
 
 			// Get default locale
+			await Locale.Load();
 			Locale.Init();
 
 			// Get site information and start linking bot
 			LogMessage("Getting wiki site information");
-			Linking.Init();
+			await Linking.Init();
 
 			// Methods for linking bot
 			Client.MessageCreated += (s, e) =>
@@ -204,7 +205,7 @@ namespace DiscordWikiBot
 			string guild = e.Guild.Id.ToString();
 			Task.Run(async () =>
 			{
-				Linking.Init(guild);
+				await Linking.Init(guild);
 
 				Locale.Init(Config.GetLang(guild));
 

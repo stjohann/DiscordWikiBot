@@ -43,6 +43,14 @@ namespace DiscordWikiBot
 		private static readonly string FALLBACK_LANG = "en";
 
 		/// <summary>
+		/// Load language data.
+		/// </summary>
+		public static async Task Load()
+		{
+			LanguageData = await GetLanguageData();
+		}
+
+		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
 		/// </summary>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
@@ -51,15 +59,14 @@ namespace DiscordWikiBot
 			// Initialise default locale
 			if (lang == null)
 			{
-				InitLanguages().Wait();
 				lang = Config.GetLang();
-				Program.LogMessage($"Loading {lang.ToUpper()} locale");
+				Program.LogMessage($"Loading {lang.ToUpper()} locale...");
 				Default = LoadLocale(lang);
 
 				// Revert to English if default language does not exist
 				if (Default == null)
 				{
-					Program.LogMessage($"Please create a file with {lang.ToUpper()} locale. Reverting to {FALLBACK_LANG.ToUpper()}.", level: "warning");
+					Program.LogMessage($"No file found for {lang.ToUpper()} locale. {FALLBACK_LANG.ToUpper()} locale will be used for it.", level: "warning");
 					Default = LoadLocale(FALLBACK_LANG);
 				}
 				return;
@@ -77,28 +84,11 @@ namespace DiscordWikiBot
 				Dictionary<string, string> locale = LoadLocale(lang);
 				if (locale != null)
 				{
-					Program.LogMessage($"Loading {lang.ToUpper()} locale");
+					Program.LogMessage($"Loaded {lang.ToUpper()} locale.");
 					Custom.Add(lang, locale);
 					return;
 				}
-
-				// Get a fallback language if locale does not exist
-				List<string> fallbackChain = GetFallbackChain(lang);
-				string fallback = fallbackChain.First();
-				if (!Custom.ContainsKey(fallback))
-				{
-					Program.LogMessage($"Loading {fallback.ToUpper()} locale as a fallback for {lang.ToUpper()}");
-					Custom.Add(fallback, LoadLocale(fallback));
-				}
 			}
-		}
-
-		/// <summary>
-		/// Get the language data.
-		/// </summary>
-		private static async Task InitLanguages()
-		{
-			LanguageData = await GetLanguageData();
 		}
 
 		/// <summary>
@@ -108,8 +98,8 @@ namespace DiscordWikiBot
 		/// <returns>A parsed dictionary of localised messages.</returns>
 		private static Dictionary<string, string> LoadLocale(string lang)
 		{
-			string localePath = $"i18n/{lang}.json";
-			if (!File.Exists(localePath))
+			var localePath = GetLocalePath(lang);
+			if (localePath == null)
 			{
 				return null;
 			}
@@ -130,46 +120,20 @@ namespace DiscordWikiBot
 		/// <returns>A parsed message.</returns>
 		public static string GetMessage(string key, string lang, params dynamic[] args)
 		{
-			Dictionary<string, string> list = Default;
+			var str = GetFallbackChain(lang)
+				.Select(lng => GetMessageCode(key, lng))
+				.Where(x => x != null && !x.StartsWith("!!FUZZY!!"))
+				.FirstOrDefault();
 
-			if (lang != Config.GetLang())
+			// Return a MediaWiki-styled key-value pair if there is no message
+			if (str == null)
 			{
-				// Try to load a locale if it doesn’t exist
-				if (!Custom.ContainsKey(lang))
-				{
-					Init(lang);
-				}
-
-				// Use loaded locale or provide an empty dictionary
-				if (Custom.ContainsKey(lang))
-				{
-					list = Custom[lang];
-				}
-				else
-				{
-					list = new Dictionary<string, string>();
-				}
-			}
-
-			// Go through a MediaWiki-style language fallback chain
-			if (!list.TryGetValue(key, out string str) || str.StartsWith("!!FUZZY!!"))
-			{
-				// Revert to nearest fallback language if it exis
-				if (lang != FALLBACK_LANG)
-				{
-					List<string> fallbackChain = GetFallbackChain(lang);
-					string fallback = fallbackChain.First();
-					return GetMessage(key, fallback, args);
-				}
-
-				// Return a MediaWiki-styled key-value pair if there is no message
 				string strArgs = string.Join(", ", args);
 				if (strArgs != "")
 				{
 					strArgs = $": {strArgs}";
 				}
-				str = string.Format("({0}{1})", key, strArgs);
-				return str;
+				return string.Format("({0}{1})", key, strArgs);
 			}
 
 			// Replace messages inside messages (works without arguments)
@@ -183,17 +147,59 @@ namespace DiscordWikiBot
 			{
 				// Break hyphenated language codes for SmartFormat
 				string rootLang = lang.Split('-')[0];
-				str = Smart.Format(CultureInfo.GetCultureInfo(rootLang), str, args);
+				try
+				{
+					str = Smart.Format(CultureInfo.GetCultureInfo(rootLang), str, args);
+				} catch(CultureNotFoundException)
+				{
+					str = Smart.Format(str, args);
+				}
 			}
 
 			return str;
 		}
 
 		/// <summary>
+		/// Get the message code in a specified language.
+		/// </summary>
+		/// <param name="key">Message key in JSON file.</param>
+		/// <param name="lang">Language code in ISO 639.</param>
+		/// <param name="fallback">Fallback language (for tracking).</param>
+		/// <returns>An unparsed message or null.</returns>
+		private static string GetMessageCode(string key, string lang)
+		{
+			Dictionary<string, string> list = Default;
+
+			if (lang != Config.GetLang())
+			{
+				// Try to load a locale if it doesn’t exist yet
+				if (!Custom.ContainsKey(lang))
+				{
+					Init(lang);
+				}
+
+				if (!Custom.ContainsKey(lang))
+				{
+					throw new ArgumentNullException(lang);
+				}
+
+				// Use loaded locale
+				list = Custom[lang];
+			}
+
+			if (list.TryGetValue(key, out string str))
+			{
+				return str;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Get usable fallback chain for languages without a localisation.
 		/// </summary>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
-		/// <returns>List of language fallbacks.</returns>
+		/// <returns>List of language fallbacks for a language.</returns>
 		private static List<string> GetFallbackChain(string lang)
 		{
 			// Use cache if it exists
@@ -203,21 +209,18 @@ namespace DiscordWikiBot
 			}
 
 			// Compile a list of fallbacks with locales
-			List<string> result = new List<string>();
-			string[] fallbacks = null;
-			try
+			List<string> result = new List<string>(new[] { lang });
+			var langs = new Queue<string>(result);
+
+			while (langs.Count > 0)
 			{
-				fallbacks = LanguageData[lang]?["fallbacks"].Select(jt => (string)jt).ToArray();
-			} catch (Exception) { }
-			if (fallbacks != null)
-			{
-				foreach (var fallbackCode in fallbacks)
+				foreach (var fallback in GetFallbackData(langs.Dequeue()))
 				{
-					string localePath = $"i18n/{fallbackCode}.json";
-					if (File.Exists(localePath))
-					{
-						result.Add(fallbackCode);
-					}
+					if (result.Contains(fallback))
+						continue;
+
+					result.Add(fallback);
+					langs.Enqueue(fallback);
 				}
 			}
 
@@ -225,6 +228,19 @@ namespace DiscordWikiBot
 			result.Add(FALLBACK_LANG);
 			LanguageFallbacks.Add(lang, result);
 			return result;
+		}
+
+		/// <summary>
+		/// Get fallback languages for a specified language.
+		/// </summary>
+		/// <param name="code">MediaWiki-compatible language code.</param>
+		/// <param name="compareCode">MediaWiki-compatible language code.</param>
+		/// <returns>A language chain or null.</returns>
+		private static List<string> GetFallbackData(string code, string compareCode = null)
+		{
+			return LanguageData[code]?["fallbacks"]
+				.Select(jt => (string)jt)
+				.Where(x => x != compareCode).ToList();
 		}
 
 		/// <summary>
@@ -293,14 +309,33 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Get locale path if the file for it exists.
+		/// </summary>
+		/// <param name="lang">MediaWiki-compatible language code.</param>
+		private static string GetLocalePath(string lang)
+		{
+			string localePath = $"i18n/{lang}.json";
+			if (File.Exists(localePath))
+			{
+				return localePath;
+			}
+
+			return null;
+		}
+
+		/// <summary>
 		/// Determines whether the language code is a valid language.
 		/// </summary>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
 		public static bool IsValidLanguage(string lang)
 		{
+			if (lang == null || lang == "") return false;
 			if (LanguageData == null)
 			{
-				return false;
+				Program.LogMessage($"No language data is present. This means that you need to restart the bot. The assessment of {lang.ToUpper()} can be wrong as a result.", level: "error");
+				return CultureInfo.GetCultures(CultureTypes.NeutralCultures)
+					.Select(c => c.Name.ToLower())
+					.Any(name => name == lang);
 			}
 
 			return (LanguageData?[lang] != null);
