@@ -217,6 +217,22 @@ namespace DiscordWikiBot.Tests
 			Assert.AreEqual("", actual);
 		}
 
+		[TestMethod]
+		public void LinksInSpoilerBlocks()
+		{
+			string actual1 = Linking.PrepareMessage("||[[Test]]||", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected1 = "Ссылка: ||<https://ru.wikipedia.org/wiki/Test>||";
+			Assert.AreEqual(expected1, actual1);
+
+			string actual2 = Linking.PrepareMessage("[[A]] ||[[B]] [[C]]|| [[D]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected2 = @"Ссылки:
+<https://ru.wikipedia.org/wiki/A>
+||<https://ru.wikipedia.org/wiki/B>||
+||<https://ru.wikipedia.org/wiki/C>||
+<https://ru.wikipedia.org/wiki/D>";
+			Assert.AreEqual(expected2, actual2);
+		}
+
 		[ClassInitialize]
 		public static void DiscordSetup(TestContext ctx)
 		{

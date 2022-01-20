@@ -35,6 +35,8 @@ namespace DiscordWikiBot
 			( \]\] | \}{2,} )
 		", RegexOptions.IgnorePatternWhitespace);
 
+		private static readonly Regex spoilerPattern = new Regex(@"\|{2}(.+?)\|{2}", RegexOptions.Singleline);
+
 		/// <summary>
 		/// See https://www.mediawiki.org/wiki/Manual:$wgCapitalLinks
 		/// </summary>
@@ -295,6 +297,10 @@ namespace DiscordWikiBot
 			// Replace emojis (e. g. <:meta:873203055804436513>) in the message
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
 
+			// Retrieve text marked as spoiler
+			MatchCollection spoilers = spoilerPattern.Matches(content);
+			string hiddenContent = string.Join("", spoilers.Select(match => match.Groups[1].Value));
+
 			// Start digging for links
 			MatchCollection matches = linkPattern.Matches(content);
 			List<string> links = new List<string>();
@@ -305,9 +311,17 @@ namespace DiscordWikiBot
 				foreach (Match link in matches)
 				{
 					string str = AddLink(link, linkFormat);
-					if (str.Length > 0 && !links.Contains(str))
+					if (str.Length > 0)
 					{
-						links.Add(str);
+						if (hiddenContent.Contains(link.Value))
+						{
+							str = string.Format("||{0}||", str);
+						}
+
+						if (!links.Contains(str))
+						{
+							links.Add(str);
+						}
 					}
 				}
 
