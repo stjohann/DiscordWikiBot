@@ -681,7 +681,7 @@ namespace DiscordWikiBot
 			title = EncodePageTitle(title, escapePar);
 
 			// TODO: Remove the hack when Discord fixes its Android client
-			if (!escapePar && title.EndsWith(")") && !title.Contains("#"))
+			if (!escapePar && (title.EndsWith(")") || title.EndsWith(".")) && !title.Contains("#"))
 			{
 				title += "_";
 			}
