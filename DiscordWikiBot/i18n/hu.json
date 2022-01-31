@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Balint36"
+		]
+	},
+	"yes": "igen",
+	"no": "nem",
+	"help-title": "Segítség",
+	"help-title-command": "{1}{0}{msg:separator}segítség",
+	"help-version": "Verzió {0}.",
+	"help-repo": "Forráskód: {0}",
+	"help-commands": "Parancsok",
+	"help-subcommands": "Alparancsok",
+	"help-aliases": "Más nevek",
+	"help-arguments": "Változók",
+	"help-default": "Alapértelmezetten: `{0}`",
+	"help-optional": "nem kötelező",
+	"eventstreams-diff": "eltér",
+	"eventstreams-talk": "vita",
+	"eventstreams-contribs": "szerkesztései",
+	"eventstreams-new": "Ú",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "a",
+	"linking-link": "Hivatkozás:",
+	"linking-links": "Hivatkozások:",
+	"streaming-stream-namespace": "`{0}` névtérből",
+	"streaming-stream-title": "`{0}` oldalról"
+}
