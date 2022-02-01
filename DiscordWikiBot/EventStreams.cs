@@ -466,30 +466,21 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="channel">Discord channel ID.</param>
 		/// <param name="args">List of parameters.</param>
-		/// <param name="reset">Should original parameters be discarded.</param>
+		/// <param name="discardPrevData">Should original parameters be discarded.</param>
 		/// <returns>A list with changed parameters.</returns>
-		public static Dictionary<string, dynamic> SetData(string channel, Dictionary<string, dynamic> args, bool reset = true)
+		public static Dictionary<string, dynamic> SetData(string channel, Dictionary<string, dynamic> args, bool discardPrevData = true)
 		{
 			if (Data == null) return null;
 			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
-			Program.LogMessage($"Adding data ({goal}) to JSON config", "EventStreams");
+			Program.LogMessage($"Channel #{channel} triggered a change ({goal}) in eventStreams.json.", "EventStreams");
 			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
 
-			// List of allowed keys
-			string[] allowedKeys =
-			{
-				"bot",
-				"in-comment",
-				"diff-length",
-				"minor",
-				"patrolled",
-				"type",
-			};
-
-			// Default values for keys
-			Dictionary<string, dynamic> defaults = new Dictionary<string, dynamic>
+			// List of allowed keys and their defaults
+			Dictionary<string, dynamic> allowedKeys = new Dictionary<string, dynamic>
 			{
 				{ "bot", false },
+				{ "in-comment", "" },
+				{ "diff-length", 0 },
 				{ "minor", true },
 				{ "patrolled", "any" },
 				{ "type", "any" },
@@ -503,46 +494,54 @@ namespace DiscordWikiBot
 
 			// Add or append necessary data
 			JObject result = new JObject();
-			if (reset == false && (JObject)Data[goal][channel] != null)
+			if (discardPrevData == false && (JObject)Data[goal][channel] != null)
 			{
 				result = (JObject)Data[goal][channel];
 			}
 
 			foreach (KeyValuePair<string, dynamic> item in args)
 			{
-				if (allowedKeys.Contains(item.Key))
-				{
-					string key = item.Key;
-					dynamic value = item.Value;
-
-					// Ignore same values
-					if (reset == false && result[key] != null && result[key] == value) {
-						continue;
-					}
-
-					// Reset to default
-					if (defaults.ContainsKey(key) && value == defaults[key])
-					{
-						if (reset == false)
-						{
-							JProperty prop = result.Property(key);
-							if (prop != null)
-							{
-								prop.Remove();
-								changes.Add(key, value);
-							}
-						}
-						continue;
-					}
-
-					// Set and remember data
-					result[key] = value;
-					changes.Add(key, value);
+				if (!allowedKeys.ContainsKey(item.Key)) {
+					continue;
 				}
+
+				var key = item.Key;
+				var value = item.Value;
+				var requiredValueType = allowedKeys.GetValueOrDefault(key)?.GetType();
+				if (requiredValueType == null) {
+					continue;
+				}
+
+				// Ignore incorrectly typed values
+				if (item.Value.GetType() != requiredValueType) {
+					continue;
+				}
+
+				// Ignore default values if not resetting
+				if (discardPrevData == false && result.Property(key) == value) {
+					continue;
+				}
+
+				// Reset to default
+				if (allowedKeys.GetValueOrDefault(item.Key) == item.Value) {
+					if (discardPrevData == true) {
+						JProperty prop = result.Property(key);
+						if (prop != null)
+						{
+							prop.Remove();
+							changes.Add(key, value);
+						}
+					}
+					continue;
+				}
+
+				// Set and remember data
+				result[key] = value;
+				changes.Add(key, value);
 			}
 
 			// Set and save data
-			if (reset == false && changes.Count == 0)
+			if (discardPrevData == false && changes.Count == 0)
 			{
 				return changes;
 			}

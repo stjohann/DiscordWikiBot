@@ -136,9 +136,9 @@ namespace DiscordWikiBot
 					// Combine everything
 					string editGoal = (goal == entry.Key ? $" --title {goal}" : $" --namespace {goal}");
 					string argsMsg = ListArguments(args, lang);
-					argsMsg = (argsMsg.Length > 0 ? $":\n{argsMsg}" : "");
+					argsMsg = (argsMsg.Length > 0 ? $":\n{argsMsg}\n" : ": ");
 
-					output += $"{channel.Mention}{argsMsg}\n`!editStream #{channel.Name}{editGoal}`\n";
+					output += $"{channel.Mention}{argsMsg}`!editStream #{channel.Name}{editGoal}`\n";
 				}
 
 				msg.Add(output);
@@ -155,14 +155,12 @@ namespace DiscordWikiBot
 				foreach (var stream in msg)
 				{
 					string output = stream + "\n";
-					if (response.Length + output.Length <= 2000)
-					{
-						response += output;
-					} else
+					if (response.Length + output.Length >= 2000)
 					{
 						await ctx.RespondAsync(response);
 						response = "";
 					}
+					response += output;
 				}
 
 				if (response.Length > 0)
