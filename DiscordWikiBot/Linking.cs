@@ -541,12 +541,13 @@ namespace DiscordWikiBot
 				return Tuple.Create(site.Namespaces[0], Regex.Replace(title, "^ *: *", ""));
 			}
 			var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
+			var magicWords = site.MagicWords;
 
 			// Remove subst:/safesubst: (substitution) / raw:/msg: (always template) or their localisations
-			var substNames = GetMagicWordNames("subst", site);
-			var safesubstNames = GetMagicWordNames("safesubst", site);
-			var rawNames = GetMagicWordNames("raw", site);
-			var msgNames = GetMagicWordNames("msg", site);
+			var substNames = GetMagicWordNames("subst", magicWords);
+			var safesubstNames = GetMagicWordNames("safesubst", magicWords);
+			var rawNames = GetMagicWordNames("raw", magicWords);
+			var msgNames = GetMagicWordNames("msg", magicWords);
 			var junkRegex = string.Join('|', new string[] {
 				string.Join('|', substNames),
 				string.Join('|', safesubstNames),
@@ -557,7 +558,7 @@ namespace DiscordWikiBot
 			title = Regex.Replace(title, $"^ *(?:{junkRegex}) *", "", RegexOptions.IgnoreCase);
 
 			// Guess that it is a MediaWiki: page
-			var intNames = GetMagicWordNames("int", site);
+			var intNames = GetMagicWordNames("int", magicWords);
 			if (intNames.Any(x => title.StartsWith(x, InvariantCultureIgnoreCase)))
 			{
 				var intRegex = string.Join('|', intNames);
@@ -569,7 +570,7 @@ namespace DiscordWikiBot
 			var hasModuleNamespace = site.Namespaces["module"] != null;
 			if (hasModuleNamespace)
 			{
-				var invokeNames = GetMagicWordNames("invoke", site);
+				var invokeNames = GetMagicWordNames("invoke", magicWords);
 				if (invokeNames.Any(x => title.StartsWith(x, InvariantCultureIgnoreCase)))
 				{
 					var invokeRegex = string.Join('|', invokeNames);
@@ -579,7 +580,7 @@ namespace DiscordWikiBot
 			}
 
 			// Ignore known magic words of any kind
-			if (HasMagicWord(title, site))
+			if (HasMagicWord(title, magicWords))
 			{
 				return null;
 			}
@@ -591,11 +592,11 @@ namespace DiscordWikiBot
 		/// Get localised aliases for a specified magic word.
 		/// </summary>
 		/// <param name="name">Magic word name.</param>
-		/// <param name="site">Wiki site information.</param>
+		/// <param name="data">Magic words collection.</param>
 		/// <returns>Array of strings with formatted magic word.</returns>
-		private static string[] GetMagicWordNames(string name, WikiSite site)
+		private static string[] GetMagicWordNames(string name, MagicWordCollection data)
 		{
-			var names = site.MagicWords.FirstOrDefault(x => x.Name == name)?.Aliases.ToArray();
+			var names = data.FirstOrDefault(x => x.Name == name)?.Aliases.ToArray();
 			if (names == null)
 			{
 				return new string[] { name };
@@ -615,8 +616,8 @@ namespace DiscordWikiBot
 		/// See https://www.mediawiki.org/wiki/Help:Magic_words
 		/// </summary>
 		/// <param name="str">String to check for magic words.</param>
-		/// <param name="site">Wiki site information.</param>
-		private static bool HasMagicWord(string str, WikiSite site)
+		/// <param name="data">Magic words collection.</param>
+		private static bool HasMagicWord(string str, MagicWordCollection data)
 		{
 			// Assume this is a parser function
 			if (str.StartsWith("#"))
@@ -625,7 +626,7 @@ namespace DiscordWikiBot
 			}
 
 			// Skip some values
-			var magicWords = site.MagicWords.Where(x =>
+			var magicWords = data.Where(x =>
 			{
 				return (
 					// Behaviour switches

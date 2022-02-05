@@ -518,12 +518,12 @@ namespace DiscordWikiBot
 				}
 
 				// Ignore default values if not resetting
-				if (discardPrevData == false && result.Property(key) == value) {
+				if (discardPrevData == false && result.Property(key).Equals(value)) {
 					continue;
 				}
 
 				// Reset to default
-				if (allowedKeys.GetValueOrDefault(item.Key) == item.Value) {
+				if (allowedKeys.GetValueOrDefault(item.Key).Equals(item.Value)) {
 					if (discardPrevData == true) {
 						JProperty prop = result.Property(key);
 						if (prop != null)
