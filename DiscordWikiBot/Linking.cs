@@ -197,7 +197,8 @@ namespace DiscordWikiBot
 
 				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
 				if (response.Content != msg) await response.ModifyAsync(msg);
-			} else
+			}
+			else
 			{
 				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
 				Cache.Remove(id);
@@ -234,7 +235,8 @@ namespace DiscordWikiBot
 				DiscordMessage response = await e.Message.Channel.GetMessageAsync(Cache[id]);
 				Cache.Remove(id);
 				await response.DeleteAsync();
-			} catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
 				Program.LogMessage($"Deleting the bot’s message {Cache[id]} returned an exception: {ex}");
 			}
@@ -264,7 +266,8 @@ namespace DiscordWikiBot
 					DiscordMessage message = await item.Channel.GetMessageAsync(Cache[id]);
 					Cache.Remove(id);
 					await message.DeleteAsync();
-				} catch(Exception ex)
+				}
+				catch (Exception ex)
 				{
 					Program.LogMessage($"Deleting the bot’s message {Cache[id]} returned an exception: {ex}");
 				}
@@ -362,11 +365,11 @@ namespace DiscordWikiBot
 			string endBrackets = groups[3].Value.Trim();
 
 			bool isLink = type == "[[";
-			bool isTemplate = type.StartsWith("{{");
+			bool isTransclusion = type.StartsWith("{{");
 
 			// Check for matching brackets
 			if (isLink && !endBrackets.StartsWith("]")) return "";
-			if (isTemplate && !endBrackets.StartsWith("}")) return "";
+			if (isTransclusion && !endBrackets.StartsWith("}")) return "";
 
 			// Check for parameter syntax
 			if (type.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return "";
@@ -386,36 +389,26 @@ namespace DiscordWikiBot
 
 			// Storages for prefix and namespace data
 			string iw = "%%%%%";
-			string ns = "";
+			NamespaceInfo ns = null;
 			bool capitalised = !defaultSiteInfo.SiteInfo.IsTitleCaseSensitive;
 
 			if (str.Length > 0)
 			{
-				// Add namespaces for template links and remove substitution
-				if (isTemplate && !str.StartsWith(':'))
+				// Handle transclusion links
+				if (isTransclusion)
 				{
-					ns = defaultSiteInfo.Namespaces["template"].CustomName;
-					str = Regex.Replace(str, "^:? *(?:subst|подст): *", "");
-
-					// Scribunto modules / parser functions
-					if (str.StartsWith("#invoke:"))
-					{
-						ns = defaultSiteInfo.Namespaces?["module"]?.CustomName;
-						if (ns != null)
-						{
-							str = Regex.Replace(str, "^#invoke: *", "");
-						}
-					}
-					else if (str.StartsWith("#"))
+					var tuple = GetTransclusionInfo(str, defaultSiteInfo);
+					if (tuple == null)
 					{
 						return "";
 					}
 
-					// MediaWiki page transclusion
-					if (str.StartsWith("int:"))
+					ns = tuple.Item1;
+					str = tuple.Item2;
+
+					// MediaWiki pages are always capitalised
+					if (capitalisedNamespaces.Contains(ns.Id))
 					{
-						ns = defaultSiteInfo.Namespaces["mediawiki"].CustomName;
-						str = Regex.Replace(str, "^int: *", "");
 						capitalised = true;
 					}
 				}
@@ -456,7 +449,8 @@ namespace DiscordWikiBot
 						str = only.Replace(str, "", 1).Trim();
 
 						iwMatch = Regex.Match(str, iwRegex);
-					} else
+					}
+					else
 					{
 						// Return the regex that can’t be matched
 						iwMatch = Regex.Match(str, "^\b$");
@@ -485,9 +479,15 @@ namespace DiscordWikiBot
 						}
 						else
 						{
-							ns = namespaceInfo.CustomName;
+							ns = namespaceInfo;
 							Regex only = new Regex($" *:? *{prefix} *: *", RegexOptions.IgnoreCase);
 							str = only.Replace(str, "", 1).Trim();
+						}
+
+						// Normalise Media: to File: since MediaWiki redirects it like this
+						if (ns.Id == -2)
+						{
+							ns = latestNSList["file"];
 						}
 
 						if (capitalisedNamespaces.Contains(namespaceInfo.Id))
@@ -498,7 +498,7 @@ namespace DiscordWikiBot
 				}
 
 				// If there is only namespace, return nothing
-				if (ns != "" && str.Length == 0) return "";
+				if (ns != null && str.Length == 0) return "";
 
 				// Check for invalid page title length
 				if (IsInvalid(str, true)) return "";
@@ -516,15 +516,160 @@ namespace DiscordWikiBot
 					}
 
 					// Add namespace before any transformations
-					if (ns != "")
+					if (ns != null && ns.Id != 0)
 					{
-						str = string.Join(":", new[] { ns, str });
+						str = string.Join(":", new[] { ns.CustomName, str });
 					}
 				}
 				return string.Format("<{0}>", GetLink(str, linkFormat));
 			}
 
 			return "";
+		}
+
+		/// <summary>
+		/// Get transclusion’s namespace and format its title.
+		/// </summary>
+		/// <param name="title">Original transclusion title.</param>
+		/// <param name="site">Wiki site information.</param>
+		/// <returns>Tuple of namespace info and formatted title, or null for parser functions.</returns>
+		private static Tuple<NamespaceInfo, string> GetTransclusionInfo(string title, WikiSite site)
+		{
+			// Guess that it is a mainspace page
+			if (title.StartsWith(':'))
+			{
+				return Tuple.Create(site.Namespaces[0], Regex.Replace(title, "^ *: *", ""));
+			}
+			var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
+
+			// Remove subst:/safesubst: (substitution) / raw:/msg: (always template) or their localisations
+			var substNames = GetMagicWordNames("subst", site);
+			var safesubstNames = GetMagicWordNames("safesubst", site);
+			var rawNames = GetMagicWordNames("raw", site);
+			var msgNames = GetMagicWordNames("msg", site);
+			var junkRegex = string.Join('|', new string[] {
+				string.Join('|', substNames),
+				string.Join('|', safesubstNames),
+				string.Join('|', rawNames),
+				string.Join('|', msgNames),
+			});
+
+			title = Regex.Replace(title, $"^ *(?:{junkRegex}) *", "", RegexOptions.IgnoreCase);
+
+			// Guess that it is a MediaWiki: page
+			var intNames = GetMagicWordNames("int", site);
+			if (intNames.Any(x => title.StartsWith(x, InvariantCultureIgnoreCase)))
+			{
+				var intRegex = string.Join('|', intNames);
+				title = Regex.Replace(title, $"^ *(?:{intRegex}) *", "", RegexOptions.IgnoreCase);
+				return Tuple.Create(site.Namespaces["mediawiki"], title);
+			}
+
+			// Guess that it is a Module: page
+			var hasModuleNamespace = site.Namespaces["module"] != null;
+			if (hasModuleNamespace)
+			{
+				var invokeNames = GetMagicWordNames("invoke", site);
+				if (invokeNames.Any(x => title.StartsWith(x, InvariantCultureIgnoreCase)))
+				{
+					var invokeRegex = string.Join('|', invokeNames);
+					title = Regex.Replace(title, $"^ *(?:{invokeRegex}) *", "", RegexOptions.IgnoreCase);
+					return Tuple.Create(site.Namespaces["module"], title);
+				}
+			}
+
+			// Ignore known magic words of any kind
+			if (HasMagicWord(title, site))
+			{
+				return null;
+			}
+
+			return Tuple.Create(site.Namespaces["template"], title);
+		}
+
+		/// <summary>
+		/// Get localised aliases for a specified magic word.
+		/// </summary>
+		/// <param name="name">Magic word name.</param>
+		/// <param name="site">Wiki site information.</param>
+		/// <returns>Array of strings with formatted magic word.</returns>
+		private static string[] GetMagicWordNames(string name, WikiSite site)
+		{
+			var names = site.MagicWords.FirstOrDefault(x => x.Name == name)?.Aliases.ToArray();
+			if (names == null)
+			{
+				return new string[] { name };
+			}
+
+			// Format #invoke: manually
+			if (name == "invoke")
+			{
+				names = names.Select(x => $"#{x}:").ToArray();
+			}
+
+			return names;
+		}
+
+		/// <summary>
+		/// Check if a string has a known magic word on a wiki.
+		/// See https://www.mediawiki.org/wiki/Help:Magic_words
+		/// </summary>
+		/// <param name="str">String to check for magic words.</param>
+		/// <param name="site">Wiki site information.</param>
+		private static bool HasMagicWord(string str, WikiSite site)
+		{
+			// Assume this is a parser function
+			if (str.StartsWith("#"))
+			{
+				return true;
+			}
+
+			// Skip some values
+			var magicWords = site.MagicWords.Where(x =>
+			{
+				return (
+					// Behaviour switches
+					x.Aliases.FirstOrDefault(xa => xa.StartsWith("__")) == null
+					// Params to magic words (img_, timedmedia_, url_ etc.)
+					&& !x.Name.Contains("_")
+					// |R param to some magic words
+					&& x.Name != "rawsuffix"
+					// #special: parser function
+					&& x.Name != "special"
+				);
+			});
+
+			// Check for variables
+			// Most are case-sensitive ({{PAGENAME}} ≠ {{pagename}}), but some ({{serverpath}}, {{servername}}) are not. Until MediaWiki fixes it, all are expected to be case-insensitive.
+			// For simplicity {{PAGENAME|name}} is treated as a variable, even though it is a template.
+			var isMagicVariable = magicWords.FirstOrDefault(x =>
+			{
+				return x.Aliases.FirstOrDefault(xa => xa == str.ToUpper()) != null;
+			}) != null;
+			if (isMagicVariable) return true;
+
+			// Skip titles that cannot contain parser functions
+			if (!str.Contains(':'))
+			{
+				return false;
+			}
+
+			// Parser functions: {{#tag:}} or {{formatnum:}}
+			// For simplicity {{if: test}} (for {{#if}} etc.) is treated as a parser function, though it is allowed to create templates with these names.
+			static bool IsParserFunction(string value, string str)
+			{
+				var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
+				value = value.TrimEnd(':') + ":";
+				return str.StartsWith(value, InvariantCultureIgnoreCase);
+			}
+
+			return magicWords.FirstOrDefault(x =>
+			{
+				// Some variables, such as {{servername}}, will be treated like parser functions here.
+				// TODO: Come up with a way to actually ignore variables here.
+				return x.CaseSensitive == false
+					&& x.Aliases.FirstOrDefault(xa => IsParserFunction(xa, str)) != null;
+			}) != null;
 		}
 
 		/// <summary>
@@ -581,7 +726,7 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="title">Page title.</param>
 		/// <param name="url">URL string in <code>https://ru.wikipedia.org/wiki/$1</code> format.</param>
-		public static async Task<string> GetNormalisedTitle(string title, string url)
+		private static async Task<string> GetNormalisedTitle(string title, string url)
 		{
 			string pageTitle = title;
 			WikiSite site = GetWikiSite(url).Result;
@@ -656,7 +801,7 @@ namespace DiscordWikiBot
 				@"&(?:[a-z]+|#x?\d+);"
 			};
 
-			foreach(string expr in illegalExprs)
+			foreach (string expr in illegalExprs)
 			{
 				if (Regex.Match(str, expr, RegexOptions.IgnoreCase).Success) return true;
 			}

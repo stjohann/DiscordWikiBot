@@ -51,8 +51,10 @@ namespace DiscordWikiBot.Tests
 		{
 			string actual = Linking.PrepareMessage(@"
 				{{С отвратительным дизайном}}
-				{{int:lang}}
+				{{подст:int:lang}}
+				{{subst:внутр:lang}}
 				{{#invoke:Math}}
+				{{#вызвать:Math}}
 				{{subst:тест}}
 				{{подст:тест 2}}
 				{{:тест}}
@@ -64,6 +66,31 @@ namespace DiscordWikiBot.Tests
 <https://ru.wikipedia.org/wiki/Шаблон:Тест>
 <https://ru.wikipedia.org/wiki/Шаблон:Тест_2>
 <https://ru.wikipedia.org/wiki/Тест>";
+			Assert.AreEqual(expected, actual);
+		}
+
+		[TestMethod]
+		public void MagicWordLinks()
+		{
+			string actual = Linking.PrepareMessage(@"
+				// Should return a template name, but currently cannot
+				{{pagename}}
+				{{SERVERNAME}}
+				{{safesubst:SERVERNAME}}
+				{{servername}}
+				{{SERVERNAME: test}}
+				{{PAGENAME|test}}
+				{{Special:RecentChanges}}
+				{{#special:RecentChanges}}
+				{{#tag:ref}}
+				{{tag test}}
+				{{subst:#time:d.m.Y H:i}}
+				{{formatnum:223}}
+				{{GENDER:stjn}}
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected = @"Ссылки:
+<https://ru.wikipedia.org/wiki/Служебная:RecentChanges>
+<https://ru.wikipedia.org/wiki/Шаблон:Tag_test>";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -185,8 +212,6 @@ namespace DiscordWikiBot.Tests
 				{{ }}
 				[[https://ru.wikipedia.org/wiki/Ithappens]]
 				[[<test>]]
-				{{#tag:ref}}
-				{{subst:#time:d.m.Y H:i}}
 				[[ВП:]]
 				[[Eh bien, mon prince. Gênes et Lucques ne sont plus que des apanages, des поместья, de la famille Buonaparte. Non, je vous préviens que si vous ne me dites pas que nous avons la guerre, si vous vous permettez encore de pallier toutes les infamies, toutes les atrocités de cet Antichrist (ma parole, j'y crois) — je ne vous connais plus, vous n'êtes plus mon ami, vous n'êtes plus мой верный раб, comme vous dites]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");

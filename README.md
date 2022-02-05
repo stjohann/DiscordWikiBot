@@ -34,6 +34,19 @@ The version in this repository is configured for Russian Wikipedia by default. Y
 Most variables in `config.json` can be overridden per server by members with ‘Manage server’ permission.
 
 ## Usage
-When the bot is enabled, it will transform [[link syntax]] to real URLs to the pages of your wiki or its interwiki links, and will transform {{template syntax}} to real URLs to the templates of your wiki. To stop the bot from reacting to links in your message, wrap it into \` (\`[[example]]\`) or escape [[ symbols (with \\ before them).
+When the bot is enabled, it will transform [[link syntax]] to real URLs to the pages of your wiki or its interwiki links, and will transform {{template syntax}} to real URLs to the templates of your wiki. To stop the bot from reacting to links in your message, wrap it into \` (\`[[example]]\`) or escape \[\[ symbols (with \\ before them).
 
 DiscordWikiBot can be configured per server by server members with ‘Manage server’ permission. Available configuration includes the language of the bot, the default wiki URL, recent changes streams parameters etc. Up-to-date instructions for configuration of the bot [are provided on Meta-Wiki](https://meta.wikimedia.org/wiki/Discord#WikiBot).
+
+## Versioning
+DiscordWikiBot uses [semver](https://semver.org/) for versioning:
+
+- Major versions (**X.0.0**) are changes that remove backwards-compatibility of any of the configuration files, including introducing new expectations from bot owners.
+- Minor versions (**0.X.0**) are changes that introduce new features to the bot.
+- Patch versions (**0.0.X**) are changes that fix existing code without introducing new features.
+- Third-party bot maintainers can be expected to update the bot to minor/patch versions without any required changes.
+
+Pull requests should, if possible, include a change in `DiscordWikiBot/DiscordWikiBot.csproj` file with an appropriate version change.
+
+## Translations
+Translations are done by volunteers [on translatewiki.net](https://translatewiki.net/wiki/Translating:DiscordWikiBot). Pull requests with simple translation changes will not be accepted (except for `en.json`).
