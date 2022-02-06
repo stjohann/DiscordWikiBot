@@ -491,7 +491,8 @@ namespace DiscordWikiBot
 			}
 
 			// Add main page title if needed
-			if (currentLinkFormat != linkFormat && str.Length == 0)
+			var isDifferentWiki = currentSiteInfo.SiteInfo.BaseUrl != defaultSiteInfo.SiteInfo.BaseUrl;
+			if (isDifferentWiki && str.Length == 0)
 			{
 				str = currentSiteInfo.SiteInfo.MainPage;
 			}
@@ -758,9 +759,6 @@ namespace DiscordWikiBot
 		/// <returns>Is page title invalid.</returns>
 		public static bool IsInvalid(string str, bool checkLength = false)
 		{
-			// Check if empty
-			if (checkLength && (str == null || str.Length == 0)) return true;
-
 			// Only check part before #
 			string[] anchor = str.Split('#');
 			if (anchor.Length > 1)

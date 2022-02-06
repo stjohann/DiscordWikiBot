@@ -127,10 +127,12 @@ namespace DiscordWikiBot.Tests
 		{
 			string actual = Linking.PrepareMessage(@"
 			[[toollabs:guc]]
+			[[google:]]
 			[[google:lmgtfy]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://iw.toolforge.org/guc>
+<https://www.google.com/search?q=>
 <https://www.google.com/search?q=lmgtfy>";
 			Assert.AreEqual(expected, actual);
 		}
