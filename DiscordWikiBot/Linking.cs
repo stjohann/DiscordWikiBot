@@ -453,7 +453,7 @@ namespace DiscordWikiBot
 				}
 
 				// Check for interwiki links next
-				if (iwMap.Contains(prefix))
+				if (!isTransclusion && iwMap.Contains(prefix))
 				{
 					// Assume not to be capitalised by default
 					capitalised = false;
