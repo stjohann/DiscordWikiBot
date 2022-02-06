@@ -48,11 +48,6 @@ namespace DiscordWikiBot
 		};
 
 		/// <summary>
-		/// Key of default configuration.
-		/// </summary>
-		private static readonly string LANG_DEFAULT = "default";
-
-		/// <summary>
 		/// Replacement string for long messages.
 		/// </summary>
 		private static readonly string TOO_LONG = "TOO_LONG";
@@ -63,14 +58,24 @@ namespace DiscordWikiBot
 		private static readonly int CACHE_LENGTH = 500;
 
 		/// <summary>
-		/// Cache for messages IDs for which edits and deletions are tracked.
+		/// Cache for message IDs for which edits and deletions are tracked.
 		/// </summary>
 		private static Buffer<ulong, ulong> Cache = new Buffer<ulong, ulong>
 		{
 			MaxItems = CACHE_LENGTH
 		};
 
-		// Permanent site information for main wikis
+		/// <summary>
+		/// Cache for recently deleted message IDs.
+		/// </summary>
+		private static Buffer<ulong, bool> DeletedMessageCache = new Buffer<ulong, bool>
+		{
+			MaxItems = CACHE_LENGTH
+		};
+
+		/// <summary>
+		/// Permanent site information for main wikis
+		/// </summary>
 		private static Dictionary<string, WikiSite> WikiSiteInfo = new Dictionary<string, WikiSite>();
 
 		/// <summary>
@@ -112,26 +117,24 @@ namespace DiscordWikiBot
 			string content = e.Message.Content;
 
 			// Ignore messages without wiki syntax
-			if (!content.Contains("[[") && !content.Contains("{{"))
-			{
-				return;
-			}
+			if (!content.Contains("[[") && !content.Contains("{{")) return;
 
 			// Determine our goal (default for DMs)
 			bool isServerMessage = (e.Guild != null);
-			string goal = LANG_DEFAULT;
-			string lang = Config.GetLang();
+			var wikiUrl = Config.GetWiki();
+			var lang = Config.GetLang();
 
 			if (isServerMessage)
 			{
-				goal = GetConfigGoal(e.Channel);
+				var goal = GetConfigGoal(e.Channel);
+				wikiUrl = Config.GetWiki(goal);
 				lang = Config.GetLang(e.Guild.Id.ToString());
 
 				await Init(goal);
 			}
 
 			// Send message
-			string msg = PrepareMessage(content, lang, Config.GetWiki(goal));
+			string msg = PrepareMessage(content, lang, wikiUrl);
 			if (msg != "")
 			{
 				bool isTooLong = (msg == TOO_LONG);
@@ -139,6 +142,9 @@ namespace DiscordWikiBot
 				{
 					msg = Locale.GetMessage("linking-toolong", lang);
 				}
+
+				// Ignore recently deleted messages
+				if (DeletedMessageCache.ContainsKey(e.Message.Id)) return;
 
 				DiscordMessage response = await e.Message.RespondAsync(msg);
 				if (isServerMessage && !isTooLong)
@@ -217,6 +223,7 @@ namespace DiscordWikiBot
 			bool isOurBot = (isBot && e.Message?.Author == Program.Client.CurrentUser);
 			if (isBot && !isOurBot || e.Guild == null) return;
 			ulong id = e.Message.Id;
+			DeletedMessageCache.Add(id, true);
 
 			// Clear cache if bot’s message was deleted
 			if (isOurBot && Cache.ContainsValue(id))
@@ -253,12 +260,14 @@ namespace DiscordWikiBot
 
 			foreach (var item in e.Messages)
 			{
+				ulong id = item.Id;
+				DeletedMessageCache.Add(id, true);
+
 				// Ignore messages not in cache
-				if (!Cache.ContainsKey(item.Id))
+				if (!Cache.ContainsKey(id))
 				{
 					continue;
 				}
-				ulong id = item.Id;
 
 				// Delete bot’s message if possible
 				try
@@ -311,18 +320,17 @@ namespace DiscordWikiBot
 				foreach (Match link in matches)
 				{
 					string str = AddLink(link, linkFormat);
-					if (str.Length > 0)
-					{
-						// Present in content but not visible, therefore it's marked as spoiler
-						if (!visibleContent.Contains(link.Value))
-						{
-							str = string.Format("||{0}||", str);
-						}
+					if (str == null || str.Length == 0) continue;
 
-						if (!links.Contains(str))
-						{
-							links.Add(str);
-						}
+					// Present in content but not visible, therefore it's marked as spoiler
+					if (!visibleContent.Contains(link.Value))
+					{
+						str = string.Format("||{0}||", str);
+					}
+
+					if (!links.Contains(str))
+					{
+						links.Add(str);
 					}
 				}
 
@@ -368,163 +376,151 @@ namespace DiscordWikiBot
 			bool isTransclusion = type.StartsWith("{{");
 
 			// Check for matching brackets
-			if (isLink && !endBrackets.StartsWith("]")) return "";
-			if (isTransclusion && !endBrackets.StartsWith("}")) return "";
+			if (isLink && !endBrackets.StartsWith("]")) return null;
+			if (isTransclusion && !endBrackets.StartsWith("}")) return null;
 
 			// Check for parameter syntax
-			if (type.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return "";
-
-			// Default site info
-			WikiSite defaultSiteInfo = WikiSiteInfo[linkFormat];
-
-			// Temporary site info storage for other wikis
-			WikiSite tempSiteInfo = null;
+			if (type.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return null;
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
 			str = str.Replace(@"\", "");
 
-			// Check for invalid page titles
-			if (IsInvalid(str)) return "";
+			// Check for invalid page titles (without length)
+			if (IsInvalid(str, false)) return null;
 
-			// Storages for prefix and namespace data
-			string iw = "%%%%%";
+			// Reject if empty
+			if (str.Length == 0) return null;
+
+			// Reject if a regular link contains an anchor
+			if (isLink && str.StartsWith('#')) return null;
+
+			// Storage for default and current site data
+			var defaultSiteInfo = WikiSiteInfo[linkFormat];
+			var currentSiteInfo = defaultSiteInfo;
+			var currentLinkFormat = linkFormat;
+
+			// Storage for page data
 			NamespaceInfo ns = null;
+			string nsName = null;
 			bool capitalised = !defaultSiteInfo.SiteInfo.IsTitleCaseSensitive;
 
-			if (str.Length > 0)
+			// Handle transclusion links
+			if (isTransclusion)
 			{
-				// Handle transclusion links
-				if (isTransclusion)
+				var tuple = GetTransclusionInfo(str, defaultSiteInfo);
+				if (tuple == null) return null;
+
+				ns = tuple.Item1;
+				str = tuple.Item2;
+			}
+
+			// Check for interwikis or namespace names if needed
+			var prefixRegex = new Regex(@"^ *:? *([^:]+?) *: *");
+			var match = prefixRegex.Match(str);
+			while (str.Contains(':') && match.Length != 0)
+			{
+				var prefix = match.Groups[1].Value;
+				var nsCollection = currentSiteInfo.Namespaces;
+				var iwMap = currentSiteInfo.InterwikiMap;
+
+				// Namespace names/aliases have priority over the interwiki map
+				if (nsCollection.Contains(prefix))
 				{
-					var tuple = GetTransclusionInfo(str, defaultSiteInfo);
-					if (tuple == null)
+					ns = nsCollection[prefix];
+					if ((ns.Id == 2 || ns.Id == 3) && ns.Aliases.Count > 0)
 					{
-						return "";
-					}
+						// Get title according to gender for User namespaces
+						var normalisedTitle = GetNormalisedTitle(str, currentLinkFormat).Result;
+						var tokens = normalisedTitle.Split(':');
 
-					ns = tuple.Item1;
-					str = tuple.Item2;
-
-					// MediaWiki pages are always capitalised
-					if (capitalisedNamespaces.Contains(ns.Id))
-					{
-						capitalised = true;
-					}
-				}
-
-				WikiSite latestSiteInfo = defaultSiteInfo;
-
-				// Check if link contains interwikis
-				string iwRegex = "^ *:? *([^ :]+?) *: *";
-				Match iwMatch = Regex.Match(str, iwRegex);
-				while (isLink && iwMatch.Length > 0)
-				{
-					string prefix = iwMatch.Groups[1].Value.ToLower();
-
-					latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
-					InterwikiMap latestIWList = latestSiteInfo.InterwikiMap;
-					NamespaceCollection latestNSList = latestSiteInfo.Namespaces;
-					if (latestIWList.Contains(prefix) && !latestNSList.Contains(prefix))
-					{
-						string oldLinkFormat = linkFormat;
-						linkFormat = latestIWList[prefix].Url;
-
-						// Fetch temporary site information if necessary and store new prefix
-						if (iw != "" || prefix != iw || oldLinkFormat.Replace(iw, prefix) != linkFormat)
-						{
-							WikiSite data = GetWikiSite(linkFormat).Result;
-							tempSiteInfo = data;
-							latestSiteInfo = tempSiteInfo ?? defaultSiteInfo;
-
-							capitalised = (
-								tempSiteInfo != null
-								? !tempSiteInfo.SiteInfo.IsTitleCaseSensitive
-								: false
-							);
-						}
-						iw = prefix;
-
-						Regex only = new Regex($" *:? *{prefix} *: *", RegexOptions.IgnoreCase);
-						str = only.Replace(str, "", 1).Trim();
-
-						iwMatch = Regex.Match(str, iwRegex);
+						nsName = tokens.Length > 1 ? tokens[0] : null;
+						str = tokens[1];
 					}
 					else
 					{
-						// Return the regex that can’t be matched
-						iwMatch = Regex.Match(str, "^\b$");
+						str = prefixRegex.Replace(str, "", 1).Trim();
 					}
 
-					// Add main page title if needed
-					if (str.Length == 0 && tempSiteInfo != null)
+					// Normalise Media: to File: since MediaWiki redirects it like this
+					if (ns.Id == -2)
 					{
-						str = tempSiteInfo.SiteInfo.MainPage;
+						ns = nsCollection["file"];
 					}
+
+					// Cannot have an interwiki link after namespace
+					break;
 				}
 
-				// Check if link contains namespace
-				Match nsMatch = Regex.Match(str, "^ *:? *([^:]+) *: *");
-				if (nsMatch.Length > 0)
+				// Check for interwiki links next
+				if (iwMap.Contains(prefix))
 				{
-					string prefix = nsMatch.Groups[1].Value.ToUpper();
-					NamespaceCollection latestNSList = latestSiteInfo.Namespaces;
-					if (latestNSList.Contains(prefix))
+					// Assume not to be capitalised by default
+					capitalised = false;
+
+					// Save new link format and try fetching data
+					currentLinkFormat = iwMap[prefix].Url;
+					var newSiteInfo = GetWikiSite(currentLinkFormat).Result;
+					if (newSiteInfo != null)
 					{
-						var namespaceInfo = latestNSList[prefix];
-						if ((namespaceInfo.Id == 2 || namespaceInfo.Id == 3) && namespaceInfo.Aliases.Count > 0)
-						{
-							// Get title according to gender for User namespaces
-							str = GetNormalisedTitle(str, linkFormat).Result;
-						}
-						else
-						{
-							ns = namespaceInfo;
-							Regex only = new Regex($" *:? *{prefix} *: *", RegexOptions.IgnoreCase);
-							str = only.Replace(str, "", 1).Trim();
-						}
-
-						// Normalise Media: to File: since MediaWiki redirects it like this
-						if (ns.Id == -2)
-						{
-							ns = latestNSList["file"];
-						}
-
-						if (capitalisedNamespaces.Contains(namespaceInfo.Id))
-						{
-							capitalised = true;
-						}
+						currentSiteInfo = newSiteInfo;
+						capitalised = !newSiteInfo.SiteInfo.IsTitleCaseSensitive;
 					}
+
+					str = prefixRegex.Replace(str, "", 1).Trim();
+
+					// Cannot resolve future interwiki links after a fetch failed
+					if (newSiteInfo == null) break;
 				}
-
-				// If there is only namespace, return nothing
-				if (ns != null && str.Length == 0) return "";
-
-				// Check for invalid page title length
-				if (IsInvalid(str, true)) return "";
-
-				// Rewrite other text
-				if (str.Length > 0)
+				else
 				{
-					// Trim : from the start (nuisance)
-					str = str.TrimStart(':');
-
-					// Capitalise first letter if lowercase titles are not allowed
-					if (capitalised)
-					{
-						str = str[0].ToString().ToUpper() + str.Substring(1);
-					}
-
-					// Add namespace before any transformations
-					if (ns != null && ns.Id != 0)
-					{
-						str = string.Join(":", new[] { ns.CustomName, str });
-					}
+					// Cannot be matched with anything, prevent endless loop
+					break;
 				}
-				return string.Format("<{0}>", GetLink(str, linkFormat));
+
+				match = prefixRegex.Match(str);
 			}
 
-			return "";
+			// If there is only namespace, return nothing
+			if (ns != null && str.Length == 0) return null;
+
+			// Pages in some namespaces are always capitalised
+			if (ns != null && capitalisedNamespaces.Contains(ns.Id))
+			{
+				capitalised = true;
+			}
+
+			// Add main page title if needed
+			if (currentLinkFormat != linkFormat && str.Length == 0)
+			{
+				str = currentSiteInfo.SiteInfo.MainPage;
+			}
+
+			// Check for invalid page title length (namespace number + title)
+			var nsTitle = (ns == null || ns.Id == 0) ? str : $"{ns.Id}:{str}";
+			if (IsInvalid(nsTitle, true)) return null;
+
+			// Rewrite remaining title
+			if (str.Length > 0)
+			{
+				// Trim : from the start (nuisance)
+				str = str.TrimStart(':');
+
+				// Capitalise first letter if lowercase titles are not allowed
+				if (capitalised)
+				{
+					str = str[0].ToString().ToUpper() + str.Substring(1);
+				}
+
+				// Add namespace before any transformations
+				if (ns != null && ns.Id != 0)
+				{
+					nsName = nsName == null ? ns.CustomName : nsName;
+					str = string.Join(":", new[] { nsName, str });
+				}
+			}
+
+			return string.Format("<{0}>", GetLink(str, currentLinkFormat));
 		}
 
 		/// <summary>
@@ -538,7 +534,7 @@ namespace DiscordWikiBot
 			// Guess that it is a mainspace page
 			if (title.StartsWith(':'))
 			{
-				return Tuple.Create(site.Namespaces[0], Regex.Replace(title, "^ *: *", ""));
+				return Tuple.Create<NamespaceInfo, string>(null, Regex.Replace(title, "^ *: *", ""));
 			}
 			var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
 			var magicWords = site.MagicWords;
@@ -762,6 +758,10 @@ namespace DiscordWikiBot
 		/// <returns>Is page title invalid.</returns>
 		public static bool IsInvalid(string str, bool checkLength = false)
 		{
+			// Check if empty
+			if (checkLength && (str == null || str.Length == 0)) return true;
+
+			// Only check part before #
 			string[] anchor = str.Split('#');
 			if (anchor.Length > 1)
 			{

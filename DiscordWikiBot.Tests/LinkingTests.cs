@@ -123,20 +123,30 @@ namespace DiscordWikiBot.Tests
 		}
 
 		[TestMethod]
-		public void NonWikiInterwikiLink()
+		public void NonWikiInterwikiLinks()
 		{
-			string actual = Linking.PrepareMessage("[[google:lmgtfy]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://www.google.com/search?q=lmgtfy>";
+			string actual = Linking.PrepareMessage(@"
+			[[toollabs:guc]]
+			[[google:lmgtfy]]
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected = @"Ссылки:
+<https://iw.toolforge.org/guc>
+<https://www.google.com/search?q=lmgtfy>";
 			Assert.AreEqual(expected, actual);
 		}
 
 		[TestMethod]
 		public void NestedInterwikiLinks()
 		{
-			string actual = Linking.PrepareMessage("[[en:wikt:test]] [[en:wikt:mediawiki:common.js]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string actual = Linking.PrepareMessage(@"
+			[[en:wikt:test]]
+			[[en:wikt:mediawiki:common.js]]
+			[[google:de:test]]
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://en.wiktionary.org/wiki/test>
-<https://en.wiktionary.org/wiki/MediaWiki:Common.js>";
+<https://en.wiktionary.org/wiki/MediaWiki:Common.js>
+<https://www.google.com/search?q=de:test>";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -210,6 +220,7 @@ namespace DiscordWikiBot.Tests
 			string actual = Linking.PrepareMessage(@"
 				[[ ]]
 				{{ }}
+				[[#top]]
 				[[https://ru.wikipedia.org/wiki/Ithappens]]
 				[[<test>]]
 				[[ВП:]]
