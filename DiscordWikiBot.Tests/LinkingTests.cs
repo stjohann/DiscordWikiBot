@@ -115,10 +115,15 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void BasicInterwikiLinks()
 		{
-			string actual = Linking.PrepareMessage("[[en:wikipedia:sandbox]] [[fr:]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string actual = Linking.PrepareMessage(@"
+			[[en:wikipedia:sandbox]]
+			[[fr:]]
+			{{de:test}}
+			", "ru", "https://ru.wikipedia.org/wiki/$1");
 			string expected = @"Ссылки:
 <https://en.wikipedia.org/wiki/Wikipedia:Sandbox>
-<https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal>";
+<https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal>
+<https://ru.wikipedia.org/wiki/Шаблон:De:test>";
 			Assert.AreEqual(expected, actual);
 		}
 

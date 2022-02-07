@@ -142,14 +142,15 @@ namespace DiscordWikiBot
 				{
 					msg = Locale.GetMessage("linking-toolong", lang);
 				}
+				var messageId = e.Message.Id;
 
 				// Ignore recently deleted messages
-				if (DeletedMessageCache.ContainsKey(e.Message.Id)) return;
+				if (DeletedMessageCache.ContainsKey(messageId)) return;
 
 				DiscordMessage response = await e.Message.RespondAsync(msg);
 				if (isServerMessage && !isTooLong)
 				{
-					Cache.Add(e.Message.Id, response.Id);
+					Cache.Add(messageId, response.Id);
 				}
 			}
 		}
@@ -162,11 +163,14 @@ namespace DiscordWikiBot
 		{
 			// Ignore empty messages / bots / DMs
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true || e.Guild == null) return;
-			ulong id = e.Message.Id;
+			var messageId = e.Message.Id;
 			bool isRecentMessage = (DateTime.UtcNow - e.Message.CreationTimestamp).TotalMinutes <= 5;
 
 			// Only update known or recent messages
-			if (!Cache.ContainsKey(id) && !isRecentMessage) return;
+			if (!Cache.ContainsKey(messageId) && !isRecentMessage) return;
+
+			// Only update on real edits, because new messages with embeds trigger two events
+			if (e.Message.Content == e.MessageBefore?.Content) return;
 
 			// Determine our goal
 			string goal = GetConfigGoal(e.Channel);
@@ -175,13 +179,13 @@ namespace DiscordWikiBot
 
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
+			bool isTooLong = (msg == TOO_LONG);
 
-			// Post a reply to a recent message if it is without links
-			if (!Cache.ContainsKey(id) && isRecentMessage)
+			// Post a reply to a recent message if it was without links
+			if (!Cache.ContainsKey(messageId) && isRecentMessage)
 			{
 				if (msg == "") return;
 
-				bool isTooLong = (msg == TOO_LONG);
 				if (isTooLong)
 				{
 					msg = Locale.GetMessage("linking-toolong", lang);
@@ -198,16 +202,16 @@ namespace DiscordWikiBot
 			// Update message
 			if (msg != "")
 			{
-				bool isTooLong = (msg == TOO_LONG);
+				// Ignore the edit if too many links were added
 				if (isTooLong) return;
 
-				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
+				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[messageId]);
 				if (response.Content != msg) await response.ModifyAsync(msg);
 			}
 			else
 			{
-				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[id]);
-				Cache.Remove(id);
+				DiscordMessage response = await e.Channel.GetMessageAsync(Cache[messageId]);
+				Cache.Remove(messageId);
 				await response.DeleteAsync();
 			}
 		}
