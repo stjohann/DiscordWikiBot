@@ -42,7 +42,7 @@
 	"configuring-required-value": "La valeur d’un paramètre est requise.\nPour obtenir une aide complète, tapez `{1}help {0}`.",
 	"configuring-badvalue-domain": "Les flux sont disponibles seulement pour les projets Wikimedia.\nListe des domaines autorisés : {0}.",
 	"configuring-badvalue-lang": "Le bot ne reconnaît pas votre entrée comme étant un code ISO 639 valide.",
-	"configuring-badvalue-wiki": "Le robot ne peut pas obtenir les informations de l'API pour ce wiki. Il doit y avoir `{0}` à la fin de votre URL.",
+	"configuring-badvalue-wiki": "Le robot ne peut pas obtenir les informations de l’API pour ce wiki. Il doit y avoir `{0}` à la fin de votre URL.",
 	"configuring-help-status": "Vérifie si le robot est opérationnel.",
 	"configuring-help-domain": "Modifiez le domaine depuis lequel les modifications récentes sont diffusées sur ce serveur. Ne fonctionne que pour les projets Wikimedia.",
 	"configuring-help-domain-value": "domaine d’un projet Wikimedia (au format `fr.wikipedia.org`). Utilisez `-` pour rétablir les valeurs par défaut.",
