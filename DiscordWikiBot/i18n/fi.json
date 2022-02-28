@@ -3,6 +3,7 @@
 		"authors": [
 			"01miki10",
 			"Joquliina",
+			"Markus Mikkonen",
 			"Nike",
 			"Pyscowicz"
 		]
@@ -25,7 +26,8 @@
 	"configuring-error-strange": "Komentosi epäonnistui jonkin oudon ongelman vuoksi.",
 	"configuring-required-value": "Arvo on parametrissa välttämätön.\nSaadaksesi täyden ohjeen komentoon, lähetä `{1}help {0}`.",
 	"configuring-badvalue-lang": "Botti ei tunnista syötettäsi kelvolliseksi ISO 639 -koodiksi.",
-	"configuring-badvalue-wiki": "URL-osoitteesi lopussa täytyy olla `{0}`.",
+	"configuring-badvalue-wiki": "Botti ei pysty saamaan tämän wikin API-tietoja. URL-osoitteesi lopussa täytyy olla `{0}`.",
+	"configuring-help-status": "Tarkista botin toimiminen.",
 	"configuring-help-lang": "Vaihda botin kieli tällä palvelimella.",
 	"configuring-help-translatewiki-channel": "kanava, jonne botilla on pääsy.",
 	"configuring-help-wiki-value": "haluamasi wiki (muodossa <https://en.wikipedia.org/wiki/$1>). Käytä `-` palauttaaksesi oletukseen.",
