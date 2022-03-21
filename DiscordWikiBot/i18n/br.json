@@ -36,7 +36,7 @@
 	"configuring-required-value": "Talvoudegezh un arventenn a zo rekis.\\nEvit kaout ur skoazell glok, skrivit `{1}help {0}` eta.",
 	"configuring-badvalue-domain": "Ar froudoù a zo hegerz hepken evit ar raktresoù Wikimedia.\\nListennad an domanioù aotreet: {0}.",
 	"configuring-badvalue-lang": "Neket anavezet hoc'h ebarzhadenn gant ar Bot evel bezañ ur c'hod ISO 639 mat.",
-	"configuring-badvalue-wiki": "`{0}` a zlefe bezañ e dibenn hoc'h URL.",
+	"configuring-badvalue-wiki": "Ne c'hall ket kaout ar bot titour ebet diwar-benn ar wiki-mañ. `{0}` a zlefe bezañ e dibenn hoc'h URL.",
 	"configuring-help-status": "Gwiriañ hag oberiant emañ ar robot.",
 	"configuring-help-domain": "Cheñchit an domani a vez skignet ar c'hemmoù fresk-nevez ennañ war ar servijer-mañ. Mont a ra en-dro hepken evit ar raktresoù Wikimedia.",
 	"configuring-help-domain-value": "domani ur raktres Wikimedia (dindan ar stumm `br.wikipedia.org`). Grit gant `-` evit adlakaat d'an talvoudegezhioù orin.",
@@ -80,7 +80,7 @@
 	"streaming-help-close": "Herzel froud ar c'hemmoù diwezhañ er ganol.",
 	"streaming-help-list": "Listennañ an holl froudoù digoret war ar servijer-mañ.",
 	"streaming-help-channel": "ur ganol a zo hegerz evit ar robot.",
-	"streaming-help-args": "Arventennoù hegerz evit ar froud :\n{msg:bullet}`--title` (*neudennad*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*anterin*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*boulean*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*neudennad*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*anterin*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*boulean*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "Arventennoù hegerz evit ar froud:\n{msg:bullet}`--title` (*neudennad*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*anterin*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*boulean*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*neudennad*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*anterin*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*boulean*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	"translatewiki-deadline": "Kavit an amzer da wiriañ an troidigezhioù bet graet ar sizhun-mañ **betek dilun 00:00** UTC kuit da gaout troidigezhioù dizampart pe vandalerezh.",
 	"translatewiki-header": "{0} {1:ur gemennadenn|a gemmannadennoù|a gemmannadennoù|a gemmannadennoù|a gemmannadennoù} graet gant {2} {2:aozer|a aozerien|a aozerien|a aozerien|a aozerien}"
 }
