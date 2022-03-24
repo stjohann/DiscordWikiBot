@@ -7,6 +7,7 @@
 			"Ihojose",
 			"Jack30",
 			"Jakeukalane",
+			"Josuert",
 			"MartaEgea"
 		]
 	},
@@ -41,12 +42,13 @@
 	"configuring-required-value": "El valor para un parámetro es requerido.\nPara conseguir la ayuda completa para este comando, manda `{1}ayuda{0}`.",
 	"configuring-badvalue-domain": "Flujos solo disponibles para proyectos de Wikimedia.\nLista de dominios disponibles: {0}.",
 	"configuring-badvalue-lang": "El robot no reconoce la entrada como un código ISO 639 válido.",
-	"configuring-badvalue-wiki": "Debe haber un `{0}` al final de tu LRU (URL).",
+	"configuring-badvalue-wiki": "El bot no puede conseguir API información para este wiki. Tiene que haber `{0}` al final de tu URL.",
 	"configuring-help-status": "Revisar si el bot está operacional.",
 	"configuring-help-domain": "Cambiar el dominio de donde los cambios recientes son transmitidos para este servidor. Solo funciona para los proyectos Wikimedia.",
 	"configuring-help-domain-value": "dominio del proyecto Wikimedia (en el formato de es.wikipedia.org). Usa `-` para restablecerlo al valor predeterminado.",
 	"configuring-help-lang": "Cambio el lenguaje del bot en este servidor.",
 	"configuring-help-lang-value": "el lenguaje de bot que quieres. Usa `-` para restablecerlo al valor predeterminado.",
+	"configuring-help-translatewiki": "Comience o finalice informes cada hora sobre cambios recientes en Translatewiki en uno de los canales.",
 	"configuring-help-translatewiki-channel": "un canal que está disponible para el bot.",
 	"eventstreams-diff": "difs.",
 	"eventstreams-talk": "discusión",
