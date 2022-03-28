@@ -2,12 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Arian Ar",
+			"Beginneruser",
 			"Frowzyispenguin"
 		]
 	},
 	"yes": "بله",
 	"no": "خیر",
-	"help-title": "کمک",
+	"help-title": "راهنما",
 	"help-title-command": "{1}{0}{msg:separator}کمک",
 	"help-all": "فهرست‌کردن تمام دستورها و گروه‌های سطح بالا. برای دیدن اطلاعات بیشتر یک دستور را انتخاب کنید.",
 	"help-version": "نسخه {0}.",

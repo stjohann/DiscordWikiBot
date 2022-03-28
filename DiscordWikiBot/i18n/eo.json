@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Robin van der Vliet"
+		]
+	},
+	"yes": "jes",
+	"no": "ne",
+	"help-title": "Helpo",
+	"help-title-command": "{1}{0}{msg:separator}helpo",
+	"help-version": "Versio {0}.",
+	"help-repo": "Fontkodo: {0}",
+	"help-commands": "Komandoj",
+	"help-subcommands": "Subkomandoj",
+	"help-aliases": "Kromnomoj",
+	"help-arguments": "Argumentoj",
+	"help-default": "Defaŭlte: `{0}`.",
+	"help-optional": "nedeviga",
+	"eventstreams-diff": "malsamoj",
+	"eventstreams-talk": "diskuto",
+	"eventstreams-contribs": "kontribuoj",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "r",
+	"eventstreams-minor": "e",
+	"linking-link": "Ligilo:",
+	"linking-links": "Ligiloj:",
+	"streaming-stream-namespace": "de la nomspaco `{0}`",
+	"streaming-stream-title": "de la paĝo `{0}`",
+	"streaming-list-stream": "**{1:Elsendo|Elsendoj} {0}:**",
+	"translatewiki-header": "{0} {1:mesaĝo|mesaĝoj} de {2} {2:aŭtoro|aŭtoroj}"
+}
