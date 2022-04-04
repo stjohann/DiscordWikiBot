@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Just Sayori",
 			"Patsagorn Y."
 		]
 	},
@@ -35,7 +36,7 @@
 	"configuring-required-value": "สำหรับรายการคำสั่งฉบับเต็ม พิมพ์ `{1}help {0}`",
 	"configuring-badvalue-domain": "สตรีมพร้อมใช้งานกับวิกิในโครงการวิกิมีเดียเท่านั้น\nรายการโดเมนที่อนุญาต: {0}",
 	"configuring-badvalue-lang": "บอตไม่พบรหัสภาษานี้ในรายการ ISO 639",
-	"configuring-badvalue-wiki": "ควรมี `{0}` ที่ท้ายยูอาร์แอลของคุณ",
+	"configuring-badvalue-wiki": "บอทไม่สามารถรับข้อมูลเอพีไอสำหรับวิกินี้ ควรมี `{0}` ที่ท้ายยูอาร์แอลของคุณ",
 	"configuring-help-status": "ตรวจสอบว่าบอตทำงานอยู่หรือไม่",
 	"configuring-help-domain": "เปลี่ยนโดเมนที่การเปลี่ยนแปลงล่าสุดทำงานอยู่ในเซิร์ฟเวอร์นี้ ทำงานเฉพาะในวิกิในโครงการวิกิมีเดีย",
 	"configuring-help-domain-value": "โดเมนของโครงการวิกิมีเดีย (เช่น th.wikipedia.org) หรือ `-` สำหรับปรับเป็นค่าปริยาย",
@@ -76,7 +77,7 @@
 	"streaming-required-goal": "จำเป็นต้องมีเป้าหมายการสตรีม (ชื่อหน้าหรือเลขเนมสเปซ)\nสำหรับข้อความช่วยเหลือฉบับเต็ม พิมพ์ `{1}help {0}`",
 	"streaming-help-open": "เริ่มการสตรีมการเปลี่ยนแปลงในแชนแนล",
 	"streaming-help-edit": "แก้ไขพารามิเตอร์ของการเปลี่ยนแปลงในแชนแนล",
-	"streaming-help-close": "หนุดการสตรีมการเปลี่ยนแปลงในแชนแนล",
+	"streaming-help-close": "หยุดสตรีมการเปลี่ยนแปลงในแชนแนล",
 	"streaming-help-list": "รายการของสตรีมที่เปิดอยู่บนเซิร์ฟเวอร์นี้",
 	"streaming-help-channel": "แชนแนลที่บอตสามารถเข้าถึงได้",
 	"streaming-help-args": "พารามิเตอร์สตรีมที่พร้อมใช้งาน:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
