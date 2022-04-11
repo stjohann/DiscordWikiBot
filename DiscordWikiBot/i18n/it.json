@@ -3,6 +3,7 @@
 		"authors": [
 			"Ajeje Brazorf",
 			"Beta16",
+			"IrsY",
 			"Yacine Boussoufa"
 		]
 	},
@@ -17,6 +18,7 @@
 	"help-aliases": "Alias",
 	"help-arguments": "Argomenti",
 	"help-optional": "facoltativo",
+	"configuring-help-status": "Controlla se il bot è operativo.",
 	"eventstreams-diff": "diff",
 	"eventstreams-talk": "discussione",
 	"eventstreams-contribs": "contributi",

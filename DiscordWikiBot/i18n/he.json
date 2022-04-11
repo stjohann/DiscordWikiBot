@@ -40,7 +40,7 @@
 	"configuring-required-value": "נדרש ערך לפרמטר.\nלקבלת עזרה עבור הפקודה הזאת, שלחו `{1}help {0}`.",
 	"configuring-badvalue-domain": "הסטרימים זמינים למיזמי ויקימדיה בלבד.\nרשימת המתחמים הזמינים: {0}.",
 	"configuring-badvalue-lang": "הבוט לא מזהה את הקלט כקוד ISO 639 תקין.",
-	"configuring-badvalue-wiki": "חייב להיות `{0}` בסוף כתובת ה־URL.",
+	"configuring-badvalue-wiki": "הבוט לא הצליח לקבל את פרטי ה־API עבור הוויקי הזה. חייב להיות `{0}` בסוף הכתובת הזאת.",
 	"configuring-help-status": "בדקו אם הבוט פעיל.",
 	"configuring-help-domain": "החלפת המתחם שהשינויים האחרונים שודרו ממנו לשרת הנוכחי. עובד עבור מיזמי קרן ויקימדיה בלבד.",
 	"configuring-help-domain-value": "מתחם של מיזם ויקימדיה (בצורת he.wikipedia.org). יש להשתמש בסימן `-` לאיפוס לברירת מחדל.",
