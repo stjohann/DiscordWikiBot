@@ -35,7 +35,7 @@
 	"configuring-required-value": "Gildi fyrir færibreytu er krafist.\nSendu „{1}help {0}“ til að fá fulla hjálp fyrir skipunina.",
 	"configuring-badvalue-domain": "Straumar eru aðeins fáanlegir fyrir Wikimedia verkefni.\nListi yfir leyfileg lén: {0}.",
 	"configuring-badvalue-lang": "Vélmenninn kannast ekki við inntak þitt sem gildan ISO 639 kóða.",
-	"configuring-badvalue-wiki": "Botninn getur ekki fengið API upplýsingar fyrir þessa wiki. Það verður að vera „{0}“ aftast á vefslóðinni þinni.",
+	"configuring-badvalue-wiki": "Vélmenninn getur ekki fengið API upplýsingar fyrir þessa wiki. Það verður að vera „{0}“ aftast á vefslóðinni þinni.",
 	"configuring-help-status": "Athuga hvort vélmenninn sé í gangi.",
 	"configuring-help-domain": "Breyttu léninu sem nýlegar breytingar eru sendar frá á þessum netþjóni. Virkar aðeins fyrir Wikimedia verkefni.",
 	"configuring-help-domain-value": "lén Wikimedia verkefnis (á en.wikipedia.org sniði). Notaðu „-“ til að endurstilla sjálfgefið.",
