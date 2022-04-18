@@ -6,14 +6,14 @@
 		<PackageLicenseFile>LICENCE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/stjohann/DiscordWikiBot</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>3.7.4</Version>
+		<Version>3.7.5</Version>
 		<Authors>stjn and others</Authors>
 		<Company />
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
 		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.8.0-int.5" />
-		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0-nightly-01063" />
+		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="5.0.2" />
 		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
