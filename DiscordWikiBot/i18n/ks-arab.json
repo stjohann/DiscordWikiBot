@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Iflaq"
+		]
+	},
+	"yes": "آ",
+	"no": "نَہ",
+	"help-title": "مَدَتھ",
+	"help-title-command": "{1}{0}{msg:separator}مَدَتھ",
+	"help-version": "ؤرجَن {0}.",
+	"help-repo": "آگُر گوڈ: {0}",
+	"help-commands": "اَحکام:",
+	"help-subcommands": "لۄکٕٹؠ اَحکام",
+	"help-aliases": "ایلیَس",
+	"help-arguments": "آرگیومینٹ",
+	"help-default": "گوڈہ پؠٹھ: '{0}'.",
+	"help-optional": "اِختِیٲری",
+	"eventstreams-diff": "فَرَق",
+	"eventstreams-talk": "کَتھ صَفہٕ",
+	"eventstreams-contribs": "شِرکَت",
+	"eventstreams-new": "نٔو",
+	"eventstreams-bot": "ب",
+	"eventstreams-minor": "ل",
+	"linking-link": "لِنک:",
+	"linking-links": "لِنکہٕ:",
+	"streaming-key-bot": "باٹ اؠڑِٹ تہِ",
+	"streaming-key-title": "صَفہٕ عُنٛوان"
+}
