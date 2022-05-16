@@ -3,7 +3,8 @@
 		"authors": [
 			"Chrumps",
 			"Rail",
-			"Rainbow P"
+			"Rainbow P",
+			"WaldiSt"
 		]
 	},
 	"yes": "tak",
@@ -37,7 +38,7 @@
 	"configuring-required-value": "Wartość parametru jest wymagana.\nAby uzyskać pełną pomoc dla komendy, wyślij `{1}pomoc {0}`.",
 	"configuring-badvalue-domain": "Strumienie są dostępne tylko dla projektów Fundacji Wikimedia.\nLista dozwolonych domen: {0}.",
 	"configuring-badvalue-lang": "Bot nie rozpoznał wprowadzonej wartości jako poprawnego kodu ISO 639.",
-	"configuring-badvalue-wiki": "Na końcu wprowadzonego adresu URL musi znajdować się `{0}`.",
+	"configuring-badvalue-wiki": "Bot nie może uzyskać informacji API dla tej wiki. Na końcu wprowadzonego adresu URL musi znajdować się `{0}`.",
 	"configuring-help-status": "Sprawdź, czy bot działa.",
 	"configuring-help-domain": "Zmień domenę, dla której strumieniowane będą ostatnie zmiany na tym serwerze. Działa tylko z projektami Fundacji Wikimedia.",
 	"configuring-help-domain-value": "domena projektu Fundacji Wikimedia (w formacie pl.wikipedia.org). Użyj `-` aby przywrócić wartości domyślne.",
