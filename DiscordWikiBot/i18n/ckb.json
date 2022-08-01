@@ -1,0 +1,28 @@
+{
+	"@metadata": {
+		"authors": [
+			"Aram"
+		]
+	},
+	"yes": "بەڵێ",
+	"no": "نەخێر",
+	"help-title": "یارمەتی",
+	"help-version": "وەشانی {0}.",
+	"help-repo": "سەرچاوەکۆد: {0}",
+	"help-commands": "فەرمانەکان",
+	"help-subcommands": "ژێرفەرمانەکان",
+	"help-aliases": "نازناوەکان",
+	"help-arguments": "مشتومڕەکان",
+	"help-default": "بە بنەڕەت: `{0}`.",
+	"help-optional": "ئارەزوومەندانە",
+	"help-group-standalone": "ئەم گرووپە فەرمانێکی سەربەخۆیە.",
+	"help-command": "فەرمانی help پیشان دەدات.",
+	"configuring-changed-reset": "نرخەکە گەڕێندرایەوە بۆ نرخە بنچینەیییەکەی.",
+	"configuring-error-strange": "لەبەر چەند ھەڵەیەکی سەیر، فەرمانەکەت شکستی ھێنا.",
+	"configuring-help-status": "بزانە بۆتەکە کاردەکات یان نا.",
+	"configuring-help-lang": "زمانی بۆتەکە لەسەر ئەم ڕاژەیە بگۆڕە.",
+	"configuring-help-lang-value": "ئەو زمانی بۆتەی کە دەتەوێت. `-` بەکاربێنە تا بیکەیتەوە زمانی بنەڕەتی.",
+	"configuring-help-translatewiki-channel": "کەناڵێکی بەردەستە بۆ بۆتەکە.",
+	"streaming-key-bot": "دەستکارییەکانی بۆت لەخۆ بگرێت",
+	"streaming-help-channel": "کەناڵێکی بەردەستە بۆ بۆتەکە."
+}
