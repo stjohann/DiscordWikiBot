@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Fulup",
+			"Huñvreüs",
 			"Iriep"
 		]
 	},
@@ -80,7 +81,7 @@
 	"streaming-help-close": "Herzel froud ar c'hemmoù diwezhañ er ganol.",
 	"streaming-help-list": "Listennañ an holl froudoù digoret war ar servijer-mañ.",
 	"streaming-help-channel": "ur ganol a zo hegerz evit ar robot.",
-	"streaming-help-args": "Arventennoù hegerz evit ar froud:\n{msg:bullet}`--title` (*neudennad*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*anterin*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*boulean*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*neudennad*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*anterin*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*boulean*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "Arventennoù hegerz evit ar froud:\n{msg:bullet}`--title` (*neudennad*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*anterin*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*boolean*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*neudennad*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*anterin*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*boolean*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	"translatewiki-deadline": "Kavit an amzer da wiriañ an troidigezhioù bet graet ar sizhun-mañ **betek dilun 00:00** UTC kuit da gaout troidigezhioù dizampart pe vandalerezh.",
 	"translatewiki-header": "{0} {1:ur gemennadenn|a gemmannadennoù|a gemmannadennoù|a gemmannadennoù|a gemmannadennoù} graet gant {2} {2:aozer|a aozerien|a aozerien|a aozerien|a aozerien}"
 }
