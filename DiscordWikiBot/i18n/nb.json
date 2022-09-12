@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"EdoAug",
 			"Jon Harald Søby",
 			"Premeditated",
 			"VukAnd12",
@@ -28,6 +29,10 @@
 	"configuring-changed-lang": "Språket til botten på denne tjeneren ble endret til **{0}**.",
 	"configuring-changed-translatewiki": "Rapporter om siste endringer på Translatewiki er slått på i kanalen {0} for språket **{1}**.",
 	"configuring-changed-translatewiki-channel": "Kanalen for rapporter om siste endringer på Translatewiki ble endret til {0}.",
+	"configuring-changed-reset": "Verdien ble tilbakestilt til standardverdien.",
+	"configuring-error-same": "Verdien du har angitt er lik den nåværende.",
+	"configuring-error-strange": "Din kommando mislyktes på grunn av en snål feil.",
+	"configuring-required-value": "En parameter-verdi kreves.\nFor å få kommandohjelp, send `{1}help {0}`.",
 	"configuring-help-status": "Kontroller om boten kan kjøres.",
 	"eventstreams-diff": "diff",
 	"eventstreams-talk": "diskusjon",
