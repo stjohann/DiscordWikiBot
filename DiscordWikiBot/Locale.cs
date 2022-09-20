@@ -150,7 +150,7 @@ namespace DiscordWikiBot
 				try
 				{
 					str = Smart.Format(CultureInfo.GetCultureInfo(rootLang), str, args);
-				} catch(CultureNotFoundException)
+				} catch(Exception)
 				{
 					str = Smart.Format(str, args);
 				}
@@ -180,7 +180,7 @@ namespace DiscordWikiBot
 
 				if (!Custom.ContainsKey(lang))
 				{
-					throw new ArgumentNullException(lang);
+					return null;
 				}
 
 				// Use loaded locale
@@ -234,13 +234,13 @@ namespace DiscordWikiBot
 		/// Get fallback languages for a specified language.
 		/// </summary>
 		/// <param name="code">MediaWiki-compatible language code.</param>
-		/// <param name="compareCode">MediaWiki-compatible language code.</param>
 		/// <returns>A language chain or null.</returns>
-		private static List<string> GetFallbackData(string code, string compareCode = null)
+		private static List<string> GetFallbackData(string code)
 		{
-			return LanguageData[code]?["fallbacks"]
-				.Select(jt => (string)jt)
-				.Where(x => x != compareCode).ToList();
+			var result = LanguageData[code]?["fallbacks"]
+				.Select(jt => (string)jt).ToList();
+
+			return result != null ? result : new List<string>();
 		}
 
 		/// <summary>
