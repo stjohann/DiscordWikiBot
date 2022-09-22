@@ -4,7 +4,8 @@
 			"BadDog",
 			"Bugoslav",
 			"Nesmir Kudilovic",
-			"Stjn"
+			"Stjn",
+			"Vlad5250"
 		]
 	},
 	"bullet": "• {0}",
@@ -40,7 +41,7 @@
 	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili potpunu pomoć za naredbu, pošaljite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Tokovi su dostupni samo za wikimedijine projekte.\nLista dozvoljenih domena: {0}.",
 	"configuring-badvalue-lang": "Bot ne prepoznaje vaš unos kao validan kôd po ISO 639.",
-	"configuring-badvalue-wiki": "Na kraju vašeg URL-a mora se nalaziti `{0}`.",
+	"configuring-badvalue-wiki": "Bot ne može dobiti API informacije za ovaj wiki. Na kraju vašeg URL-a mora se nalaziti `{0}`.",
 	"configuring-help-status": "Provjera da li je bot operativan.",
 	"configuring-help-domain": "Promjena domene za koju se odašilju skorašnje izmjene na ovaj server. Funkcionira samo na wikimedijinim projektima.",
 	"configuring-help-domain-value": "domena wikimedijinog projekta (u formatu sh.wikipedia.org). Koristite `-` za vraćanje na predodređeno.",
