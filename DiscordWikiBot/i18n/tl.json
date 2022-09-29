@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"GinawaSaHapon"
+			"GinawaSaHapon",
+			"Jojit fb"
 		]
 	},
 	"yes": "oo",
@@ -65,17 +66,17 @@
 	"streaming-list": ":information_source: {0} {0:aktibong stream|(na) aktibong stream} sa server na ito.\n{1}",
 	"streaming-list-nothing": ":ok: Walang nakabukas na stream sa server na ito.",
 	"streaming-list-stream": "**{1:Stream|Mga stream} {0}:**",
-	"streaming-key-bot": "isama ang mga edit ng bot",
+	"streaming-key-bot": "isama ang mga binago ng bot",
 	"streaming-key-in-comment": "maghanap sa komento",
 	"streaming-key-diff-length": "minimum na haba ng pagkakaiba",
 	"streaming-key-minor": "isama ang mga maliliit na pagbabago",
 	"streaming-key-namespace": "numero ng namespace",
 	"streaming-key-patrolled": "i-filter base sa estado ng pagpatrol",
 	"streaming-key-title": "pamagat ng pahina",
-	"streaming-key-type": "uri ng edit",
+	"streaming-key-type": "uri ng pagbabago",
 	"streaming-required-goal": "Kailangan ng goal (pamagat ng pahina o numero ng namespace) ang stream.\nPara makakuha ng buong tulong para sa utos, ipadala ang `{1}tulong {0}`.",
 	"streaming-help-open": "Simulan ang pag-stream sa mga kamakailang pagbabago sa channel.",
-	"streaming-help-edit": "I-edit ang mga parameter ng isang stream ng mga kamakailang pagbabago sa channel.",
+	"streaming-help-edit": "Baguhin ang mga parameter ng isang stream ng mga kamakailang pagbabago sa channel.",
 	"streaming-help-close": "Itigil ang pag-stream sa mga kamakailang pagbabago sa channel.",
 	"streaming-help-list": "Ilista lahat ng mga nakabukas na stream sa server na ito.",
 	"streaming-help-channel": "channel na magagamit ng bot.",
