@@ -24,7 +24,7 @@
 	"help-group-standalone": "Denne gruppa er en enkeltstående kommando.",
 	"help-command": "Viser kommandohjelp.",
 	"help-command-command": "kommando det skal gis hjelp for.",
-	"configuring-status-streaming": "Siste svar fra strømmene: {0} {0:minutt|minutter} {1} {1:sekund|sekunder} siden.",
+	"configuring-status-streaming": "Siste svar fra strømmene: {0} {0:minutt|minutter} og {1} {1:sekund|sekunder} siden.",
 	"configuring-changed-domain": "Domenet for siste endringer-strømmene på denne tjeneren ble endret til **{0}**.",
 	"configuring-changed-lang": "Språket til botten på denne tjeneren ble endret til **{0}**.",
 	"configuring-changed-translatewiki": "Rapporter om siste endringer på Translatewiki er slått på i kanalen {0} for språket **{1}**.",
@@ -39,5 +39,6 @@
 	"eventstreams-contribs": "bidrag",
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
-	"eventstreams-minor": "m"
+	"eventstreams-minor": "m",
+	"translatewiki-header": "{0} {1:melding|meldinger} av {2} {2:forfatter|forfattere}"
 }
