@@ -85,5 +85,5 @@
 	"streaming-help-channel": "قناة متاحة للبوت.",
 	"streaming-help-args": "وسائط التيارات المتاحة:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	"translatewiki-deadline": "لديك وقت للتحقق من الترجمات لهذا الأسبوع **حتى 00:00** الإثنين بالتوقيت العالمي لتجنب الترجمات السيئة والتخريب.",
-	"translatewiki-header": "{0} {1:رسالة|رسائل} من {2} {2:مؤلف|مؤلفين}"
+	"translatewiki-header": "{0} {1:لا رسالة|رسالة واحدة|رسالتان|1 رسائل|1 رسالة|1 رسالة} من {2} {2:لا مؤلف|مؤلف واحد|مؤلفان|2 مؤلفين|2 مؤلف|2 مؤلف}"
 }

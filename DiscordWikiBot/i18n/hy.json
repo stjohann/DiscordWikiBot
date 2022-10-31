@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kareyac"
+		]
+	},
+	"yes": "այո",
+	"no": "ոչ",
+	"help-title": "Օգնություն",
+	"help-title-command": "{1}{0}{msg:separator}օգնություն",
+	"help-version": "Տարբերակ {0}.",
+	"help-repo": "Աղբյուրի կոդը՝ {0}",
+	"help-commands": "Հրամաններ",
+	"help-subcommands": "Ենթահրամաններ",
+	"help-arguments": "Փաստարկներ",
+	"help-default": "Լռելյայն՝ «{0}»:",
+	"help-optional": "ոչ պարտադիր",
+	"eventstreams-diff": "տարբ",
+	"eventstreams-talk": "քննարկում",
+	"eventstreams-contribs": "ներդրում",
+	"eventstreams-new": "Ն",
+	"eventstreams-bot": "բ",
+	"eventstreams-minor": "չ",
+	"linking-link": "Հղում.",
+	"linking-links": "Հղումներ՝",
+	"streaming-stream-namespace": "«{0}» անվանատարածքից",
+	"streaming-stream-title": "«{0}» էջից",
+	"streaming-key-title": "էջի վերնագիր",
+	"streaming-key-type": "խմբագրման տեսակը"
+}
