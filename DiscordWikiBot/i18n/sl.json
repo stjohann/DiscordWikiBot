@@ -70,7 +70,7 @@
 	"streaming-key-diff-length": "najmanjša dolžina prim",
 	"streaming-key-minor": "vključi manjša urejanja",
 	"streaming-key-namespace": "številka imenskega prostora",
-	"streaming-key-patrolled": "filtriraj po stanju patruljiranja",
+	"streaming-key-patrolled": "filtriraj po stanju pregledovanja",
 	"streaming-key-title": "naslov strani",
 	"streaming-key-type": "vrsta urejanja",
 	"streaming-required-goal": "Treba je navesti cilj toka (imenski prostor ali številko imenskega prostora).\nZa celotno pomoč za ukaz pošljite »{1}help {0}«.",
