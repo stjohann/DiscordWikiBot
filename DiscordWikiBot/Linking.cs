@@ -436,7 +436,7 @@ namespace DiscordWikiBot
 					{
 						// Get title according to gender for User namespaces
 						var normalisedTitle = GetNormalisedTitle(str, currentLinkFormat).Result;
-						var tokens = normalisedTitle.Split(':');
+						var tokens = normalisedTitle.Split(':', 2);
 
 						nsName = tokens.Length > 1 ? tokens[0] : null;
 						str = tokens[1];
