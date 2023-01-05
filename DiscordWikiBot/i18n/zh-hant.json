@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"HellojoeAoPS",
 			"Kly",
 			"LNDDYL"
 		]
@@ -36,7 +37,7 @@
 	"configuring-required-value": "需要用於參數的值。\n要取得指令的完整說明，請傳送「{1}help {0}」。",
 	"configuring-badvalue-domain": "僅適用於維基媒體專案的串流。\n允許網域清單：{0}。",
 	"configuring-badvalue-lang": "機器人無法將您的輸入識別為有效的 ISO 639 代碼。",
-	"configuring-badvalue-wiki": "您的 URL 末端必須是「{0}」。",
+	"configuring-badvalue-wiki": "機器人無法獲取此 wiki 的 API 信息。您的網址末尾必須有“{0}”。",
 	"configuring-help-status": "檢查機器人是否運行。",
 	"configuring-help-domain": "變更來自此伺服器上近期變更廣播的網域。僅適用於維基多媒體專案。",
 	"configuring-help-domain-value": "維基媒體專案的網域（en.wikipedia.org 格式）。使用「-」來重新設定成預設值。",
