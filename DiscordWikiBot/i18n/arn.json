@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Manke ruLpa"
+		]
+	},
+	"yes": "may",
+	"no": "mü",
+	"help-title": "Kellun",
+	"help-title-command": "{1}{0}{msg:separator}kellun",
+	"help-version": "Tüfa {0}.",
+	"help-commands": "Ngünewe",
+	"help-subcommands": "Ina ngünewe",
+	"help-aliases": "Ka üy",
+	"help-optional": "zullifal",
+	"help-group-standalone": "Tüfachi trokiñ ta kizungünewkechi ngünewe.",
+	"help-command": "Pengelngey ngünewe ñi kellun.",
+	"help-command-command": "ngünewe ñi femngechi kelluam.",
+	"configuring-changed-lang": "Fachi bot ñi zungun kakünungey faci server mew, fewla **{0}** ngey.",
+	"configuring-changed-translatewiki": "Kom zugu mi kimael Translatewiki ñi kangen pengefali {0} mew, **{1}** mew.",
+	"eventstreams-talk": "nütramkan",
+	"eventstreams-contribs": "kellukontun",
+	"eventstreams-new": "W",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "p",
+	"linking-link": "Trarintuku:",
+	"linking-links": "Trarintuku:",
+	"streaming-key-title": "Tapülh ñi üy"
+}
