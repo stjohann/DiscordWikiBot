@@ -3,7 +3,8 @@
 		"authors": [
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
-			"Isabelle Belato"
+			"Isabelle Belato",
+			"Mello25"
 		]
 	},
 	"yes": "sim",
@@ -37,7 +38,7 @@
 	"configuring-required-value": "O valor para um parâmetro é obrigatório.\nPara obter ajuda completa sobre o comando, envie `{1}help {0}`.",
 	"configuring-badvalue-domain": "Os fluxos estão disponíveis apenas para projetos Wikimedia.\nLista de domínios permitidos: {0}.",
 	"configuring-badvalue-lang": "O robô não reconhece sua entrada como um código ISO 639 válido.",
-	"configuring-badvalue-wiki": "Deve haver`{0}` no final do seu URL.",
+	"configuring-badvalue-wiki": "O bot não pode obter informações da API para esta wiki. Deve haver `{0}` no final da seu URL.",
 	"configuring-help-status": "Verifique se o robô está operacional.",
 	"configuring-help-domain": "Altere o domínio do qual as alterações recentes são transmitidas neste servidor. Funciona apenas para projetos Wikimedia.",
 	"configuring-help-domain-value": "domínio de um projeto Wikimedia (no formato pt.wikipedia.org). Use `-` para redefinir para o padrão.",
