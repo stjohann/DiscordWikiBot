@@ -3,7 +3,8 @@
 		"authors": [
 			"LaMagiaaa",
 			"Linuxmetel",
-			"RYOUMA1117"
+			"RYOUMA1117",
+			"春春眠眠"
 		]
 	},
 	"yes": "はい",
@@ -37,7 +38,7 @@
 	"configuring-required-value": "パラメータの値は必須です。\nコマンドの完全なヘルプを取得するには、`{1}help {0}`を送信します。",
 	"configuring-badvalue-domain": "ストリームはウィキメディアプロジェクトでのみ利用できます。\n許可されたドメインのリスト：{0}",
 	"configuring-badvalue-lang": "BOTは、入力を有効なISO639コードとして認識しません。",
-	"configuring-badvalue-wiki": "URLの最後に `{0}`が必要です。",
+	"configuring-badvalue-wiki": "ボットはこのウィキのAPI情報を取得できません。URLの最後に `{0}`が必要です。",
 	"configuring-help-status": "ボットが動作しているかどうかを確認します。",
 	"configuring-help-domain": "このサーバーで最近の変更が、ブロードキャストされるドメインを変更します。\nウィキメディアプロジェクトでのみ機能します。",
 	"configuring-help-domain-value": "ウィキメディアプロジェクトのドメイン（en.wikipedia.org形式）。\nデフォルトにリセットするには、`-`を使用します。",
