@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Gomoko",
+			"McDutchie",
 			"Meiræ",
 			"Paraboule",
 			"Sadenar",
@@ -29,12 +30,12 @@
 	"help-command-command": "commande pour laquelle l’aide est à fournir.",
 	"configuring-status": ":information_source: Branché sur la prise.",
 	"configuring-status-streaming": "Dernière réponse des flux : il y a {0} {0:minute|minutes} {1} {1:seconde|secondes}.",
-	"configuring-changed-domain": "Le domaine pour les flux de modifications récentes sur ce serveur a été modifié par **{0}**.",
+	"configuring-changed-domain": "Le domaine pour les flux de modifications récentes sur ce serveur a été modifié en **{0}**.",
 	"configuring-changed-lang": "La langue du bot sur ce serveur a été modifiée et est maintenant **{0}**.",
 	"configuring-changed-translatewiki": "Les rapports concernant les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",
-	"configuring-changed-translatewiki-channel": "Le canal pour les rapports concernant les modifications récentes sur Translatewiki a été changé par {0}.",
+	"configuring-changed-translatewiki-channel": "Le canal pour les rapports concernant les modifications récentes sur Translatewiki a été changé en {0}.",
 	"configuring-changed-translatewiki-lang": "La langue pour laquelle ont été compilés les rapports concernant les modifications récentes sur Translatewiki a été changée en **{0}**.",
-	"configuring-changed-wiki": "Le wiki pour les liens sur ce serveur a été remplacé par **{0}**.",
+	"configuring-changed-wiki": "Le wiki pour les liens sur ce serveur a été changé en **{0}**.",
 	"configuring-changed-wiki-channel": "Le wiki pour les liens sur ce canal a été changé en **{0}**.",
 	"configuring-changed-reset": "La valeur a été réinitialisée à défaut.",
 	"configuring-error-same": "La valeur que vous avez saisie est identique à l’actuelle.",
