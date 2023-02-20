@@ -1,13 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"ToJack"
+			"ToJack",
+			"Vashgird"
 		]
 	},
 	"yes": "бале",
 	"no": "на",
-	"help-title": "Кӯмак",
-	"help-title-command": "{1}{0}{msg:separator}кӯмак",
+	"help-title": "Кумак",
+	"help-title-command": "{1}{0}{msg:separator}кумак",
 	"help-version": "Нусхаи {0}.",
 	"help-arguments": "Аргументҳо",
 	"help-optional": "ихтиёрӣ",
