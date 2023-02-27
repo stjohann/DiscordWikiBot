@@ -4,6 +4,7 @@
 			"Ajeje Brazorf",
 			"Beta16",
 			"IrsY",
+			"UnGiglio",
 			"Yacine Boussoufa"
 		]
 	},
@@ -11,6 +12,7 @@
 	"no": "no",
 	"help-title": "Aiuto",
 	"help-title-command": "{1}{0}{msg:separator}aiuto",
+	"help-all": "Elenca tutti i comandi e i gruppi di primo livello. Specificare un comando per visualizzare ulteriori informazioni.",
 	"help-version": "Versione {0}.",
 	"help-repo": "Codice sorgente: {0}",
 	"help-commands": "Comandi",
