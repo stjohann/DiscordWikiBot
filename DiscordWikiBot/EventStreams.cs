@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DiscordWikiBot.Schemas;
-using EvtSource;
+using LaunchDarkly.EventSource;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DSharpPlus;
@@ -28,7 +28,7 @@ namespace DiscordWikiBot
 		public static bool Enabled = false;
 
 		// EventSource stream instance
-		private static EventSourceReader Stream;
+		private static EventSource Stream;
 
 		// EventSource stream translations
 		private static JObject Data = null;
@@ -66,7 +66,7 @@ namespace DiscordWikiBot
 			// Restart the stream if everything is initialised
 			if (Enabled)
 			{
-				Stream.Start();
+				Stream.Restart(true);
 				return;
 			}
 
@@ -92,25 +92,23 @@ namespace DiscordWikiBot
 			// Open new EventStreams instance
 			Enabled = true;
 			Program.LogMessage($"Connecting to stream.wikimedia.org", "EventStreams");
-			Stream = new EventSourceReader(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
+			Stream = new EventSource(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
 			LatestTimestamp = DateTime.Now;
 
-			// Log any disconnects
-			Stream.Disconnected += async(object sender, DisconnectEventArgs e) => {
+			// Log any errors
+			Stream.Error += (sender, args) =>
+			{
+				var exception = args.Exception;
 				// See https://phabricator.wikimedia.org/T242767 for why IOExceptions are ignored
-				if (!(e.Exception is IOException)) {
-					Program.LogMessage($"Stream returned the following exception (retry in {e.ReconnectDelay}): {e.Exception}", "EventStreams", "warning");
+				if (!(exception is IOException)) {
+					Program.LogMessage($"Stream returned the following exception): {exception}", "EventStreams", "warning");
 				}
-
-				// Reconnect to the same URL
-				await Task.Delay(e.ReconnectDelay);
-				Stream.Start();
 			};
 
 			// Start recording events
 			Stream.MessageReceived += Stream_MessageReceived;
 
-			Stream.Start();
+			Task.Run(async () => await Stream.StartAsync().ConfigureAwait(false));
 		}
 
 		/// <summary>
@@ -118,13 +116,13 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e">Recent change information.</param>
-		private static void Stream_MessageReceived(object sender, EventSourceMessageEventArgs e)
+		private static void Stream_MessageReceived(object sender, MessageReceivedEventArgs e)
 		{
-			if (e.Event != "message")
+			if (e.EventName != "message")
 			{
 				return;
 			}
-			RecentChange change = RecentChange.FromJson(e.Message);
+			RecentChange change = RecentChange.FromJson(e.Message.Data);
 			var changeTimestamp = change.Metadata.DateTime.ToUniversalTime();
 			LatestTimestamp = changeTimestamp;
 			bool notEdit = (change.Type != "edit" && change.Type != "new");

@@ -232,7 +232,7 @@ namespace DiscordWikiBot
 			// Remove anchor from page title
 			if (result.ContainsKey("title"))
 			{
-				string[] anchor = ((string)result["title"]).Split('#');
+				string[] anchor = ((string)result["title"]).Split('#', 2);
 				if (anchor.Length > 1)
 				{
 					result["title"] = anchor[0];

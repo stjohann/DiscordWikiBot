@@ -764,7 +764,7 @@ namespace DiscordWikiBot
 		public static bool IsInvalid(string str, bool checkLength = false)
 		{
 			// Only check part before #
-			string[] anchor = str.Split('#');
+			string[] anchor = str.Split('#', 2);
 			if (anchor.Length > 1)
 			{
 				str = anchor[0];
