@@ -66,7 +66,7 @@ namespace DiscordWikiBot
 			// Restart the stream if everything is initialised
 			if (Enabled)
 			{
-				Stream.Restart(true);
+				Stream.Restart(false);
 				return;
 			}
 
@@ -103,6 +103,9 @@ namespace DiscordWikiBot
 				if (!(exception is IOException)) {
 					Program.LogMessage($"Stream returned the following exception): {exception}", "EventStreams", "warning");
 				}
+
+				// Reconnect to the stream
+				Stream.Restart(false);
 			};
 
 			// Start recording events
