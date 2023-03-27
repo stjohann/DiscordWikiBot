@@ -1,0 +1,31 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ella Lachow"
+		]
+	},
+	"yes": "ee",
+	"no": "chii",
+	"help-title": "Maaduwaa",
+	"help-title-command": "{1}{0}{msg:separator}maaduwaa",
+	"help-all": "Ubba xoqqa xekka azazotanne citata paattanawu gujo naqaashaa be'anawu azazota dummaya.",
+	"help-version": "Birshshettaa {0}.",
+	"help-repo": "Man\"iyaa koodiyaa: {0}",
+	"help-commands": "Azazota",
+	"help-subcommands": "Sima azazota",
+	"help-aliases": "Laamettiyaa sunttata",
+	"help-arguments": "Palamata",
+	"help-default": "De'iyaagan: '{0}'.",
+	"help-optional": "Dooriyooba",
+	"help-group-standalone": "Ha citay bana danddayida azazo.",
+	"help-command": "Azazuwaa maaduwaa bessees.",
+	"help-command-command": "Maaduwaa shiishshiyoo azazuwaa.",
+	"configuring-status": ": information_sourcr: Sookkeetiyaan gayttiis.",
+	"eventstreams-talk": "haasayaa",
+	"eventstreams-contribs": "xaafo shiishota",
+	"eventstreams-new": "Ooratta",
+	"eventstreams-bot": "Bootiyaa",
+	"eventstreams-minor": "Guutta",
+	"linking-link": "Gattiyaagaa:",
+	"linking-links": "Gattiyaageta:"
+}
