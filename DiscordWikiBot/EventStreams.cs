@@ -509,7 +509,7 @@ namespace DiscordWikiBot
 				var key = item.Key;
 				var value = item.Value;
 				var requiredValueType = allowedKeys.GetValueOrDefault(key)?.GetType();
-				if (requiredValueType == null) {
+				if (item.Value == null || requiredValueType == null) {
 					continue;
 				}
 
@@ -519,12 +519,12 @@ namespace DiscordWikiBot
 				}
 
 				// Ignore default values if not resetting
-				if (discardPrevData == false && result.Property(key).Equals(value)) {
+				if (discardPrevData == false && result?.Property(key)?.Equals(value)) {
 					continue;
 				}
 
 				// Reset to default
-				if (allowedKeys.GetValueOrDefault(item.Key).Equals(item.Value)) {
+				if (allowedKeys.GetValueOrDefault(item.Key)?.Equals(item.Value)) {
 					if (discardPrevData == true) {
 						JProperty prop = result.Property(key);
 						if (prop != null)
