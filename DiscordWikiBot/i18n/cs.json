@@ -15,7 +15,7 @@
 	"help-subcommands": "Podpříkazy",
 	"help-aliases": "Aliasy",
 	"help-arguments": "Argumenty",
-	"help-default": "Defaultně: `{0}`.",
+	"help-default": "Ve výchozím nastavení: `{0}`.",
 	"help-optional": "volitelné",
 	"help-group-standalone": "Tato skupina je samostatný příkaz.",
 	"help-command": "Zobrazí nápovědu k příkazu.",
