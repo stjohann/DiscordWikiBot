@@ -525,7 +525,7 @@ namespace DiscordWikiBot
 				}
 			}
 
-			return string.Format("<{0}>", GetLink(str, currentLinkFormat));
+			return string.Format(Config.GetValue("linkFormat") == null ? "<{0}>" : Config.GetValue("linkFormat"), GetLink(str, currentLinkFormat));
 		}
 
 		/// <summary>
