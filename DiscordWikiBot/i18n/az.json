@@ -39,7 +39,7 @@
 	"configuring-required-value": "Bir parametr üçün dəyər tələb olunur.\nKomanda üçün tam kömək almaq üçün `{1}help {0}` yazın.",
 	"configuring-badvalue-domain": "Yayımlar yalnız Vikimedia layihələri üçün mövcuddur.\nİcazə verilən domenlərin siyahısı: {0}.",
 	"configuring-badvalue-lang": "Bot girişinizi etibarlı ISO 639 kodu kimi tanımır.",
-	"configuring-badvalue-wiki": "URL-nin sonunda `{0} 'olmalıdır.",
+	"configuring-badvalue-wiki": "Bot bu viki üçün API məlumatını əldə edə bilmir. URL-nizin sonunda `{0}` olmalıdır.",
 	"configuring-help-status": "Botun işlədiyini yoxlayın.",
 	"configuring-help-domain": "Bu serverdə son dəyişikliklərin yayımlandığı domeni dəyişdirin. Yalnız Vikimedia layihələri üçün işləyir.",
 	"configuring-help-domain-value": "bir Vikimedia layihəsinin domeni (az.wikipedia.org formatında). Defolt olaraq yenidən qurmaq üçün `-` istifadə edin.",
