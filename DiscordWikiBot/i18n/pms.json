@@ -35,7 +35,7 @@
 	"configuring-required-value": "Ël valor d'un paràmeter a l'é obligatòri.\nPër oten-e n'agiut complet për ël comand, mandé `{1}help {0}`.",
 	"configuring-badvalue-domain": "Ij fluss a son disponìbij mach për ij proget Wikimedia.\nLista dij domini autorisà: {0}.",
 	"configuring-badvalue-lang": "Ël trigomiro a arconòss nen sò anseriment tanme còdes ISO 639 bon.",
-	"configuring-badvalue-wiki": "A dev ess-ie `{0}` a la fin ëd soa adrëssa.",
+	"configuring-badvalue-wiki": "Ël trigomiro a peul nen oten-e j'anformassion ëd l'API për costa wiki.\nA dev ess-ie `{0}` a la fin ëd soa adrëssa.",
 	"configuring-help-status": "Verifiché si ël trigomiro a l'é operativ.",
 	"configuring-help-domain": "Ch'a modìfica ël domini dal qual j'ùltime modìfiche a son difondùe da cost servent. A marcia mach për ij proget Wikimedia.",
 	"configuring-help-domain-value": "domini d'un proget Wikimedia (ant ël formà pms.wikipedia.org). Ch'a deuvra `-` për ristabilì ij valor inissiaj.",

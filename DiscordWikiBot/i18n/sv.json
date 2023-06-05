@@ -38,7 +38,7 @@
 	"configuring-required-value": "Värdet för en parameter krävs.\nFör att skicka efter hjälp med kommandot, skicka `{1}help {0}`.",
 	"configuring-badvalue-domain": "Strömmar finns bara tillgängliga för Wikimediaprojekt.\nLista över tillåtna domäner: {0}.",
 	"configuring-badvalue-lang": "Boten känner inte igen din inmatning som en giltig ISO 639-kod.",
-	"configuring-badvalue-wiki": "Det måste finnas `{0}` i slutet på din webbadress.",
+	"configuring-badvalue-wiki": "Boten kan inte hämta API-information för denna wiki. Det måste finnas `{0}` i slutet på din webbadress.",
 	"configuring-help-status": "Kontrollera om boten kan köras.",
 	"configuring-help-domain": "Ändra domänen som senaste ändringarna sänds ifrån på den här server. Fungerar bara för Wikimediaprojekt.",
 	"configuring-help-domain-value": "domänen för ett Wikimedia-projekt (i formatet en.wikipedia.org). Använd `-` för att återställa till standardvärdet.",
