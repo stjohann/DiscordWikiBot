@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Naufal06",
-			"Sonic Speedy"
+			"Sonic Speedy",
+			"Veracious"
 		]
 	},
 	"yes": "ya",
@@ -36,7 +37,7 @@
 	"configuring-required-value": "Nilai dari sebuah parameter dibutuhkan.\nUntuk mendapatkan bantuan lebih lanjut dari perintah, kirimkan `{1}help {0}`.",
 	"configuring-badvalue-domain": "Siaran hanya tersedia untuk proyek Wikipedia.\nDaftar domain yang diperbolehkan: {0}.",
 	"configuring-badvalue-lang": "Bot tidak mengenali masukan sebagai kode ISO 639 yang valid.",
-	"configuring-badvalue-wiki": "Harus ada `{0}` di akhir URL Anda.",
+	"configuring-badvalue-wiki": "Botnya tidak bisa mendapatkan informasi API untuk wiki ini. Harus ada `{0}` di akhir URL Anda.",
 	"configuring-help-status": "Memeriksa apakah bot beroperasi.",
 	"configuring-help-domain": "Mengubah domain untuk perubahan terbaru yang disiarkan di peladen ini. Hanya dapat digunakan untuk proyek Wikimedia.",
 	"configuring-help-domain-value": "domain dari proyek Wikimedia (dengan format en.wikipedia.org). Gunakan `-` untuk menyetel ulang ke bawaan.",
