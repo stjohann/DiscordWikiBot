@@ -6,7 +6,8 @@
 			"Steeve815",
 			"YaronSh",
 			"דגש",
-			"דגש חזק"
+			"דגש חזק",
+			"מקף"
 		]
 	},
 	"yes": "כן",
@@ -27,7 +28,7 @@
 	"help-command-command": "פקודה הדורשת הצגת עזרה.",
 	"configuring-status": ":information_source: מחובר לשקע.",
 	"configuring-status-streaming": "התגובה האחרונה מהסטרימים: {0:דקה אחת|{0} דקות|{0} דקות|{0} דקות} {1:שנייה אחת|{1} שניות|{1} שניות|{1} שניות} מוקדם יותר.",
-	"configuring-changed-domain": "המתחם לסטרימים של השינויים האחרונים בשרת הזה שוּנה ל־**{0}**.",
+	"configuring-changed-domain": "המתחם לזרמי השינויים האחרונים בשרת הזה שוּנה ל־**{0}**.",
 	"configuring-changed-lang": "השפה של הבוט בשרת הזה שונתה ל־**{0}**.",
 	"configuring-changed-translatewiki": "דיווחים על השינויים האחרונים ב־translatewiki מופעלים בערוץ {0} עבור השפה **{1}**.",
 	"configuring-changed-translatewiki-channel": "הערוץ לדיווחים על השינויים האחרונים ב־translatewiki שוּנה ל־{0}.",
