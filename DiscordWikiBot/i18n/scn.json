@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ajeje Brazorf"
+		]
+	},
+	"yes": "sì",
+	"no": "no",
+	"help-title": "Aiutu",
+	"help-title-command": "{1}{0}{msg:separator}aiutu",
+	"help-version": "Virsioni {0}.",
+	"help-repo": "Còdici surgenti: {0}",
+	"help-commands": "Cumanni",
+	"help-subcommands": "Suttacumanni",
+	"help-aliases": "Alias",
+	"help-arguments": "Argumenta",
+	"help-optional": "facultativu",
+	"eventstreams-diff": "diff",
+	"eventstreams-talk": "discussioni",
+	"eventstreams-contribs": "cuntribbuti",
+	"eventstreams-new": "N",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "n",
+	"linking-link": "Culligamentu:",
+	"linking-links": "Culligamenti:",
+	"streaming-stream-namespace": "dû namespace `{0}`",
+	"streaming-stream-title": "dâ pàggina `{0}`",
+	"streaming-key-minor": "ncludi li canciamenti nichi",
+	"streaming-key-namespace": "nùmmuru di namespace",
+	"streaming-key-title": "tìtulu dâ pàggina",
+	"streaming-key-type": "Tipu di canciamentu",
+	"translatewiki-header": "{0} {1:missaggiu|missaggiu} di {2} {2:auturi/trici|autura/trici}"
+}
