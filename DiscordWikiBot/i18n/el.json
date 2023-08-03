@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Babispan",
+			"Geraki",
 			"GhotuoIncubator",
 			"Norhorn"
 		]
@@ -37,7 +38,7 @@
 	"configuring-required-value": "H αξία μίας παραμέτρου είναι αναγκαία. Για να πάρετε πλήρη βοήθεια για την εντολή,  στείλτε `{1}help {0}`",
 	"configuring-badvalue-domain": "Τα κανάλια είναι διαθέσημα μόνο για πρότζεκτ της Wikimedia. Λίστα των διαθέσημων διευθύνσεων: {0}",
 	"configuring-badvalue-lang": "Το ρομπότ δέν αναγνωρίζει αυτά που ησάγατε σαν εναν έγκυρο κωδικό ISO 639.",
-	"configuring-badvalue-wiki": "Πρέπει να υπάρχει ένα '{0}΄στο τέλος του URL που δώσατε.",
+	"configuring-badvalue-wiki": "Το bot δεν μπορεί να λάβει πληροφορίες API για αυτό το wiki. Πρέπει να υπάρχει «{0}» στο τέλος της διεύθυνσης URL σας.",
 	"configuring-help-status": "Ελέγξτε αν το bot λειτουργεί.",
 	"configuring-help-domain": "Άλλαξε την διεύθυνση απο την οποία οι πρόσφατες αλλαγές μεταδίδονται σε αυτόν τον διακομιστή. Μόνο για πρότζεκτ της Wikimedia.",
 	"configuring-help-domain-value": "Η διεύθυνση ενότ πρότζεκτ της Wikimedia (π.χ. en.wikipedia.org).  Χρησημοποίησε το `-` για επιστροφή στο προκαθορισμένο.",
