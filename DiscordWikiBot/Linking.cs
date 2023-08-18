@@ -10,6 +10,7 @@ using DSharpPlus.EventArgs;
 using WikiClientLibrary.Sites;
 using DSharpPlus.Entities;
 using WikiClientLibrary.Pages;
+using System.Web;
 
 namespace DiscordWikiBot
 {
@@ -329,7 +330,7 @@ namespace DiscordWikiBot
 					// Present in content but not visible, therefore it's marked as spoiler
 					if (!visibleContent.Contains(link.Value))
 					{
-						str = string.Format("||{0}||", str);
+						str = $"||{str}||";
 					}
 
 					if (!links.Contains(str))
@@ -341,18 +342,9 @@ namespace DiscordWikiBot
 				// Reject if there are no links
 				if (links.Count == 0) return "";
 
-				// Choose label and separator
-				string label = "linking-link";
-				string separator = " ";
-				if (links.Count > 1)
-				{
-					label = "linking-links";
-					separator = Environment.NewLine;
-				}
-
 				// Compose message
-				string msg = Locale.GetMessage(label, lang) + separator;
-				msg += string.Join(Environment.NewLine, links);
+				var msg = Locale.GetMessage("linking-links", lang, links.Count, " ");
+				msg += string.Join(Locale.GetMessage("comma", lang, " "), links);
 
 				// Reject if the message is too long
 				if (msg.Length > 2000) return TOO_LONG;
@@ -372,19 +364,19 @@ namespace DiscordWikiBot
 		static public string AddLink(Match link, string linkFormat)
 		{
 			GroupCollection groups = link.Groups;
-			string type = groups[1].Value.Trim();
-			string str = groups[2].Value.Trim();
-			string endBrackets = groups[3].Value.Trim();
+			var brackets = groups[1].Value.Trim();
+			var str = groups[2].Value.Trim();
+			var endBrackets = groups[3].Value.Trim();
 
-			bool isLink = type == "[[";
-			bool isTransclusion = type.StartsWith("{{");
+			bool isLink = brackets == "[[";
+			bool isTransclusion = brackets.StartsWith("{{");
 
 			// Check for matching brackets
 			if (isLink && !endBrackets.StartsWith("]")) return null;
 			if (isTransclusion && !endBrackets.StartsWith("}")) return null;
 
 			// Check for parameter syntax
-			if (type.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return null;
+			if (brackets.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return null;
 
 			// Remove escaping symbols before Markdown syntax in Discord
 			// (it converts \ to / anyway)
@@ -408,6 +400,9 @@ namespace DiscordWikiBot
 			NamespaceInfo ns = null;
 			string nsName = null;
 			bool capitalised = !defaultSiteInfo.SiteInfo.IsTitleCaseSensitive;
+
+			// Storage for interwiki link prefix
+			List<string> iwList = new List<string>();
 
 			// Handle transclusion links
 			if (isTransclusion)
@@ -471,6 +466,7 @@ namespace DiscordWikiBot
 						capitalised = !newSiteInfo.SiteInfo.IsTitleCaseSensitive;
 					}
 
+					iwList.Add(prefix);
 					str = prefixRegex.Replace(str, "", 1).Trim();
 
 					// Cannot resolve future interwiki links after a fetch failed
@@ -505,27 +501,48 @@ namespace DiscordWikiBot
 			var nsTitle = (ns == null || ns.Id == 0) ? str : $"{ns.Id}:{str}";
 			if (IsInvalid(nsTitle, true)) return null;
 
-			// Rewrite remaining title
-			if (str.Length > 0)
+			// Trim : from the start (nuisance)
+			str = str.TrimStart(':');
+
+			// Capitalise the title if lowercase titles are not allowed
+			if (capitalised)
 			{
-				// Trim : from the start (nuisance)
-				str = str.TrimStart(':');
+				str = Capitalise(str);
+			}
 
-				// Capitalise first letter if lowercase titles are not allowed
-				if (capitalised)
-				{
-					str = str[0].ToString().ToUpper() + str.Substring(1);
-				}
+			// Remember the link string (without namespace for template links)
+			var linkStr = str;
 
-				// Add namespace before any transformations
-				if (ns != null && ns.Id != 0)
+			// Add namespace before any transformations
+			if (ns != null && ns.Id != 0)
+			{
+				nsName = nsName == null ? ns.CustomName : nsName;
+				str = string.Join(":", new[] { nsName, str });
+
+				if (!(isTransclusion && ns.Id == 10))
 				{
-					nsName = nsName == null ? ns.CustomName : nsName;
-					str = string.Join(":", new[] { nsName, str });
+					linkStr = str;
 				}
 			}
 
-			return string.Format("<{0}>", GetLink(str, currentLinkFormat));
+			// Add semicolon to mainspace transclusions
+			if (isTransclusion && ns != null && ns.Id == 0)
+			{
+				linkStr = ":" + linkStr;
+			}
+
+			// Encode displayed link title for any issues
+			linkStr = EncodePageTitle(linkStr, spaceChar: " ");
+
+			// Create link text from the result
+			var linkStart = brackets.Substring(0, 2);
+			var linkEnd = endBrackets.Substring(0, 2);
+			var linkInterwikis = string.Join(":", iwList);
+			if (linkInterwikis.Length > 0) linkInterwikis += ":";
+
+			var linkText = $"{linkStart}{linkInterwikis}{linkStr}{linkEnd}";
+
+			return $"[{linkText}](<{GetLink(str, currentLinkFormat)}>)";
 		}
 
 		/// <summary>
@@ -539,7 +556,7 @@ namespace DiscordWikiBot
 			// Guess that it is a mainspace page
 			if (title.StartsWith(':'))
 			{
-				return Tuple.Create<NamespaceInfo, string>(null, Regex.Replace(title, "^ *: *", ""));
+				return Tuple.Create(site.Namespaces[""], Regex.Replace(title, "^ *: *", ""));
 			}
 			var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
 			var magicWords = site.MagicWords;
@@ -748,7 +765,7 @@ namespace DiscordWikiBot
 			// Restore the anchor from original title
 			if (title.Contains('#'))
 			{
-				pageTitle += "#" + EncodePageTitle(title.Split('#')?[1], false);
+				pageTitle += "#" + EncodePageTitle(title.Split('#')?[1]);
 			}
 
 			await Task.CompletedTask;
@@ -859,12 +876,28 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Capitalise a string.
+		/// </summary>
+		/// <param name="value">String to be capitalised.</param>
+		/// <returns>String with the first letter in uppercase.</returns>
+		private static string Capitalise(string value)
+		{
+			if (value.Length == 0)
+			{
+				return value;
+			}
+			
+			return value[0].ToString().ToUpper() + value.Substring(1);
+		}
+
+		/// <summary>
 		/// Encode page title according to the rules of MediaWiki.
 		/// </summary>
 		/// <param name="str">Page title.</param>
 		/// <param name="escapePar">Escape parentheses for Markdown links.</param>
+		/// <param name="spaceChar">Character that should be used instead of space-like characters.</param>
 		/// <returns>An encoded page title.</returns>
-		private static string EncodePageTitle(string str, bool escapePar)
+		private static string EncodePageTitle(string str, bool escapePar = false, string spaceChar = "_")
 		{
 			// Following character conversions are based on {{PAGENAMEE}} specification:
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding
@@ -884,23 +917,36 @@ namespace DiscordWikiBot
 				// Added: Causes problems in anchors
 				'<',
 				'>',
-				// Added: Soft hyphen (difficult to see in copied text)
+			};
+
+			char[] deletedChars = {
+				// Soft hyphen (useless in links)
 				'\u00ad',
-				// Added: LTR/RTL marks (difficult to see in copied text)
+				// LTR/RTL marks (useless in links)
 				'\u200e',
 				'\u200f',
 			};
 
+			// Decode HTML-encoded symbols before encoding
+			if (str.Contains("&")) str = HttpUtility.HtmlDecode(str);
+
 			// Decode percent-encoded symbols before encoding
 			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
 
-			// Replace all spaces to underscores
-			str = Regex.Replace(str.Trim(), @"\s{1,}", "_");
+			// Replace all spaces to required space symbol
+			str = str.Trim().Replace('_', ' ');
+			str = Regex.Replace(str, @"\s{1,}", spaceChar);
 
 			// Percent encoding for special characters
 			foreach (var ch in specialChars)
 			{
 				str = str.Replace(ch.ToString(), Uri.EscapeDataString(ch.ToString()));
+			}
+
+			// Remove deleted special characters
+			foreach (var ch in deletedChars)
+			{
+				str = str.Replace(ch.ToString(), "");
 			}
 
 			// Escape ) in embeds to not break links

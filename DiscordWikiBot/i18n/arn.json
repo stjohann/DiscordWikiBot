@@ -23,7 +23,6 @@
 	"eventstreams-new": "W",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "p",
-	"linking-link": "Trarintuku:",
-	"linking-links": "Trarintuku:",
+	"linking-links": "{0:Trarintuku|Trarintuku}:{1}",
 	"streaming-key-title": "Tapülh ñi üy"
 }

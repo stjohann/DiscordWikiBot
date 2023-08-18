@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"stjn"
+			"Stjn"
 		]
 	},
 
 	"bullet": "• {0}",
 	"separator": " – {0}",
+	"comma": ",{0}",
 	"yes": "yes",
 	"no": "no",
 
@@ -62,8 +63,7 @@
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
 
-	"linking-link": "Link:",
-	"linking-links": "Links:",
+	"linking-links": "{0:Link|Links}:{1}",
 	"linking-toolong": "Links to the message above are not provided because the message would be too long for Discord.",
 
 	"streaming-stream-namespace": "from the namespace `{0}`",

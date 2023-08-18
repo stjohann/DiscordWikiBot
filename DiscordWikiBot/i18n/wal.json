@@ -26,6 +26,5 @@
 	"eventstreams-new": "Ooratta",
 	"eventstreams-bot": "Bootiyaa",
 	"eventstreams-minor": "Guutta",
-	"linking-link": "Gattiyaagaa:",
-	"linking-links": "Gattiyaageta:"
+	"linking-links": "{0:Gattiyaagaa|Gattiyaageta}:{1}"
 }

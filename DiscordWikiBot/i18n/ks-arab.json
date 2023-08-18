@@ -22,8 +22,7 @@
 	"eventstreams-new": "نٔو",
 	"eventstreams-bot": "ب",
 	"eventstreams-minor": "ل",
-	"linking-link": "لِنک:",
-	"linking-links": "لِنکہٕ:",
+	"linking-links": "{0:لِنک|لِنکہٕ}:{1}",
 	"streaming-key-bot": "باٹ اؠڑِٹ تہِ",
 	"streaming-key-title": "صَفہٕ عُنٛوان"
 }
