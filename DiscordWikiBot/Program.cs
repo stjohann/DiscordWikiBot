@@ -90,6 +90,7 @@ namespace DiscordWikiBot
 				MinimumLogLevel = LogLevel.Information,
 				Token = Token,
 				TokenType = TokenType.Bot,
+				Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents,
 			});
 
 			// Initialise events
