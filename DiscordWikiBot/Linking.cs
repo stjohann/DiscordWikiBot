@@ -596,6 +596,15 @@ namespace DiscordWikiBot
 				return Tuple.Create(site.Namespaces["mediawiki"], title);
 			}
 
+			// Guess that it is a Special: page
+			var specialNames = GetMagicWordNames("special", magicWords);
+			if (specialNames.Any(x => title.StartsWith(x, InvariantCultureIgnoreCase)))
+			{
+				var specialRegex = string.Join('|', specialNames);
+				title = Regex.Replace(title, $"^ *(?:{specialRegex}) *", "", RegexOptions.IgnoreCase);
+				return Tuple.Create(site.Namespaces["special"], title);
+			}
+
 			// Guess that it is a Module: page
 			var hasModuleNamespace = site.Namespaces["module"] != null;
 			if (hasModuleNamespace)
@@ -632,8 +641,8 @@ namespace DiscordWikiBot
 				return new string[] { name };
 			}
 
-			// Format #invoke: manually
-			if (name == "invoke")
+			// Format #invoke: and #special: manually
+			if (name == "invoke" || name == "special")
 			{
 				names = names.Select(x => $"#{x}:").ToArray();
 			}
