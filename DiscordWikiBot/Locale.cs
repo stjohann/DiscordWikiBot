@@ -133,7 +133,7 @@ namespace DiscordWikiBot
 				{
 					strArgs = $": {strArgs}";
 				}
-				return string.Format("({0}{1})", key, strArgs);
+				return $"({key}{strArgs})";
 			}
 
 			// Replace messages inside messages (works without arguments)

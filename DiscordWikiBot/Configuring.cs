@@ -366,12 +366,12 @@ namespace DiscordWikiBot
 			string[] list = channelList.Cast<DiscordChannel>().Select(x => x.Id.ToString()).ToArray();
 			JObject streams = EventStreams.GetData(list);
 
-			// Inform about streams if they exist on a server
-			string streamingMsg = "";
+			// Inform about version and streams if they exist on a server
+			var appendedMsg = " " + Locale.GetMessage("help-version", lang, Program.Version);
 			if (streams.Count > 0)
 			{
 				TimeSpan timestamp = DateTime.UtcNow - EventStreams.LatestTimestamp;
-				streamingMsg = " " + Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
+				appendedMsg = " " + Locale.GetMessage("configuring-status-streaming", lang, (int)timestamp.TotalMinutes, timestamp.Seconds);
 
 				// Restart the stream if it is offline for five minutes
 				if (timestamp.TotalMinutes > 5)
@@ -382,7 +382,7 @@ namespace DiscordWikiBot
 			}
 
 			// Respond to message
-			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + streamingMsg);
+			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + appendedMsg);
 		}
 	}
 }

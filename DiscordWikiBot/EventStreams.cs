@@ -363,7 +363,7 @@ namespace DiscordWikiBot
 				.WithAuthor(
 					change.Title,
 					Linking.GetLink(change.Title, format),
-					string.Format("https://upload.wikimedia.org/wikipedia/commons/thumb/{0}", embedIcon)
+					$"https://upload.wikimedia.org/wikipedia/commons/thumb/{embedIcon}"
 				)
 				.WithColor(embedColor)
 				.WithDescription(GetMessage(change, format, lang));

@@ -9,7 +9,7 @@ namespace DiscordWikiBot.Tests
 		public void BasicLink()
 		{
 			string actual = Linking.PrepareMessage("[[test link]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Test_link>";
+			string expected = "Ссылка: [[[Test link]]](<https://ru.wikipedia.org/wiki/Test_link>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -17,7 +17,7 @@ namespace DiscordWikiBot.Tests
 		public void BasicLinkWithHack()
 		{
 			string actual = Linking.PrepareMessage("[[test (disambiguation)]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Test_(disambiguation)_>";
+			string expected = "Ссылка: [[[Test (disambiguation)]]](<https://ru.wikipedia.org/wiki/Test_(disambiguation)_>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -25,9 +25,7 @@ namespace DiscordWikiBot.Tests
 		public void MultipleLinks()
 		{
 			string actual = Linking.PrepareMessage("[[Кот]]о[[пёс]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Кот>
-<https://ru.wikipedia.org/wiki/Пёс>";
+			string expected = @"Ссылки: [[[Кот]]](<https://ru.wikipedia.org/wiki/Кот>), [[[Пёс]]](<https://ru.wikipedia.org/wiki/Пёс>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -39,10 +37,7 @@ namespace DiscordWikiBot.Tests
 				[[user:Udacha]]
 				[[user:js]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Участник:Stjn>
-<https://ru.wikipedia.org/wiki/Участница:Udacha>
-<https://ru.wikipedia.org/wiki/Участник:Js>";
+			string expected = @"Ссылки: [[[Участник:Stjn]]](<https://ru.wikipedia.org/wiki/Участник:Stjn>), [[[Участница:Udacha]]](<https://ru.wikipedia.org/wiki/Участница:Udacha>), [[[Участник:Js]]](<https://ru.wikipedia.org/wiki/Участник:Js>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -59,13 +54,7 @@ namespace DiscordWikiBot.Tests
 				{{подст:тест 2}}
 				{{:тест}}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Шаблон:С_отвратительным_дизайном>
-<https://ru.wikipedia.org/wiki/MediaWiki:Lang>
-<https://ru.wikipedia.org/wiki/Модуль:Math>
-<https://ru.wikipedia.org/wiki/Шаблон:Тест>
-<https://ru.wikipedia.org/wiki/Шаблон:Тест_2>
-<https://ru.wikipedia.org/wiki/Тест>";
+			string expected = @"Ссылки: [{{С отвратительным дизайном}}](<https://ru.wikipedia.org/wiki/Шаблон:С_отвратительным_дизайном>), [{{MediaWiki:Lang}}](<https://ru.wikipedia.org/wiki/MediaWiki:Lang>), [{{Модуль:Math}}](<https://ru.wikipedia.org/wiki/Модуль:Math>), [{{Тест}}](<https://ru.wikipedia.org/wiki/Шаблон:Тест>), [{{Тест 2}}](<https://ru.wikipedia.org/wiki/Шаблон:Тест_2>), [{{:Тест}}](<https://ru.wikipedia.org/wiki/Тест>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -88,9 +77,7 @@ namespace DiscordWikiBot.Tests
 				{{formatnum:223}}
 				{{GENDER:stjn}}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Служебная:RecentChanges>
-<https://ru.wikipedia.org/wiki/Шаблон:Tag_test>";
+			string expected = @"Ссылки: [{{Служебная:RecentChanges}}](<https://ru.wikipedia.org/wiki/Служебная:RecentChanges>), [{{Tag test}}](<https://ru.wikipedia.org/wiki/Шаблон:Tag_test>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -98,7 +85,7 @@ namespace DiscordWikiBot.Tests
 		public void NamespaceAliasLink()
 		{
 			string actual = Linking.PrepareMessage("[[ВП:Страшное место]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://ru.wikipedia.org/wiki/Википедия:Страшное_место>";
+			string expected = "Ссылка: [[[Википедия:Страшное место]]](<https://ru.wikipedia.org/wiki/Википедия:Страшное_место>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -106,9 +93,7 @@ namespace DiscordWikiBot.Tests
 		public void NonCapitalisedLinks()
 		{
 			string actual = Linking.PrepareMessage("[[wikt:пёс]] [[wikt:mediawiki:common.js]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wiktionary.org/wiki/пёс>
-<https://ru.wiktionary.org/wiki/MediaWiki:Common.js>";
+			string expected = @"Ссылки: [[[wikt:пёс]]](<https://ru.wiktionary.org/wiki/пёс>), [[[wikt:MediaWiki:Common.js]]](<https://ru.wiktionary.org/wiki/MediaWiki:Common.js>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -120,10 +105,7 @@ namespace DiscordWikiBot.Tests
 			[[fr:]]
 			{{de:test}}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://en.wikipedia.org/wiki/Wikipedia:Sandbox>
-<https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal>
-<https://ru.wikipedia.org/wiki/Шаблон:De:test>";
+			string expected = @"Ссылки: [[[en:Wikipedia:Sandbox]]](<https://en.wikipedia.org/wiki/Wikipedia:Sandbox>), [[[fr:Wikipédia:Accueil principal]]](<https://fr.wikipedia.org/wiki/Wikipédia:Accueil_principal>), [{{De:test}}](<https://ru.wikipedia.org/wiki/Шаблон:De:test>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -135,10 +117,7 @@ namespace DiscordWikiBot.Tests
 			[[google:]]
 			[[google:lmgtfy]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://iw.toolforge.org/guc>
-<https://www.google.com/search?q=>
-<https://www.google.com/search?q=lmgtfy>";
+			string expected = @"Ссылки: [[[toollabs:guc]]](<https://iw.toolforge.org/guc>), [[[google:]]](<https://www.google.com/search?q=>), [[[google:lmgtfy]]](<https://www.google.com/search?q=lmgtfy>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -150,10 +129,7 @@ namespace DiscordWikiBot.Tests
 			[[en:wikt:mediawiki:common.js]]
 			[[google:de:test]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://en.wiktionary.org/wiki/test>
-<https://en.wiktionary.org/wiki/MediaWiki:Common.js>
-<https://www.google.com/search?q=de:test>";
+			string expected = @"Ссылки: [[[en:wikt:test]]](<https://en.wiktionary.org/wiki/test>), [[[en:wikt:MediaWiki:Common.js]]](<https://en.wiktionary.org/wiki/MediaWiki:Common.js>), [[[google:de:test]]](<https://www.google.com/search?q=de:test>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -161,7 +137,7 @@ namespace DiscordWikiBot.Tests
 		public void EmojiInterwikiLink()
 		{
 			string actual = Linking.PrepareMessage("[[<:meta:873203055804436513>Discord]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = "Ссылка: <https://meta.wikimedia.org/wiki/Discord>";
+			string expected = "Ссылка: [[[meta:Discord]]](<https://meta.wikimedia.org/wiki/Discord>)";
 			Assert.AreEqual(expected, actual);
 		}
 
@@ -177,24 +153,19 @@ namespace DiscordWikiBot.Tests
 				{{{{сидит}}}}
 				{{{{{{фазан}}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Каждый>
-<https://ru.wikipedia.org/wiki/Охотник>
-<https://ru.wikipedia.org/wiki/Шаблон:Желает>
-<https://ru.wikipedia.org/wiki/Шаблон:Знать>
-<https://ru.wikipedia.org/wiki/Шаблон:Фазан>";
+			string expected = @"Ссылки: [[[Каждый]]](<https://ru.wikipedia.org/wiki/Каждый>), [[[Охотник]]](<https://ru.wikipedia.org/wiki/Охотник>), [{{Желает}}](<https://ru.wikipedia.org/wiki/Шаблон:Желает>), [{{Знать}}](<https://ru.wikipedia.org/wiki/Шаблон:Знать>), [{{Фазан}}](<https://ru.wikipedia.org/wiki/Шаблон:Фазан>)";
 			Assert.AreEqual(expected, actual);
 		}
 
 		[TestMethod]
 		public void WeirdLinks()
 		{
-			string actual1 = Linking.PrepareMessage("[[:Test#One%20Two]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected1 = "Ссылка: <https://ru.wikipedia.org/wiki/Test#One_Two>";
+			string actual1 = Linking.PrepareMessage("[[:Test#One%20Two]] [[Tam&#x200F;zin]]", "ru", "https://ru.wikipedia.org/wiki/$1");
+			string expected1 = "Ссылки: [[[Test#One Two]]](<https://ru.wikipedia.org/wiki/Test#One_Two>), [[[Tamzin]]](<https://ru.wikipedia.org/wiki/Tamzin>)";
 			Assert.AreEqual(expected1, actual1);
 
 			string actual2 = Linking.PrepareMessage("[[File:Rainbow lorikeet.jpg%20]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected2 = "Ссылка: <https://ru.wikipedia.org/wiki/Файл:Rainbow_lorikeet.jpg>";
+			string expected2 = "Ссылка: [[[Файл:Rainbow lorikeet.jpg]]](<https://ru.wikipedia.org/wiki/Файл:Rainbow_lorikeet.jpg>)";
 			Assert.AreEqual(expected2, actual2);
 
 			string actual3 = Linking.PrepareMessage(@"
@@ -204,20 +175,14 @@ namespace DiscordWikiBot.Tests
 				[[Википедия: ЗЛВ]]
 				{{ int: mainpage }}
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected3 = @"Ссылки:
-<https://ru.wiktionary.org/wiki/Gift>
-<https://ja.wikipedia.org/wiki/おちんちん>
-<https://ru.wikipedia.org/wiki/Википедия:ЗЛВ>
-<https://ru.wikipedia.org/wiki/MediaWiki:Mainpage>";
+			string expected3 = @"Ссылки: [[[wikt:Gift]]](<https://ru.wiktionary.org/wiki/Gift>), [[[ja:おちんちん]]](<https://ja.wikipedia.org/wiki/おちんちん>), [[[Википедия:ЗЛВ]]](<https://ru.wikipedia.org/wiki/Википедия:ЗЛВ>), [{{MediaWiki:Mainpage}}](<https://ru.wikipedia.org/wiki/MediaWiki:Mainpage>)";
 			Assert.AreEqual(expected3, actual3);
 
 			string actual4 = Linking.PrepareMessage(@"
 				[[foo|bar|baz]]
 				[[nested|[pipes]]]
 			", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected4 = @"Ссылки:
-<https://ru.wikipedia.org/wiki/Foo>
-<https://ru.wikipedia.org/wiki/Nested>";
+			string expected4 = @"Ссылки: [[[Foo]]](<https://ru.wikipedia.org/wiki/Foo>), [[[Nested]]](<https://ru.wikipedia.org/wiki/Nested>)";
 			Assert.AreEqual(expected4, actual4);
 		}
 
@@ -264,15 +229,11 @@ namespace DiscordWikiBot.Tests
 		public void LinksInSpoilerBlocks()
 		{
 			string actual1 = Linking.PrepareMessage("||[[Test]]||", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected1 = "Ссылка: ||<https://ru.wikipedia.org/wiki/Test>||";
+			string expected1 = "Ссылка: ||[[[Test]]](<https://ru.wikipedia.org/wiki/Test>)||";
 			Assert.AreEqual(expected1, actual1);
 
 			string actual2 = Linking.PrepareMessage("[[A]] ||[[B]] [[C]]|| [[D]]", "ru", "https://ru.wikipedia.org/wiki/$1");
-			string expected2 = @"Ссылки:
-<https://ru.wikipedia.org/wiki/A>
-||<https://ru.wikipedia.org/wiki/B>||
-||<https://ru.wikipedia.org/wiki/C>||
-<https://ru.wikipedia.org/wiki/D>";
+			string expected2 = @"Ссылки: [[[A]]](<https://ru.wikipedia.org/wiki/A>), ||[[[B]]](<https://ru.wikipedia.org/wiki/B>)||, ||[[[C]]](<https://ru.wikipedia.org/wiki/C>)||, [[[D]]](<https://ru.wikipedia.org/wiki/D>)";
 			Assert.AreEqual(expected2, actual2);
 		}
 
