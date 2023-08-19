@@ -2,7 +2,7 @@
 # See https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/customizing-dependency-updates
 version: 2
 updates:
-  - package-ecosystem: "nuget"
+  - package-ecosystem: 'nuget'
     directory: '/'
     schedule:
       interval: 'weekly'
@@ -10,7 +10,7 @@ updates:
     groups:
       all:
         patterns:
-          - "*"
+          - '*'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'

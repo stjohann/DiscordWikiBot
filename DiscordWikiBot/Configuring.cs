@@ -381,6 +381,9 @@ namespace DiscordWikiBot
 				}
 			}
 
+			// Refresh site info for the channel (or the server if default)
+			await Linking.Init(ctx.Channel.Id.ToString(), true);
+
 			// Respond to message
 			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + appendedMsg);
 		}

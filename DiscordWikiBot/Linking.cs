@@ -83,15 +83,27 @@ namespace DiscordWikiBot
 		/// Initialise the default settings and setup things for overrides.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
-		static public async Task Init(string goal = "")
+		/// <param name="refresh">Refresh the info even if site info already has a key.</param>
+		static public async Task Init(string goal = "", bool refresh = false)
 		{
 			string wiki = Config.GetWiki(goal);
 
 			// Fetch values for the goal’s wiki
-			if (!WikiSiteInfo.ContainsKey(wiki))
+			if (refresh || !WikiSiteInfo.ContainsKey(wiki))
 			{
-				WikiSite data = await GetWikiSite(wiki);
-				if (data != null) WikiSiteInfo.Add(wiki, data);
+				var data = await GetWikiSite(wiki);
+				if (data != null)
+				{
+					if (!WikiSiteInfo.ContainsKey(wiki))
+					{
+						WikiSiteInfo.Add(wiki, data);
+					}
+					else
+					{
+						await WikiSiteInfo[wiki].RefreshSiteInfoAsync();
+						Program.LogMessage($"Updated the site info for {wiki} (#{goal})");
+					}
+				}
 			}
 		}
 
@@ -886,7 +898,7 @@ namespace DiscordWikiBot
 			{
 				return value;
 			}
-			
+
 			return value[0].ToString().ToUpper() + value.Substring(1);
 		}
 

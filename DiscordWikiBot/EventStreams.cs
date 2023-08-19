@@ -119,7 +119,7 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e">Recent change information.</param>
-		private static void Stream_MessageReceived(object sender, MessageReceivedEventArgs e)
+		private static async void Stream_MessageReceived(object sender, MessageReceivedEventArgs e)
 		{
 			if (e.EventName != "message")
 			{
@@ -144,13 +144,13 @@ namespace DiscordWikiBot
 			// React if there is server data for namespace
 			if (Data[$"<{ns}>"] != null)
 			{
-				React($"<{ns}>", Data.Value<JObject>($"<{ns}>"), change).Wait();
+				await React($"<{ns}>", Data.Value<JObject>($"<{ns}>"), change);
 			}
 
 			// React if there is server data for title
 			if (Data[title] != null)
 			{
-				React(title, Data.Value<JObject>(title), change).Wait();
+				await React(title, Data.Value<JObject>(title), change);
 			}
 		}
 
