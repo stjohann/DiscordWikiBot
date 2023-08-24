@@ -56,7 +56,7 @@
 	"eventstreams-new": "新",
 	"eventstreams-bot": "機",
 	"eventstreams-minor": "小",
-	"linking-links": "{0:連結|連結}：",
+	"linking-links": "{0:連結|連結}：{1}",
 	"linking-toolong": "未提供以上訊息的連結，因為對 Discord 而言此訊息過長。",
 	"streaming-stream-namespace": "來自命名空間「{0}」",
 	"streaming-stream-title": "來自頁面「{0}」",
