@@ -56,7 +56,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Veza|Veze}:{1}",
+	"linking-links": "{0:Veza|Veze}:&#32;",
 	"linking-toolong": "Veze do gorenavedene poruke nisu obezbeđene jer bi poruka bila preduga za Discord.",
 	"streaming-stream-namespace": "sa imenskog prostora `{0}`",
 	"streaming-stream-title": "sa stranice `{0}`",

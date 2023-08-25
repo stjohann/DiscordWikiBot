@@ -53,7 +53,7 @@
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "с",
-	"linking-links": "{0:Врска|Врски}:{1}",
+	"linking-links": "{0:Врска|Врски}:&#32;",
 	"linking-toolong": "Не се дадени врски до пораката погоре бидејќи таа би била предолга за Discord.",
 	"streaming-stream-namespace": "од именскиот простор `{0}`",
 	"streaming-stream-title": "од страницата `{0}`",

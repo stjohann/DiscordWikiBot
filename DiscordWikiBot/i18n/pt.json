@@ -54,7 +54,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Hiperligação|Hiperligações}:{1}",
+	"linking-links": "{0:Hiperligação|Hiperligações}:&#32;",
 	"linking-toolong": "As hiperligações para a mensagem acima não são fornecidas porque a mensagem seria demasiado longa para o Discord.",
 	"streaming-stream-namespace": "do espaço nominal `{0}`",
 	"streaming-stream-title": "da página `{0}`",

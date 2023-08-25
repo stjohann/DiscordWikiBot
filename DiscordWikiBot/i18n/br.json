@@ -55,7 +55,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Liamm|Liammoù}:{1}",
+	"linking-links": "{0:Liamm|Liammoù}:&#32;",
 	"linking-toolong": "Al liammoù davet ar gemennadenn amañ a-us na vezont ket diskouezet, rak re hir e vefe ar gemennadenn evit Discord.",
 	"streaming-stream-namespace": "spas an anvioù `{0}`",
 	"streaming-stream-title": "eus ar bajenn `{0}`",

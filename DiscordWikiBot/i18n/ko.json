@@ -36,7 +36,7 @@
 	"eventstreams-new": "새글",
 	"eventstreams-bot": "봇",
 	"eventstreams-minor": "잔글",
-	"linking-links": "{0:링크|링크}:{1}",
+	"linking-links": "{0:링크|링크}:&#32;",
 	"linking-toolong": "위 메시지의 링크는 디스코드에 게시하기에는 너무 길기 때문에 제공되지 않습니다.",
 	"streaming-stream-namespace": "`{0}` 이름공간에서",
 	"streaming-stream-title": "`{0}` 문서에서",

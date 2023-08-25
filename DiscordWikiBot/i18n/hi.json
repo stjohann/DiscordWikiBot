@@ -54,7 +54,7 @@
 	"eventstreams-new": "न",
 	"eventstreams-bot": "बॉ",
 	"eventstreams-minor": "छो",
-	"linking-links": "{0:कड़ी|कड़ियाँ}:{1}",
+	"linking-links": "{0:कड़ी|कड़ियाँ}:&#32;",
 	"linking-toolong": "ऊपर के संदेश की कड़ियाँ नहीं दी गई हैं क्योंकि संदेश डिस्कॉर्ड के लिए कुछ ज़्यादा ही लंबा हो जाता।",
 	"streaming-stream-namespace": "नामस्थान `{0}` से",
 	"streaming-stream-title": "पृष्ठ `{0}` से",

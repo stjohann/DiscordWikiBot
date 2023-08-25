@@ -62,7 +62,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Enlace|Enlaces}:{1}",
+	"linking-links": "{0:Enlace|Enlaces}:&#32;",
 	"linking-toolong": "Los enlaces del mensaje de encima no fueron enviados porque el mensaje sería demasiado largo para Discord.",
 	"streaming-stream-namespace": "desde el espacio de nombres  `{0}`",
 	"streaming-stream-title": "Desde la página `{0}`",

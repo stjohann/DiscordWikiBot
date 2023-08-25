@@ -38,7 +38,7 @@
 	"eventstreams-new": "Ж",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "ш",
-	"linking-links": "{0:Сілтеме|Сілтемелер}:{1}",
+	"linking-links": "{0:Сілтеме|Сілтемелер}:&#32;",
 	"linking-toolong": "Жоғары хабарға сілтемелер берілмейді, себебі хабар Discord үшін тым ұзын болады.",
 	"streaming-stream-namespace": "`{0}` есім кеңістігінен",
 	"streaming-stream-title": "`{0}` бетінен",

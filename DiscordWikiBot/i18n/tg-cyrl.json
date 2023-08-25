@@ -18,7 +18,7 @@
 	"eventstreams-new": "Ҷадид",
 	"eventstreams-bot": "бот",
 	"eventstreams-minor": "х",
-	"linking-links": "{0:Пайванд|Пайвандҳо}:{1}",
+	"linking-links": "{0:Пайванд|Пайвандҳо}:&#32;",
 	"streaming-stream-namespace": "аз фазои номи `{0}`",
 	"streaming-key-bot": "бо вироишоти ботҳо",
 	"streaming-key-in-comment": "кофтан дар шарҳҳо/тавзеҳот",

@@ -39,7 +39,7 @@
 	"eventstreams-new": "ن",
 	"eventstreams-bot": "بۆت",
 	"eventstreams-minor": "ب",
-	"linking-links": "{0:بەستەر|بەستەرەکان}:{1}",
+	"linking-links": "{0:بەستەر|بەستەرەکان}:&#32;",
 	"streaming-stream-namespace": "لە بۆشاییناوی `{0}`",
 	"streaming-stream-title": "لە پەڕەی `{0}`",
 	"streaming-edited-nothing": ":ok: تەوژمی {0} لە کەناڵی {1} ھیچ گۆڕانکارییەکی نەبوو.",

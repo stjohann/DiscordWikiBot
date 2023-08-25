@@ -56,7 +56,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Link|Linki}:{1}",
+	"linking-links": "{0:Link|Linki}:&#32;",
 	"linking-toolong": "Linki do powyższej wiadomości nie są podane, ponieważ wiadomość byłaby zbyt długa.",
 	"streaming-stream-namespace": "z przestrzeni nazw `{0}`",
 	"streaming-stream-title": "ze strony `{0}`",

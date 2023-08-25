@@ -58,7 +58,7 @@
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "р",
 	"eventstreams-minor": "др",
-	"linking-links": "{0:Спасылка|Спасылкі}:{1}",
+	"linking-links": "{0:Спасылка|Спасылкі}:&#32;",
 	"linking-toolong": "Спасылкі да паведамлення вышэй не адлюстраваны, бо паведамленне з імі — занадта доўгае для Discord.",
 	"streaming-stream-namespace": "з прасторы `{0}`",
 	"streaming-stream-title": "са старонкі `{0}`",

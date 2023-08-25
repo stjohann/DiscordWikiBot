@@ -52,7 +52,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Enllaz|Enllaces}:{1}",
+	"linking-links": "{0:Enllaz|Enllaces}:&#32;",
 	"streaming-stream-namespace": "dende l'espaciu de nomes `{0}`",
 	"streaming-stream-title": "Dende la páxina `{0}`",
 	"streaming-list-stream": "**{1:Canal|Canales} {0}:**",

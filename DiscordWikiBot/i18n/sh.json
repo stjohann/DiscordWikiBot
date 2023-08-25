@@ -59,7 +59,7 @@
 	"eventstreams-new": "N/Н",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Link|Linkovi}:{1}",
+	"linking-links": "{0:Link|Linkovi}:&#32;",
 	"linking-toolong": "Linkovi na gornju poruku nisu dohvaćeni, jer bi poruka bila preduga za Diskord.",
 	"streaming-stream-namespace": "iz imenskog prostora `{0}`",
 	"streaming-stream-title": "sa stranice `{0}`",

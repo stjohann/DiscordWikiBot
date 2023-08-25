@@ -22,7 +22,7 @@
 	"eventstreams-new": "Ú",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "a",
-	"linking-links": "{0:Hivatkozás|Hivatkozások}:{1}",
+	"linking-links": "{0:Hivatkozás|Hivatkozások}:&#32;",
 	"streaming-stream-namespace": "`{0}` névtérből",
 	"streaming-stream-title": "`{0}` oldalról"
 }

@@ -27,7 +27,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Collegamento|Collegamenti}:{1}",
+	"linking-links": "{0:Collegamento|Collegamenti}:&#32;",
 	"streaming-stream-namespace": "dal namespace `{0}`",
 	"streaming-stream-title": "dalla pagina `{0}`",
 	"streaming-key-title": "titolo della pagina",

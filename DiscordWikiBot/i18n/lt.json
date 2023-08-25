@@ -50,7 +50,7 @@
 	"eventstreams-talk": "aptarimas",
 	"eventstreams-contribs": "indėlis",
 	"eventstreams-new": "N",
-	"linking-links": "{0:Nuoroda|Nuorodos}:{1}",
+	"linking-links": "{0:Nuoroda|Nuorodos}:&#32;",
 	"linking-toolong": "Nuorodos į žinutę aukščiau nėra pateikiamos, nes žinutė būtų per ilga Discord.",
 	"streaming-stream-title": "iš puslapio `{0}`",
 	"streaming-opened": ":white_check_mark: Šaltinis {0} pridėtas į kanalą {1}{2}",

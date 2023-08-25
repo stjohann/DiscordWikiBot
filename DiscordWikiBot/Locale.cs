@@ -43,6 +43,18 @@ namespace DiscordWikiBot
 		private static readonly string FALLBACK_LANG = "en";
 
 		/// <summary>
+		/// List of whitespace fixes applied by MediaWiki.
+		/// See https://gerrit.wikimedia.org/g/mediawiki/core/+/0f513f1e7a1362097116fe8ed662a1d5c428e7ef/includes/language/MessageCache.php#1079
+		/// </summary>
+		private static Dictionary<string, string> WhitespaceFixes = new Dictionary<string, string>()
+		{
+			{ "&#32;", " " },
+			{ "&nbsp;", "\u00A0" },
+			{ "&#160;", "\u00A0" },
+			{ "&shy;", "\u00AD" },
+		};
+
+		/// <summary>
 		/// Load language data.
 		/// </summary>
 		public static async Task Load()
@@ -118,7 +130,7 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639.</param>
 		/// <param name="args">List of arguments to be substituted in a message.</param>
 		/// <returns>A parsed message.</returns>
-		public static string GetMessage(string key, string lang, params dynamic[] args)
+		public static string GetMessage(string key, string lang, params object[] args)
 		{
 			var str = GetFallbackChain(lang)
 				.Select(lng => GetMessageCode(key, lng))
@@ -142,6 +154,12 @@ namespace DiscordWikiBot
 				return GetMessage(m.Groups[1].Value, lang, new string[] { "" });
 			});
 
+			// Fix whitespace, see WhitespaceFixes
+			foreach (var wsp in WhitespaceFixes)
+			{
+				str = str.Replace(wsp.Key, wsp.Value);
+			}
+
 			// Set params
 			if (args.Length > 0)
 			{
@@ -150,7 +168,8 @@ namespace DiscordWikiBot
 				try
 				{
 					str = Smart.Format(CultureInfo.GetCultureInfo(rootLang), str, args);
-				} catch(Exception)
+				}
+				catch (Exception)
 				{
 					str = Smart.Format(str, args);
 				}
@@ -275,7 +294,8 @@ namespace DiscordWikiBot
 					JObject languageinfo = (JObject)newRequest["query"]?["languageinfo"];
 					return languageinfo;
 				}
-			} catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
 				Program.LogMessage($"Fetching language list (1.34+) returned an error: {ex}", level: "warning");
 			}
@@ -300,7 +320,8 @@ namespace DiscordWikiBot
 				);
 
 				return languages;
-			} catch (Exception ex)
+			}
+			catch (Exception ex)
 			{
 				Program.LogMessage($"Fetching language list (<1.34) returned an error: {ex}", level: "error");
 			}

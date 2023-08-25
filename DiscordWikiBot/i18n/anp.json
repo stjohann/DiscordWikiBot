@@ -49,7 +49,7 @@
 	"eventstreams-new": "न.",
 	"eventstreams-bot": "बॉ",
 	"eventstreams-minor": "छो.",
-	"linking-links": "{0:कड़ी|कड़ी सिनी}:{1}",
+	"linking-links": "{0:कड़ी|कड़ी सिनी}:&#32;",
 	"streaming-stream-namespace": "नामस्थान `{0}` सँ",
 	"streaming-stream-title": "पृष्ठ `{0}` सँ",
 	"streaming-opened": ":white_check_mark: स्ट्रीम {0} चैनल {1} मँ जोड़लौ गेलौं{2}",

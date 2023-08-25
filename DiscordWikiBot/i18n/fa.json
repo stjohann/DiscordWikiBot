@@ -56,7 +56,7 @@
 	"eventstreams-new": "نو",
 	"eventstreams-bot": "ر",
 	"eventstreams-minor": "جز",
-	"linking-links": "{0:پیوند|پیوندها}:{1}",
+	"linking-links": "{0:پیوند|پیوندها}:&#32;",
 	"linking-toolong": "پیوندهای پیام بالا ارائه نشده‌اند زیرا پیام برای Discord بسیار طولانی خواهد شد.",
 	"streaming-stream-namespace": "از فضای نام `{0}`",
 	"streaming-stream-title": "از صفحه `{0}`",

@@ -54,7 +54,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Enllaç|Enllaços}:{1}",
+	"linking-links": "{0:Enllaç|Enllaços}:&#32;",
 	"linking-toolong": "No es proporcionen enllaços al missatge anterior perquè el missatge seria massa llarg per Discord.",
 	"streaming-stream-namespace": "des de l'espai de noms `{0}`",
 	"streaming-stream-title": "Des de la pàgina `{0}`",

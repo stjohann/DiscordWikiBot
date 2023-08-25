@@ -611,7 +611,7 @@ namespace DiscordWikiBot
 				});
 
 				bool IsLikelyInterwikiLink(string title) {
-					// See https://gerrit.wikimedia.org/g/mediawiki/core/+/master/includes/specials/SpecialGoToInterwiki.php#55
+					// See https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/core/+/32ded76880f86359a0a9dc6999ed2113c8bbb9c1/includes/specials/SpecialGoToInterwiki.php#73
 					return title.Contains(":")
 						&& char.IsLower(title[0])
 						&& !title.StartsWith("special:");

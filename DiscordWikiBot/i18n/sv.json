@@ -56,7 +56,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Länk|Länkar}:{1}",
+	"linking-links": "{0:Länk|Länkar}:&#32;",
 	"linking-toolong": "Länkar till meddelandet ovan inkluderas inte eftersom meddelandet skulle bli för långt för Discord.",
 	"streaming-stream-namespace": "från namnrymden `{0}`",
 	"streaming-stream-title": "från sidan `{0}`",

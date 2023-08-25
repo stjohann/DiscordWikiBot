@@ -54,7 +54,7 @@
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "м",
-	"linking-links": "{0:Препратка|Препратки}:{1}",
+	"linking-links": "{0:Препратка|Препратки}:&#32;",
 	"linking-toolong": "Препратките от горното съобщение не са дадени, защото биха били твърде дълги за Discord.",
 	"streaming-stream-namespace": "от именно пространство `{0}`",
 	"streaming-stream-title": "от страница `{0}`",

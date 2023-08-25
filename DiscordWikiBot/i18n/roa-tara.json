@@ -19,7 +19,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Collegamende|Collegaminde}:{1}",
+	"linking-links": "{0:Collegamende|Collegaminde}:&#32;",
 	"streaming-stream-namespace": "da 'u namespace `{0}`",
 	"streaming-key-in-comment": "cirche jndr'à 'u commende",
 	"streaming-key-diff-length": "lunghezze minime de differenze",

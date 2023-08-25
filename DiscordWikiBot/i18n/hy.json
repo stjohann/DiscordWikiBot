@@ -21,7 +21,7 @@
 	"eventstreams-new": "Ն",
 	"eventstreams-bot": "բ",
 	"eventstreams-minor": "չ",
-	"linking-links": "{0:Հղում.|Հղումներ՝}:{1}",
+	"linking-links": "{0:Հղում.|Հղումներ՝}:&#32;",
 	"streaming-stream-namespace": "«{0}» անվանատարածքից",
 	"streaming-stream-title": "«{0}» էջից",
 	"streaming-key-title": "էջի վերնագիր",

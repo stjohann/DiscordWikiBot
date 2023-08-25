@@ -54,7 +54,7 @@
 	"eventstreams-new": "B",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Link|Mga link}:{1}",
+	"linking-links": "{0:Link|Mga link}:&#32;",
 	"linking-toolong": "Hindi binigay ang mga link sa mensahe sa taas dahil masyadong mahaba para sa Discord ang magiging mensahe.",
 	"streaming-stream-namespace": "mula sa namespace na `{0}`",
 	"streaming-stream-title": "mula sa pahinang `{0}`",

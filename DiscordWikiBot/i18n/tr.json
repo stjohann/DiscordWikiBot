@@ -58,7 +58,7 @@
 	"eventstreams-new": "Y",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "k",
-	"linking-links": "{0:Bağlantı|Bağlantılar}:{1}",
+	"linking-links": "{0:Bağlantı|Bağlantılar}:&#32;",
 	"linking-toolong": "İletinin Discord için çok uzun olacağı için yukarıdaki iletiye bağlantı verilmemiştir.",
 	"streaming-stream-namespace": "`{0}` ad alanından",
 	"streaming-stream-title": "`{0}` sayfasından",

@@ -57,7 +57,7 @@
 	"eventstreams-new": "Y",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "k",
-	"linking-links": "{0:Keçid|Keçidlər}:{1}",
+	"linking-links": "{0:Keçid|Keçidlər}:&#32;",
 	"linking-toolong": "Yuxarıdakı mesajın keçidləri təmin edilə bilmir, çünki mesaj Discord üçün çox uzun olacaqdır.",
 	"streaming-stream-namespace": "`{0}` adlar fəzası üçün",
 	"streaming-stream-title": "`{0}` səhifəsindən",

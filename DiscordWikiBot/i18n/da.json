@@ -23,7 +23,7 @@
 	"configuring-help-translatewiki-channel": "en kanal der er tilgængelig for botten.",
 	"eventstreams-talk": "diskussion",
 	"eventstreams-contribs": "bidrag",
-	"linking-links": "{0:Link|Links}:{1}",
+	"linking-links": "{0:Link|Links}:&#32;",
 	"streaming-stream-title": "fra siden `{0}`",
 	"streaming-key-bot": "inkluder redigeringer udført af botter",
 	"streaming-key-in-comment": "søg i kommentarer",

@@ -7,7 +7,7 @@
 
 	"bullet": "• {0}",
 	"separator": " – {0}",
-	"comma": ",{0}",
+	"comma": ",&#32;",
 	"yes": "yes",
 	"no": "no",
 
@@ -63,7 +63,7 @@
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
 
-	"linking-links": "{0:Link|Links}:{1}",
+	"linking-links": "{0:Link|Links}:&#32;",
 	"linking-toolong": "Links to the message above are not provided because the message would be too long for Discord.",
 
 	"streaming-stream-namespace": "from the namespace `{0}`",
