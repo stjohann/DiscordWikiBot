@@ -60,7 +60,7 @@
 	"eventstreams-new": "ח",
 	"eventstreams-bot": "ב",
 	"eventstreams-minor": "מ",
-	"linking-links": "{0:קישור|קישורים}:&#32;",
+	"linking-links": "{0:קישור|קישור|קישור|קישורים}:&#32;",
 	"linking-toolong": "קישורים להודעה לעיל לא סופקו כי התוצאה תהיה ארוכה מדי עבור דיסקורד.",
 	"streaming-stream-namespace": "ממרחב השם `{0}`",
 	"streaming-stream-title": "מהעמוד `{0}`",
