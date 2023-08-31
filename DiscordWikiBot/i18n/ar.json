@@ -2,12 +2,14 @@
 	"@metadata": {
 		"authors": [
 			"Meno25",
+			"Stjn",
 			"Tala Ali",
 			"ديفيد"
 		]
 	},
 	"bullet": "• {0}",
 	"separator": " – {0}",
+	"comma": "،&#32;",
 	"yes": "نعم",
 	"no": "لا",
 	"help-title": "مساعدة",
