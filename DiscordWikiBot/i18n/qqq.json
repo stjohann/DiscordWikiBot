@@ -44,7 +44,7 @@
 	"eventstreams-new": "Should be the same as {{msg-mw|newpageletter}}.",
 	"eventstreams-bot": "Should be the same as {{msg-mw|boteditletter}}.",
 	"eventstreams-minor": "Should be the same as {{msg-mw|minoreditletter}}.",
-	"linking-links": "\"Link\" means [[:w:Hyperlink|hyperlink]] here.\n\n<code>{0}</code> is the link count (1 link, 2 links, etc.).\n{{Identical|Link}}",
+	"linking-links": "\"Link\" means [[:w:Hyperlink|hyperlink]] here. Keep it in the nominative tense (Link/Links).\n\n<code>{0}</code> is the link count (1 link, 2 links, etc.).\n{{Identical|Link}}",
 	"linking-toolong": "The error response in a case where the bot’s message with links gets longer than 2,000 characters, which is not allowed in Discord.",
 	"streaming-stream-namespace": "Used in messages such as {{msg-wm|Discordwikibot-streaming-opened}}. <code>{0}</code> is a namespace number.",
 	"streaming-stream-title": "Used in messages such as {{msg-wm|Discordwikibot-streaming-opened}}. <code>{0}</code> is a page title.",

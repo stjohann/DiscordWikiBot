@@ -61,7 +61,7 @@
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "м",
-	"linking-links": "{0:Link|Links}:&#32;",
+	"linking-links": "{0:Веза|Везе}:&#32;",
 	"linking-toolong": "Везе ка горенаведеној поруци нису пружене, јер би порука била предуга за Дискорд.",
 	"streaming-stream-namespace": "из именског простора `{0}`",
 	"streaming-stream-title": "са странице `{0}`",
