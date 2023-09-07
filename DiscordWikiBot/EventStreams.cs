@@ -166,7 +166,7 @@ namespace DiscordWikiBot
 			DiscordClient client = Program.Client;
 			Dictionary<string, Dictionary<string, dynamic>> badChannels = new Dictionary<string, Dictionary<string, dynamic>>();
 
-			foreach (KeyValuePair<string, JToken> item in data)
+			foreach (var item in data.ToObject<Dictionary<string, dynamic>>())
 			{
 				Dictionary<string, dynamic> args = item.Value.ToObject<Dictionary<string, dynamic>>();
 				DiscordChannel channel = null;
