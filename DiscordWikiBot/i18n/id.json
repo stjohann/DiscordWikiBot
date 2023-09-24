@@ -55,7 +55,7 @@
 	"eventstreams-new": "B",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "k",
-	"linking-links": "{0:Pranala|Pranala}:&#32;",
+	"linking-links": "{0:Pranala}:&#32;",
 	"linking-toolong": "Pranala menuju pesan di atas tidak tersedia karena pesan tersebut akan terlalu panjang untuk Discord.",
 	"streaming-stream-namespace": "dari ruang nama `{0}`",
 	"streaming-stream-title": "dari halaman `{0}`",
