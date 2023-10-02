@@ -62,7 +62,7 @@
 	"eventstreams-new": "Н",
 	"eventstreams-bot": "б",
 	"eventstreams-minor": "м",
-	"linking-links": "{0:Посилання|Посилання}:&#32;",
+	"linking-links": "{0:Посилання|Посилання|Посилань|Посилань}:&#32;",
 	"linking-toolong": "Посилання до повідомлення вище не відображені, бо повідомлення з ними занадто довге для Discord.",
 	"streaming-stream-namespace": "з простору `{0}`",
 	"streaming-stream-title": "зі сторінки `{0}`",
