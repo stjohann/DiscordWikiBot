@@ -46,7 +46,7 @@
 	"configuring-help-translatewiki-channel": "একটি চ্যানেল যা বটের কাছে উপলব্ধ।",
 	"configuring-help-translatewiki-value": "ভাষা যা ট্রান্সলেটউইকিতে অনুবাদের জন্য উপলব্ধ (আইএসও ৬৩৯ অনুযায়ী ভাষা কোড)। প্রতিবেদন শেষ করার জন্য একটি ভাষা হিসেবে `-` দিন।",
 	"configuring-help-wiki": "এই সার্ভারে, লিঙ্কের জন্য প্রধান উইকিটি পরিবর্তন করুন। শেষে /wiki/$1 দিতে হবে।",
-	"configuring-help-wiki-channel": "এই চ্যানেলে, লিঙ্কের জন্য প্রধান উইকিটি পরিবর্তন করুন। শেষে /wiki/$1 দিতে হবে।",
+	"configuring-help-wiki-channel": "এই চ্যানেলের লিঙ্কগুলির জন্য উইকি পরিবর্তন করুন। শেষে /wiki/$1 দিতে হবে।",
 	"configuring-help-wiki-value": "আপনি যে উইকি ব্যবহার করতে চান (<https://bn.wikipedia.org/wiki/$1> বিন্যাসে)। পূর্বনির্ধারিততে পুনঃস্থাপন করতে `-` ব্যবহার করুন।",
 	"eventstreams-diff": "পার্থক্য",
 	"eventstreams-talk": "আলাপ",
