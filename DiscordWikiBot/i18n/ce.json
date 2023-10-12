@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"yes": "хӀаъ",
+	"no": "хӀан-хӀа",
+	"help-title": "ГӀо",
+	"help-title-command": "{1}{0}{msg:separator}гӀо",
+	"help-version": "{0} верси.",
+	"help-repo": "Йуьхьанцара код: {0}",
+	"help-commands": "Командаш",
+	"help-aliases": "Алиасаш",
+	"help-arguments": "Аргументаш",
+	"help-optional": "тӀехь дац",
+	"eventstreams-diff": "башха",
+	"eventstreams-talk": "дийцар",
+	"eventstreams-contribs": "къинхьегам",
+	"linking-links": "{0:Хьажорг|Хьажоргаш}:&#32;",
+	"streaming-key-bot": "ботийн нисдарш йукъатоха",
+	"streaming-key-in-comment": "комментан йозанехь лаха",
+	"streaming-key-diff-length": "нисдаран минимум барам",
+	"streaming-key-minor": "кегий нисдарш йукъатоха",
+	"streaming-key-namespace": "цӀерийн меттиган лоьмар",
+	"streaming-key-title": "агӀонан корта",
+	"streaming-key-type": "нисдаран тайпа",
+	"translatewiki-header": "{0} {1:хаам|хаамаш} {2} {2:авторера|авторшкара}"
+}
