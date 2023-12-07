@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kolonahe"
+		]
+	},
+	"yes": "ʻae",
+	"no": "ʻaʻole",
+	"help-title": "Kōkua",
+	"help-title-command": "{1}{0}{msg:separator}kōkua",
+	"help-version": "Mana {0}.",
+	"help-repo": "Pāʻālua kumu: {0}.",
+	"help-commands": "Kauoha",
+	"help-subcommands": "Kauohalalo",
+	"help-aliases": "ʻĪpuka",
+	"help-arguments": "Waiwai maʻiʻo",
+	"help-default": "Ma o ka paʻamau: `{0}`.",
+	"help-optional": "koho paha",
+	"help-group-standalone": "He kauoha kū wale kēīa hui.",
+	"help-command": "Hōʻike i ke kōkua kauoha.",
+	"help-command-command": "ke kauoha no ke kōkua ʻana no.",
+	"configuring-status": ":information_source: Paʻa me ka pona uila.",
+	"configuring-status-streaming": "Ka pane hou nei mai ʻau pāpaho: {0} {0:minuke|mau minuke} {1} {1:kekona|mau kekona} aku nei.",
+	"configuring-changed-lang": "ʻO ka ʻōlelo o ka lopako ma kēia kikowaena, ua loli i ka ʻōlelo **{0}**.",
+	"streaming-list-nothing": ":ok: ʻAʻohe ʻau pāpaho ma kēia kikowaena.",
+	"streaming-list-stream": "**{1:ʻAu pāpaho|mau ʻAu Pāpaho} {0}:**",
+	"streaming-key-bot": "hoʻokomo i nā loli lopako",
+	"streaming-key-in-comment": "huli i nā kikokiko",
+	"streaming-key-minor": "hoʻokomo i nā loli iki",
+	"streaming-key-title": "inoa ʻaoʻao",
+	"streaming-key-type": "ʻano hoʻololi",
+	"translatewiki-header": "{0} {1:memo|mau memo} na {2} {2:mea kākau|poʻe mea kākau}"
+}
