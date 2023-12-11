@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"GuoPC",
+			"HellojoeAoPS",
 			"Shuiwater",
 			"Stang",
 			"Stjn",
@@ -27,9 +28,9 @@
 	"help-group-standalone": "此群组是独立指令。",
 	"help-command": "显示命令帮助。",
 	"help-command-command": "提供帮助的命令",
-	"configuring-status": ":information_source: 已接入插座。",
-	"configuring-status-streaming": "来自串流的最新回应：{0}{0:分|分}{1}{1:秒|秒}前。",
-	"configuring-changed-domain": "此服务器上用于最近更改串流的域名被变更为**{0}**。",
+	"configuring-status": ":information_source: 插入插座。",
+	"configuring-status-streaming": "来自信息流的最新响应：{0} {0:分钟|分钟} {1} {1:秒|秒} 前。",
+	"configuring-changed-domain": "此服务器上最近更改流的域已更改为 **{0}**。",
 	"configuring-changed-lang": "此服务器上的机器人使用语言已更改至 **{0}**。",
 	"configuring-changed-translatewiki": "在Translatewiki上有关最近更改的报告在语言**{1}**的频道{0}上启用。",
 	"configuring-changed-translatewiki-channel": "在Translatewiki上有关最近更改报告的频道被变更为{0}。",
