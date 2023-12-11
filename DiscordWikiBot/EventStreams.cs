@@ -130,7 +130,7 @@ namespace DiscordWikiBot
 			{
 				change = RecentChange.FromJson(e.Message.Data);
 			}
-			catch (Exception e)
+			catch (Exception exception)
 			{
 				Program.LogMessage($"Stream returned the following exception: {exception}", "EventStreams", "warning");
 			}
