@@ -101,7 +101,7 @@ namespace DiscordWikiBot
 				var exception = args.Exception;
 				// See https://phabricator.wikimedia.org/T242767 for why IOExceptions are ignored
 				if (!(exception is IOException)) {
-					Program.LogMessage($"Stream returned the following exception): {exception}", "EventStreams", "warning");
+					Program.LogMessage($"Stream returned the following exception: {exception}", "EventStreams", "warning");
 				}
 
 				// Reconnect to the stream
@@ -125,7 +125,16 @@ namespace DiscordWikiBot
 			{
 				return;
 			}
-			RecentChange change = RecentChange.FromJson(e.Message.Data);
+			RecentChange change = null;
+			try
+			{
+				change = RecentChange.FromJson(e.Message.Data);
+			}
+			catch (Exception e)
+			{
+				Program.LogMessage($"Stream returned the following exception: {exception}", "EventStreams", "warning");
+			}
+			if (change == null) return;
 			var changeTimestamp = change.Metadata.DateTime.ToUniversalTime();
 			LatestTimestamp = changeTimestamp;
 			bool notEdit = (change.Type != "edit" && change.Type != "new");
