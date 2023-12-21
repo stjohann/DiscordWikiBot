@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Meno25",
+			"NEHAOUA",
 			"Stjn",
 			"Tala Ali",
 			"ديفيد"
@@ -59,7 +60,7 @@
 	"eventstreams-new": "ج‌",
 	"eventstreams-bot": "ب",
 	"eventstreams-minor": "ط",
-	"linking-links": "{0:وصلة|وصلات}:&#32;",
+	"linking-links": "{0:وصلة واحدة|وصلتين|وصلات|وصلة|وصلات|وصلة}:&#32؛",
 	"linking-toolong": "لا يتم توفير روابط للرسالة أعلاه لأن الرسالة ستكون طويلة جدا بالنسبة لديسكورد.",
 	"streaming-stream-namespace": "من النطاق `{0}`",
 	"streaming-stream-title": "من الصفحة `{0}`",
