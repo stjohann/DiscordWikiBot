@@ -12,7 +12,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.8.0-int.7" />
-		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.5" />
+		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.4.6" />
 		<PackageReference Include="LaunchDarkly.EventSource" Version="5.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
