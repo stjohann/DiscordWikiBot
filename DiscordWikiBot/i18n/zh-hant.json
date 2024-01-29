@@ -5,14 +5,15 @@
 			"Kly",
 			"LNDDYL",
 			"Stjn",
+			"Winston Sung",
 			"捍粵者"
 		]
 	},
 	"comma": "、",
 	"yes": "是",
 	"no": "否",
-	"help-title": "幫助",
-	"help-title-command": "{1}{0}{msg:separator}幫助",
+	"help-title": "說明",
+	"help-title-command": "{1}{0}{msg:separator}說明",
 	"help-all": "此處列出了所有頂級指令與群組。選擇一條指令以查看更多資訊。",
 	"help-version": "版本 {0}。",
 	"help-repo": "原始碼：{0}",
