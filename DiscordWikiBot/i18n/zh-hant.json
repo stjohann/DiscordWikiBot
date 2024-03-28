@@ -22,7 +22,7 @@
 	"help-aliases": "別名",
 	"help-arguments": "論點",
 	"help-default": "預設值：「{0}」。",
-	"help-optional": "可選",
+	"help-optional": "非必填",
 	"help-group-standalone": "該組是一個獨立的命令。",
 	"help-command": "顯示命令幫助。",
 	"help-command-command": "提供幫助的命令",

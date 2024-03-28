@@ -4,6 +4,7 @@
 			"Arian Ar",
 			"Beginneruser",
 			"Caden99",
+			"Ebraminio",
 			"Frowzyispenguin",
 			"Stjn"
 		]
@@ -31,7 +32,7 @@
 	"configuring-changed-lang": "زبان ربات در این سرور به **{0}** تغییر داده شد.",
 	"configuring-changed-translatewiki": "گزارش‌‌ها دربارهٔ تغییرات اخیر در ویکی‌ترجمه در کانال {0} برای زبان **{1}** فعال شد.",
 	"configuring-changed-translatewiki-channel": "کانال گزارش‌ها دربارهٔ تغییرات اخیر ویکی‌ترجمه به {0} تغییر یافت.",
-	"configuring-changed-translatewiki-lang": "زبانی که گزارش‌های مربوط به تغییرات اخیر در ویکی‌ترجمه به آن گردآوری می شود به ** {0} ** تغییر یافت.",
+	"configuring-changed-translatewiki-lang": "زبانی که گزارش‌های مربوط به تغییرات اخیر در ویکی‌ترجمه به آن گردآوری می‌شود به ** {0} ** تغییر یافت.",
 	"configuring-changed-wiki": "ویکی مورد استفاده برای پیوند‌ها در این سرور به **{0}** تغییر داده شد.",
 	"configuring-changed-wiki-channel": "ویکی مورد استفاده برای پیوند‌ها در این کانال به **{0}** تغییر داده شد.",
 	"configuring-changed-reset": "این مقدار به حالت اولیه بازنشانده شد.",
