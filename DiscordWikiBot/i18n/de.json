@@ -8,7 +8,8 @@
 			"FF-11",
 			"FF11",
 			"Magiczocker",
-			"Stjn"
+			"Stjn",
+			"TomatoCake"
 		]
 	},
 	"yes": "ja",
@@ -20,7 +21,7 @@
 	"help-repo": "Quellcode: {0}",
 	"help-commands": "Befehle",
 	"help-subcommands": "Unterbefehle",
-	"help-aliases": "Aliase",
+	"help-aliases": "Aliasse",
 	"help-arguments": "Argumente",
 	"help-default": "Standardmäßig: `{0}`.",
 	"help-optional": "optional",
