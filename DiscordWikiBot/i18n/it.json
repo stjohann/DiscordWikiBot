@@ -3,6 +3,7 @@
 		"authors": [
 			"Ajeje Brazorf",
 			"Beta16",
+			"Champ0999",
 			"IrsY",
 			"UnGiglio",
 			"Yacine Boussoufa"
@@ -21,6 +22,7 @@
 	"help-arguments": "Argomenti",
 	"help-optional": "facoltativo",
 	"configuring-help-status": "Controlla se il bot è operativo.",
+	"configuring-help-lang": "Cambia la lingua del bot su questo server.",
 	"eventstreams-diff": "diff",
 	"eventstreams-talk": "discussione",
 	"eventstreams-contribs": "contributi",
@@ -30,6 +32,7 @@
 	"linking-links": "{0:Collegamento|Collegamenti}:&#32;",
 	"streaming-stream-namespace": "dal namespace `{0}`",
 	"streaming-stream-title": "dalla pagina `{0}`",
+	"streaming-key-minor": "includere modifiche minori",
 	"streaming-key-title": "titolo della pagina",
 	"streaming-key-type": "tipologia di modifica",
 	"translatewiki-header": "{0} {1:messaggio|messaggi} da {2} {2:autore|autori}"
