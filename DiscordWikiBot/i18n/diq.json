@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"1917 Ekim Devrimi",
+			"GolyatGeri",
 			"Mirzali",
 			"Orbot707"
 		]
@@ -37,7 +38,7 @@
 	"configuring-required-value": "Ercê yew parametrey lazımo.\nKomuti rê tam pheşti gırotışi rê, `{1}help {0}` bırışê .",
 	"configuring-badvalue-domain": "Rodayışi teyna seba proceyanê MediaWiki yalnızca karniyenê.\nMısade deyaye lista nameyan : {0}.",
 	"configuring-badvalue-lang": "Bot, ronıştışê şıma ravêrde yew kodê ISO 639 nêvineno",
-	"configuring-badvalue-wiki": "Peyê URL dê şıma de wa `{0}` bıbo .",
+	"configuring-badvalue-wiki": "Boto serva in wiki nêşkeno datayı API begero.Peyê URL dê şıma de wa `{0}` bıbo .",
 	"configuring-help-status": "Guriyayışê Boti kontrol kerê.",
 	"configuring-help-domain": "Ena server de çapnayışê cayê tesirê vurnayışê peyêni bıvurne. Teyna proceyanê Wikimedia dê guriyeno.",
 	"configuring-help-domain-value": "Cayê procey Wikimedia  (be formatê diq.wikipedia.org de). Hesabyayey rê reset kerdışi rê `-` bıkarnê .",
