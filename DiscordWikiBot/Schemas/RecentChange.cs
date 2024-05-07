@@ -208,7 +208,6 @@ namespace DiscordWikiBot.Schemas
 			/// The unique URI identifying the event.
 			/// </summary>
 			[JsonProperty("uri")]
-			[JsonRequired]
 			public Uri Uri { get; set; }
 
 			[JsonProperty("partition")]

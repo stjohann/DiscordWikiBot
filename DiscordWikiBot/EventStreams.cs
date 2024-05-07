@@ -528,7 +528,7 @@ namespace DiscordWikiBot
 				}
 
 				// Ignore default values if not resetting
-				if (discardPrevData == false && result?.Property(key)?.Equals(value)) {
+				if (discardPrevData == false && result?.Property(key)?.Equals(value) == true) {
 					continue;
 				}
 
