@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Ekminarin",
 			"Just Sayori",
 			"Patsagorn Y."
 		]
@@ -54,7 +55,7 @@
 	"eventstreams-new": "ม",
 	"eventstreams-bot": "บ",
 	"eventstreams-minor": "ล",
-	"linking-links": "{0:ลิงก์|ลิงก์}:&#32;",
+	"linking-links": "{0:ลิงก์}:&#32;",
 	"linking-toolong": "ลิงก์ไปยังข้อความก่อนหน้าไม่พร้อมใช้งาน เนื่องจากข้อความอาจยาวเกินไปสำหรับดิสคอร์ด",
 	"streaming-stream-namespace": "จากเนมสเปซ `{0}`",
 	"streaming-stream-title": "จากหน้า `{0}`",
