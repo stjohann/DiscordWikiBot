@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Oujon",
 			"Yardom78"
 		]
 	},
@@ -35,7 +36,7 @@
 	"configuring-required-value": "Je vyžadovaná hodnota parametru. Pre získanie plnej pomoci s príkazom odošlite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Strímy sú dostupné len pre projekty Wikimédie. Zoznam povolených domén: {0}.",
 	"configuring-badvalue-lang": "Bot nerozpoznal váš vstup a platný kód ISO 639.",
-	"configuring-badvalue-wiki": "Na konci vašej adresy URL musí byť `{0}`.",
+	"configuring-badvalue-wiki": "Robot nemôže získať informácie o API pre túto wiki. Na konci vašej adresy URL musí byť „{0}“.",
 	"configuring-help-status": "Skontrolujte či bot funguje.",
 	"configuring-help-domain": "Zmeniť doménu k ktorej sa práve vysielajú zmeny na tomto servery. Funguje len pre projekty Wikimédie.",
 	"configuring-help-domain-value": "doména projektu Wikimédie (vo formáte en.wikipedia.org). Použite `-` na resetovanie na predvolené nastavenia.",
@@ -53,7 +54,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Odkaz|Odkazy}:&#32;",
+	"linking-links": "{0:Li|nk|Li|nks}:&#32;",
 	"linking-toolong": "Odkazy na správu vyššie nie sú k dispozícii pretože správa by bola pre Discord príliš dlhá.",
 	"streaming-stream-namespace": "z menného priestoru `{0}`",
 	"streaming-stream-title": "zo stránky `{0}`",

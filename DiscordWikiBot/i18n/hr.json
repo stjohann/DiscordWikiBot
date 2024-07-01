@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Bugoslav",
-			"Hmxhmx"
+			"Hmxhmx",
+			"N0one"
 		]
 	},
 	"bullet": "• {0}",
@@ -38,7 +39,7 @@
 	"configuring-required-value": "Potrebna je vrijednost za parametar.\nDa biste dobili punu pomoć za naredbu, pošaljite `{1}help {0}`.",
 	"configuring-badvalue-domain": "Struje su dostupne samo za Wikimedijine projekte.\nPopis dopuštenih domena: {0}.",
 	"configuring-badvalue-lang": "Bot ne prepoznaje Vaš unos kao valjani ISO 639 kôd.",
-	"configuring-badvalue-wiki": "Na kraju Vašeg URL-a mora se nalaziti `{0}`.",
+	"configuring-badvalue-wiki": "Bot ne može dobiti API informacije za ovaj wiki. Mora postojati `{0}` na kraju vašeg URL-a.",
 	"configuring-help-status": "Provjera funkcionalnosti bota.",
 	"configuring-help-domain": "Promjena domene za koju se odašilju nedavne izmjene na ovaj poslužitelj. Funkcionira samo za Wikimedijine projekte.",
 	"configuring-help-domain-value": "domena Wikimedijinog projekta (u formatu hr.wikipedia.org). Koristite `-` za vraćanje na zadano.",
