@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ella Lachow"
+			"Ella Lachow",
+			"Malaalaa"
 		]
 	},
 	"yes": "ee",
@@ -21,7 +22,7 @@
 	"help-command": "Azazuwaa maaduwaa bessees.",
 	"help-command-command": "Maaduwaa shiishshiyoo azazuwaa.",
 	"configuring-status": ": information_sourcr: Sookkeetiyaan gayttiis.",
-	"eventstreams-talk": "haasayaa",
+	"eventstreams-talk": "tobbiya",
 	"eventstreams-contribs": "xaafo shiishota",
 	"eventstreams-new": "Ooratta",
 	"eventstreams-bot": "Bootiyaa",
