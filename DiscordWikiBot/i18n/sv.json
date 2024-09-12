@@ -7,6 +7,7 @@
 	},
 	"bullet": "• {0}",
 	"separator": " – {0}",
+	"comma": ",&#32;",
 	"yes": "ja",
 	"no": "nej",
 	"help-title": "Hjälp",
