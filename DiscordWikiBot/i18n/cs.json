@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"MrJaroslavik"
+			"MrJaroslavik",
+			"ShaggyCZ - Main"
 		]
 	},
 	"yes": "ano",
@@ -53,7 +54,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Odkaz|Odkazy}:&#32;",
+	"linking-links": "{0:Odkaz|Odkazy|Odkazů|Odkazů}:&#32;",
 	"linking-toolong": "Odkazy na výše uvedenou zprávu nejsou k dispozici, protože by zpráva byla pro Discord příliš dlouhá.",
 	"streaming-stream-namespace": "z jmenného prostoru `{0}`",
 	"streaming-stream-title": "ze stránky `{0}`",
