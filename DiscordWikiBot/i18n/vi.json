@@ -3,6 +3,7 @@
 		"authors": [
 			"Caden99",
 			"Hide on Rosé",
+			"Phungminh141",
 			"Tryvix1509",
 			"Yosari101"
 		]
@@ -23,5 +24,12 @@
 	"help-group-standalone": "Nhóm này là một lệnh độc lập.",
 	"help-command": "Hiển thị lệnh trợ giúp.",
 	"help-command-command": "lệnh để cung cấp trợ giúp.",
-	"configuring-status": ":information_source: Đã kết nối socket."
+	"configuring-status": ":information_source: Đã kết nối socket.",
+	"eventstreams-diff": "khác",
+	"eventstreams-talk": "thảo luận",
+	"eventstreams-contribs": "đóng góp",
+	"eventstreams-new": "M",
+	"eventstreams-bot": "b",
+	"eventstreams-minor": "n",
+	"streaming-key-title": "tên trang"
 }
