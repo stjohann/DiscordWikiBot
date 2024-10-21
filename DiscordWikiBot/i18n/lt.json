@@ -52,6 +52,7 @@
 	"eventstreams-new": "N",
 	"linking-links": "{0:Nuoroda|Nuorodos}:&#32;",
 	"linking-toolong": "Nuorodos į žinutę aukščiau nėra pateikiamos, nes žinutė būtų per ilga Discord.",
+	"streaming-stream-namespace": "iš vardų srities `{0}`",
 	"streaming-stream-title": "iš puslapio `{0}`",
 	"streaming-opened": ":white_check_mark: Šaltinis {0} pridėtas į kanalą {1}{2}",
 	"streaming-edited": ":eight_spoked_asterisk: Šaltinis {0} kanale {1} pakeitė šiuos parametrus:\n{2}",
@@ -59,9 +60,15 @@
 	"streaming-closed": ":negative_squared_cross_mark: Šaltinis {0} pašalintas iš kanalo {1}.",
 	"streaming-key-bot": "įtraukti robotų keitimus",
 	"streaming-key-in-comment": "ieškoti komentare",
+	"streaming-key-diff-length": "minimalus skirtumo ilgis",
 	"streaming-key-minor": "įtraukti mažus keitimus",
 	"streaming-key-namespace": "vardų srities skaičius",
 	"streaming-key-patrolled": "filtruoti pagal patruliavimo statusą",
 	"streaming-key-title": "puslapio pavadinimas",
-	"streaming-key-type": "redagavimo tipas"
+	"streaming-key-type": "redagavimo tipas",
+	"streaming-help-open": "Pradėti transliuoti naujausius pakeitimus kanale.",
+	"streaming-help-edit": "Redaguoti naujausių pakeitimų srauto parametrus kanale.",
+	"streaming-help-close": "Nebetransliuoti naujausių pakeitimų kanale.",
+	"streaming-help-list": "Išvardyti visus atidarytus srautus šiame serveryje.",
+	"streaming-help-channel": "kanalas, kuris yra prieinamas robotui."
 }
