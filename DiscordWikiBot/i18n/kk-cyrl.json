@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Casserium",
 			"U.ayaao.p"
 		]
 	},
@@ -32,7 +33,7 @@
 	"configuring-changed-reset": "Мән әдепкіге қайтарылды.",
 	"configuring-error-same": "Сіз енгізген мән ағымдағы мәнмен бірдей.",
 	"configuring-error-strange": "Біртүрлі қатеге байланысты пәрменіңіз орындалмады.",
-	"eventstreams-diff": "айырм",
+	"eventstreams-diff": "айырма",
 	"eventstreams-talk": "талқылауы",
 	"eventstreams-contribs": "үлесі",
 	"eventstreams-new": "Ж",
