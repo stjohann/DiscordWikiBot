@@ -120,9 +120,10 @@ namespace DiscordWikiBot
 
 			// Return default value
 			value = Default.GetValue(key);
-			if (useDefault && value != null) {
+			if (useDefault && value != null)
+			{
 				string val = value.ToString();
-				if (val != "")
+				if (val != "" && val != "False")
 				{
 					str = val;
 				}
@@ -202,7 +203,7 @@ namespace DiscordWikiBot
 		static public bool IsValuePresent(string key, string value)
 		{
 			bool isPresent = false;
-			foreach(var guild in Overrides)
+			foreach (var guild in Overrides)
 			{
 				JToken cfg = guild.Value;
 

@@ -43,7 +43,7 @@ namespace DiscordWikiBot
 
 			// Check if matches Wikimedia project
 			string[] projectList = null;
-			bool notWmProject = (value != "-" && !EventStreams.CanBeUsed(value, out projectList));
+			bool notWmProject = value != "-" && !EventStreams.CanBeUsed(value, out projectList);
 			if (notWmProject)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-badvalue-domain", lang, "`" + string.Join("`, `", projectList) + "`"));
@@ -91,7 +91,7 @@ namespace DiscordWikiBot
 			}
 
 			// Use new language in this command only
-			lang = (value == "-" ? Config.GetLang() : value);
+			lang = value == "-" ? Config.GetLang() : value;
 
 			// Do action and respond
 			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "lang", value);
@@ -172,7 +172,7 @@ namespace DiscordWikiBot
 				TranslateWiki.Init(chanId, value);
 			}
 
-			if ( succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_CHANGE
+			if (succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_CHANGE
 				|| (
 					succeedsChan == Config.RESULT_SAME
 					&& (succeedsLang == Config.RESULT_RESET || succeedsLang == Config.RESULT_CHANGE)
@@ -288,7 +288,7 @@ namespace DiscordWikiBot
 			{
 				value = "-";
 			}
-			
+
 			// Check if a wiki was passed
 			if (value != "-")
 			{
@@ -347,7 +347,7 @@ namespace DiscordWikiBot
 			return Locale.GetLanguageName(code, "{1} ({0})");
 		}
 	}
-	
+
 	class Pinging : BaseCommandModule
 	{
 		/// <summary>
@@ -382,7 +382,7 @@ namespace DiscordWikiBot
 			}
 
 			// Refresh site info for the channel (or the server if default)
-			await Linking.Init(ctx.Channel.Id.ToString(), true);
+			await Linking.InitChannel(ctx.Channel, true);
 
 			// Respond to message
 			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + appendedMsg);

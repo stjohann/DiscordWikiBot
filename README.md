@@ -17,8 +17,15 @@ The version in this repository is configured for Russian Wikipedia by default. Y
 
 ```js
 {
+	// REQUIRED: User agent string.
+	// Change the username if you modified DiscordWikiBot internals (not including configs).
+	"userAgent": "DiscordWikiBot/{version} (https://w.wiki/4nm) (user:stjn)",
+
 	// Link to the bot’s source code
 	"repo":  "<https://github.com/stjohann/DiscordWikiBot> (C# / MIT)",
+
+	// Use Discord’s buggy standard embeds for wikilinks
+	"useDiscordLinkEmbeds": false,
 
 	// Default domain for recent changes streams (only Wikimedia projects work here)
 	"domain": "ru.wikipedia.org",
@@ -26,12 +33,12 @@ The version in this repository is configured for Russian Wikipedia by default. Y
 	// REQUIRED: Default language of the bot
 	"lang": "ru",
 
-	// REQUIRED: Default wiki link configuration
+	// REQUIRED: Default wikilink configuration
 	"wiki": "https://ru.wikipedia.org/wiki/$1"
 }
 ```
 
-Most variables in `config.json` can be overridden per server by members with ‘Manage server’ permission.
+Non-system variables in `config.json` can be overridden per server (and some per channel) by members with ‘Manage server’ permission.
 
 ## Usage
 When the bot is enabled, it will transform [[link syntax]] to real URLs to the pages of your wiki or its interwiki links, and will transform {{template syntax}} to real URLs to the templates of your wiki. To stop the bot from reacting to links in your message, wrap it into \` (\`[[example]]\`) or escape \[\[ symbols (with \\ before them).
@@ -44,7 +51,7 @@ DiscordWikiBot uses [semver](https://semver.org/) for versioning:
 - Major versions (**X.0.0**) are changes that remove backwards-compatibility of any of the configuration files, including introducing new expectations from bot owners.
 - Minor versions (**0.X.0**) are changes that introduce new features to the bot.
 - Patch versions (**0.0.X**) are changes that fix existing code without introducing new features.
-- Third-party bot maintainers can be expected to update the bot to minor/patch versions without any required changes.
+- Third-party bot maintainers can update the bot to minor/patch versions without any required changes.
 
 Pull requests should, if possible, include a change in `DiscordWikiBot/DiscordWikiBot.csproj` file with an appropriate version change.
 

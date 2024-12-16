@@ -39,14 +39,16 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// See https://www.mediawiki.org/wiki/Manual:$wgCapitalLinks
 		/// </summary>
-		private static readonly int[] capitalisedNamespaces = {
+		private static readonly int[] capitalisedNamespaces = [
 			// Special
 			-1,
 			// User
 			2, 3,
 			// MediaWiki
 			8, 9,
-		};
+		];
+
+		private static readonly bool useDiscordLinkEmbeds = Config.GetValue("useDiscordLinkEmbeds") != null;
 
 		/// <summary>
 		/// Replacement string for long messages.
@@ -108,6 +110,16 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Initialise settings for a channel.
+		/// </summary>
+		/// <param name="channel">Discord channel.</param>
+		/// <param name="refresh">Refresh the info even if site info already has a key.</param>
+		static public async Task InitChannel(DiscordChannel channel, bool refresh = false)
+		{
+			await Init(GetConfigGoal(channel), refresh);
+		}
+
+		/// <summary>
 		/// Remove wiki site information for a specified server.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
@@ -129,11 +141,8 @@ namespace DiscordWikiBot
 			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true) return;
 			string content = e.Message.Content;
 
-			// Ignore messages without wiki syntax
-			if (!content.Contains("[[") && !content.Contains("{{")) return;
-
 			// Determine our goal (default for DMs)
-			bool isServerMessage = (e.Guild != null);
+			bool isServerMessage = e.Guild != null;
 			var wikiUrl = Config.GetWiki();
 			var lang = Config.GetLang();
 
@@ -143,14 +152,14 @@ namespace DiscordWikiBot
 				wikiUrl = Config.GetWiki(goal);
 				lang = Config.GetLang(e.Guild.Id.ToString());
 
-				await Init(goal);
+				await InitChannel(e.Channel);
 			}
 
 			// Send message
 			string msg = PrepareMessage(content, lang, wikiUrl);
 			if (msg != "")
 			{
-				bool isTooLong = (msg == TOO_LONG);
+				bool isTooLong = msg == TOO_LONG;
 				if (isTooLong)
 				{
 					msg = Locale.GetMessage("linking-toolong", lang);
@@ -188,7 +197,7 @@ namespace DiscordWikiBot
 			// Determine our goal
 			string goal = GetConfigGoal(e.Channel);
 			string lang = Config.GetLang(e.Guild.Id.ToString());
-			await Init(goal);
+			await InitChannel(e.Channel);
 
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
@@ -321,23 +330,53 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
 			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
 
+			// Remove text in [link text]() syntax
+			content = Regex.Replace(content, @"\[.*?\]\((.*?)\)", "[]($1)");
+
 			// Replace emojis (e. g. <:meta:873203055804436513>) in the message
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
 
+			// Try to convert mobile links to current wiki to desktop links
+			if (content.Contains("//") && content.Contains("m."))
+			{
+				// Guess the format of the link from domain
+				var mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
+				if (mobileLinkFormat == linkFormat)
+				{
+					mobileLinkFormat = Regex.Replace(mobileLinkFormat, @"://www\.", "://m.");
+				}
+
+				// Convert these links to wikilinks
+				if (mobileLinkFormat != linkFormat)
+				{
+					mobileLinkFormat = mobileLinkFormat.Replace("$1", @"([^\s?]+)");
+
+					content = Regex.Replace(content, mobileLinkFormat, "[[$1]]");
+				}
+			}
+
+			// Ignore messages without wiki syntax
+			if (!content.Contains("[[") && !content.Contains("{{")) return "";
+
 			// Extract visible content (no spoilers)
-			string visibleContent = Regex.Replace(content, @"\|{2}(.+?)\|{2}", "", RegexOptions.Singleline);
+			string visibleContent = Regex.Replace(content, @"\|{2}(.+?)\|{2}", "", RegexOptions.Multiline);
 
 			// Start digging for links
-			MatchCollection matches = linkPattern.Matches(content);
-			List<string> links = new List<string>();
+			var matches = linkPattern.Matches(content);
+			var linkIds = new List<string>();
+			var links = new List<string>();
 
 			if (matches.Count > 0)
 			{
 				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
-					string str = AddLink(link, linkFormat);
-					if (str == null || str.Length == 0) continue;
+					var linkData = AddLink(link, linkFormat);
+					if (linkData == null) continue;
+
+					var strId = linkData.Item1;
+					var str = linkData.Item2;
+					if (str.Length == 0) continue;
 
 					// Present in content but not visible, therefore it's marked as spoiler
 					if (!visibleContent.Contains(link.Value))
@@ -345,9 +384,11 @@ namespace DiscordWikiBot
 						str = $"||{str}||";
 					}
 
-					if (!links.Contains(str))
+					// Remember title to prevent duplicate links with different formatting
+					if (!linkIds.Contains(strId))
 					{
 						links.Add(str);
+						linkIds.Add(strId);
 					}
 				}
 
@@ -372,8 +413,8 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="link">Regular expression match.</param>
 		/// <param name="linkFormat">Standard link format for the message.</param>
-		/// <returns>A parsed URL from the match.</returns>
-		static public string AddLink(Match link, string linkFormat)
+		/// <returns>Resolved title and link string.</returns>
+		static public Tuple<string, string> AddLink(Match link, string linkFormat)
 		{
 			GroupCollection groups = link.Groups;
 			var brackets = groups[1].Value.Trim();
@@ -390,21 +431,17 @@ namespace DiscordWikiBot
 			// Check for parameter syntax
 			if (brackets.StartsWith("{{{") && endBrackets.StartsWith("}}}")) return null;
 
-			// Remove escaping symbols before Markdown syntax in Discord
-			// (it converts \ to / anyway)
-			str = str.Replace(@"\", "");
-
 			// Check for invalid page titles (without length)
 			if (IsInvalid(str, false)) return null;
 
 			// Reject if empty
 			if (str.Length == 0) return null;
 
-			// Reject if a regular link contains an anchor
+			// Reject if a regular link starts with an anchor
 			if (isLink && str.StartsWith('#')) return null;
 
 			// Storage for default and current site data
-			var defaultSiteInfo = WikiSiteInfo[linkFormat];
+			var defaultSiteInfo = GetWikiSite(linkFormat).Result;
 			var currentSiteInfo = defaultSiteInfo;
 			var currentLinkFormat = linkFormat;
 
@@ -412,6 +449,7 @@ namespace DiscordWikiBot
 			NamespaceInfo ns = null;
 			string nsName = null;
 			bool capitalised = !defaultSiteInfo.SiteInfo.IsTitleCaseSensitive;
+			bool isMediaWiki = true;
 
 			// Storage for interwiki link prefix
 			List<string> iwList = new List<string>();
@@ -477,6 +515,10 @@ namespace DiscordWikiBot
 						currentSiteInfo = newSiteInfo;
 						capitalised = !newSiteInfo.SiteInfo.IsTitleCaseSensitive;
 					}
+					else
+					{
+						isMediaWiki = false;
+					}
 
 					iwList.Add(prefix);
 					str = prefixRegex.Replace(str, "", 1).Trim();
@@ -503,24 +545,21 @@ namespace DiscordWikiBot
 			}
 
 			// Add main page title if needed
-			var isDifferentWiki = currentSiteInfo.SiteInfo.BaseUrl != defaultSiteInfo.SiteInfo.BaseUrl;
+			var isDifferentWiki = isMediaWiki && currentSiteInfo.SiteInfo.BaseUrl != defaultSiteInfo.SiteInfo.BaseUrl;
 			if (isDifferentWiki && str.Length == 0)
 			{
 				str = currentSiteInfo.SiteInfo.MainPage;
 			}
 
+			// Decode page title once before any transforms
+			str = DecodePageTitle(str);
+
 			// Check for invalid page title length (namespace number + title)
 			var nsTitle = (ns == null || ns.Id == 0) ? str : $"{ns.Id}:{str}";
-			if (IsInvalid(nsTitle, true)) return null;
+			if (IsInvalid(nsTitle, true, isMediaWiki, !isDifferentWiki)) return null;
 
-			// Trim : from the start (nuisance)
-			str = str.TrimStart(':');
-
-			// Capitalise the title if lowercase titles are not allowed
-			if (capitalised)
-			{
-				str = Capitalise(str);
-			}
+			// Capitalise the title if necessary
+			str = Capitalise(str, capitalised);
 
 			// Remember the link string (without namespace for template links)
 			var linkStr = str;
@@ -529,7 +568,7 @@ namespace DiscordWikiBot
 			if (ns != null && ns.Id != 0)
 			{
 				nsName = nsName == null ? ns.CustomName : nsName;
-				str = string.Join(":", new[] { nsName, str });
+				str = string.Join(":", [nsName, str]);
 
 				if (!(isTransclusion && ns.Id == 10))
 				{
@@ -543,18 +582,17 @@ namespace DiscordWikiBot
 				linkStr = ":" + linkStr;
 			}
 
-			// Encode displayed link title for any issues
-			linkStr = EncodePageTitle(linkStr, spaceChar: " ");
-
 			// Create link text from the result
 			var linkStart = brackets.Substring(0, 2);
 			var linkEnd = endBrackets.Substring(0, 2);
 			var linkInterwikis = string.Join(":", iwList);
 			if (linkInterwikis.Length > 0) linkInterwikis += ":";
 
-			var linkText = $"{linkStart}{linkInterwikis}{linkStr}{linkEnd}";
-
-			return $"[{linkText}](<{GetLink(str, currentLinkFormat)}>)";
+			var linkText = $"{linkStart}`{linkInterwikis}{linkStr}`{linkEnd}";
+			return Tuple.Create(
+				$"{linkInterwikis}{str}",
+				GetMarkdownLink(str, currentLinkFormat, linkText)
+			);
 		}
 
 		/// <summary>
@@ -578,12 +616,12 @@ namespace DiscordWikiBot
 			var safesubstNames = GetMagicWordNames("safesubst", magicWords);
 			var rawNames = GetMagicWordNames("raw", magicWords);
 			var msgNames = GetMagicWordNames("msg", magicWords);
-			var junkRegex = string.Join('|', new string[] {
+			var junkRegex = string.Join('|', [
 				string.Join('|', substNames),
 				string.Join('|', safesubstNames),
 				string.Join('|', rawNames),
 				string.Join('|', msgNames),
-			});
+			]);
 
 			title = Regex.Replace(title, $"^ *(?:{junkRegex}) *", "", RegexOptions.IgnoreCase);
 
@@ -638,7 +676,7 @@ namespace DiscordWikiBot
 			var names = data.FirstOrDefault(x => x.Name == name)?.Aliases.ToArray();
 			if (names == null)
 			{
-				return new string[] { name };
+				return [name];
 			}
 
 			// Format #invoke: and #special: manually
@@ -695,21 +733,46 @@ namespace DiscordWikiBot
 			}
 
 			// Parser functions: {{#tag:}} or {{formatnum:}}
-			// For simplicity {{if: test}} (for {{#if}} etc.) is treated as a parser function, though it is allowed to create templates with these names.
-			static bool IsParserFunction(string value, string str)
+			return magicWords.FirstOrDefault(x => HasParserFunction(str, x)) != null;
+		}
+
+		/// <summary>
+		/// Check if a string has a specific parser function from a wiki.
+		/// For simplicity {{if: test}} (for {{#if}} etc.) is treated as a parser function, though it is allowed to create templates with these names.
+		/// </summary>
+		/// <param name="str">String to check for parser functions.</param>
+		/// <param name="data">Magic word info.</param>
+		/// <returns></returns>
+		private static bool HasParserFunction(string str, MagicWordInfo data)
+		{
+			// Ignore things that cannot be parser functions
+			var notParserFunction = (
+				// SERVERNAME etc.
+				data.Name.StartsWith("server")
+				// STYLEPATH etc.
+				|| data.Name.EndsWith("path")
+				// REVISIONID etc.
+				|| data.Name.StartsWith("revision")
+				// NUMBEROFADMINS etc.
+				|| data.Name.StartsWith("numberof")
+				// CURRENTDAY/LOCALDAY etc.
+				|| data.Name.StartsWith("current")
+				|| data.Name.StartsWith("local")
+			);
+			if (notParserFunction)
 			{
-				var InvariantCultureIgnoreCase = StringComparison.InvariantCultureIgnoreCase;
-				value = value.TrimEnd(':') + ":";
-				return str.StartsWith(value, InvariantCultureIgnoreCase);
+				return false;
 			}
 
-			return magicWords.FirstOrDefault(x =>
+			var comparisonType = data.CaseSensitive ? StringComparison.InvariantCulture : StringComparison.InvariantCultureIgnoreCase;
+			bool Compare(string value)
 			{
-				// Some variables, such as {{servername}}, will be treated like parser functions here.
-				// TODO: Come up with a way to actually ignore variables here.
-				return x.CaseSensitive == false
-					&& x.Aliases.FirstOrDefault(xa => IsParserFunction(xa, str)) != null;
-			}) != null;
+				var alias = value.TrimEnd(':') + ":";
+				return str.StartsWith(alias, comparisonType);
+			}
+
+			// Canonical name is not present in alias list
+			return Compare(data.Name) || data.Aliases.FirstOrDefault(Compare) != null;
 		}
 
 		/// <summary>
@@ -798,8 +861,10 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="str">Page title.</param>
 		/// <param name="checkLength">Whether to check page title length.</param>
+		/// <param name="isMediaWiki">Is the title length checked for a wiki.</param>
+		/// <param name="checkProtocol">Whether to check for URI protocols.</param>
 		/// <returns>Is page title invalid.</returns>
-		public static bool IsInvalid(string str, bool checkLength = false)
+		public static bool IsInvalid(string str, bool checkLength = false, bool isMediaWiki = true, bool checkProtocol = true)
 		{
 			// Only check part before #
 			string[] anchor = str.Split('#', 2);
@@ -809,7 +874,15 @@ namespace DiscordWikiBot
 			}
 
 			// Check if page title length is more than 255 bytes
-			if (checkLength && Encoding.UTF8.GetByteCount(str) > 255) return true;
+			// There is an undocumented higher limit for special pages:
+			// https://github.com/wikimedia/mediawiki/blob/8a0ae03da00d9f031b8ea5cd1b7d7b2694ee6bd5/includes/title/MediaWikiTitleCodec.php#L521
+			if (checkLength)
+			{
+				var isSpecial = isMediaWiki && str.StartsWith("-1:");
+				if (isSpecial && Encoding.UTF8.GetByteCount(str) > 512) return true;
+
+				if (Encoding.UTF8.GetByteCount(str) > 255) return true;
+			}
 
 			// Check if it contains illegal sequences
 			if (str == "." || str == "..") return true;
@@ -819,13 +892,14 @@ namespace DiscordWikiBot
 
 			// Check if it is a MediaWiki-valid URL
 			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
-			string[] uriProtocols = {
+			string[] uriProtocols = [
 				"bitcoin:", "ftp://", "ftps://", "geo:", "git://", "gopher://", "http://",
-				"https://", "irc://", "ircs://", "magnet:", "mailto:", "mms://", "news:",
-				"nntp://", "redis://", "sftp://", "sip:", "sips:", "sms:", "ssh://",
-				"svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:", "//"
-			};
-			if (uriProtocols.Any(str.StartsWith)) return true;
+				"https://", "irc://", "ircs://", "magnet:", "mailto:", "matrix:", "mms://",
+				"news:", "nntp://", "redis://", "sftp://", "sip:", "sips:", "sms:",
+				"ssh://", "svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:",
+				"//",
+			];
+			if (checkProtocol && uriProtocols.Any(str.StartsWith)) return true;
 
 			// Check if it has two : or more
 			if (Regex.IsMatch(str, "^ *:{2,}")) return true;
@@ -833,14 +907,14 @@ namespace DiscordWikiBot
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title
 			string[] illegalExprs =
-			{
+			[
 				@"\<", @"\>",
 				@"\[", @"\]",
 				@"\{", @"\}",
 				@"\|",
 				@"~{3,}",
 				@"&(?:[a-z]+|#x?\d+);"
-			};
+			];
 
 			foreach (string expr in illegalExprs)
 			{
@@ -850,28 +924,42 @@ namespace DiscordWikiBot
 			return false;
 		}
 
+
 		/// <summary>
 		/// Get a URL for a specified title and a wiki URL.
 		/// </summary>
 		/// <param name="title">Page title.</param>
 		/// <param name="format">Wiki URL.</param>
-		/// <param name="escapePar">Escape parentheses for Markdown links.</param>
 		/// <returns>A page URL in specified format.</returns>
-		public static string GetLink(string title, string format = null, bool escapePar = false)
+		public static string GetMarkdownLink(string title, string format = null, string text = "")
+		{
+			if (text == null || text == "")
+			{
+				text = DecodePageTitle(title);
+			}
+
+			if (useDiscordLinkEmbeds)
+			{
+				return $"[{text}]( {GetUrl(title, format)} )";
+			}
+			return $"[{text}]( <{GetUrl(title, format)}> )";
+		}
+
+		/// <summary>
+		/// Get a URL for a specified title and a wiki URL.
+		/// </summary>
+		/// <param name="title">Page title.</param>
+		/// <param name="format">Wiki URL.</param>
+		/// <returns>A page URL in specified format.</returns>
+		public static string GetUrl(string title, string format = null)
 		{
 			if (format == null)
 			{
 				format = Config.GetWiki();
 			}
 
-			title = EncodePageTitle(title, escapePar);
-
-			// TODO: Remove the hack when Discord fixes its Android client
-			if (!escapePar && (title.EndsWith(")") || title.EndsWith(".")) && !title.Contains("#"))
-			{
-				title += "_";
-			}
-			return format.Replace("$1", title.Trim());
+			title = EncodePageTitle(title);
+			return format.Replace("$1", title);
 		}
 
 		/// <summary>
@@ -900,10 +988,11 @@ namespace DiscordWikiBot
 		/// Capitalise a string.
 		/// </summary>
 		/// <param name="value">String to be capitalised.</param>
+		/// <param name="capitalise">Whether to not perform capitalisation.</param>
 		/// <returns>String with the first letter in uppercase.</returns>
-		private static string Capitalise(string value)
+		private static string Capitalise(string value, bool capitalise = true)
 		{
-			if (value.Length == 0)
+			if (capitalise == false || value.Length == 0)
 			{
 				return value;
 			}
@@ -915,18 +1004,17 @@ namespace DiscordWikiBot
 		/// Encode page title according to the rules of MediaWiki.
 		/// </summary>
 		/// <param name="str">Page title.</param>
-		/// <param name="escapePar">Escape parentheses for Markdown links.</param>
 		/// <param name="spaceChar">Character that should be used instead of space-like characters.</param>
-		/// <returns>An encoded page title.</returns>
-		private static string EncodePageTitle(string str, bool escapePar = false, string spaceChar = "_")
+		private static string EncodePageTitle(string str, string spaceChar = "_")
 		{
 			// Following character conversions are based on {{PAGENAMEE}} specification:
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding
 			char[] specialChars =
-			{
+			[
 				// Discord already escapes this character in URLs
 				// '"',
-				'%',
+				// Discord breaks the links with %25 in them
+				// '%',
 				'&',
 				'+',
 				'=',
@@ -935,27 +1023,17 @@ namespace DiscordWikiBot
 				'^',
 				'`',
 				'~',
+
 				// Added: Causes problems in anchors
 				'<',
 				'>',
-			};
+				// Added: Causes problems for {{)!}} etc.
+				'(',
+				')',
+			];
 
-			char[] deletedChars = {
-				// Soft hyphen (useless in links)
-				'\u00ad',
-				// LTR/RTL marks (useless in links)
-				'\u200e',
-				'\u200f',
-			};
-
-			// Decode HTML-encoded symbols before encoding
-			if (str.Contains("&")) str = HttpUtility.HtmlDecode(str);
-
-			// Decode percent-encoded symbols before encoding
-			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
-
-			// Replace all spaces to required space symbol
-			str = str.Trim().Replace('_', ' ');
+			// Decode and replace all spaces to required space symbol
+			str = DecodePageTitle(str);
 			str = Regex.Replace(str, @"\s{1,}", spaceChar);
 
 			// Percent encoding for special characters
@@ -964,19 +1042,41 @@ namespace DiscordWikiBot
 				str = str.Replace(ch.ToString(), Uri.EscapeDataString(ch.ToString()));
 			}
 
+			return str;
+		}
+
+		/// <summary>
+		/// Clean up page title from unnecessary stuff.
+		/// </summary>
+		/// <param name="str">Page title.</param>
+		private static string DecodePageTitle(string str)
+		{
+			str = str.Trim().TrimStart(':').Replace('_', ' ');
+
+			// Remove escaping symbols for \ in Discord
+			str = Regex.Replace(str, @"\\\\", "");
+
+			// Decode HTML-encoded symbols before encoding
+			if (str.Contains("&")) str = HttpUtility.HtmlDecode(str);
+
+			// Decode percent-encoded symbols before encoding
+			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
+
 			// Remove deleted special characters
+			char[] deletedChars = [
+				// Soft hyphen (useless in links)
+				'\u00ad',
+				// LTR/RTL marks (useless in links)
+				'\u200e',
+				'\u200f',
+			];
+
 			foreach (var ch in deletedChars)
 			{
 				str = str.Replace(ch.ToString(), "");
 			}
 
-			// Escape ) in embeds to not break links
-			if (escapePar)
-			{
-				str = str.Replace(")", @"\)");
-			}
-
-			return str;
+			return str.Trim();
 		}
 	}
 }

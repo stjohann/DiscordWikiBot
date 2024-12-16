@@ -273,7 +273,7 @@ namespace DiscordWikiBot
 				}
 
 				// Build messages
-				string headerCount = (gotToLatest ? count.ToString() : count.ToString() + "+");
+				string headerCount = gotToLatest ? count.ToString() : count.ToString() + "+";
 				string header = Locale.GetMessage("translatewiki-header", guildLang, headerCount, count, authors.Count);
 				embed.WithTitle(header)
 					.WithUrl(string.Format("https://translatewiki.net/wiki/Special:RecentChanges?translations=only&namespace={0}&limit=500&trailer=/{1}", string.Join("%3B", Projects.Keys), _lang));
@@ -282,7 +282,7 @@ namespace DiscordWikiBot
 				foreach (var groupList in groups)
 				{
 					// Do not display message IDs for Phabricator messages
-					string desc = FormDescription(groupList.Value, (groupList.Key != "1274"));
+					string desc = FormDescription(groupList.Value, groupList.Key != "1274");
 					embed.AddField(Projects[groupList.Key], desc);
 				}
 
@@ -335,7 +335,7 @@ namespace DiscordWikiBot
 			foreach (var item in authors)
 			{
 				var arr = new string[3];
-				arr[0] = string.Format("[{0}]({1})", item.Key, Linking.GetLink(item.Key, "https://translatewiki.net/wiki/Special:Contribs/$1", true));
+				arr[0] = Linking.GetMarkdownLink($"Special:Contributions/{item.Key}", "https://translatewiki.net/wiki/$1", item.Key);
 				arr[1] = item.Value.Count.ToString();
 				arr[2] = "";
 
@@ -346,7 +346,7 @@ namespace DiscordWikiBot
 
 			// Add as many message IDs as we can
 			int msgLength = 0;
-			bool useLinks = (authorLinkLength < (MAX_EMBED_LENGTH / 2));
+			bool useLinks = authorLinkLength < (MAX_EMBED_LENGTH / 2);
 			Dictionary<string, int> msgNumbers = new Dictionary<string, int>();
 			Dictionary<string, bool> finished = new Dictionary<string, bool>();
 			while (msgLength < MAX_EMBED_LENGTH)
@@ -372,7 +372,7 @@ namespace DiscordWikiBot
 					var arr = storage[item.Key];
 					if (num == 0)
 					{
-						arr[0] = string.Format(" ({0})\n", (useLinks ? arr[0] : item.Key));
+						arr[0] = string.Format(" ({0})\n", useLinks ? arr[0] : item.Key);
 						msgLength += arr[0].Length;
 						msgLength += arr[1].Length;
 					}
@@ -403,14 +403,14 @@ namespace DiscordWikiBot
 			StringBuilder result = new StringBuilder();
 			foreach (var item in storage)
 			{
-				int trim = (authors[item.Key].Count - msgNumbers[item.Key]);
-				string trimmed = (trim > 0 ? $" + {trim}" : "");
+				int trim = authors[item.Key].Count - msgNumbers[item.Key];
+				string trimmed = trim > 0 ? $" + {trim}" : "";
 
 				result.Append(item.Value[2]);
 				result.Append(trimmed);
 				if (useLinks)
 				{
-					result.Append((result.Length + item.Value[0].Length > MAX_EMBED_LENGTH ? $" ({item.Key})\n" : item.Value[0]));
+					result.Append(result.Length + item.Value[0].Length > MAX_EMBED_LENGTH ? $" ({item.Key})\n" : item.Value[0]);
 				}
 				else
 				{
@@ -431,7 +431,7 @@ namespace DiscordWikiBot
 			var keys = authors.Keys.ToList();
 			var list = keys.Select(author =>
 			{
-				return string.Format("{0} ([{1}]({2}))", authors[author].Count, author, Linking.GetLink(author, "https://translatewiki.net/wiki/Special:Contribs/$1", true));
+				return $"{authors[author].Count} ({Linking.GetMarkdownLink($"Special:Contributions/{author}", "https://translatewiki.net/wiki/$1", author)})";
 			});
 			string result = string.Join(", ", list);
 

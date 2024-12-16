@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<PackageLicenseFile>LICENCE.md</PackageLicenseFile>
 		<RepositoryUrl>https://github.com/stjohann/DiscordWikiBot</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Version>4.1.6</Version>
+		<Version>5.0.0</Version>
 		<Authors>stjn and others</Authors>
 		<Company />
 	</PropertyGroup>
@@ -14,7 +14,6 @@
 		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.8.0" />
 		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.5.0" />
 		<PackageReference Include="LaunchDarkly.EventSource" Version="5.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
 		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

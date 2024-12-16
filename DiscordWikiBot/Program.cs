@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Exceptions;
 using DSharpPlus.EventArgs;
 using Microsoft.Extensions.Logging;
 using WikiClientLibrary.Client;
+using System.Text.RegularExpressions;
 
 namespace DiscordWikiBot
 {
@@ -38,14 +36,14 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// DiscordWikiBot version.
 		/// </summary>
-		public static string Version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+		public static string Version;
 
 		/// <summary>
 		/// DiscordWikiBot user agent.
-		/// Please specify your own when modifying the bot.
-		/// <para>See https://meta.wikimedia.org/wiki/User-Agent_policy </para>
+		/// Please specify your own when modifying DiscordWikiBot internals (not including configs).
+		/// <para>See https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy </para>
 		/// </summary>
-		public static string UserAgent = $"DiscordWikiBot/{Version}";
+		public static string UserAgent;
 
 		/// <summary>
 		/// Available bot commands.
@@ -79,8 +77,10 @@ namespace DiscordWikiBot
 			}
 			Token = File.ReadAllText(tokenPath, Encoding.Default);
 
-			// Get JSON config file
+			// Get JSON config file and its values
 			Config.Init();
+			Version = GetBotVersion();
+			UserAgent = GetBotUserAgent();
 
 			// Initialise Discord client
 			Client = new DiscordClient(new DiscordConfiguration()
@@ -91,10 +91,12 @@ namespace DiscordWikiBot
 				Token = Token,
 				TokenType = TokenType.Bot,
 				Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents,
+				LogUnknownEvents = false,
 			});
 
 			// Initialise events
-			LogMessage($"DiscordWikiBot, version {Version}");
+			LogMessage($"Starting DiscordWikiBot, version {Version}");
+			LogMessage($"UserAgent: {UserAgent}");
 
 			// Get default locale
 			await Locale.Load();
@@ -218,7 +220,7 @@ namespace DiscordWikiBot
 
 			return Task.CompletedTask;
 		}
-		
+
 		/// <summary>
 		/// Log message when the bot is added to new guilds.
 		/// </summary>
@@ -307,6 +309,33 @@ namespace DiscordWikiBot
 					Client.Logger.LogInformation(eventId, message, DateTime.Now);
 					break;
 			}
+		}
+
+		/// <summary>
+		/// Return current bot version from assembly.
+		/// </summary>
+		private static string GetBotVersion()
+		{
+			var version = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+
+			return Regex.Replace(version, @"\+.*$", "");
+		}
+
+		/// <summary>
+		/// Get user agent from config or provide default.
+		/// You need to provide your own when modifying the bot's source code:
+		/// <para>https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy </para>
+		/// </summary>
+		private static string GetBotUserAgent()
+		{
+			var userAgent = Config.GetValue("userAgent");
+			if (userAgent == null)
+			{
+				LogMessage("Please add a custom user agent string in config.json if you changed  DiscordWikiBot internals (not including configs). See https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy for details.", level: "error");
+				return $"DiscordWikiBot/{Version} (https://w.wiki/4nm)";
+			}
+
+			return userAgent.Replace("{version}", Version);
 		}
 	}
 }

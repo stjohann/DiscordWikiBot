@@ -57,7 +57,7 @@ namespace DiscordWikiBot
 
 		// Path to JSON file
 		private static readonly string JSON_PATH = @"eventStreams.json";
-		
+
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
 		/// </summary>
@@ -100,7 +100,8 @@ namespace DiscordWikiBot
 			{
 				var exception = args.Exception;
 				// See https://phabricator.wikimedia.org/T242767 for why IOExceptions are ignored
-				if (!(exception is IOException)) {
+				if (!(exception is IOException))
+				{
 					Program.LogMessage($"Stream returned the following exception: {exception}", "EventStreams", "warning");
 				}
 
@@ -137,9 +138,9 @@ namespace DiscordWikiBot
 			if (change == null) return;
 			var changeTimestamp = change.Metadata.DateTime.ToUniversalTime();
 			LatestTimestamp = changeTimestamp;
-			bool notEdit = (change.Type != "edit" && change.Type != "new");
+			bool notEdit = change.Type != "edit" && change.Type != "new";
 			if (notEdit) return;
-			
+
 			// Do not post anything if it is an edit older than a day
 			// TODO: Investigate the proper fix
 			if (DateTime.UtcNow > changeTimestamp.AddHours(24))
@@ -183,7 +184,8 @@ namespace DiscordWikiBot
 				{
 					ulong channelID = ulong.Parse(item.Key);
 					channel = await client.GetChannelAsync(channelID);
-				} catch(Exception ex)
+				}
+				catch (Exception ex)
 				{
 					string goalInfo = $"title={goal}";
 					string rawGoal = goal.Trim('<', '>');
@@ -199,7 +201,8 @@ namespace DiscordWikiBot
 						if (rawGoal != goal)
 						{
 							args["namespace"] = rawGoal;
-						} else
+						}
+						else
 						{
 							args["title"] = rawGoal;
 						}
@@ -245,7 +248,7 @@ namespace DiscordWikiBot
 				// Check if patrolled edits are allowed
 				if (args.ContainsKey("patrolled"))
 				{
-					bool patrolStatus = (args["patrolled"] == "only" ? true : false);
+					bool patrolStatus = args["patrolled"] == "only" ? true : false;
 					if (change.Patrolled != patrolStatus)
 					{
 						continue;
@@ -265,8 +268,8 @@ namespace DiscordWikiBot
 				if (args.ContainsKey("diff-length"))
 				{
 					int minLength = Convert.ToInt32(args["diff-length"]);
-					long revLength = (change.Length.New - change.Length.Old);
-					
+					long revLength = change.Length.New - change.Length.Old;
+
 					if (revLength < minLength)
 					{
 						continue;
@@ -288,7 +291,8 @@ namespace DiscordWikiBot
 				try
 				{
 					await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));
-				} catch(Exception ex)
+				}
+				catch (Exception ex)
 				{
 					string goalInfo = $"title={goal}";
 					string rawGoal = goal.Trim('<', '>');
@@ -320,7 +324,7 @@ namespace DiscordWikiBot
 				RemoveData(entry.Key, entry.Value);
 			}
 		}
-		
+
 		/// <summary>
 		/// Build a Discord embed in the style of a MediaWiki diff.
 		/// </summary>
@@ -357,25 +361,35 @@ namespace DiscordWikiBot
 			}
 
 			// Parse length of the diff
-			long length = (change.Length.New - change.Length.Old);
+			long length = change.Length.New - change.Length.Old;
 			if (length > 0)
 			{
 				embedColor = new DiscordColor(0x00af89);
-				embedIcon = "a/ab/MobileFrontend_bytes-added.svg/512px-MobileFrontend_bytes-added.svg.png";
-			} else if (length < 0)
+				embedIcon = "a/ab/MobileFrontend_bytes-added.svg/128px-MobileFrontend_bytes-added.svg.png";
+			}
+			else if (length < 0)
 			{
-				embedIcon = "7/7c/MobileFrontend_bytes-removed.svg/512px-MobileFrontend_bytes-removed.svg.png";
+				embedIcon = "7/7c/MobileFrontend_bytes-removed.svg/128px-MobileFrontend_bytes-removed.svg.png";
 				embedColor = new DiscordColor(0xdd3333);
 			}
 
 			embed
 				.WithAuthor(
 					change.Title,
-					Linking.GetLink(change.Title, format),
+					Linking.GetUrl(change.Title, format),
 					$"https://upload.wikimedia.org/wikipedia/commons/thumb/{embedIcon}"
 				)
-				.WithColor(embedColor)
-				.WithDescription(GetMessage(change, format, lang));
+				.WithColor(embedColor);
+
+			// Rely on default error catching to guess if the message is too long
+			try
+			{
+				embed.WithDescription(GetMessage(change, format, lang));
+			}
+			catch
+			{
+				embed.WithDescription(GetMessage(change, format, lang, false));
+			}
 
 			return embed;
 		}
@@ -386,11 +400,12 @@ namespace DiscordWikiBot
 		/// <param name="change">Recent change information.</param>
 		/// <param name="format">Wiki link URL.</param>
 		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <param name="linkify">Whether to make wikilinks actual links.</param>
 		/// <returns>String with recent change information and links.</returns>
-		public static string GetMessage(RecentChange change, string format, string lang)
+		public static string GetMessage(RecentChange change, string format, string lang, bool linkify = true)
 		{
 			// Parse length of the diff
-			long length = (change.Length.New - change.Length.Old);
+			long length = change.Length.New - change.Length.Old;
 			string strLength = length.ToString();
 			if (length > 0)
 			{
@@ -404,39 +419,30 @@ namespace DiscordWikiBot
 			}
 
 			// Markdownify link
-			string link = format.Replace("/wiki/$1", string.Format("/?{0}{1}", (change.Revision.Old != 0 ? "diff=" : "oldid="), change.Revision.New));
-			link = string.Format("([{0}]({1}))", Locale.GetMessage("eventstreams-diff", lang), link);
+			string link = format.Replace("/wiki/$1", string.Format("/?{0}{1}", change.Revision.Old != 0 ? "diff=" : "oldid=", change.Revision.New));
+			link = string.Format("([{0}]( <{1}> ))", Locale.GetMessage("eventstreams-diff", lang), link);
 
-			// Markdownify user
+			// Markdownify user links
 			string user = "User:" + change.User;
-			string talk = "User_talk:" + change.User;
+			string talk = "User talk:" + change.User;
 			string contribs = "Special:Contributions/" + change.User;
+			talk = Linking.GetMarkdownLink(talk, format, Locale.GetMessage("eventstreams-talk", lang));
 
-			user = Linking.GetLink(user, format, true);
-			talk = Linking.GetLink(talk, format, true);
-			contribs = Linking.GetLink(contribs, format, true);
-
-			talk = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-talk", lang), talk);
-
-			if (IPAddress.TryParse(change.User, out IPAddress address))
+			if (IPAddress.TryParse(change.User, out _))
 			{
-				user = $"[{change.User}]({contribs}) ({talk})";
-			} else
+				user = Linking.GetMarkdownLink(contribs, format, change.User);
+				user = $"{user} ({talk})";
+			}
+			else
 			{
-				contribs = string.Format("[{0}]({1})", Locale.GetMessage("eventstreams-contribs", lang), contribs);
-				user = $"[{change.User}]({user}) ({talk} | {contribs})";
+				contribs = Linking.GetMarkdownLink(contribs, format, Locale.GetMessage("eventstreams-contribs", lang));
+				user = Linking.GetMarkdownLink(user, format, change.User);
+
+				user = $"${user} ({talk} | {contribs})";
 			}
 
-			// Parse comment, adjusting for its length
-			string comment = ParseComment(change.Comment, format, change.Title);
-			string msg = $"{link} . . {strLength} . . {user}";
-			if (msg.Length + comment.Length > 2000)
-			{
-				comment = ParseComment(change.Comment, format, change.Title, false);
-			}
-			msg += comment;
-
-			return msg;
+			string comment = ParseComment(change.Comment, format, change.Title, linkify);
+			return $"{link} . . {strLength} . . {user}{comment}";
 		}
 
 		/// <summary>
@@ -467,7 +473,7 @@ namespace DiscordWikiBot
 					}
 				}
 			}
-			
+
 			return result;
 		}
 
@@ -481,7 +487,7 @@ namespace DiscordWikiBot
 		public static Dictionary<string, dynamic> SetData(string channel, Dictionary<string, dynamic> args, bool discardPrevData = true)
 		{
 			if (Data == null) return null;
-			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
+			string goal = args.ContainsKey("title") ? args["title"] : $"<{args["namespace"]}>";
 			Program.LogMessage($"Channel #{channel} triggered a change ({goal}) in eventStreams.json.", "EventStreams");
 			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
 
@@ -511,30 +517,36 @@ namespace DiscordWikiBot
 
 			foreach (KeyValuePair<string, dynamic> item in args)
 			{
-				if (!allowedKeys.ContainsKey(item.Key)) {
+				if (!allowedKeys.ContainsKey(item.Key))
+				{
 					continue;
 				}
 
 				var key = item.Key;
 				var value = item.Value;
 				var requiredValueType = allowedKeys.GetValueOrDefault(key)?.GetType();
-				if (item.Value == null || requiredValueType == null) {
+				if (item.Value == null || requiredValueType == null)
+				{
 					continue;
 				}
 
 				// Ignore incorrectly typed values
-				if (item.Value.GetType() != requiredValueType) {
+				if (item.Value.GetType() != requiredValueType)
+				{
 					continue;
 				}
 
 				// Ignore default values if not resetting
-				if (discardPrevData == false && result?.Property(key)?.Equals(value) == true) {
+				if (discardPrevData == false && result?.Property(key)?.Equals(value) == true)
+				{
 					continue;
 				}
 
 				// Reset to default
-				if (allowedKeys.GetValueOrDefault(item.Key)?.Equals(item.Value)) {
-					if (discardPrevData == true) {
+				if (allowedKeys.GetValueOrDefault(item.Key)?.Equals(item.Value))
+				{
+					if (discardPrevData == true)
+					{
 						JProperty prop = result.Property(key);
 						if (prop != null)
 						{
@@ -569,7 +581,7 @@ namespace DiscordWikiBot
 		public static void RemoveData(string channel, Dictionary<string, dynamic> args)
 		{
 			if (Data == null) return;
-			string goal = (args.ContainsKey("title") ? args["title"] : $"<{ args["namespace"] }>");
+			string goal = args.ContainsKey("title") ? args["title"] : $"<{args["namespace"]}>";
 			Program.LogMessage($"Removing data ({goal}) from JSON config", "EventStreams");
 
 			// Change current data and remove an item if necessary
@@ -591,7 +603,7 @@ namespace DiscordWikiBot
 		/// <param name="summary">Comment text.</param>
 		/// <param name="format">Wiki link URL.</param>
 		/// <param name="page">Page title.</param>
-		/// <param name="linkify">Should links be linkified or just removed.</param>
+		/// <param name="linkify">Whether to make wikilinks actual links.</param>
 		/// <returns>Parsed comment with styling.</returns>
 		private static string ParseComment(string summary, string format, string page, bool linkify = true)
 		{
@@ -602,14 +614,14 @@ namespace DiscordWikiBot
 
 			string linkPattern = @"\[{2}([^\[\]\|\n]+)\]{2}";
 			string linkPatternPipe = @"\[{2}([^\[\]\|\n]+)\|([^\[\]\n]+)\]{2}";
-			
+
 			if (linkify)
 			{
 				// Linkify the code for sections
 				summary = Regex.Replace(summary, @"/\* (.*?) \*/(.?)", m =>
 				{
-					string section = m.Groups[1].Value;
-					string link = string.Format("[→{0}]({1})", section.Trim(), Linking.GetLink(page + "#" + section.Trim(), format));
+					string section = m.Groups[1].Value.Trim();
+					var link = Linking.GetMarkdownLink(page + "#" + section, format, $"→{section}");
 
 					if (m.Groups?[2].Value != "")
 					{
@@ -619,7 +631,8 @@ namespace DiscordWikiBot
 					return link;
 				});
 
-				bool IsLikelyInterwikiLink(string title) {
+				bool IsLikelyInterwikiLink(string title)
+				{
 					// See https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/core/+/32ded76880f86359a0a9dc6999ed2113c8bbb9c1/includes/specials/SpecialGoToInterwiki.php#73
 					return title.Contains(":")
 						&& char.IsLower(title[0])
@@ -627,20 +640,21 @@ namespace DiscordWikiBot
 				}
 
 				// Linkify every wiki link in comment text
-				summary = Regex.Replace(summary, linkPattern, m => {
+				summary = Regex.Replace(summary, linkPattern, m =>
+				{
 					string title = m.Groups[1].Value;
 					string text = title;
 					// TODO: Implement proper link parsing, see #16
 					if (IsLikelyInterwikiLink(title))
 					{
-						title = $"Special:GoToInterwiki/{title}";
+						title = $"Special:GoToInterwiki/{title.TrimStart(':')}";
 					}
-					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
 
-					return link;
+					return Linking.GetMarkdownLink(title, format, text);
 				});
 
-				summary = Regex.Replace(summary, linkPatternPipe, m => {
+				summary = Regex.Replace(summary, linkPatternPipe, m =>
+				{
 					string title = m.Groups[1].Value;
 					// TODO: Implement proper link parsing, see #16
 					if (IsLikelyInterwikiLink(title))
@@ -648,11 +662,11 @@ namespace DiscordWikiBot
 						title = $"Special:GoToInterwiki/{title}";
 					}
 					string text = m.Groups[2].Value;
-					string link = string.Format("[{0}]({1})", text, Linking.GetLink(title, format, true));
 
-					return link;
+					return Linking.GetMarkdownLink(title, format, text);
 				});
-			} else
+			}
+			else
 			{
 				// Transform code for sections to simpler version
 				string comment = summary.ToString().Replace("/* ", "→");
