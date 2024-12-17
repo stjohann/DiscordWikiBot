@@ -39,14 +39,14 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// See https://www.mediawiki.org/wiki/Manual:$wgCapitalLinks
 		/// </summary>
-		private static readonly int[] capitalisedNamespaces = [
+		private static readonly int[] capitalisedNamespaces = {
 			// Special
 			-1,
 			// User
 			2, 3,
 			// MediaWiki
 			8, 9,
-		];
+		};
 
 		private static readonly bool useDiscordLinkEmbeds = Config.GetValue("useDiscordLinkEmbeds") != null;
 
@@ -568,7 +568,7 @@ namespace DiscordWikiBot
 			if (ns != null && ns.Id != 0)
 			{
 				nsName = nsName == null ? ns.CustomName : nsName;
-				str = string.Join(":", [nsName, str]);
+				str = string.Join(":", new[] { nsName, str });
 
 				if (!(isTransclusion && ns.Id == 10))
 				{
@@ -616,12 +616,12 @@ namespace DiscordWikiBot
 			var safesubstNames = GetMagicWordNames("safesubst", magicWords);
 			var rawNames = GetMagicWordNames("raw", magicWords);
 			var msgNames = GetMagicWordNames("msg", magicWords);
-			var junkRegex = string.Join('|', [
-				string.Join('|', substNames),
-				string.Join('|', safesubstNames),
-				string.Join('|', rawNames),
-				string.Join('|', msgNames),
-			]);
+			var junkRegex = string.Join('|', new[] {
+					string.Join('|', substNames),
+					string.Join('|', safesubstNames),
+					string.Join('|', rawNames),
+					string.Join('|', msgNames),
+			});
 
 			title = Regex.Replace(title, $"^ *(?:{junkRegex}) *", "", RegexOptions.IgnoreCase);
 
@@ -676,7 +676,7 @@ namespace DiscordWikiBot
 			var names = data.FirstOrDefault(x => x.Name == name)?.Aliases.ToArray();
 			if (names == null)
 			{
-				return [name];
+				return new[] { name };
 			}
 
 			// Format #invoke: and #special: manually
@@ -892,13 +892,13 @@ namespace DiscordWikiBot
 
 			// Check if it is a MediaWiki-valid URL
 			// https://www.mediawiki.org/wiki/Manual:$wgUrlProtocols
-			string[] uriProtocols = [
+			string[] uriProtocols = new[] {
 				"bitcoin:", "ftp://", "ftps://", "geo:", "git://", "gopher://", "http://",
 				"https://", "irc://", "ircs://", "magnet:", "mailto:", "matrix:", "mms://",
 				"news:", "nntp://", "redis://", "sftp://", "sip:", "sips:", "sms:",
 				"ssh://", "svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:",
 				"//",
-			];
+			};
 			if (checkProtocol && uriProtocols.Any(str.StartsWith)) return true;
 
 			// Check if it has two : or more
@@ -907,14 +907,14 @@ namespace DiscordWikiBot
 			// Following checks are based on MediaWiki page title restrictions:
 			// https://www.mediawiki.org/wiki/Manual:Page_title
 			string[] illegalExprs =
-			[
+			new[] {
 				@"\<", @"\>",
 				@"\[", @"\]",
 				@"\{", @"\}",
 				@"\|",
 				@"~{3,}",
 				@"&(?:[a-z]+|#x?\d+);"
-			];
+			};
 
 			foreach (string expr in illegalExprs)
 			{
@@ -1010,7 +1010,7 @@ namespace DiscordWikiBot
 			// Following character conversions are based on {{PAGENAMEE}} specification:
 			// https://www.mediawiki.org/wiki/Manual:PAGENAMEE_encoding
 			char[] specialChars =
-			[
+			new[] {
 				// Discord already escapes this character in URLs
 				// '"',
 				// Discord breaks the links with %25 in them
@@ -1030,7 +1030,7 @@ namespace DiscordWikiBot
 				// Added: Causes problems for {{)!}} etc.
 				'(',
 				')',
-			];
+			};
 
 			// Decode and replace all spaces to required space symbol
 			str = DecodePageTitle(str);
@@ -1063,13 +1063,13 @@ namespace DiscordWikiBot
 			if (str.Contains("%")) str = Uri.UnescapeDataString(str);
 
 			// Remove deleted special characters
-			char[] deletedChars = [
+			char[] deletedChars = new[] {
 				// Soft hyphen (useless in links)
 				'\u00ad',
 				// LTR/RTL marks (useless in links)
 				'\u200e',
 				'\u200f',
-			];
+			};
 
 			foreach (var ch in deletedChars)
 			{
