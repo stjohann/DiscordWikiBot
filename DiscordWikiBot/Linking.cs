@@ -103,7 +103,10 @@ namespace DiscordWikiBot
 					else
 					{
 						await WikiSiteInfo[wiki].RefreshSiteInfoAsync();
-						Program.LogMessage($"Updated the site info for {wiki} (#{goal})");
+						if (refresh)
+						{
+							Program.LogMessage($"Updated the site info for {wiki} (#{goal})");
+						}
 					}
 				}
 			}
@@ -201,7 +204,7 @@ namespace DiscordWikiBot
 
 			// Get a message
 			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
-			bool isTooLong = (msg == TOO_LONG);
+			bool isTooLong = msg == TOO_LONG;
 
 			// Post a reply to a recent message if it was without links
 			if (!Cache.ContainsKey(messageId) && isRecentMessage)
@@ -245,8 +248,8 @@ namespace DiscordWikiBot
 		static public async Task Delete(DiscordClient sender, MessageDeleteEventArgs e)
 		{
 			// Ignore other bots / DMs
-			bool isBot = (e.Message?.Author?.IsBot == true);
-			bool isOurBot = (isBot && e.Message?.Author == Program.Client.CurrentUser);
+			bool isBot = e.Message?.Author?.IsBot == true;
+			bool isOurBot = isBot && e.Message?.Author == Program.Client.CurrentUser;
 			if (isBot && !isOurBot || e.Guild == null) return;
 			ulong id = e.Message.Id;
 			DeletedMessageCache.Add(id, true);
@@ -336,24 +339,8 @@ namespace DiscordWikiBot
 			// Replace emojis (e. g. <:meta:873203055804436513>) in the message
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
 
-			// Try to convert mobile links to current wiki to desktop links
-			if (content.Contains("//") && content.Contains("m."))
-			{
-				// Guess the format of the link from domain
-				var mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
-				if (mobileLinkFormat == linkFormat)
-				{
-					mobileLinkFormat = Regex.Replace(mobileLinkFormat, @"://www\.", "://m.");
-				}
-
-				// Convert these links to wikilinks
-				if (mobileLinkFormat != linkFormat)
-				{
-					mobileLinkFormat = mobileLinkFormat.Replace("$1", @"([^\s?]+)");
-
-					content = Regex.Replace(content, mobileLinkFormat, "[[$1]]");
-				}
-			}
+			// Convert mobile links to current wiki to wikilinks
+			content = ReplaceMobileLinks(content, linkFormat);
 
 			// Ignore messages without wiki syntax
 			if (!content.Contains("[[") && !content.Contains("{{")) return "";
@@ -593,6 +580,49 @@ namespace DiscordWikiBot
 				$"{linkInterwikis}{str}",
 				GetMarkdownLink(str, currentLinkFormat, linkText)
 			);
+		}
+
+		/// <summary>
+		/// Try to replace mobile links in a given string to wikilinks.
+		/// </summary>
+		/// <param name="content">Message content.</param>
+		/// <param name="linkFormat">Standard link format for the message.</param>
+		private static string ReplaceMobileLinks(string content, string linkFormat)
+		{
+			if (!content.Contains("//") || !content.Contains("m."))
+			{
+				return content;
+			}
+
+			// Guess the format, most are abcd.m.domain.org
+			var mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
+			if (mobileLinkFormat == linkFormat)
+			{
+				// www.wikidata.org/www.mediawiki.org
+				mobileLinkFormat = Regex.Replace(mobileLinkFormat, @"://www\.", "://m.");
+			}
+
+			// Replace guessed subdomain instances to wikilinks
+			var linkRegex = mobileLinkFormat.Replace("$1", @"([^\s]+)");
+			var matches = Regex.Matches(content, linkRegex);
+			if (matches.Count == 0)
+			{
+				return content;
+			}
+
+			foreach (Match match in matches)
+			{
+				// Ignore links with URL parameters (?action=history)
+				var link = new Uri(match.Value);
+				if (link.Query != "" && link.Query != "?")
+				{
+					continue;
+				}
+
+				content = Regex.Replace(content, linkRegex, "[[$1]]");
+			}
+
+			return content;
 		}
 
 		/// <summary>

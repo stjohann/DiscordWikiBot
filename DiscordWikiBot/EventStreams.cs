@@ -438,7 +438,7 @@ namespace DiscordWikiBot
 				contribs = Linking.GetMarkdownLink(contribs, format, Locale.GetMessage("eventstreams-contribs", lang));
 				user = Linking.GetMarkdownLink(user, format, change.User);
 
-				user = $"${user} ({talk} | {contribs})";
+				user = $"{user} ({talk} | {contribs})";
 			}
 
 			string comment = ParseComment(change.Comment, format, change.Title, linkify);
