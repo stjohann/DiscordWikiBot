@@ -18,7 +18,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Default command prefix.
 		/// </summary>
-		private readonly string PREFIX = Config.GetValue("prefix");
+		private static readonly string _prefix = Program.CommandPrefix;
 
 		/// <summary>
 		/// Command for which the help message is being produced.
@@ -44,7 +44,7 @@ namespace DiscordWikiBot
 			EmbedBuilder = new DiscordEmbedBuilder().WithColor(new DiscordColor(0x72777d));
 
 			// Get the language of the server
-			Lang = Config.GetLang(ctx.Guild.Id.ToString());
+			Lang = Config.GetLang(ctx.Guild);
 		}
 
 		/// <summary>
@@ -55,7 +55,7 @@ namespace DiscordWikiBot
 		public override BaseHelpFormatter WithCommand(Command command)
 		{
 			Command = command;
-			EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", Lang, Command.Name, Config.GetValue("prefix")));
+			EmbedBuilder.WithTitle(Locale.GetMessage("help-title-command", Lang, Command.Name, Program.CommandPrefix));
 
 			// Set command description
 			string description = command.Description;
@@ -76,7 +76,7 @@ namespace DiscordWikiBot
 			{
 				EmbedBuilder.AddField(
 					Locale.GetMessage("help-aliases", Lang),
-					string.Join(", ", command.Aliases.Select(xa => $"`{PREFIX}{xa}`"))
+					string.Join(", ", command.Aliases.Select(xa => $"`{_prefix}{xa}`"))
 				);
 			}
 
@@ -110,7 +110,7 @@ namespace DiscordWikiBot
 			foreach (var xc in subcommands)
 			{
 				if (xc.IsHidden) continue;
-				sb.Append(Locale.GetMessage("bullet", Lang, $"`{PREFIX}{xc.QualifiedName}`"));
+				sb.Append(Locale.GetMessage("bullet", Lang, $"`{_prefix}{xc.QualifiedName}`"));
 
 				// Provide the description
 				if (xc.Description.Length > 0)
@@ -165,7 +165,7 @@ namespace DiscordWikiBot
 				// Format the example of command
 				if (command.Overloads.Count > 1)
 				{
-					sb.Append('`').Append(PREFIX).Append(command.QualifiedName);
+					sb.Append('`').Append(_prefix).Append(command.QualifiedName);
 					foreach (var arg in ovl.Arguments)
 					{
 						sb.Append(arg.IsOptional || arg.IsCatchAll ? " [" : " <").Append(arg.Name).Append(arg.IsCatchAll ? "…" : "").Append(arg.IsOptional || arg.IsCatchAll ? ']' : '>');

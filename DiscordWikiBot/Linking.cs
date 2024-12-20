@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DiscordWikiBot.Schemas;
+using System.Web;
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using WikiClientLibrary.Sites;
-using DSharpPlus.Entities;
 using WikiClientLibrary.Pages;
-using System.Web;
+using DiscordWikiBot.Schemas;
 
 namespace DiscordWikiBot
 {
@@ -58,7 +58,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Message cache length.
 		/// </summary>
-		private static readonly int CACHE_LENGTH = 500;
+		private static readonly int CACHE_LENGTH = 1000;
 
 		/// <summary>
 		/// Cache for message IDs for which edits and deletions are tracked.
@@ -84,9 +84,9 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Initialise the default settings and setup things for overrides.
 		/// </summary>
-		/// <param name="goal">Discord server ID.</param>
+		/// <param name="goal">Discord server/channel ID.</param>
 		/// <param name="refresh">Refresh the info even if site info already has a key.</param>
-		static public async Task Init(string goal = "", bool refresh = false)
+		public static async Task Init(string goal = "", bool refresh = false)
 		{
 			string wiki = Config.GetWiki(goal);
 
@@ -112,21 +112,29 @@ namespace DiscordWikiBot
 			}
 		}
 
-		/// <summary>
-		/// Initialise settings for a channel.
-		/// </summary>
-		/// <param name="channel">Discord channel.</param>
-		/// <param name="refresh">Refresh the info even if site info already has a key.</param>
-		static public async Task InitChannel(DiscordChannel channel, bool refresh = false)
+		/// <param name="server">Discord server instance.</param>
+		/// <inheritdoc cref="Init" />
+		public static async Task Init(DiscordGuild server, bool refresh = false)
 		{
-			await Init(GetConfigGoal(channel), refresh);
+			await Init(server.Id.ToString(), refresh);
+		}
+
+		/// <param name="channel">Discord channel instance.</param>
+		/// <inheritdoc cref="Init" />
+		public static async Task Init(DiscordChannel channel, bool refresh = false)
+		{
+			var channelWiki = Config.GetWiki(channel, false);
+			if (channelWiki != null)
+			{
+				await Init($"#{channel.Id}", refresh);
+			}
 		}
 
 		/// <summary>
 		/// Remove wiki site information for a specified server.
 		/// </summary>
 		/// <param name="goal">Discord server ID.</param>
-		static public void Remove(string goal = "")
+		public static void Remove(string goal = "")
 		{
 			//if (goal == "" || goal == null) return;
 			return;
@@ -138,10 +146,13 @@ namespace DiscordWikiBot
 		/// React to a Discord message containing wiki links.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Answer(DiscordClient sender, MessageCreateEventArgs e)
+		public static async Task Answer(DiscordClient sender, MessageCreateEventArgs e)
 		{
-			// Ignore empty messages / bots
-			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true) return;
+			// Ignore empty messages / bots if necessary
+			if (e.Message?.Content == null) return;
+			
+			if (CannotAnswerBots(e.Guild, e.Message)) return;
+
 			string content = e.Message.Content;
 
 			// Determine our goal (default for DMs)
@@ -151,11 +162,10 @@ namespace DiscordWikiBot
 
 			if (isServerMessage)
 			{
-				var goal = GetConfigGoal(e.Channel);
-				wikiUrl = Config.GetWiki(goal);
-				lang = Config.GetLang(e.Guild.Id.ToString());
+				wikiUrl = Config.GetWiki(e.Channel);
+				lang = Config.GetLang(e.Guild);
 
-				await InitChannel(e.Channel);
+				await Init(e.Channel);
 			}
 
 			// Send message
@@ -184,10 +194,13 @@ namespace DiscordWikiBot
 		/// Edit or delete the bot’s message if one of the messages in cache was edited.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Edit(DiscordClient sender, MessageUpdateEventArgs e)
+		public static async Task Edit(DiscordClient sender, MessageUpdateEventArgs e)
 		{
-			// Ignore empty messages / bots / DMs
-			if (e.Message?.Content == null || e.Message?.Author?.IsBot == true || e.Guild == null) return;
+			// Ignore empty messages / DMs / bots if necessary
+			if (e.Message?.Content == null || e.Guild == null) return;
+			
+			if (CannotAnswerBots(e.Guild, e.Message)) return;
+
 			var messageId = e.Message.Id;
 			bool isRecentMessage = (DateTime.UtcNow - e.Message.CreationTimestamp).TotalMinutes <= 5;
 
@@ -198,12 +211,11 @@ namespace DiscordWikiBot
 			if (e.Message.Content == e.MessageBefore?.Content) return;
 
 			// Determine our goal
-			string goal = GetConfigGoal(e.Channel);
-			string lang = Config.GetLang(e.Guild.Id.ToString());
-			await InitChannel(e.Channel);
+			string lang = Config.GetLang(e.Guild);
+			await Init(e.Channel);
 
 			// Get a message
-			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(goal));
+			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(e.Channel));
 			bool isTooLong = msg == TOO_LONG;
 
 			// Post a reply to a recent message if it was without links
@@ -245,12 +257,15 @@ namespace DiscordWikiBot
 		/// Delete the bot’s message if one of the messages in cache was deleted.
 		/// </summary>
 		/// <param name="e">Discord message information.</param>
-		static public async Task Delete(DiscordClient sender, MessageDeleteEventArgs e)
+		public static async Task Delete(DiscordClient sender, MessageDeleteEventArgs e)
 		{
+			// Ignore DMs / bots if necessary
+			if (e.Channel?.Guild == null) return;
+			
+			if (CannotAnswerBots(e.Guild, e.Message)) return;
+
 			// Ignore other bots / DMs
-			bool isBot = e.Message?.Author?.IsBot == true;
-			bool isOurBot = isBot && e.Message?.Author == Program.Client.CurrentUser;
-			if (isBot && !isOurBot || e.Guild == null) return;
+			bool isOurBot = e.Message?.Author == Program.Client.CurrentUser;
 			ulong id = e.Message.Id;
 			DeletedMessageCache.Add(id, true);
 
@@ -282,10 +297,12 @@ namespace DiscordWikiBot
 		/// Respond to bulk deletion by bulk deleting the bot’s messages.
 		/// </summary>
 		/// <param name="e">Discord information.</param>
-		static public async Task BulkDelete(DiscordClient sender, MessageBulkDeleteEventArgs e)
+		public static async Task BulkDelete(DiscordClient sender, MessageBulkDeleteEventArgs e)
 		{
-			// Ignore bots / DMs
-			if (e.Messages?[0]?.Author?.IsBot == true || e.Channel?.Guild == null) return;
+			// Ignore DMs / bots if necessary
+			if (e.Channel?.Guild == null) return;
+			
+			if (CannotAnswerBots(e.Guild, e.Messages?[0])) return;
 
 			foreach (var item in e.Messages)
 			{
@@ -313,6 +330,20 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Check whether the bot cannot answer other bots on this server.
+		/// </summary>
+		/// <param name="server"></param>
+		private static bool CannotAnswerBots(DiscordGuild server, DiscordMessage message)
+		{
+			if (message?.Author?.IsBot == false) return false;
+
+			// Always ignore our bot
+			if (message?.Author == Program.Client.CurrentUser) return true;
+
+			return !Config.GetAnswerBots(server);
+		}
+
+		/// <summary>
 		/// Parse a Discord message.
 		/// </summary>
 		/// <param name="content">Discord message content.</param>
@@ -328,6 +359,9 @@ namespace DiscordWikiBot
 
 			// Remove code from the message
 			content = Regex.Replace(content, @"(`{1,3}).*?\1", string.Empty, RegexOptions.Singleline);
+
+			// Remove nowiki tags from the message
+			content = Regex.Replace(content, @"<nowiki>.*?<\/nowiki>", string.Empty, RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
 			// Remove quotes from the message
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
@@ -401,7 +435,7 @@ namespace DiscordWikiBot
 		/// <param name="link">Regular expression match.</param>
 		/// <param name="linkFormat">Standard link format for the message.</param>
 		/// <returns>Resolved title and link string.</returns>
-		static public Tuple<string, string> AddLink(Match link, string linkFormat)
+		public static Tuple<string, string> AddLink(Match link, string linkFormat)
 		{
 			GroupCollection groups = link.Groups;
 			var brackets = groups[1].Value.Trim();
@@ -614,7 +648,7 @@ namespace DiscordWikiBot
 			{
 				// Ignore links with URL parameters (?action=history)
 				var link = new Uri(match.Value);
-				if (link.Query != "" && link.Query != "?")
+				if (link.Query != "" || link.Query != "?")
 				{
 					continue;
 				}
@@ -990,28 +1024,6 @@ namespace DiscordWikiBot
 
 			title = EncodePageTitle(title);
 			return format.Replace("$1", title);
-		}
-
-		/// <summary>
-		/// Test if a channel override exists for the channel.
-		/// </summary>
-		/// <param name="channel">Discord channel information.</param>
-		/// <returns>Goal ID compatible with data.</returns>
-		private static string GetConfigGoal(DiscordChannel channel)
-		{
-			var goal = "#" + channel.Id;
-			if (channel.IsThread)
-			{
-				goal = "#" + channel.ParentId;
-			}
-
-			string channelWiki = Config.GetWiki(goal.ToString(), false);
-			if (channelWiki != null)
-			{
-				return goal;
-			}
-
-			return channel.GuildId.ToString();
 		}
 
 		/// <summary>

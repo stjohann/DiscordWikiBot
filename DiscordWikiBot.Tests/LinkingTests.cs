@@ -222,25 +222,38 @@ namespace DiscordWikiBot.Tests
 		[TestMethod]
 		public void LinksInIgnoredBlocks()
 		{
-			string actual = TestMessage(@"
-				`[[one-liner]]`
+			// Code blocks
+			Assert.AreEqual("", TestMessage(@"
+				`[[one-liner]]` ``[[double]]``
 				`[[multiline 1]]
 				[[multiline 2]]`
 
-				``[[double one-liner]]``
 				``[[double multiline 1]]
 				[[double multiline 2]]``
+
+				<nowiki>[[test]]</nowiki>
+				<nowiki>
+				[[nowiki]]
+				[[nowiki 2]]
+				</nowiki>
 
 				```
 				[[code block]]
 				```
-				
+			"));
+
+			// Quotes
+			Assert.AreEqual("", TestMessage(@"
 > quote block example [[test]]
 
 >>> test
 [[ignore everything after triple quote block]]
-");
-			Assert.AreEqual("", actual);
+			"));
+
+			// Other
+			Assert.AreEqual("", TestMessage(@"
+				[example [[link text]] example](https://google.com/)
+			"));
 		}
 
 		[TestMethod]

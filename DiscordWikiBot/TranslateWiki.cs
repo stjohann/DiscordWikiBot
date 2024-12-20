@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Sites;
-using System.Threading;
-using Newtonsoft.Json.Linq;
-using System.Text.RegularExpressions;
 
 namespace DiscordWikiBot
 {
@@ -80,7 +81,7 @@ namespace DiscordWikiBot
 			}
 
 			wiki.Channels.Add(channel);
-			wiki.LatestFetchKey = GetLegacyKey(channel);
+			wiki.LatestFetchKey = Config.GetValue("translatewiki-key", $"#{channel}")?.ToString();
 			if (run)
 			{
 				wiki.Run();
@@ -102,10 +103,16 @@ namespace DiscordWikiBot
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		public static void Remove(string channel = "", string lang = "")
 		{
-			Config.SetChannelOverride(channel, "translatewiki-key", null);
+			if (lang == "" || lang == null)
+			{
+				return;
+			}
+			Config.SetOverride($"#{channel}", "translatewiki-key", null).Wait();
 
 			if (!Wikis.TryGetValue(lang, out var wiki))
+			{
 				return;
+			}
 
 			wiki.RemoveChannel(channel);
 		}
@@ -146,14 +153,10 @@ namespace DiscordWikiBot
 				}
 
 				// React to all channels about any new changes
-				var msgresult = await Fetch(_lang);
-				if (msgresult != null)
+				var msgList = await Fetch(_lang);
+				if (msgList.Count > 0)
 				{
-					JToken[] msgs = msgresult.ToArray();
-					if (msgs != null)
-					{
-						await React(msgs);
-					}
+					await React(msgList);
 				}
 
 				now = DateTime.UtcNow;
@@ -164,7 +167,11 @@ namespace DiscordWikiBot
 					.AddHours(1)
 					.AddSeconds(3 * Array.IndexOf(Wikis.Keys.ToArray(), _lang));
 
-				await Task.Delay(nextTime - now, _cancellation.Token);
+				try
+				{
+					await Task.Delay(nextTime - now, _cancellation.Token);
+				}
+				catch {}
 			}
 		}
 
@@ -173,11 +180,11 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="list">List of all fetched messages.</param>
 		/// <param name="lang">Language code in ISO 639 format.</param>
-		private async Task React(JToken[] list)
+		private async Task React(List<Dictionary<string, JsonNode>> list)
 		{
 			// Filter only translations from projects above
 			bool gotToLatest = false;
-			List<JToken> query = list.Where(jt => jt.Type == JTokenType.Object).Select(item =>
+			var query = list.Select(item =>
 			{
 				string key = item["key"].ToString();
 				if (Projects.Keys.Where(x => key.StartsWith(x + ":")).ToList().Count > 0)
@@ -201,14 +208,15 @@ namespace DiscordWikiBot
 
 			// Sort authors and messages by groups
 			int count = query.Count;
-			Dictionary<string, Dictionary<string, List<string>>> groups = new Dictionary<string, Dictionary<string, List<string>>>();
-			HashSet<string> authors = new HashSet<string>();
+			var groups = new Dictionary<string, Dictionary<string, List<string>>>();
+			var authors = new HashSet<string>();
 
 			foreach (var item in query)
 			{
 				string key = item["key"].ToString();
 				string ns = Regex.Match(key, @"^\d+:").ToString().TrimEnd(':');
-				string translator = item["properties"]["last-translator-text"].ToString();
+				var props = item["properties"].Deserialize<Dictionary<string, object>>();
+				var translator = props["last-translator-text"].ToString();
 				key = key.Replace(ns + ":", string.Empty);
 
 				if (!groups.ContainsKey(ns))
@@ -261,7 +269,7 @@ namespace DiscordWikiBot
 					continue;
 				}
 
-				string guildLang = Config.GetLang(channel.GuildId.ToString());
+				string guildLang = Config.GetLang(channel.Guild);
 
 				// Inform about deadline if needed
 				string deadlineInfo = null;
@@ -291,7 +299,7 @@ namespace DiscordWikiBot
 					await client.SendMessageAsync(channel, deadlineInfo, embed: embed);
 
 					// Remember the key of first message
-					Config.SetChannelOverride(channel.Id.ToString(), "translatewiki-key", query[0]["key"].ToString());
+					await Config.SetOverride(channel, "translatewiki-key", query[0]["key"].ToString());
 				}
 				catch (Exception ex)
 				{
@@ -456,13 +464,13 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		/// <returns>A list of messages.</returns>
-		private static async Task<JToken> Fetch(string lang)
+		private static async Task<List<Dictionary<string, JsonNode>>> Fetch(string lang)
 		{
 			if (lang == null) return null;
 
 			WikiSite site = Linking.GetWikiSite("https://translatewiki.net/w/api.php").Result;
 
-			JToken result = await site.InvokeMediaWikiApiAsync(
+			var result = await site.InvokeMediaWikiApiAsync(
 				new MediaWikiFormRequestMessage(new
 				{
 					action = "query",
@@ -478,27 +486,13 @@ namespace DiscordWikiBot
 			);
 
 			// Return a message collection
-			JToken rcmsgs = result["query"]?["messagecollection"];
-			return rcmsgs;
-		}
-
-		/// <summary>
-		/// Get key via legacy way and convert it to new format.
-		/// </summary>
-		/// <param name="channel">Discord channel ID.</param>
-		private static string GetLegacyKey(string channel)
-		{
-			var oldValue = Config.GetValue("_translatewiki-key", channel);
-			if (oldValue != null)
+			var msgList = result["query"]?["messagecollection"];
+			if (msgList == null)
 			{
-				Program.LogMessage("Converting internal key into the new format.", "TranslateWiki");
-				Config.SetOverride(channel, "_translatewiki-key", null);
-				Config.SetChannelOverride(channel, "translatewiki-key", oldValue);
-
-				return oldValue;
+				return new List<Dictionary<string, JsonNode>>();
 			}
 
-			return Config.GetChannelOverride("translatewiki-key", channel);
+			return JsonSerializer.Deserialize<List<Dictionary<string, JsonNode>>>(msgList);
 		}
 	}
 }

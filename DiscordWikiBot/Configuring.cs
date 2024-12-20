@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
 {
@@ -16,9 +13,37 @@ namespace DiscordWikiBot
 	/// Configuring class.
 	/// <para>Adds commands for overriding bot settings per server.</para>
 	/// </summary>
-	[RequireUserPermissions(Permissions.ManageGuild)]
+	[RequireUserPermissions(Permissions.ManageGuild), RequireOwner]
 	class Configuring : BaseCommandModule
 	{
+		/// <summary>
+		/// Set language of the bot for a Discord server.
+		/// </summary>
+		/// <param name="ctx">Discord information.</param>
+		/// <param name="value">Language code in ISO 639 format.</param>
+		[Command("serverAnswerBots")]
+		[Aliases("guildAnswerBots")]
+		[Description("configuring-help-answerBots")]
+		public async Task SetAnswerBots(CommandContext ctx,
+			[Description("configuring-help-answerBots-value")] string value)
+		{
+			var lang = Config.GetLang(ctx.Guild);
+			object overrideVal = Config.ParseBool(value, lang);
+
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
+
+			// Do action and respond
+			int succeeds = await Config.SetOverride(ctx.Guild, "answerBots", overrideVal);
+			if (succeeds == Config.RESULT_CHANGE || succeeds == Config.RESULT_RESET)
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-answerBots", lang, overrideVal));
+				return;
+			}
+			await RespondOnErrors(succeeds, ctx, lang);
+		}
+
 		/// <summary>
 		/// Set EventStreams domain for a Discord server.
 		/// </summary>
@@ -30,18 +55,13 @@ namespace DiscordWikiBot
 		public async Task SetDomain(CommandContext ctx,
 			[Description("configuring-help-domain-value"), RemainingText] string value)
 		{
-			string prevDomain = Config.GetDomain(ctx.Guild.Id.ToString());
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-			await ctx.TriggerTypingAsync();
+			string lang = Config.GetLang(ctx.Guild);
 
-			// Check for required parameters
-			if (value.ToString() == "")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
-				return;
-			}
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
 
-			// Check if matches Wikimedia project
+			// Check if value matches Wikimedia project
 			string[] projectList = null;
 			bool notWmProject = value != "-" && !EventStreams.CanBeUsed(value, out projectList);
 			if (notWmProject)
@@ -51,7 +71,7 @@ namespace DiscordWikiBot
 			}
 
 			// Do action and respond
-			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "domain", value);
+			int succeeds = await Config.SetOverride(ctx.Guild, "domain", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-domain", lang, value));
@@ -70,15 +90,11 @@ namespace DiscordWikiBot
 		public async Task SetLanguage(CommandContext ctx,
 			[Description("configuring-help-lang-value")] string value)
 		{
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-			await ctx.TriggerTypingAsync();
+			string lang = Config.GetLang(ctx.Guild);
 
-			// Check for required parameters
-			if (value.ToString() == "")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
-				return;
-			}
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
 
 			// Set language to lowercase
 			value = value.ToLower();
@@ -94,7 +110,7 @@ namespace DiscordWikiBot
 			lang = value == "-" ? Config.GetLang() : value;
 
 			// Do action and respond
-			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "lang", value);
+			int succeeds = await Config.SetOverride(ctx.Guild, "lang", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-lang", lang, GetLanguageInfo(lang)));
@@ -116,10 +132,9 @@ namespace DiscordWikiBot
 			[Description("configuring-help-translatewiki-value"), RemainingText] string value)
 		{
 			string chanId = channel.Id.ToString();
-			string chanPrevId = Config.GetTWChannel(ctx.Guild.Id.ToString());
-			string chanPrevLang = Config.GetTWLang(ctx.Guild.Id.ToString());
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-			await ctx.TriggerTypingAsync();
+			string chanPrevId = Config.GetTWChannel(ctx.Guild);
+			string chanPrevLang = Config.GetTWLang(ctx.Guild);
+			string lang = Config.GetLang(ctx.Guild);
 
 			// Check for return to default
 			if (value == "-")
@@ -128,12 +143,9 @@ namespace DiscordWikiBot
 				value = "-";
 			}
 
-			// Check for required parameters
-			if (value.ToString() == "")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
-				return;
-			}
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
 
 			// Set language to lowercase
 			value = value.ToLower();
@@ -145,58 +157,48 @@ namespace DiscordWikiBot
 				return;
 			}
 
-			// Do action and respond
-			int succeedsChan = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-channel", chanId);
-			int succeedsLang = Config.SetOverride(ctx.Guild.Id.ToString(), "translatewiki-lang", value);
+			// Do actions and respond
+			int succeedsChan = await Config.SetOverride(ctx.Guild, "translatewiki-channel", chanId);
+			int succeedsLang = await Config.SetOverride(ctx.Guild, "translatewiki-lang", value);
 
-			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_CHANGE)
+			// Remove both keys if language was reset
+			if (succeedsLang == Config.RESULT_RESET)
 			{
-				// Different channel and language
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, GetLanguageInfo(value)));
-				TranslateWiki.Init(chanId, value);
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-reset", lang));
+				TranslateWiki.Remove(channel.Id.ToString(), chanPrevLang);
+				return;
 			}
 
-			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_RESET)
+			// Language was changed
+			if (succeedsLang == Config.RESULT_CHANGE)
 			{
-				// Different channel, default language
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-channel", lang, channel.Mention));
-				TranslateWiki.Remove(chanId, chanPrevLang);
+				// Check if language is also different
+				if (succeedsChan == Config.RESULT_CHANGE)
+				{
+					// Different channel, default language
+					await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, GetLanguageInfo(value)));
+					TranslateWiki.Remove(chanId, chanPrevLang);
+				}
+				else {
+					await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention));
+					TranslateWiki.Remove(chanId, chanPrevLang);
+				}
+				
 				TranslateWiki.Init(chanId, value);
+				return;
 			}
 
-			if (succeedsChan == Config.RESULT_CHANGE && succeedsLang == Config.RESULT_SAME)
+			// Channel was changed but language is same
+			if (succeedsChan == Config.RESULT_CHANGE)
 			{
-				// Different channel, same language
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-channel", lang, channel.Mention));
 				TranslateWiki.Remove(chanPrevId, chanPrevLang);
 				TranslateWiki.Init(chanId, value);
+				return;
 			}
 
-			if (succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_CHANGE
-				|| (
-					succeedsChan == Config.RESULT_SAME
-					&& (succeedsLang == Config.RESULT_RESET || succeedsLang == Config.RESULT_CHANGE)
-				)
-			)
-			{
-				// Same or default channel, different language
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki-lang", lang, GetLanguageInfo(value)));
-				TranslateWiki.Remove(chanId, chanPrevLang);
-				TranslateWiki.Init(chanId, value);
-			}
-
-			if (succeedsChan == Config.RESULT_RESET && succeedsLang == Config.RESULT_RESET)
-			{
-				// Reset both channel and language with -
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-reset", lang));
-				TranslateWiki.Remove(channel.Id.ToString(), chanPrevLang);
-			}
-
-			if (succeedsChan == Config.RESULT_STRANGE || succeedsLang == Config.RESULT_STRANGE)
-			{
-				// Other strange errors
-				await ctx.RespondAsync(Locale.GetMessage("configuring-error-strange", lang));
-			}
+			// Other strange errors
+			await ctx.RespondAsync(Locale.GetMessage("configuring-error-strange", lang));
 		}
 
 		/// <summary>
@@ -210,15 +212,11 @@ namespace DiscordWikiBot
 		public async Task SetWiki(CommandContext ctx,
 			[Description("configuring-help-wiki-value"), RemainingText] string value)
 		{
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-			await ctx.TriggerTypingAsync();
+			string lang = Config.GetLang(ctx.Guild);
 
-			// Check for required parameters
-			if (value.ToString() == "")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
-				return;
-			}
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
 
 			if (value != "-" && !value.Contains("/wiki/$1"))
 			{
@@ -241,10 +239,10 @@ namespace DiscordWikiBot
 			}
 
 			// Do action and respond
-			int succeeds = Config.SetOverride(ctx.Guild.Id.ToString(), "wiki", value);
+			int succeeds = await Config.SetOverride(ctx.Guild, "wiki", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				await Linking.Init(ctx.Guild.Id.ToString());
+				await Linking.Init(ctx.Guild);
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-wiki", lang, value));
 			}
 			if (succeeds == Config.RESULT_RESET)
@@ -264,15 +262,11 @@ namespace DiscordWikiBot
 		public async Task SetChannelWiki(CommandContext ctx,
 			[Description("configuring-help-wiki-value"), RemainingText] string value)
 		{
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
-			await ctx.TriggerTypingAsync();
+			string lang = Config.GetLang(ctx.Guild);
 
-			// Check for required parameters
-			if (value.ToString() == "")
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Config.GetValue("prefix")));
-				return;
-			}
+			// Check for required parameter
+			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
+			if (isEmpty) return;
 
 			if (value != "-" && !value.Contains("/wiki/$1"))
 			{
@@ -284,7 +278,7 @@ namespace DiscordWikiBot
 			value = value.Trim('<', '>');
 
 			// Reset to default server value if necessary
-			if (value == Config.GetWiki(ctx.Guild.Id.ToString()))
+			if (value == Config.GetWiki(ctx.Guild))
 			{
 				value = "-";
 			}
@@ -301,10 +295,10 @@ namespace DiscordWikiBot
 			}
 
 			// Do action and respond
-			int succeeds = Config.SetOverride($"#{ctx.Channel.Id}", "wiki", value);
+			int succeeds = await Config.SetOverride(ctx.Channel, "wiki", value);
 			if (succeeds == Config.RESULT_CHANGE)
 			{
-				await Linking.Init($"#{ctx.Channel.Id}");
+				await Linking.Init(ctx.Channel);
 				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-wiki-channel", lang, value));
 			}
 			if (succeeds == Config.RESULT_RESET)
@@ -315,10 +309,28 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Respond with a rejection message if a value is empty.
+		/// </summary>
+		/// <param name="ctx">Command context.</param>
+		/// <param name="lang">Language code in ISO 639 format.</param>
+		/// <param name="value">String to be checked.</param>
+		private async Task<bool> RespondIfEmpty(CommandContext ctx, string lang, string value = "")
+		{
+			if (value == null || value == "")
+			{
+				await ctx.RespondAsync(Locale.GetMessage("configuring-required-value", lang, ctx.Command.Name, Program.CommandPrefix));
+				return true;
+			}
+
+			await ctx.TriggerTypingAsync();
+			return false;
+		}
+
+		/// <summary>
 		/// Common responses to error response codes.
 		/// </summary>
 		/// <param name="response">Response code from configuration function.</param>
-		/// <param name="ctx">Discord information.</param>
+		/// <param name="ctx">Command context.</param>
 		/// <param name="lang">Language code in ISO 639 format.</param>
 		private async Task RespondOnErrors(int response, CommandContext ctx, string lang)
 		{
@@ -361,10 +373,10 @@ namespace DiscordWikiBot
 		{
 			await ctx.TriggerTypingAsync();
 
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+			string lang = Config.GetLang(ctx.Guild);
 			IReadOnlyList<DiscordChannel> channelList = await ctx.Guild.GetChannelsAsync();
 			string[] list = channelList.Cast<DiscordChannel>().Select(x => x.Id.ToString()).ToArray();
-			JObject streams = EventStreams.GetData(list);
+			var streams = EventStreams.GetData(list);
 
 			// Inform about version and streams if they exist on a server
 			var appendedMsg = " " + Locale.GetMessage("help-version", lang, Program.Version);
@@ -382,7 +394,7 @@ namespace DiscordWikiBot
 			}
 
 			// Refresh site info for the channel (or the server if default)
-			await Linking.InitChannel(ctx.Channel, true);
+			await Linking.Init(ctx.Channel, true);
 
 			// Respond to message
 			await ctx.RespondAsync(Locale.GetMessage("configuring-status", lang) + appendedMsg);

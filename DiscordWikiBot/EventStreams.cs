@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Text;
-using System.Threading;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DiscordWikiBot.Schemas;
-using LaunchDarkly.EventSource;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using DSharpPlus;
 using DSharpPlus.Entities;
+using LaunchDarkly.EventSource;
+using Newtonsoft.Json.Linq;
+using DiscordWikiBot.Schemas;
 
 namespace DiscordWikiBot
 {
@@ -220,7 +218,7 @@ namespace DiscordWikiBot
 				string domain = Config.GetDomain();
 				if (channel != null)
 				{
-					domain = Config.GetDomain(channel.GuildId.ToString());
+					domain = Config.GetDomain(channel.Guild);
 					if (domain != change.ServerName)
 					{
 						continue;
@@ -287,7 +285,7 @@ namespace DiscordWikiBot
 				}
 
 				// Send the message
-				string lang = Config.GetLang(channel.GuildId.ToString());
+				string lang = Config.GetLang(channel.Guild);
 				try
 				{
 					await client.SendMessageAsync(channel, embed: GetEmbed(change, domain, lang));

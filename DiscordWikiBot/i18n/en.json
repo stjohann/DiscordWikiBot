@@ -28,6 +28,7 @@
 
 	"configuring-status": ":information_source: Plugged into the socket.",
 	"configuring-status-streaming": "Latest response from the streams: {0} {0:minute|minutes} {1} {1:second|seconds} ago.",
+	"configuring-changed-answerBots": "The bot will {0:answer|ignore} new messages from other bots on this server.",
 	"configuring-changed-domain": "Domain for recent changes streams on this server was changed to **{0}**.",
 	"configuring-changed-lang": "Language of the bot on this server was changed to **{0}**.",
 	"configuring-changed-translatewiki": "Reports about recent changes on Translatewiki are enabled in the channel {0} for language **{1}**.",
@@ -45,6 +46,8 @@
 	"configuring-badvalue-wiki": "The bot cannot get API information for this wiki. There must be `{0}` at the end of your URL.",
 
 	"configuring-help-status": "Check if the bot is operational.",
+	"configuring-help-answerBots": "Configure whether the bot should answer messages from other bots.",
+	"configuring-help-answerBots-value": "Boolean value ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Change the domain from which recent changes are broadcasted on this server. Works only for Wikimedia projects.",
 	"configuring-help-domain-value": "domain of a Wikimedia project (in en.wikipedia.org format). Use `-` to reset to default.",
 	"configuring-help-lang": "Change the language of the bot on this server.",

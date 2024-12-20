@@ -46,6 +46,11 @@ namespace DiscordWikiBot
 		public static string UserAgent;
 
 		/// <summary>
+		/// Default command prefix.
+		/// </summary>
+		public static string CommandPrefix;
+
+		/// <summary>
 		/// Available bot commands.
 		/// </summary>
 		private CommandsNextExtension Commands { get; set; }
@@ -81,6 +86,7 @@ namespace DiscordWikiBot
 			Config.Init();
 			Version = GetBotVersion();
 			UserAgent = GetBotUserAgent();
+			CommandPrefix = Config.GetValue("prefix").ToString();
 
 			// Initialise Discord client
 			Client = new DiscordClient(new DiscordConfiguration()
@@ -151,7 +157,7 @@ namespace DiscordWikiBot
 			LogMessage("Setting up commands");
 			Commands = Client.UseCommandsNext(new CommandsNextConfiguration
 			{
-				StringPrefixes = new[] { Config.GetValue("prefix") },
+				StringPrefixes = [CommandPrefix],
 				EnableDms = false,
 				EnableMentionPrefix = true,
 			});
@@ -205,16 +211,15 @@ namespace DiscordWikiBot
 			LogMessage($"Server is loaded: {e.Guild.Name}");
 
 			// Load custom values if needed
-			string guild = e.Guild.Id.ToString();
 			Task.Run(async () =>
 			{
-				await Linking.Init(guild);
+				await Linking.Init(e.Guild);
 
-				Locale.Init(Config.GetLang(guild));
+				Locale.Init(Config.GetLang(e.Guild));
 
-				if (Config.GetTWChannel(guild) != null && Config.GetTWLang(guild) != null)
+				if (Config.GetTWChannel(e.Guild) != null && Config.GetTWLang(e.Guild) != null)
 				{
-					TranslateWiki.Init(Config.GetTWChannel(guild), Config.GetTWLang(guild));
+					TranslateWiki.Init(Config.GetTWChannel(e.Guild), Config.GetTWLang(e.Guild));
 				}
 			});
 
@@ -328,8 +333,8 @@ namespace DiscordWikiBot
 		/// </summary>
 		private static string GetBotUserAgent()
 		{
-			var userAgent = Config.GetValue("userAgent");
-			if (userAgent == null)
+			var userAgent = Config.GetValue("userAgent")?.ToString();
+			if (userAgent == null || userAgent == "")
 			{
 				LogMessage("Please add a custom user agent string in config.json if you changed  DiscordWikiBot internals (not including configs). See https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy for details.", level: "error");
 				return $"DiscordWikiBot/{Version} (https://w.wiki/4nm)";

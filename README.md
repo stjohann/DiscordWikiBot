@@ -4,6 +4,8 @@
 DiscordWikiBot is cross-platform console app built with .NET Core. It uses [DSharpPlus](https://github.com/NaamloosDT/DSharpPlus), [WikiClientLibrary](https://github.com/CXuesong/WikiClientLibrary), and [EvtSource](https://github.com/3ventic/EvtSource) for most of heavy lifting. Its code is published under MIT licence.
 
 ## Installation
+Keep in mind that the main wiki defined in `config.json` is required to be at least on [current LTS version of MediaWiki](https://www.mediawiki.org/wiki/Version_lifecycle). Older versions are not supported.
+
 1. Download the source files.
 2. Create `token.txt` in project folder with a private token for your Discord bot. If you haven’t created your own Discord bot, [create it first](https://discordapp.com/developers/applications/me). Do not share your private token.
 3. Change `config.json` to your needs according to instructions there.

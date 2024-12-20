@@ -5,15 +5,12 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using DSharpPlus.Entities;
-using Newtonsoft.Json;
-using SmartFormat;
-using DSharpPlus;
-using Newtonsoft.Json.Linq;
-using WikiClientLibrary.Client;
-using WikiClientLibrary.Sites;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
+using System.Threading.Tasks;
+using SmartFormat;
+using WikiClientLibrary.Client;
 
 namespace DiscordWikiBot
 {
@@ -35,7 +32,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Storage for MediaWiki’s language data
 		/// </summary>
-		private static JObject LanguageData;
+		private static JsonNode LanguageData;
 
 		/// <summary>
 		/// Final fallback language of MediaWiki language chain (English)
@@ -120,7 +117,7 @@ namespace DiscordWikiBot
 			// Remove authors metadata for the dictionary
 			json = Regex.Replace(json, "\"@metadata\": {[^}]+},", String.Empty, RegexOptions.Multiline);
 
-			return JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+			return JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 		}
 
 		/// <summary>
@@ -256,17 +253,20 @@ namespace DiscordWikiBot
 		/// <returns>A language chain or null.</returns>
 		private static List<string> GetFallbackData(string code)
 		{
-			var result = LanguageData[code]?["fallbacks"]
-				.Select(jt => (string)jt).ToList();
+			var fallbacks = LanguageData?[code]?["fallbacks"];
+			if (fallbacks == null)
+			{
+				return new List<string>();
+			}
 
-			return result != null ? result : new List<string>();
+			return JsonSerializer.Deserialize<List<string>>(fallbacks);
 		}
 
 		/// <summary>
 		/// Get supported languages list from MediaWiki API.
 		/// </summary>
 		/// <returns>List of supported languages.</returns>
-		private static async Task<JObject> GetLanguageData()
+		private static async Task<JsonNode> GetLanguageData()
 		{
 			string url = Config.GetWiki();
 			var site = Linking.GetWikiSite(url).Result;
@@ -279,7 +279,7 @@ namespace DiscordWikiBot
 			// Fetch languages using new API (MediaWiki 1.34+)
 			try
 			{
-				JToken newRequest = await site.InvokeMediaWikiApiAsync(
+				var newRequest = await site.InvokeMediaWikiApiAsync(
 					new MediaWikiFormRequestMessage(new
 					{
 						action = "query",
@@ -291,39 +291,12 @@ namespace DiscordWikiBot
 
 				if (newRequest?["warnings"] == null)
 				{
-					JObject languageinfo = (JObject)newRequest["query"]?["languageinfo"];
-					return languageinfo;
+					return newRequest["query"]?["languageinfo"];
 				}
 			}
 			catch (Exception ex)
 			{
-				Program.LogMessage($"Fetching language list (1.34+) returned an error: {ex}", level: "warning");
-			}
-
-			// Fetch languages using old API
-			try
-			{
-				JToken oldRequest = await site.InvokeMediaWikiApiAsync(
-					new MediaWikiFormRequestMessage(new
-					{
-						action = "query",
-						meta = "siteinfo",
-						siprop = "languages"
-					}),
-					new CancellationToken()
-				);
-
-				// Convert the old format to new one
-				JToken temp = oldRequest["query"]?["languages"];
-				JObject languages = new JObject(
-					temp.Select(jt => new JProperty((string)jt["code"], jt))
-				);
-
-				return languages;
-			}
-			catch (Exception ex)
-			{
-				Program.LogMessage($"Fetching language list (<1.34) returned an error: {ex}", level: "error");
+				Program.LogMessage($"Fetching language list returned an error: {ex}", level: "warning");
 			}
 
 			return null;
@@ -359,7 +332,7 @@ namespace DiscordWikiBot
 					.Any(name => name == lang);
 			}
 
-			return (LanguageData?[lang] != null);
+			return LanguageData?[lang] != null;
 		}
 
 		/// <summary>

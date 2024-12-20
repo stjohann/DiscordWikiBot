@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace DiscordWikiBot
@@ -34,11 +33,11 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments);
-				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string type = arguments.ContainsKey("title") ? "title" : "namespace";
 				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				string desc = ListArguments(temp, lang);
-				desc = (desc.Length > 0 ? $":\n{desc}" : ".");
+				desc = desc.Length > 0 ? $":\n{desc}" : ".";
 				await ctx.RespondAsync(Locale.GetMessage("streaming-opened", lang, goal, channel.Mention, desc));
 			});
 		}
@@ -58,7 +57,7 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments, false);
-				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string type = arguments.ContainsKey("title") ? "title" : "namespace";
 				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				// Return a specific message if nothing was changed
@@ -88,7 +87,7 @@ namespace DiscordWikiBot
 			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
 			{
 				EventStreams.RemoveData(channel.Id.ToString(), arguments);
-				string type = (arguments.ContainsKey("title") ? "title" : "namespace");
+				string type = arguments.ContainsKey("title") ? "title" : "namespace";
 				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				await ctx.RespondAsync(Locale.GetMessage("streaming-closed", lang, goal, channel.Mention));
@@ -103,7 +102,7 @@ namespace DiscordWikiBot
 		[Description("streaming-help-list")]
 		public async Task ListStreams(CommandContext ctx)
 		{
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+			string lang = Config.GetLang(ctx.Guild);
 			await ctx.TriggerTypingAsync();
 
 			IReadOnlyList<DiscordChannel> channelList = await ctx.Guild.GetChannelsAsync();
@@ -123,7 +122,7 @@ namespace DiscordWikiBot
 			{
 				string output = "";
 				string goal = entry.Key.Trim('<', '>');
-				string goalMsg = GetGoalMessage(lang, (goal == entry.Key ? "title" : "namespace"), goal);
+				string goalMsg = GetGoalMessage(lang, goal == entry.Key ? "title" : "namespace", goal);
 				output += Locale.GetMessage("streaming-list-stream", lang, goalMsg, entry.Value.Count()) + "\n";
 
 				// List each stream with an editing command
@@ -134,9 +133,9 @@ namespace DiscordWikiBot
 					Dictionary<string, dynamic> args = ((JObject)item.Value).ToObject<Dictionary<string, dynamic>>();
 
 					// Combine everything
-					string editGoal = (goal == entry.Key ? $" --title {goal}" : $" --namespace {goal}");
+					string editGoal = goal == entry.Key ? $" --title {goal}" : $" --namespace {goal}";
 					string argsMsg = ListArguments(args, lang);
-					argsMsg = (argsMsg.Length > 0 ? $":\n{argsMsg}\n" : ": ");
+					argsMsg = argsMsg.Length > 0 ? $":\n{argsMsg}\n" : ": ";
 
 					output += $"{channel.Mention}{argsMsg}`!editStream #{channel.Name}{editGoal}`\n";
 				}
@@ -179,7 +178,7 @@ namespace DiscordWikiBot
 		/// <param name="callback">Method to execute after all checks.</param>
 		private async Task CommandChecks(CommandContext ctx, DiscordChannel channel, string args, Action<Dictionary<string, dynamic>, string> callback)
 		{
-			string lang = Config.GetLang(ctx.Guild.Id.ToString());
+			string lang = Config.GetLang(ctx.Guild);
 			Dictionary<string, dynamic> arguments = ParseArguments(args);
 			await ctx.TriggerTypingAsync();
 
@@ -190,7 +189,7 @@ namespace DiscordWikiBot
 				|| arguments.ContainsKey("title") && Linking.IsInvalid(arguments["title"])
 			)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, ctx.Command.Name, Config.GetValue("prefix")));
+				await ctx.RespondAsync(Locale.GetMessage("streaming-required-goal", lang, ctx.Command.Name, Program.CommandPrefix));
 				return;
 			}
 
@@ -349,7 +348,7 @@ namespace DiscordWikiBot
 				string value = x.Value.ToString();
 				if (x.Value is bool)
 				{
-					value = Locale.GetMessage((x.Value ? "yes" : "no"), lang);
+					value = Locale.GetMessage(x.Value ? "yes" : "no", lang);
 				}
 
 				return Locale.GetMessage("bullet", lang, Locale.GetMessage($"streaming-key-{x.Key}", lang) + Locale.GetMessage("separator", lang, $"`{value}`"));
