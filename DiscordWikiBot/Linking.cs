@@ -639,7 +639,7 @@ namespace DiscordWikiBot
 				mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
 			}
 
-			// Do not respond to regular links
+			// Do not respond to unchanged links
 			if (mobileLinkFormat == linkFormat)
 			{
 				return content;
@@ -656,13 +656,14 @@ namespace DiscordWikiBot
 			foreach (Match match in matches)
 			{
 				// Ignore links with URL parameters (?action=history)
-				var link = new Uri(match.Value);
+				var value = match.Value;
+				var link = new Uri(value);
 				if (link.Query.Length > 0 && link.Query != "?")
 				{
 					continue;
 				}
 
-				content = linkRegex.Replace(content, "[[$1]]", 1);
+				content = content.Replace(value, linkRegex.Replace(value, "[[$1]]"));
 			}
 
 			return content;

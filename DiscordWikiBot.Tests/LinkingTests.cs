@@ -112,12 +112,13 @@ namespace DiscordWikiBot.Tests
 		public void MobileLinks()
 		{
 			Assert.AreEqual(
-				@"Ссылки: [[[`Тест`]]]( <https://ru.wikipedia.org/wiki/Тест> ), [[[`Заглавная страница`]]]( <https://ru.wikipedia.org/wiki/Заглавная_страница> )",
+				@"Ссылки: [[[`Тест`]]]( <https://ru.wikipedia.org/wiki/Тест> ), [[[`Заглавная страница`]]]( <https://ru.wikipedia.org/wiki/Заглавная_страница> ), [[[`Википедия:Форум/Общий`]]]( <https://ru.wikipedia.org/wiki/Википедия:Форум/Общий> )",
 				TestMessage(@"
 					[[Тест]]
 					https://ru.m.wikipedia.org/wiki/Заглавная_страница
 					https://en.m.wikipedia.org/wiki/Main_Page
 					https://ru.m.wikipedia.org/wiki/Википедия:Форум?action=history
+					https://ru.m.wikipedia.org/wiki/Википедия:Форум/Общий
 				")
 			);
 
