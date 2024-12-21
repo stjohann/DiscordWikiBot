@@ -150,7 +150,7 @@ namespace DiscordWikiBot
 		{
 			// Ignore empty messages / bots if necessary
 			if (e.Message?.Content == null) return;
-			
+
 			if (CannotAnswerBots(e.Guild, e.Message)) return;
 
 			string content = e.Message.Content;
@@ -198,7 +198,7 @@ namespace DiscordWikiBot
 		{
 			// Ignore empty messages / DMs / bots if necessary
 			if (e.Message?.Content == null || e.Guild == null) return;
-			
+
 			if (CannotAnswerBots(e.Guild, e.Message)) return;
 
 			var messageId = e.Message.Id;
@@ -261,7 +261,7 @@ namespace DiscordWikiBot
 		{
 			// Ignore DMs / bots if necessary
 			if (e.Channel?.Guild == null) return;
-			
+
 			if (CannotAnswerBots(e.Guild, e.Message)) return;
 
 			// Ignore other bots / DMs
@@ -301,7 +301,7 @@ namespace DiscordWikiBot
 		{
 			// Ignore DMs / bots if necessary
 			if (e.Channel?.Guild == null) return;
-			
+
 			if (CannotAnswerBots(e.Guild, e.Messages?[0])) return;
 
 			foreach (var item in e.Messages)
@@ -628,17 +628,26 @@ namespace DiscordWikiBot
 				return content;
 			}
 
-			// Guess the format, most are abcd.m.domain.org
-			var mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
+			// Guess the subdomain format: most are abcd.m.domain.org, but www.domain.org are m.domain.org
+			string mobileLinkFormat;
+			if (linkFormat.Contains("://www."))
+			{
+				mobileLinkFormat = Regex.Replace(linkFormat, @"://www\.", "://m.");
+			}
+			else
+			{
+				mobileLinkFormat = Regex.Replace(linkFormat, @$"://(.*?)\.", $"://$1.m.");
+			}
+
+			// Do not respond to regular links
 			if (mobileLinkFormat == linkFormat)
 			{
-				// www.wikidata.org/www.mediawiki.org
-				mobileLinkFormat = Regex.Replace(mobileLinkFormat, @"://www\.", "://m.");
+				return content;
 			}
 
 			// Replace guessed subdomain instances to wikilinks
-			var linkRegex = mobileLinkFormat.Replace("$1", @"([^\s]+)");
-			var matches = Regex.Matches(content, linkRegex);
+			var linkRegex = new Regex(mobileLinkFormat.Replace("$1", @"([^\s]+)"));
+			var matches = linkRegex.Matches(content);
 			if (matches.Count == 0)
 			{
 				return content;
@@ -648,12 +657,12 @@ namespace DiscordWikiBot
 			{
 				// Ignore links with URL parameters (?action=history)
 				var link = new Uri(match.Value);
-				if (link.Query != "" || link.Query != "?")
+				if (link.Query.Length > 0 && link.Query != "?")
 				{
 					continue;
 				}
 
-				content = Regex.Replace(content, linkRegex, "[[$1]]");
+				content = linkRegex.Replace(content, "[[$1]]", 1);
 			}
 
 			return content;
