@@ -28,6 +28,7 @@
 	"configuring-badvalue-lang": "봇은 입력을 유효한 ISO 639 코드로 인식하지 못합니다.",
 	"configuring-badvalue-wiki": "URL 끝에 `{0}`가 있어야 합니다.",
 	"configuring-help-status": "봇이 동작하는지 확인합니다.",
+	"configuring-help-answerBots-value": "불리언 값 ({msg:yes} / {msg:no})",
 	"configuring-help-lang": "이 서버의 봇의 언어를 변경합니다.",
 	"configuring-help-lang-value": "사용을 원하는 봇 언어입니다. 기본값으로 재설정하려면 `-`를 사용하십시오.",
 	"eventstreams-diff": "차이",

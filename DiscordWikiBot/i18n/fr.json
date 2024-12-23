@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Gomoko",
+			"Mahabarata",
 			"McDutchie",
 			"Meiræ",
 			"Paraboule",
@@ -30,6 +31,7 @@
 	"help-command-command": "commande pour laquelle l’aide est à fournir.",
 	"configuring-status": ":information_source: Branché sur la prise.",
 	"configuring-status-streaming": "Dernière réponse des flux : il y a {0} {0:minute|minutes} {1} {1:seconde|secondes}.",
+	"configuring-changed-answerBots": "Le robot {0:répondra|ignorera} les nouveaux messages provenant d'autres robots sur ce serveur.",
 	"configuring-changed-domain": "Le domaine pour les flux de modifications récentes sur ce serveur a été modifié en **{0}**.",
 	"configuring-changed-lang": "La langue du bot sur ce serveur a été modifiée et est maintenant **{0}**.",
 	"configuring-changed-translatewiki": "Les rapports concernant les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",
@@ -45,6 +47,8 @@
 	"configuring-badvalue-lang": "Le bot ne reconnaît pas votre entrée comme étant un code ISO 639 valide.",
 	"configuring-badvalue-wiki": "Le robot ne peut pas obtenir les informations de l’API pour ce wiki. Il doit y avoir `{0}` à la fin de votre URL.",
 	"configuring-help-status": "Vérifie si le robot est opérationnel.",
+	"configuring-help-answerBots": "Configurez si le robot doit répondre aux messages d'autres robots.",
+	"configuring-help-answerBots-value": "Valeur booléenne ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Modifiez le domaine depuis lequel les modifications récentes sont diffusées sur ce serveur. Ne fonctionne que pour les projets Wikimedia.",
 	"configuring-help-domain-value": "domaine d’un projet Wikimedia (au format `fr.wikipedia.org`). Utilisez `-` pour rétablir les valeurs par défaut.",
 	"configuring-help-lang": "Changer la langue du bot sur ce serveur.",
