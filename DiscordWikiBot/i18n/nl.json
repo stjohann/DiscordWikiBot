@@ -7,7 +7,8 @@
 			"McDutchie",
 			"PonkoSasuke",
 			"Romaine",
-			"Rots61"
+			"Rots61",
+			"Siebrand"
 		]
 	},
 	"yes": "ja",
@@ -28,6 +29,7 @@
 	"help-command-command": "opdracht om hulp voor te geven.",
 	"configuring-status": ":information_source: De stekker zit erin.",
 	"configuring-status-streaming": "Laatste reactie van de streams: {0} {0:minuut|minuten} {1} {1:seconde|seconden} geleden.",
+	"configuring-changed-answerBots": "De bot {0:beantwoordt|negeert} nieuwe berichten van andere bots op deze server.",
 	"configuring-changed-domain": "Het domein voor de streams voor recente wijzigingen op deze server is veranderd in **{0}**.",
 	"configuring-changed-lang": "De taal van de robot op deze server is veranderd het **{0}**.",
 	"configuring-changed-translatewiki": "Meldingen over recente wijzigingen voor het **{1}** op Translatewiki zijn ingeschakeld op het kanaal {0}.",
@@ -43,6 +45,8 @@
 	"configuring-badvalue-lang": "De robot herkent uw invoer niet als geldige ISO 639-code.",
 	"configuring-badvalue-wiki": "De robot kan geen API-informatie voor deze wiki ophalen. Aan het einde van de URL moet `{0}` staan.",
 	"configuring-help-status": "Controleer of de robot goed werkt.",
+	"configuring-help-answerBots": "Instellen of de bot moet reageren op berichten van andere bots.",
+	"configuring-help-answerBots-value": "Booleaanse waarde ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Het domein veranderen van waaruit recente wijzigingen op deze server worden uitgezonden. Werkt alleen voor Wikimedia-projecten.",
 	"configuring-help-domain-value": "domein van een Wikimedia-project (in formaat nl.wikipedia.org). Gebruik `-` om de standaardwaarde terug te zetten.",
 	"configuring-help-lang": "De taal van de robot op deze server wijzigen.",

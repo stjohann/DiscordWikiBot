@@ -22,7 +22,7 @@
 	"help-command-command": "comand për ël qual a-i é da dé l'agiut.",
 	"configuring-status": ":information_source: Tacà a la prèisa.",
 	"configuring-status-streaming": "Ùltima rispòsta dai fluss: {0} {0:minuta|minute} {1} {1:second|second} fa.",
-	"configuring-changed-answerBots": "Ël trigomiro a {0:answer|ignorërà} ij neuv mëssagi da j'àutri trigomiro su cost servent.",
+	"configuring-changed-answerBots": "Ël trigomiro a {0:rispòsta|ignorërà} ij neuv mëssagi da j'àutri trigomiro su cost servent.",
 	"configuring-changed-domain": "Ël domini për ij fluss ëd modìfiche recente su cost servent a l'é stàit modificà a **{0}**.",
 	"configuring-changed-lang": "La lenga dël trigomiro su cost servent a l'é stàita modificà a **{0}**.",
 	"configuring-changed-translatewiki": "Ij rapòrt an sle modìfiche recente su Translatewiki a son ativà ant ël canal {0} për la lenga **{1}**.",
