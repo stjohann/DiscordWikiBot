@@ -23,7 +23,7 @@
 	"help-command-command": "за која наредба да се даде помош.",
 	"configuring-status": ":information_source: Вклучено во приклучокот.",
 	"configuring-status-streaming": "Последен одговор од доводите: пред {0} {0:минута|минути} {1} {1:секунда|секунди}.",
-	"configuring-changed-answerBots": "Ботот ќе ги {0:answer|занемари} новите пораки од други ботови на опслужувачот.",
+	"configuring-changed-answerBots": "Ботот ќе ги {0:answer|занемари} новите пораки од други ботови на овој опслужувач.",
 	"configuring-changed-domain": "Доменот за доводите за скорешни промени на опслужувачов е изменет на **{0}**.",
 	"configuring-changed-lang": "Јазикот на вотот на овој опслужувач е изменет на **{0}**.",
 	"configuring-changed-translatewiki": "Извештаите за скорешните промени на Translatewiki се овозможени во каналот {0} за јазикот **{1}**.",
