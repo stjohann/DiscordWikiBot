@@ -13,7 +13,7 @@ namespace DiscordWikiBot
 	/// Configuring class.
 	/// <para>Adds commands for overriding bot settings per server.</para>
 	/// </summary>
-	[RequireUserPermissions(Permissions.ManageGuild), RequireOwner]
+	[RequireModOrOwner]
 	class Configuring : BaseCommandModule
 	{
 		/// <summary>
@@ -179,11 +179,12 @@ namespace DiscordWikiBot
 					await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention, GetLanguageInfo(value)));
 					TranslateWiki.Remove(chanId, chanPrevLang);
 				}
-				else {
+				else
+				{
 					await ctx.RespondAsync(Locale.GetMessage("configuring-changed-translatewiki", lang, channel.Mention));
 					TranslateWiki.Remove(chanId, chanPrevLang);
 				}
-				
+
 				TranslateWiki.Init(chanId, value);
 				return;
 			}
@@ -357,6 +358,39 @@ namespace DiscordWikiBot
 		private static string GetLanguageInfo(string code)
 		{
 			return Locale.GetLanguageName(code, "{1} ({0})");
+		}
+	}
+
+	/// <summary>
+	/// Check if command is run by bot owner or user with ManageGuild permissions.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+	class RequireModOrOwnerAttribute : CheckBaseAttribute
+	{
+		public override Task<bool> ExecuteCheckAsync(CommandContext ctx, bool help)
+		{
+			DiscordApplication app = ctx.Client.CurrentApplication;
+
+			var result = false;
+			if (app != null)
+			{
+				// Ignore DMs or weird stuff
+				DiscordMember usr = ctx.Member;
+				if (ctx.Guild == null || usr == null) return Task.FromResult(result);
+
+				// Always allow bot/server owners
+				result = app.Owners.Any(x => x.Id == ctx.User.Id);
+				if (result) return Task.FromResult(result);
+
+				result = usr.Id == ctx.Guild.OwnerId;
+				if (result) return Task.FromResult(result);
+
+				// Allow people with mod permissions
+				Permissions pusr = ctx.Channel.PermissionsFor(usr);
+				result = pusr.HasPermission(Permissions.ManageGuild);
+			}
+
+			return Task.FromResult(result);
 		}
 	}
 
