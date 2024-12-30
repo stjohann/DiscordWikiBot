@@ -648,10 +648,6 @@ namespace DiscordWikiBot
 			// Replace guessed subdomain instances to wikilinks
 			var linkRegex = new Regex(mobileLinkFormat.Replace("$1", @"([^\s]+)"));
 			var matches = linkRegex.Matches(content);
-			if (matches.Count == 0)
-			{
-				return content;
-			}
 
 			foreach (Match match in matches)
 			{

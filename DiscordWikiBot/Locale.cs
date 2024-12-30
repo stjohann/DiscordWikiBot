@@ -18,7 +18,7 @@ namespace DiscordWikiBot
 	/// Localisation class.
 	/// <para>Adds methods for fetching, adding and removing localisations.</para>
 	/// </summary>
-	class Locale
+	public class Locale
 	{
 		// Storage for loaded localisations
 		private static Dictionary<string, string> Default;

@@ -14,7 +14,7 @@ namespace DiscordWikiBot
 	/// Configuration class.
 	/// <para>Adds methods for reading saved configuration and changing it per server.</para>
 	/// </summary>
-	class Config
+	public class Config
 	{
 		/// <summary>
 		/// Response code: Bad parameters or errors.

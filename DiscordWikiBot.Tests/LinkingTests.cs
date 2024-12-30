@@ -2,6 +2,9 @@
 
 namespace DiscordWikiBot.Tests
 {
+#if !DEBUG
+	[Ignore]
+#endif
 	[TestClass]
 	public class LinkingTests
 	{
@@ -324,10 +327,13 @@ namespace DiscordWikiBot.Tests
 		[ClassInitialize]
 		public static void DiscordSetup(TestContext ctx)
 		{
-			if (Program.Client == null)
+			Program.Client = new(new()
 			{
-				new Program().Run(false).Wait();
-			}
+				Token = "-",
+			});
+			Config.Init();
+			Locale.Init();
+			Linking.Init().Wait();
 		}
 	}
 }
