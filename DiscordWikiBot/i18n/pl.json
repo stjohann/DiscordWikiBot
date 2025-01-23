@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Chrumps",
+			"PanWor",
 			"Rail",
 			"Rainbow P",
 			"WaldiSt"
@@ -24,7 +25,8 @@
 	"help-command": "Wyświetl pomoc komendy.",
 	"help-command-command": "komenda, dla której wyświetlić pomoc.",
 	"configuring-status": ":information_source: Gniazdko pomyślnie znalezione.",
-	"configuring-status-streaming": "Ostatnia odpowiedź od strumieni: {0} {0:minutę|minut} {1} {1:sekundę|sekund} temu.",
+	"configuring-status-streaming": "Ostatnia odpowiedź od strumieni: {0} {0:minuta|minuty|minut|minuty} {1} {1:sekunda|sekundy|sekund|sekundy} temu.",
+	"configuring-changed-answerBots": "Bot będzie {0:odpowiadał na|ignorował|błąd|błąd} nowe wiadomości od innych botów na tym serwerze.",
 	"configuring-changed-domain": "Domena strumieni ostatnich zmian na tym serwerze została zmieniona na **{0}**.",
 	"configuring-changed-lang": "Język bota na tym serwerze został zmieniony na **{0}**.",
 	"configuring-changed-translatewiki": "Raporty nt. ostatnich zmian w Translatewiki są włączone w kanale {0} dla języka **{1}**.",
@@ -40,6 +42,8 @@
 	"configuring-badvalue-lang": "Bot nie rozpoznał wprowadzonej wartości jako poprawnego kodu ISO 639.",
 	"configuring-badvalue-wiki": "Bot nie może uzyskać informacji API dla tej wiki. Na końcu wprowadzonego adresu URL musi znajdować się `{0}`.",
 	"configuring-help-status": "Sprawdź, czy bot działa.",
+	"configuring-help-answerBots": "Ustaw, czy bot ma odpowiadać na wiadomości od innych botów.",
+	"configuring-help-answerBots-value": "Wartość typu logicznego ({msg:tak} / {msg:nie})",
 	"configuring-help-domain": "Zmień domenę, dla której strumieniowane będą ostatnie zmiany na tym serwerze. Działa tylko z projektami Fundacji Wikimedia.",
 	"configuring-help-domain-value": "domena projektu Fundacji Wikimedia (w formacie pl.wikipedia.org). Użyj `-` aby przywrócić wartości domyślne.",
 	"configuring-help-lang": "Zmień język bota na serwerze.",
@@ -56,7 +60,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Link|Linki}:&#32;",
+	"linking-links": "{0:Link|Linki|Linki|Linki}:&#32;",
 	"linking-toolong": "Linki do powyższej wiadomości nie są podane, ponieważ wiadomość byłaby zbyt długa.",
 	"streaming-stream-namespace": "z przestrzeni nazw `{0}`",
 	"streaming-stream-title": "ze strony `{0}`",
@@ -64,7 +68,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Strumień {0} w kanale {1} zmienił następujące parametry:\n{2}",
 	"streaming-edited-nothing": ":ok: Strumień {0} w kanale {1} nie doświadczył żadnych zmian.",
 	"streaming-closed": ":negative_squared_cross_mark: Strumień {0} został usunięty z kanału {1}.",
-	"streaming-list": ":information_source: {0} {0:aktywny strumień|aktywne strumienie} na tym serwerze.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktywny strumień|aktywne strumienie|aktywnych strumieni|aktywnych strumieni} na tym serwerze.\n{1}",
 	"streaming-list-nothing": ":ok: Nie ma strumieni otwartych na tym serwerze.",
 	"streaming-list-stream": "**{1:Strumień|Strumienie} {0}:**",
 	"streaming-key-bot": "dołącz edycje botów",
@@ -83,5 +87,5 @@
 	"streaming-help-channel": "kanał, który jest dostępny dla bota",
 	"streaming-help-args": "parametry dostępne dla strumieni:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
 	"translatewiki-deadline": "Znajdź czas, aby sprawdzić tłumaczenia z tego tygodnia **przed północą** w poniedziałek czasu UTC, aby uniknąć złych tłumaczeń i wandalizmów.",
-	"translatewiki-header": "{0} {1:wiadomość|wiadomości|wiadomościowe|dużo wiadomości} od {2} {2:autora|autorów|autorzy|autorzów}"
+	"translatewiki-header": "{0} {1:wiadomość|wiadomości|wiadomości|wiadomości} od {2} {2:autora|autorów|autorów|autorów}"
 }
