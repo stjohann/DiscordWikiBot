@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Text.RegularExpressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DiscordWikiBot.Tests
 {
@@ -246,6 +247,17 @@ namespace DiscordWikiBot.Tests
 					[[Special:Search/insource:/Спецыялізуецца ў \./]]
 				")
 			);
+
+			Assert.AreEqual(
+				@"Ссылки: [[[`` ` ``]]]( <https://ru.wikipedia.org/wiki/%60> ), [[[``en:` ``]]]( <https://en.wikipedia.org/wiki/%60> ), [[[`*`]]]( <https://ru.wikipedia.org/wiki/*> ), [[[``Unsupported titles/f`num``num`k``]]]( <https://ru.wikipedia.org/wiki/Unsupported_titles/f%60num%60%60num%60k> )",
+				TestMessage(@"
+					[[\`]]
+					[[:en:\`]]
+					[[*]]
+					[[\*]]
+					[[Unsupported titles/f\`num\`\`num\`k]]
+				")
+			);
 		}
 
 		[TestMethod]
@@ -266,10 +278,14 @@ namespace DiscordWikiBot.Tests
 		public void LinksInIgnoredBlocks()
 		{
 			// Code blocks
-			Assert.AreEqual("", TestMessage(@"
+			Assert.AreEqual("Ссылка: [[[`Escaped`]]]( <https://ru.wikipedia.org/wiki/Escaped> )", TestMessage(@"
 				`[[one-liner]]` ``[[double]]``
 				`[[multiline 1]]
 				[[multiline 2]]`
+
+				\`\`\`
+				\`[[escaped]]\`
+				\`\`\`
 
 				``[[double multiline 1]]
 				[[double multiline 2]]``
@@ -287,10 +303,10 @@ namespace DiscordWikiBot.Tests
 
 			// Quotes
 			Assert.AreEqual("", TestMessage(@"
-> quote block example [[test]]
+				> quote block example [[test]]
 
->>> test
-[[ignore everything after triple quote block]]
+				>>> test
+				[[ignore everything after triple quote block]]
 			"));
 
 			// Other
@@ -314,13 +330,15 @@ namespace DiscordWikiBot.Tests
 		}
 
 		/// <summary>
-		/// Auto-fill PrepareMessage method with some parameters.
+		/// Format a call to <see cref="Linking.PrepareMessage" />
 		/// </summary>
 		/// <param name="str">String to be tested.</param>
 		/// <param name="format">Default link format.</param>
 		/// <returns></returns>
 		private static string TestMessage(string str, string format = "https://ru.wikipedia.org/wiki/$1")
 		{
+			// Remove starting spaces
+			str = Regex.Replace(str, @"^[^\S\n\r]+", string.Empty, RegexOptions.Multiline);
 			return Linking.PrepareMessage(str, "ru", format);
 		}
 

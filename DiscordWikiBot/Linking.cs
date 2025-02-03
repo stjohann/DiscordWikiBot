@@ -357,21 +357,25 @@ namespace DiscordWikiBot
 				return "";
 			}
 
-			// Remove code from the message
-			content = Regex.Replace(content, @"(`{1,3}).*?\1", string.Empty, RegexOptions.Singleline);
+			// Remove unescaped code syntax
+			content = Regex.Replace(content, @"(`{2,3}).*?\1", string.Empty, RegexOptions.Singleline);
+			content = Regex.Replace(content, @"(?<!\\)(`).*?\1", string.Empty, RegexOptions.Singleline);
 
-			// Remove nowiki tags from the message
+			// Remove nowiki tags
 			content = Regex.Replace(content, @"<nowiki>.*?<\/nowiki>", string.Empty, RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
-			// Remove quotes from the message
+			// Remove quote blocks
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
 			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
 
 			// Remove text in [link text]() syntax
 			content = Regex.Replace(content, @"\[.*?\]\((.*?)\)", "[]($1)");
 
-			// Replace emojis (e. g. <:meta:873203055804436513>) in the message
+			// Replace emojis like <:meta:873203055804436513> with :meta:
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
+
+			// Remove Markdown escaping for Markdown-specific symbols
+			content = Regex.Replace(content, @"\\([_*~`])", "$1");
 
 			// Convert mobile links to current wiki to wikilinks
 			content = ReplaceMobileLinks(content, linkFormat);
@@ -608,8 +612,15 @@ namespace DiscordWikiBot
 			var linkEnd = endBrackets.Substring(0, 2);
 			var linkInterwikis = string.Join(":", iwList);
 			if (linkInterwikis.Length > 0) linkInterwikis += ":";
+			linkStr = $"{linkInterwikis}{linkStr}";
+			
+			// Account for links to [[`]] and other pages with that symbol
+			var linkEsc = "`";
+			if (linkStr.StartsWith(linkEsc)) linkStr = $" {linkStr}";
+			if (linkStr.EndsWith(linkEsc)) linkStr = $"{linkStr} ";
+			if (linkStr.Contains(linkEsc)) linkEsc = "``";
 
-			var linkText = $"{linkStart}`{linkInterwikis}{linkStr}`{linkEnd}";
+			var linkText = $"{linkStart}{linkEsc}{linkStr}{linkEsc}{linkEnd}";
 			return Tuple.Create(
 				$"{linkInterwikis}{str}",
 				GetMarkdownLink(str, currentLinkFormat, linkText)
