@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Jay17",
 			"Revi",
 			"Ykhwong",
 			"그냥기여자"
@@ -22,6 +23,7 @@
 	"help-command": "명령어 도움말을 표시합니다.",
 	"help-command-command": "도움말을 제공하는 명령어입니다.",
 	"configuring-status": ":information_source: 전원이 꽂혀 있습니다.",
+	"configuring-changed-lang": "이 서버의 봇 언어가 **{0}**으로 바뀌었습니다.",
 	"configuring-changed-reset": "이 값은 기본값으로 다시 초기화되었습니다.",
 	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
 	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
