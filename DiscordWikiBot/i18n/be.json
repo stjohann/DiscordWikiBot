@@ -3,6 +3,7 @@
 		"authors": [
 			"Baccy",
 			"Maksim L.",
+			"MocnyDuham",
 			"Plaga med",
 			"Хтосьці"
 		]
@@ -40,8 +41,10 @@
 	"configuring-required-value": "Патрабуецца значэнне параметру.\nКаб атрымаць поўную даведку, увядзіце `{1}help {0}`.",
 	"configuring-badvalue-domain": "Патоки даступны толькі для праектаў Вікімедыя.\nСпіс дапушчальных даменаў: {0}.",
 	"configuring-badvalue-lang": "Бот не лічыць уведзенае вамі карэктным моўным кодам ISO 639.",
-	"configuring-badvalue-wiki": "Ваш URL мусіць заканчвацца на `{0}`.",
+	"configuring-badvalue-wiki": "Бот не можа атрымаць API інфармацыю для гэтай вікі. Ваш URL мусіць заканчвацца на `{0}`.",
 	"configuring-help-status": "Праверыць працу бота.",
+	"configuring-help-answerBots": "Сканфігуруйце, ці павінен бот адказваць на паведамленні ад іншых ботаў.",
+	"configuring-help-answerBots-value": "Лагічнае значэнне ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Змяніць дамен, з якога транслююцца свежыя праўкі, на гэтым серверы. Даступна толькі для праектаў Вікімедыя.",
 	"configuring-help-domain-value": "дамен праекта Вікімедыя (у фармаце be.wikipedia.org). Выкарыстоўвайце `-`, каб скінуць прадвызначанага да значэння.",
 	"configuring-help-lang": "Змяніць мову адказаў бота на гэтым серверы.",
