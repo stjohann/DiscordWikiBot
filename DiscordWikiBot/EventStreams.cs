@@ -50,7 +50,8 @@ namespace DiscordWikiBot
 			".wikivoyage.org",
 			".wikimedia.org",
 			"www.mediawiki.org",
-			"www.wikidata.org"
+			"www.wikidata.org",
+			"www.wikifunctions.org",
 		};
 
 		// Path to JSON file
@@ -91,7 +92,7 @@ namespace DiscordWikiBot
 			Enabled = true;
 			Program.LogMessage($"Connecting to stream.wikimedia.org", "EventStreams");
 			Stream = new EventSource(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
-			LatestTimestamp = DateTime.Now;
+			LatestTimestamp = DateTime.UtcNow;
 
 			// Log any errors
 			Stream.Error += (sender, args) =>
@@ -135,16 +136,15 @@ namespace DiscordWikiBot
 			}
 			if (change == null) return;
 			var changeTimestamp = change.Metadata.DateTime.ToUniversalTime();
-			LatestTimestamp = changeTimestamp;
 			bool notEdit = change.Type != "edit" && change.Type != "new";
 			if (notEdit) return;
 
-			// Do not post anything if it is an edit older than a day
-			// TODO: Investigate the proper fix
-			if (DateTime.UtcNow > changeTimestamp.AddHours(24))
+			// Ignore anything before the latest available timestamp
+			if (LatestTimestamp > changeTimestamp)
 			{
 				return;
 			}
+			LatestTimestamp = changeTimestamp;
 
 			string ns = change.Namespace.ToString();
 			string title = change.Title;

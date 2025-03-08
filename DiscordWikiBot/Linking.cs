@@ -1111,6 +1111,7 @@ namespace DiscordWikiBot
 		private static string DecodePageTitle(string str)
 		{
 			str = str.Trim().TrimStart(':').Replace('_', ' ');
+			str = Regex.Replace(str, @" {2,}", " ");
 
 			// Remove escaping symbols for \ in Discord
 			str = Regex.Replace(str, @"\\\\", "");
