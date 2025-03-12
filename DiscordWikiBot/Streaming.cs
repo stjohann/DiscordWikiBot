@@ -30,7 +30,7 @@ namespace DiscordWikiBot
 			[Description("streaming-help-channel")] DiscordChannel channel,
 			[RemainingText, Description("streaming-help-args")] string args = "")
 		{
-			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
+			await CommandChecks(ctx, channel, args, async (arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments);
 				string type = arguments.ContainsKey("title") ? "title" : "namespace";
@@ -38,7 +38,11 @@ namespace DiscordWikiBot
 
 				string desc = ListArguments(temp, lang);
 				desc = desc.Length > 0 ? $":\n{desc}" : ".";
-				await ctx.RespondAsync(Locale.GetMessage("streaming-opened", lang, goal, channel.Mention, desc));
+				await ctx.RespondAsync(
+					Locale.GetMessage("streaming-opened", lang, goal, channel.Mention, desc)
+					+ "\n"
+					+ Locale.GetMessage("streaming-domain", lang, Config.GetDomain(ctx.Guild))
+				);
 			});
 		}
 
@@ -54,7 +58,7 @@ namespace DiscordWikiBot
 			[Description("streaming-help-channel")] DiscordChannel channel,
 			[RemainingText, Description("streaming-help-args")] string args = "")
 		{
-			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
+			await CommandChecks(ctx, channel, args, async (arguments, lang) =>
 			{
 				Dictionary<string, dynamic> temp = EventStreams.SetData(channel.Id.ToString(), arguments, false);
 				string type = arguments.ContainsKey("title") ? "title" : "namespace";
@@ -68,7 +72,11 @@ namespace DiscordWikiBot
 				}
 
 				string desc = ListArguments(temp, lang);
-				await ctx.RespondAsync(Locale.GetMessage("streaming-edited", lang, goal, channel.Mention, desc));
+				await ctx.RespondAsync(
+					Locale.GetMessage("streaming-edited", lang, goal, channel.Mention, desc)
+					+ "\n"
+					+ Locale.GetMessage("streaming-domain", lang, Config.GetDomain(ctx.Guild))
+				);
 			});
 		}
 
@@ -84,14 +92,14 @@ namespace DiscordWikiBot
 			[Description("streaming-help-channel")] DiscordChannel channel,
 			[RemainingText, Description("streaming-help-args")] string args = "")
 		{
-			await CommandChecks(ctx, channel, args, async(arguments, lang) =>
+			await CommandChecks(ctx, channel, args, async (arguments, lang) =>
 			{
 				EventStreams.RemoveData(channel.Id.ToString(), arguments);
 				string type = arguments.ContainsKey("title") ? "title" : "namespace";
 				string goal = GetGoalMessage(lang, type, arguments[type].ToString());
 
 				await ctx.RespondAsync(Locale.GetMessage("streaming-closed", lang, goal, channel.Mention));
-			});
+			}, false);
 		}
 
 		/// <summary>
@@ -143,14 +151,16 @@ namespace DiscordWikiBot
 				msg.Add(output);
 			}
 
-			string response = Locale.GetMessage("streaming-list", lang, result.Count, string.Join("\n", msg));
+			var domainMsg = Locale.GetMessage("streaming-domain", lang, Config.GetDomain(ctx.Guild));
+			var response = Locale.GetMessage("streaming-list", lang, result.Count, string.Join("\n", msg), domainMsg);
 			if (response.Length <= 2000)
 			{
 				await ctx.RespondAsync(response);
-			} else
+			}
+			else
 			{
 				// Split long lists of streams into multiple messages
-				response = Locale.GetMessage("streaming-list", lang, result.Count, "");
+				response = Locale.GetMessage("streaming-list", lang, result.Count, "", domainMsg);
 				foreach (var stream in msg)
 				{
 					string output = stream + "\n";
@@ -176,7 +186,8 @@ namespace DiscordWikiBot
 		/// <param name="channel">Discord channel.</param>
 		/// <param name="args">Stream arguments.</param>
 		/// <param name="callback">Method to execute after all checks.</param>
-		private async Task CommandChecks(CommandContext ctx, DiscordChannel channel, string args, Action<Dictionary<string, dynamic>, string> callback)
+		/// <param name="checkTarget">Whether to check the target channel for access.</param>
+		private async Task CommandChecks(CommandContext ctx, DiscordChannel channel, string args, Action<Dictionary<string, dynamic>, string> callback, bool checkTarget = true)
 		{
 			string lang = Config.GetLang(ctx.Guild);
 			Dictionary<string, dynamic> arguments = ParseArguments(args);
@@ -193,9 +204,28 @@ namespace DiscordWikiBot
 				return;
 			}
 
+			// Check if the bot has permissions to post messages
+			try
+			{
+				if (checkTarget)
+				{
+					await channel.TriggerTypingAsync();
+				}
+			}
+			catch (Exception ex)
+			{
+				if (Program.IsChannelInvalid(ex))
+				{
+					await ctx.RespondAsync(Locale.GetMessage("streaming-required-access", lang, channel.Mention));
+				}
+
+				Program.LogMessage($"Stream setup in channel #{channel.Id} failed: {ex.Message}", "EventStreams", "error");
+				return;
+			}
+
 			callback(arguments, lang);
 		}
-		
+
 		/// <summary>
 		/// Parse a string with stream parameters.
 		/// </summary>
@@ -210,17 +240,18 @@ namespace DiscordWikiBot
 
 			string pattern = @"-{2}(\S+)(?:[=:]?|\s+)([^-\s].*?)?(?=\s+[-\/]{2}\S+|$)";
 			MatchCollection matches = Regex.Matches(args, pattern);
-			Dictionary<string, dynamic> result = matches.Cast<Match>().ToDictionary(m => m.Groups[1].Value, (m) => {
+			Dictionary<string, dynamic> result = matches.Cast<Match>().ToDictionary(m => m.Groups[1].Value, (m) =>
+			{
 				dynamic value = m.Groups[2].Value;
 
 				// Normalise to boolean
-				if (Boolean.TryParse(value, out bool outBool))
+				if (bool.TryParse(value, out bool outBool))
 				{
 					return outBool;
 				}
 
 				// Normalise to integer
-				if (Int32.TryParse(value, out int outInt))
+				if (int.TryParse(value, out int outInt))
 				{
 					return outInt;
 				}
@@ -315,7 +346,7 @@ namespace DiscordWikiBot
 			{
 				result["in-comment"] = result["in-comment"].ToLower();
 			}
-			
+
 			return result;
 		}
 

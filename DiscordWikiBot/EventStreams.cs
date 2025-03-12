@@ -65,7 +65,7 @@ namespace DiscordWikiBot
 			// Restart the stream if everything is initialised
 			if (Enabled)
 			{
-				Stream.Restart(false);
+				Stream.Restart(true);
 				return;
 			}
 
