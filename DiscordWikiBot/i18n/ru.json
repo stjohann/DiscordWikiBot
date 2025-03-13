@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Okras",
 			"Pacha Tchernof",
 			"Stjn"
 		]
@@ -68,7 +69,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Трансляция {0} в канале {1} поменяла следующие параметры:\n{2}",
 	"streaming-edited-nothing": ":ok: Трансляция {0} в канале {1} не поменяла параметров.",
 	"streaming-closed": ":negative_squared_cross_mark: Трансляция {0} прекращена в канале {1}.",
-	"streaming-list": ":information_source: {0} {0:действующая трансляция|действующие трансляции|действующих трансляций} на этом сервере. {2}\n{1}",
+	"streaming-list": ":information_source: {0} {0:действующая трансляция|действующие трансляции|действующих трансляций|действующих трансляций} на этом сервере. {2}\n{1}",
 	"streaming-list-nothing": ":ok: На этом сервере нет действующих трансляций.",
 	"streaming-list-stream": "**{1:Трансляция|Трансляции} {0}:**",
 	"streaming-key-bot": "включать правки ботов",
