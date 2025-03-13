@@ -67,7 +67,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Kenala {1} dê rodayışê {0} parametrey vêri vurna:\n{2}",
 	"streaming-edited-nothing": ":ok: Kenala {1} dê rodayışê {0} vurnayışi nêbi",
 	"streaming-closed": ":negative_squared_cross_mark: rodayışê {0} kenala {1} ra wedarna",
-	"streaming-list": ":information_source: na server dê {0} {0:ganın aktivo|ganıni aktivi}.\n{1}",
+	"streaming-list": ":information_source: na server dê {0} {0:ganın aktivo|ganıni aktivi}. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Ena server de akerde ganıni çıniyê.",
 	"streaming-list-stream": "**{1:Ganın|Ganıni} {0}:**",
 	"streaming-key-bot": "Vurnayışanê boti zi tewr ke",

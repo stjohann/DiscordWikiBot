@@ -61,7 +61,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Straumur {0} í rásinni {1} hefur breytt eftirfarandi færibreytum:\n{2}",
 	"streaming-edited-nothing": ":ok: Straumur {0} í rásinni {1} hafði engar breytingar.",
 	"streaming-closed": ":negative_squared_cross_mark: Straumur {0} var fjarlægður frá rásinni {1}.",
-	"streaming-list": ":information_source: {0} {0:virkur straumur|virkur straumur} á þessum netþjóni.\n{1}",
+	"streaming-list": ":information_source: {0} {0:virkur straumur|virkur straumur} á þessum netþjóni. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Það eru engir opnaðir straumar á þessum netþjóni.",
 	"streaming-list-stream": "**{1:Stream|Streams} {0}:**",
 	"streaming-key-bot": "innihalda vélmenni breytingar",

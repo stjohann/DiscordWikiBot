@@ -70,7 +70,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Трансляція {0} в каналі {1} змінила наступні параметри:\n{2}",
 	"streaming-edited-nothing": ":ok: Трансляція {0} в каналі {1} не змінила параметрів.",
 	"streaming-closed": ":negative_squared_cross_mark: Трансляція {0} припинена в каналі {1}.",
-	"streaming-list": ":information_source: {0} {0:діюча трансляція|діючі трансляції|діючих трансляцій} на цьому сервері.\n{1}",
+	"streaming-list": ":information_source: {0} {0:діюча трансляція|діючі трансляції|діючих трансляцій} на цьому сервері. {2}\n{1}",
 	"streaming-list-nothing": ":ok: На цьому сервері немає діючих трансляцій.",
 	"streaming-list-stream": "**{1:Трансляція|Трансляції} {0}:**",
 	"streaming-key-bot": "включати редагування ботів",

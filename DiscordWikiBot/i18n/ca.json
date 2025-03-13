@@ -62,7 +62,7 @@
 	"streaming-edited": ": eight_spoked_asterisk: El flux {0} al canal {1} ha canviat els paràmetres següents:\n{2}",
 	"streaming-edited-nothing": ": ok: El flux {0} al canal {1} no s'ha modificat.",
 	"streaming-closed": ": negative_squared_cross_mark: s'ha suprimit el flux {0} del canal {1}.",
-	"streaming-list": ":information_source: {0} {0:flux actiu|fluxos actius} sobre aquest servidor.\n{1}",
+	"streaming-list": ":information_source: {0} {0:flux actiu|fluxos actius} sobre aquest servidor. {2}\n{1}",
 	"streaming-list-nothing": ":ok: No hi ha cap flux obert en aquest servidor.",
 	"streaming-list-stream": "**{1:Flux|Fluxos} {0}:**",
 	"streaming-key-bot": "incloure modificacions del bot",

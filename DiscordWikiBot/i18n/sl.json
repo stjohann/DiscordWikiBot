@@ -61,7 +61,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Tok {0} v kanalu {1} je spremenil naslednje parametre:\n{2}",
 	"streaming-edited-nothing": ":ok: Tok {0} v kanalu {1} ni imel sprememb.",
 	"streaming-closed": ":negative_squared_cross_mark: Tok {0} je bil odstranjen iz kanala {1}.",
-	"streaming-list": ":information_source: {0} {0:aktiven tok|aktivna tokova|aktivni tokovi|aktivnih tokov} v tem strežniku.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktiven tok|aktivna tokova|aktivni tokovi|aktivnih tokov} v tem strežniku. {2}\n{1}",
 	"streaming-list-nothing": ":ok: V tem strežniku ni odprtih tokov.",
 	"streaming-list-stream": "*{1:Tok|Tokova|Tokovi|Tokovi} {0}:**",
 	"streaming-key-bot": "vključi urejanja botov",

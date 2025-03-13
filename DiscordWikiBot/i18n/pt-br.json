@@ -64,7 +64,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Fluxo {0} no canal {1} mudou os seguintes parâmetros:\n{2}",
 	"streaming-edited-nothing": ":ok: Fluxo {0} no canal {1} não sofreu alterações.",
 	"streaming-closed": ":negative_squared_cross_mark: Fluxo {0} foi removido do canal {1}.",
-	"streaming-list": ":information_source: {0} {0:active stream|fluxos ativos} neste servidor.\n{1}",
+	"streaming-list": ":information_source: {0} {0:active stream|fluxos ativos} neste servidor. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Não há fluxos abertos neste servidor.",
 	"streaming-list-stream": "**{1:Stream|Fluxos} {0}:**",
 	"streaming-key-bot": "incluir edições de robôs",

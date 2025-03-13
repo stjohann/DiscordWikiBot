@@ -64,7 +64,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Ar froud {0} er ganol {1} a zo bet cheñchet an arventennoù da-heul gantañ:\\n{2}",
 	"streaming-edited-nothing": ":ok: Kemm ebet gant ar froud {0} hag a zo er ganol {1}.",
 	"streaming-closed": ":negative_squared_cross_mark: Dilamet eo bet ar froud {0} diwar ar ganol {1}.",
-	"streaming-list": ":information_source: {0} {0:froud oberiant|a froudoù oberiant|a froudoù oberiant|a froudoù oberiant|a froudoù oberiant} war ar servijer-mañ.\n{1}",
+	"streaming-list": ":information_source: {0} {0:froud oberiant|a froudoù oberiant|a froudoù oberiant|a froudoù oberiant|a froudoù oberiant} war ar servijer-mañ. {2}\n{1}",
 	"streaming-list-nothing": ":ok: N'eus tamm froud ebet digoret war ar servijer-mañ.",
 	"streaming-list-stream": "**{1:Froud|a froudoù|a froudoù|a froudoù|a froudoù} {0}:**",
 	"streaming-key-bot": "enkorfañ aozadennoù ar robotoù",

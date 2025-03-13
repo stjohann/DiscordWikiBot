@@ -71,7 +71,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Stream {0} in het kanaal {1} heeft de volgende parameters gewijzigd:\n{2}",
 	"streaming-edited-nothing": ":ok: Stream {0} in kanaal {1} heeft geen veranderingen.",
 	"streaming-closed": ":negative_squared_cross_mark: Stream {0} is verwijderd van het kanaal {1}.",
-	"streaming-list": ":information_source: {0} {0:actieve stream|actieve streams} op deze server.\n{1}",
+	"streaming-list": ":information_source: {0} {0:actieve stream|actieve streams} op deze server. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Er zijn geen geopende streams op deze server.",
 	"streaming-list-stream": "**{1:Stream|Streams} {0}:**",
 	"streaming-key-bot": "robotbewerkingen opnemen",

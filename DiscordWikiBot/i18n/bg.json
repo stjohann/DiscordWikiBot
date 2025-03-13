@@ -62,7 +62,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Следните параметри на поток {0} в канал {1} са променени:\n{2}",
 	"streaming-edited-nothing": ":ok: Няма промени по потока {0} в канал {1}.",
 	"streaming-closed": ":negative_squared_cross_mark: Потокът {0} беше премахнат от канал {1}.",
-	"streaming-list": ":information_source: {0} {0:активен поток|активни потоци} в този сървър.\n{1}",
+	"streaming-list": ":information_source: {0} {0:активен поток|активни потоци} в този сървър. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Няма отворени потоци в този сървър.",
 	"streaming-list-stream": "**{1:Поток|Потоци} {0}:**",
 	"streaming-key-bot": "включване на редакции на ботове",

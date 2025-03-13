@@ -34,7 +34,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// Latest message timestamp.
 		/// </summary>
-		public static DateTime LatestTimestamp;
+		public static DateTime LatestTimestamp = DateTime.MinValue.ToUniversalTime();
 
 		/// <summary>
 		/// List of all allowed Wikimedia projects.
@@ -89,10 +89,17 @@ namespace DiscordWikiBot
 			}
 
 			// Open new EventStreams instance
-			Enabled = true;
-			Program.LogMessage($"Connecting to stream.wikimedia.org", "EventStreams");
-			Stream = new EventSource(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"));
-			LatestTimestamp = DateTime.UtcNow;
+			var esConfig = Configuration.Builder(new Uri("https://stream.wikimedia.org/v2/stream/recentchange"))
+				.RequestHeader("User-Agent", Program.UserAgent)
+				.Build();
+			Stream = new EventSource(esConfig);
+
+			// Log connection
+			Stream.Opened += (sender, args) =>
+			{
+				Enabled = true;
+				Program.LogMessage("Connected to stream.wikimedia.org", "EventStreams");
+			};
 
 			// Log any errors
 			Stream.Error += (sender, args) =>
@@ -140,7 +147,8 @@ namespace DiscordWikiBot
 			if (notEdit) return;
 
 			// Ignore anything before the latest available timestamp
-			if (LatestTimestamp > changeTimestamp)
+			// -2 minutes is needed because edits are sent quicker than they get processed
+			if (LatestTimestamp > changeTimestamp.AddMinutes(2))
 			{
 				return;
 			}

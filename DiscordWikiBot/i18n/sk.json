@@ -62,7 +62,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Stream {0} v kanáli {1} zmenil nasledovné parametre:\n{2}",
 	"streaming-edited-nothing": ":ok: Stream {0} v kanáli {1} nezmenený.",
 	"streaming-closed": ":negative_squared_cross_mark: Stream {0} bol odstránený z kanála{1}.",
-	"streaming-list": ":information_source: {0} {0:aktívny stream|aktívne streamy|aktívnych streamov|aktívnych streamov} na tomto serveri. \n{1}",
+	"streaming-list": ":information_source: {0} {0:aktívny stream|aktívne streamy|aktívnych streamov|aktívnych streamov} na tomto serveri. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Ta tomto serveri nie sú otvorené streamy.",
 	"streaming-list-stream": "**{1:Stream|Streamy|Streamov|Streamov} {0}:**",
 	"streaming-key-bot": "zahrnúť úpravy bota",

@@ -73,7 +73,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Le flux {0} dans le canal {1} a modifié les paramètres suivants :\n{2}",
 	"streaming-edited-nothing": ":ok: Le flux {0} dans le canal {1} n’a pas de modifications.",
 	"streaming-closed": ":negative_squared_cross_mark: Le flux {0} a été supprimé du canal {1}.",
-	"streaming-list": ":information_source: {0} flux actif{0:|s} sur ce serveur.\n{1}",
+	"streaming-list": ":information_source: {0} flux actif{0:|s} sur ce serveur. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Il n’y a aucun flux ouvert sur ce serveur.",
 	"streaming-list-stream": "** Flux{1:|} {0} : **",
 	"streaming-key-bot": "inclure les modifications de robot",

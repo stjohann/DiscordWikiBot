@@ -69,7 +69,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Трансляцыя {0} у канале {1} змяніла наступныя параметры:\n{2}",
 	"streaming-edited-nothing": ":ok: Трансляцыя {0} у канале {1} не змяніла параметры.",
 	"streaming-closed": ":negative_squared_cross_mark: Трансляцыя {0} спынена ў канале {1}.",
-	"streaming-list": ":information_source: {0} {0:дзеючая трансляцыя|дзеючыя трансляцыі|дзеючых трансляцый} на гэтым серверы.\n{1}",
+	"streaming-list": ":information_source: {0} {0:дзеючая трансляцыя|дзеючыя трансляцыі|дзеючых трансляцый} на гэтым серверы. {2}\n{1}",
 	"streaming-list-nothing": ":ok: На гэтым серверы няма дзеючых трансляцый.",
 	"streaming-list-stream": "**{1:Трансляцыя|Трансляцыі} {0}:**",
 	"streaming-key-bot": "уключаць праўкі ботаў",

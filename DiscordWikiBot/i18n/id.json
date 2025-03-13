@@ -63,7 +63,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Siaran {0} di kanal {1} telah mengubah parameter berikut:\n{2}",
 	"streaming-edited-nothing": ":ok: Siaran {0} di kanal {1} tidak berubah.",
 	"streaming-closed": ":negative_squared_cross_mark: Siaran {0} telah dihapus dari kanal {1}.",
-	"streaming-list": ":information_source: {0} {0:siaran aktif|siaran aktif} di channel ini.\n{1}",
+	"streaming-list": ":information_source: {0} {0:siaran aktif|siaran aktif} di channel ini. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Tidak ada siaran yang terbuka di peladen ini.",
 	"streaming-list-stream": "**{1:Siaran|Siaran} {0}:**",
 	"streaming-key-bot": "termasuk suntingan bot",

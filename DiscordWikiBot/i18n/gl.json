@@ -65,7 +65,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Cambiáronse os seguintes parámetros na emisión {0} da canle {1}:\n{2}",
 	"streaming-edited-nothing": ":ok: A emisión {0} da canle {1} non sufriu cambios.",
 	"streaming-closed": ":negative_squared_cross_mark: Eliminouse a emisión {0} da canle {1}.",
-	"streaming-list": ":information_source: {0} {0:emisión activa|emisións activas} neste servidor.\n{1}",
+	"streaming-list": ":information_source: {0} {0:emisión activa|emisións activas} neste servidor. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Non hai emisións abertas neste servidor.",
 	"streaming-list-stream": "**{1:Emisión|Emisións} {0}:**",
 	"streaming-key-bot": "incluír edicións de bots",

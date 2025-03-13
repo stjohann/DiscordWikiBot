@@ -69,7 +69,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: {1} kanalındakı {0} yayım bu parametrlərlə dəyişdirildi: {2}",
 	"streaming-edited-nothing": ":ok: {1} kanalındakı {0} yayım: Dəyişiklik yoxdur",
 	"streaming-closed": ":negative_squared_cross_mark: {0} yayım {1} kanalından silindi.",
-	"streaming-list": ":information_source: Bu serverdəki {0} {0:aktiv yayım|aktiv yayım}.\n{1}",
+	"streaming-list": ":information_source: Bu serverdəki {0} {0:aktiv yayım|aktiv yayım}. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Bu serverdə açılmış yayım yoxdur.",
 	"streaming-list-stream": "**{0} {1:yayım|yayımlar}:**",
 	"streaming-key-bot": "bot redaktələrini daxil et",

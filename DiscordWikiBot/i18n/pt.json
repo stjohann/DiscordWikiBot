@@ -62,7 +62,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: A transmissão {0} no canal {1} mudou os seguintes parâmetros:\n{2}",
 	"streaming-edited-nothing": ":ok: A transmissão {0} no canal {1} não teve alterações.",
 	"streaming-closed": ":negative_squared_cross_mark: A transmissão {0} foi removida do canal {1}.",
-	"streaming-list": ":information_source: {0} {0:transmissão ativa|transmissões ativas} neste servidor.\n{1}",
+	"streaming-list": ":information_source: {0} {0:transmissão ativa|transmissões ativas} neste servidor. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Não há transmissões abertas neste servidor.",
 	"streaming-list-stream": "**{1:Transmissão|Transmissões} {0}:**",
 	"streaming-key-bot": "incluir edições de robôs",

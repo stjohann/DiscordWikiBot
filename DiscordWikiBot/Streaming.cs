@@ -15,7 +15,7 @@ namespace DiscordWikiBot
 	/// Streaming class.
 	/// <para>Adds commands for configuring the recent changes streams.</para>
 	/// </summary>
-	[RequireUserPermissions(Permissions.ManageGuild)]
+	[RequireModOrOwner]
 	class Streaming : BaseCommandModule
 	{
 		/// <summary>

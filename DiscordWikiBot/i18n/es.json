@@ -70,7 +70,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: El flujo {0} en el canal {1} ha cambiado los siguientes parámetros:\n{2}",
 	"streaming-edited-nothing": ":ok: No se realizaron cambios al seguir a {0} en el canal {1}",
 	"streaming-closed": ":negative_squared_cross_mark: El flujo {0} fue eliminado del canal {1}.",
-	"streaming-list": ":information_source: {0} {0:active stream|active streams} en este servidor.\n{1}",
+	"streaming-list": ":information_source: {0} {0:active stream|active streams} en este servidor. {2}\n{1}",
 	"streaming-list-nothing": ":ok: No hay flujos abiertos en este servidor.",
 	"streaming-list-stream": "**{1:Corriente|Corrientes} {0}**",
 	"streaming-key-bot": "incluir ediciones de los bots",

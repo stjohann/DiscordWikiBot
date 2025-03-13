@@ -68,7 +68,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Strumień {0} w kanale {1} zmienił następujące parametry:\n{2}",
 	"streaming-edited-nothing": ":ok: Strumień {0} w kanale {1} nie doświadczył żadnych zmian.",
 	"streaming-closed": ":negative_squared_cross_mark: Strumień {0} został usunięty z kanału {1}.",
-	"streaming-list": ":information_source: {0} {0:aktywny strumień|aktywne strumienie|aktywnych strumieni|aktywnych strumieni} na tym serwerze.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktywny strumień|aktywne strumienie|aktywnych strumieni|aktywnych strumieni} na tym serwerze. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Nie ma strumieni otwartych na tym serwerze.",
 	"streaming-list-stream": "**{1:Strumień|Strumienie} {0}:**",
 	"streaming-key-bot": "dołącz edycje botów",

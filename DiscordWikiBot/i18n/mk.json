@@ -65,7 +65,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Доводот {0} во каналот {1} ги промени следниве параметри:\n{2}",
 	"streaming-edited-nothing": ":ok: Доводот {0} во каналот {1} нема промени.",
 	"streaming-closed": ":negative_squared_cross_mark: Доводот {0} е отстранет од каналот {1}.",
-	"streaming-list": ":information_source: {0} {0:тековен довод|тековни доводи} на овој опслужувач.\n{1}",
+	"streaming-list": ":information_source: {0} {0:тековен довод|тековни доводи} на овој опслужувач. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Нема тековни доводи на овој опслужувач.",
 	"streaming-list-stream": "**{1:Довод|Доводи} {0}:**",
 	"streaming-key-bot": "Вклучи ботовски уредувања",

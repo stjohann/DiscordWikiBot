@@ -62,7 +62,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Binago ng stream na {0} sa channel na {1} ang mga sumusunod na parameter: {2}",
 	"streaming-edited-nothing": ":ok: Walang mga pagbabago ang stream na {0} sa channel na {1}.",
 	"streaming-closed": ":negative_squared_cross_mark: Tinanggal na ang stream na {0} mula sa channel na {1}.",
-	"streaming-list": ":information_source: {0} {0:aktibong stream|(na) aktibong stream} sa server na ito.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktibong stream|(na) aktibong stream} sa server na ito. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Walang nakabukas na stream sa server na ito.",
 	"streaming-list-stream": "**{1:Stream|Mga stream} {0}:**",
 	"streaming-key-bot": "isama ang mga binago ng bot",

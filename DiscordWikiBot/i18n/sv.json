@@ -65,7 +65,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Strömmen {0} i kanalen {1} har ändrat följande parametrar:\n{2}",
 	"streaming-edited-nothing": ":ok: Strömmen {0} i kanalen {1} hade inga ändringar.",
 	"streaming-closed": ":negative_squared_cross_mark: Strömmen {0} togs bort från kanelen {1}.",
-	"streaming-list": ":information_source: {0} {0:aktiv ström|aktiva strömmar} på denna server.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktiv ström|aktiva strömmar} på denna server. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Det finns inga öppnade strömmar på denna server.",
 	"streaming-list-stream": "**{1:Ström|Strömmar} {0}:**",
 	"streaming-key-bot": "inkludera botredigeringar",

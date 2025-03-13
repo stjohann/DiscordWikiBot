@@ -65,7 +65,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: Struja {0} u kanalu {1} promijenila je sljedeće parametre:\n{2}",
 	"streaming-edited-nothing": ":ok: Struja {0} u kanalu {1} nije bilo izmjena.",
 	"streaming-closed": ":negative_squared_cross_mark: Struja {0} je uklonjena iz kanala {1}.",
-	"streaming-list": ":information_source: {0} {0:aktivna struja|aktivne struje|aktivnih struja} na ovom poslužitelju.\n{1}",
+	"streaming-list": ":information_source: {0} {0:aktivna struja|aktivne struje|aktivnih struja} na ovom poslužitelju. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Na ovom poslužitelju nema otvorenih struja.",
 	"streaming-list-stream": "**{1:Struja|Struje} {0}:**",
 	"streaming-key-bot": "uključi izmjene botova",
