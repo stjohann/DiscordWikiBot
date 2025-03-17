@@ -57,7 +57,7 @@
 	"streaming-edited": ":eight_spoked_asterisk: تەوژمی {0} لە کەناڵی {1} ئەم پارامەترانەی خوارەوەی گۆڕی:\n{2}",
 	"streaming-edited-nothing": ":ok: تەوژمی {0} لە کەناڵی {1} ھیچ گۆڕانکارییەکی نەبوو.",
 	"streaming-closed": ":negative_squared_cross_mark: تەوژمی {0} لە کەناڵی {1} لابرا.",
-	"streaming-list": ":information_source: {0} {0:تەوژمی چالاک|تەوژمی چالاک} لەسەر ئەم ڕاژەیە.\n{1}",
+	"streaming-list": ":information_source: {0} {0:تەوژمی چالاک|تەوژمی چالاک} لەسەر ئەم ڕاژەیە. {2}\n{1}",
 	"streaming-list-nothing": ":ok: ھیچ تەوژمێکی کراوە لەسەر ئەم ڕاژەیە نییە.",
 	"streaming-list-stream": "**{1:تەوژم|تەوژم} {0}:**",
 	"streaming-key-bot": "دەستکارییەکانی بۆت لەخۆ بگرێت",

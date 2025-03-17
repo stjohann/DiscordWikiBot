@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Chimes",
 			"GuoPC",
 			"HellojoeAoPS",
 			"Shuiwater",
@@ -66,13 +67,14 @@
 	"eventstreams-minor": "m",
 	"linking-links": "{0:链接|链接}：",
 	"linking-toolong": "上方消息的链接未提供，因为对于Discord该消息过长。",
+	"streaming-domain": "流媒体域：{0}",
 	"streaming-stream-namespace": "来自命名空间“{0}”。",
 	"streaming-stream-title": "来自页面“{0}”。",
 	"streaming-opened": ":white_check_mark: 串流{0}已加入频道{1}{2}",
 	"streaming-edited": ":eight_spoked_asterisk: 频道{1}的串流{0}更改了下列参数：{2}",
 	"streaming-edited-nothing": ":ok: 频道{1}的串流{0}没有任何更改。",
 	"streaming-closed": ":negative_squared_cross_mark: 串流{0}已从频道{1}移除。",
-	"streaming-list": ":information_source: 此服务器上有{0}{0:个活跃的串流|个活跃的串流}。\n{1}",
+	"streaming-list": ":information_source: 此服务器上有{0}{0:个活跃的串流|个活跃的串流}。{2}\n{1}",
 	"streaming-list-nothing": ":ok: 此服务器上没有已开启的串流。",
 	"streaming-list-stream": "**{1:串流|串流}{0}**",
 	"streaming-key-bot": "包含机器人编辑",
@@ -83,6 +85,7 @@
 	"streaming-key-patrolled": "按巡查状态过滤",
 	"streaming-key-title": "页面标题",
 	"streaming-key-type": "编辑类型",
+	"streaming-required-access": "机器人需要访问权限以查看和在 {0} 频道中发布消息。请检查频道设置并再次发送命令。",
 	"streaming-required-goal": "需要提供串流目标（页面标题或命名空间号码）。\n要获得指令的完整帮助，请发送“{1}help {0}”。",
 	"streaming-help-open": "开始传输频道中的最新更改。",
 	"streaming-help-edit": "编辑频道中最近更改串流的参数。",
