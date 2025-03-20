@@ -308,11 +308,6 @@ namespace DiscordWikiBot.Tests
 				>>> test
 				[[ignore everything after triple quote block]]
 			"));
-
-			// Other
-			Assert.AreEqual("", TestMessage(@"
-				[example [[link text]] example](https://google.com/)
-			"));
 		}
 
 		[TestMethod]

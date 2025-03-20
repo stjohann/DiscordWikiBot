@@ -368,9 +368,6 @@ namespace DiscordWikiBot
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
 			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
 
-			// Remove text in [link text]() syntax
-			content = Regex.Replace(content, @"\[.*?\]\((.*?)\)", "[]($1)");
-
 			// Replace emojis like <:meta:873203055804436513> with :meta:
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
 

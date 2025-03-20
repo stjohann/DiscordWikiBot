@@ -97,8 +97,8 @@ namespace DiscordWikiBot
 			// Log connection
 			Stream.Opened += (sender, args) =>
 			{
+				if (!Enabled) Program.LogMessage("Connected to stream.wikimedia.org", "EventStreams");
 				Enabled = true;
-				Program.LogMessage("Connected to stream.wikimedia.org", "EventStreams");
 			};
 
 			// Log any errors
