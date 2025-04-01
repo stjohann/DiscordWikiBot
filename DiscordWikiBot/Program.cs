@@ -166,7 +166,7 @@ namespace DiscordWikiBot
 
 			Commands.RegisterCommands<Configuring>();
 
-			if (EventStreams.Enabled)
+			if (Config.GetDomain() != null)
 			{
 				Commands.RegisterCommands<Streaming>();
 			}
