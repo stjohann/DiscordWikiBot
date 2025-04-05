@@ -122,7 +122,7 @@ namespace DiscordWikiBot.Tests
 					https://ru.m.wikipedia.org/wiki/Заглавная_страница
 					https://en.m.wikipedia.org/wiki/Main_Page
 					https://ru.m.wikipedia.org/wiki/Википедия:Форум?action=history
-					https://ru.m.wikipedia.org/wiki/Википедия:Форум/Общий
+					[общий форум]( <https://ru.m.wikipedia.org/wiki/Википедия:Форум/Общий> )
 				")
 			);
 

@@ -653,8 +653,11 @@ namespace DiscordWikiBot
 				return content;
 			}
 
+			// Replace Markdown [link syntax]() with URLs
+			content = Regex.Replace(content, @"\[[^\[\]]+\]\( *\<?([^\)]+)\>? *\)", "$1", RegexOptions.Multiline);
+
 			// Replace guessed subdomain instances to wikilinks
-			var linkRegex = new Regex(mobileLinkFormat.Replace("$1", @"([^\s]+)"));
+			var linkRegex = new Regex(mobileLinkFormat.Replace("$1", @"([^\s\>]+)"));
 			var matches = linkRegex.Matches(content);
 
 			foreach (Match match in matches)
