@@ -4,7 +4,8 @@
 			"Eduardo Addad de Oliveira",
 			"Eduardoaddad",
 			"Isabelle Belato",
-			"Mello25"
+			"Mello25",
+			"TheEduGobi"
 		]
 	},
 	"yes": "sim",
@@ -47,8 +48,8 @@
 	"configuring-help-translatewiki": "Comece ou termine o relatório a cada hora sobre alterações recentes no Translatewiki em um dos canais.",
 	"configuring-help-translatewiki-channel": "um canal que está disponível para o robô.",
 	"configuring-help-translatewiki-value": "idioma disponível no Translatewiki para tradução (código de idioma na ISO 639). Preencher com `-` como um idioma para finalizar os relatórios.",
-	"configuring-help-wiki": "Mude o wiki principal para obter links neste servidor. /wiki/$1 no final é necessário.",
-	"configuring-help-wiki-channel": "Mude o wiki para links neste canal. /wiki /$1 no final é necessário.",
+	"configuring-help-wiki": "Mude a wiki principal a ser usada nas ligações (links) deste servidor. É necessário que o final contenha /wiki/$1.",
+	"configuring-help-wiki-channel": "Mude a wiki a ser usada nas ligações (links) deste canal. É necessário que o final contenha /wiki/$1.",
 	"configuring-help-wiki-value": "a wiki que você quer (no formato <https://pt.wikipedia.org/wiki/$1>). Use `-` para redefinir para o padrão.",
 	"eventstreams-diff": "dif",
 	"eventstreams-talk": "discussão",
