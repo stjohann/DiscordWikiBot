@@ -66,5 +66,5 @@
 	"streaming-key-title": "Explanation for <code>title</code> key of recent changes streams configuration.\n{{Identical|Page title}}",
 	"streaming-required-goal": "The error response when a user did not provide the stream goal. <code>{1}help {0}</code> should not be translated.\nThe message to translate is formatted using the Markdown syntax.",
 	"streaming-help-args": "Please translate the first line only.",
-	"translatewiki-header": "The header in a bot response about new messages on Translatewiki.net.\n* <code>{0}</code> – formatted number of messages.\n* <code>{1}</code> – unformatted number of messages.\n* <code>{2}</code> – number of authors that have edited those messages."
+	"translatewiki-header": "The header in a bot response about new [[:mw:Special:MyLanguage/Help:System message|interface messages]] on translatewiki.net.\n* <code>{0}</code> – formatted number of messages.\n* <code>{1}</code> – unformatted number of messages.\n* <code>{2}</code> – number of authors that have edited those messages."
 }
