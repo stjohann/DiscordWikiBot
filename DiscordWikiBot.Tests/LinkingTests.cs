@@ -267,6 +267,7 @@ namespace DiscordWikiBot.Tests
 				[[ ]]
 				{{ }}
 				[[#top]]
+				{{/test}}
 				[[https://ru.wikipedia.org/wiki/Ithappens]]
 				[[<test>]]
 				[[ВП:]]

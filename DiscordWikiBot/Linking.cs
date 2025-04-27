@@ -462,6 +462,9 @@ namespace DiscordWikiBot
 			// Reject if a regular link starts with an anchor
 			if (isLink && str.StartsWith('#')) return null;
 
+			// Reject if it is a transclusion of most likely a subpage
+			if (isTransclusion && str.StartsWith('/')) return null;
+
 			// Storage for default and current site data
 			var defaultSiteInfo = GetWikiSite(linkFormat).Result;
 			var currentSiteInfo = defaultSiteInfo;
@@ -610,7 +613,7 @@ namespace DiscordWikiBot
 			var linkInterwikis = string.Join(":", iwList);
 			if (linkInterwikis.Length > 0) linkInterwikis += ":";
 			linkStr = $"{linkInterwikis}{linkStr}";
-			
+
 			// Account for links to [[`]] and other pages with that symbol
 			var linkEsc = "`";
 			if (linkStr.StartsWith(linkEsc)) linkStr = $" {linkStr}";
