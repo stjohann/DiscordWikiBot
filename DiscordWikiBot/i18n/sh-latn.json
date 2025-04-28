@@ -50,7 +50,7 @@
 	"configuring-help-wiki": "Promjena glavnog wikija, a za poveznice na ovom serveru. Potrebno je dodati /wiki/$1 na kraj.",
 	"configuring-help-wiki-channel": "Mijenjanje wikija za linkove na ovom kanalu. Na završetku je neophodno potreban dio URL-a: /wiki/$1",
 	"configuring-help-wiki-value": "wiki koji želite (u formatu <https://en.wikipedia.org/wiki/$1>). Koristite `-` za vraćanje na predodređeno.",
-	"eventstreams-diff": "razl-разл",
+	"eventstreams-diff": "razl",
 	"eventstreams-talk": "razgovor",
 	"eventstreams-contribs": "doprinosi",
 	"eventstreams-new": "N/Н",
