@@ -3,6 +3,7 @@
 		"authors": [
 			"Jay17",
 			"Revi",
+			"YeBoy371",
 			"Ykhwong",
 			"그냥기여자"
 		]
@@ -28,7 +29,7 @@
 	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
 	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
 	"configuring-badvalue-lang": "봇은 입력을 유효한 ISO 639 코드로 인식하지 못합니다.",
-	"configuring-badvalue-wiki": "URL 끝에 `{0}`가 있어야 합니다.",
+	"configuring-badvalue-wiki": "이 위키의 API 정보는 봇이 가져올 수 없습니다. URL 끝에 `{0}`가 있어야 합니다.",
 	"configuring-help-status": "봇이 동작하는지 확인합니다.",
 	"configuring-help-answerBots-value": "불리언 값 ({msg:yes} / {msg:no})",
 	"configuring-help-lang": "이 서버의 봇의 언어를 변경합니다.",
@@ -39,12 +40,13 @@
 	"eventstreams-new": "새글",
 	"eventstreams-bot": "봇",
 	"eventstreams-minor": "잔글",
-	"linking-links": "{0:링크|링크}:&#32;",
+	"linking-links": "{0:링크}:&#32;",
 	"linking-toolong": "위 메시지의 링크는 디스코드에 게시하기에는 너무 길기 때문에 제공되지 않습니다.",
+	"streaming-domain": "스트리밍 도메인: `{0}`",
 	"streaming-stream-namespace": "`{0}` 이름공간에서",
 	"streaming-stream-title": "`{0}` 문서에서",
 	"streaming-list-nothing": ":ok: 이 서버에 열려 있는 스트림이 없습니다.",
-	"streaming-list-stream": "**스트림 {0}:**",
+	"streaming-list-stream": "**{1:스트림} {0}:**",
 	"streaming-key-bot": "봇 편집 포함",
 	"streaming-key-in-comment": "댓글에서 검색",
 	"streaming-key-minor": "사소한 편집 포함",
