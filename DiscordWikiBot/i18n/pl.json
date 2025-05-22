@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Chrumps",
+			"IOIOI",
 			"PanWor",
 			"Rail",
 			"Rainbow P",
@@ -43,7 +44,7 @@
 	"configuring-badvalue-wiki": "Bot nie może uzyskać informacji API dla tej wiki. Na końcu wprowadzonego adresu URL musi znajdować się `{0}`.",
 	"configuring-help-status": "Sprawdź, czy bot działa.",
 	"configuring-help-answerBots": "Ustaw, czy bot ma odpowiadać na wiadomości od innych botów.",
-	"configuring-help-answerBots-value": "Wartość typu logicznego ({msg:tak} / {msg:nie})",
+	"configuring-help-answerBots-value": "Wartość typu logicznego ({{msg:yes} / {msg:no})",
 	"configuring-help-domain": "Zmień domenę, dla której strumieniowane będą ostatnie zmiany na tym serwerze. Działa tylko z projektami Fundacji Wikimedia.",
 	"configuring-help-domain-value": "domena projektu Fundacji Wikimedia (w formacie pl.wikipedia.org). Użyj `-` aby przywrócić wartości domyślne.",
 	"configuring-help-lang": "Zmień język bota na serwerze.",
@@ -62,6 +63,7 @@
 	"eventstreams-minor": "m",
 	"linking-links": "{0:Link|Linki|Linki|Linki}:&#32;",
 	"linking-toolong": "Linki do powyższej wiadomości nie są podane, ponieważ wiadomość byłaby zbyt długa.",
+	"streaming-domain": "Domena strumienia: `{0}`",
 	"streaming-stream-namespace": "z przestrzeni nazw `{0}`",
 	"streaming-stream-title": "ze strony `{0}`",
 	"streaming-opened": ":white_check_mark: Strumień {0} jest dodany do kanału {1}{2}",
@@ -79,6 +81,7 @@
 	"streaming-key-patrolled": "filtruj według statusu patrolowania",
 	"streaming-key-title": "tytuł strony",
 	"streaming-key-type": "rodzaj edycji",
+	"streaming-required-access": "Bot potrzebuje dostępu do przeglądania i publikowania wiadomości w kanale {0}. Sprawdź ustawienia kanału i wyślij polecenie ponownie.",
 	"streaming-required-goal": "Wymagany jest cel strumienia (tytuł strony lub numer przestrzeni nazw).\nAby uzyskać pomoc dla tej komendy, wpisz `{1}pomoc {0}`.",
 	"streaming-help-open": "Rozpocznij strumieniowanie ostatnich zmian do kanału.",
 	"streaming-help-edit": "Edytuj parametry strumienia ostatnich zmian na kanale.",
