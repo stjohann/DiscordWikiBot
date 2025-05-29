@@ -6,6 +6,7 @@
 			"RYOUMA1117",
 			"Shirayuki",
 			"Stjn",
+			"YeBoy371",
 			"春春眠眠"
 		]
 	},
@@ -59,7 +60,7 @@
 	"eventstreams-new": "新",
 	"eventstreams-bot": "ボ",
 	"eventstreams-minor": "細",
-	"linking-links": "{0:リンク|リンク}：",
+	"linking-links": "{0:リンク}：&#32;",
 	"linking-toolong": "メッセージがDiscordには長すぎるため、\n上記のメッセージへのリンクは提供されていません。",
 	"streaming-stream-namespace": "名前空間 `{0}`から",
 	"streaming-stream-title": "ページ `{0}`から",
