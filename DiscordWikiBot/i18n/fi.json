@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"01miki10",
+			"Hdicu",
 			"Joquliina",
 			"Markus Mikkonen",
 			"Nike",
@@ -44,10 +45,14 @@
 	"streaming-stream-namespace": "nimiavaruudesta `{0}`",
 	"streaming-stream-title": "sivulta `{0}`",
 	"streaming-key-bot": "sisällytä bottimuokkaukset",
+	"streaming-key-in-comment": "etsi kommentista",
+	"streaming-key-diff-length": "eron minimipituus",
 	"streaming-key-minor": "sisällytä pienet muutokset",
 	"streaming-key-namespace": "nimiavaruuden numero",
+	"streaming-key-patrolled": "suodata partioinnin tilan mukaan",
 	"streaming-key-title": "sivun otsikko",
 	"streaming-key-type": "muokkauksen tyyppi",
+	"streaming-required-access": "Botti tarvitsee oikeudet viestien näkemiseen ja lähettämiseen kanavalla {0}. Tarkista kanavan asetukset ja lähetä komento uudestaan.",
 	"streaming-help-channel": "kanava, jonne botilla on pääsy.",
 	"translatewiki-header": "{0} {1:viesti|viestiä} {2} {2:käyttäjältä|käyttäjältä}"
 }
