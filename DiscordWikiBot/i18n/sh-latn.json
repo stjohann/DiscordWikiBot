@@ -51,7 +51,7 @@
 	"configuring-help-wiki": "Promjena glavnog wikija, a za poveznice na ovom serveru. Potrebno je dodati /wiki/$1 na kraj.",
 	"configuring-help-wiki-channel": "Mijenjanje wikija za linkove na ovom kanalu. Na završetku je neophodno potreban dio URL-a: /wiki/$1",
 	"configuring-help-wiki-value": "wiki koji želite (u formatu <https://en.wikipedia.org/wiki/$1>). Koristite `-` za vraćanje na predodređeno.",
-	"eventstreams-diff": "razl",
+	"eventstreams-diff": "razlika",
 	"eventstreams-talk": "razgovor",
 	"eventstreams-contribs": "doprinosi",
 	"eventstreams-new": "N/Н",
@@ -83,6 +83,6 @@
 	"streaming-help-list": "Lista svih otvorenih tokova na ovom serveru.",
 	"streaming-help-channel": "kanal koji je dostupan botu.",
 	"streaming-help-args": "dostupni parametri tokova:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
-	"translatewiki-deadline": "Osigurajte vrijeme za provjeru prijevoda za ovaj tjedan **do 00:00** u ponedjeljak po vremenskoj zoni UTC, da biste izbjegli loše prijevode i vandalizme.",
+	"translatewiki-deadline": "Odvojite nešto vremena za provjeru ovosedmičnih prijevoda **do 00:00** u ponedjeljak po vremenskoj zoni UTC da biste izbjegli loše prijevode i vandalizme.",
 	"translatewiki-header": "{0} {1:poruka|poruke|poruka} od {2} {2:autora|autora|autora}"
 }
