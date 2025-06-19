@@ -1,0 +1,32 @@
+{
+	"@metadata": {
+		"authors": [
+			"Juwan~backup",
+			"שוקו מוקה"
+		]
+	},
+	"yes": "lon",
+	"no": "ala",
+	"help-title": "sona pali",
+	"help-title-command": "{1}{0}{msg:separator}sona",
+	"help-version": "ilo nanpa {0}.",
+	"help-repo": "nanpa ilo: {0}",
+	"help-commands": "toki ilo",
+	"help-subcommands": "toki ilo lili",
+	"help-aliases": "nimi ante",
+	"help-optional": "namako",
+	"eventstreams-diff": "ante",
+	"eventstreams-talk": "toki",
+	"eventstreams-contribs": "ante",
+	"eventstreams-new": "lipu sin",
+	"eventstreams-bot": "i",
+	"eventstreams-minor": "l",
+	"linking-links": "{0:nimi nasin}:&#32;",
+	"linking-toolong": "nimi nasin li lon ala toki mi tan ni: ona li suli ike tawa ilo Discord.",
+	"streaming-domain": "ma linja: `{0}`",
+	"streaming-stream-namespace": "poki lipu `{0}`",
+	"streaming-stream-title": "lipu `{0}`",
+	"streaming-opened": ":white_check_mark: nasin {0} la linja toki li lon tomo toki {1} {2}",
+	"streaming-key-title": "nimi lipu",
+	"translatewiki-header": "{2:jan} {2} li {1:toki} {0}"
+}
