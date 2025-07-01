@@ -11,7 +11,7 @@
 		<Company />
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.9.0-int.2" />
+		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.9.0-int.3" />
 		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.5.1" />
 		<PackageReference Include="LaunchDarkly.EventSource" Version="5.2.0" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
@@ -24,7 +24,7 @@
 		<PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
 		<PackageReference Include="System.Diagnostics.Tracing" Version="4.3.0" />
 		<PackageReference Include="System.Globalization" Version="4.3.0" />
-		<PackageReference Include="System.Interactive.Async" Version="6.0.1" />
+		<PackageReference Include="System.Interactive.Async" Version="6.0.3" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="System.Linq" Version="4.3.0" />
 		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
