@@ -6,7 +6,7 @@
 		]
 	},
 	"yes": "jo",
-	"no": "neen",
+	"no": "nee",
 	"help-title": "Hëllef",
 	"help-title-command": "{1}{0}{msg:separator}Hëllef",
 	"help-version": "Versioun {0}.",

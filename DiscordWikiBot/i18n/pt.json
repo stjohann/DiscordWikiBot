@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"B3rnas",
 			"Hamilton Abreu",
 			"Mansil alfalb",
 			"O andras"
@@ -24,6 +25,7 @@
 	"help-command-command": "comando para o qual fornecer ajuda.",
 	"configuring-status": ":information_source: Ligado à tomada.",
 	"configuring-status-streaming": "Resposta mais recente das transmissões: há {0} {0:minuto|minutos} {1} {1:segundo|segundos}.",
+	"configuring-changed-answerBots": "O bot {0:responderá|ignorará} novas mensagens de outros bots neste servidor.",
 	"configuring-changed-domain": "O domínio das transmissões de mudanças recentes deste servidor foi mudado para **{0}**.",
 	"configuring-changed-lang": "A língua do robô neste servidor foi alterada para **{0}**.",
 	"configuring-changed-translatewiki": "Os relatórios sobre mudanças recentes na Translatewiki estão ativados no canal {0} para a língua **{1}**.",
@@ -39,6 +41,8 @@
 	"configuring-badvalue-lang": "O robô não reconhece a sua entrada como um código ISO 639 válido.",
 	"configuring-badvalue-wiki": "O robô não consegue obter informações da API para esta wiki. Tem de existir `{0}` no fim do seu URL.",
 	"configuring-help-status": "Verifique se o robô está operacional.",
+	"configuring-help-answerBots": "Configurar se o bot deve responder a mensagens de outros bots.",
+	"configuring-help-answerBots-value": "Valor booleano ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Altere o domínio do qual as mudanças recentes são difundidas neste servidor. Só funciona para projetos Wikimedia.",
 	"configuring-help-domain-value": "domínio de um projeto Wikimedia (no formato pt.wikipedia.org). Use `-` para redefinir para o valor por omissão.",
 	"configuring-help-lang": "Mudar a língua do robô neste servidor.",
@@ -57,6 +61,7 @@
 	"eventstreams-minor": "m",
 	"linking-links": "{0:Hiperligação|Hiperligações}:&#32;",
 	"linking-toolong": "As hiperligações para a mensagem acima não são fornecidas porque a mensagem seria demasiado longa para o Discord.",
+	"streaming-domain": "Domínio de transmissão: `{0}`",
 	"streaming-stream-namespace": "do espaço nominal `{0}`",
 	"streaming-stream-title": "da página `{0}`",
 	"streaming-opened": ":white_check_mark: A transmissão {0} foi adicionada ao canal {1}{2}",
@@ -74,5 +79,13 @@
 	"streaming-key-patrolled": "filtrar pelo estado de patrulhamento",
 	"streaming-key-title": "título da página",
 	"streaming-key-type": "tipo de edição",
+	"streaming-required-access": "O bot precisa de acesso para ver e publicar mensagens no canal {0}. Verifique as definições do canal e envie o comando novamente.",
+	"streaming-required-goal": "O objetivo do fluxo (título da página ou número do espaço de nomes) é necessário.\nPara obter ajuda completa para o comando, envie `{1}help {0}`.",
+	"streaming-help-open": "Começar a transmitir as alterações recentes no canal.",
+	"streaming-help-edit": "Editar parâmetros de um fluxo de alterações recentes no canal.",
+	"streaming-help-close": "Parar de transmitir as alterações recentes no canal.",
+	"streaming-help-list": "Lista todos os fluxos abertos neste servidor.",
+	"streaming-help-channel": "um canal que está disponível para o bot.",
+	"translatewiki-deadline": "Arranje tempo para verificar as traduções para esta semana **até às 00:00** de segunda-feira UTC para evitar que as más traduções e o vandalismo se espalhem.",
 	"translatewiki-header": "{0} {1:mensagem|mensagens} de {2} {2:autor|autores}"
 }
