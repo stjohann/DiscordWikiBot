@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"MrJaroslavik",
-			"ShaggyCZ - Main"
+			"ShaggyCZ - Main",
+			"WikipedistaOndra"
 		]
 	},
 	"yes": "ano",
@@ -23,6 +24,7 @@
 	"help-command-command": "příkaz pro poskytnutí nápovědy.",
 	"configuring-status": ":information_source: Připojeno do socketu.",
 	"configuring-status-streaming": "Poslední odpověď ze streamů: před {0} {0:minutou|minutami|minutami|minutami} {1} {1:sekundou|sekundami|sekundami|sekundami}.",
+	"configuring-changed-answerBots": "Bot bude {0:odpovídat na|0:odpovídat na|ignorovat|ignorovat} nové zprávy ostatních botů na tomto serveru.",
 	"configuring-changed-domain": "Doména pro streamy posledních změn na tomto serveru byla změněna na **{0}**.",
 	"configuring-changed-lang": "Jazyk bota na tomto serveru byl změněn na **{0}**.",
 	"configuring-changed-translatewiki": "Hlášení o posledních změnách na Translatewiki pro jazyk **{1}** byla povolena v kanálu {0}.",
@@ -38,6 +40,7 @@
 	"configuring-badvalue-lang": "Bot nerozpoznal váš vstup jako platný ISO 639 kód.",
 	"configuring-badvalue-wiki": "Botovi se nepodařilo získat API informace pro tuto wiki. Na konci vaší adresy URL musí být `{0}`.",
 	"configuring-help-status": "Zkontrolujte, zda je bot funkční.",
+	"configuring-help-answerBots": "Konfigurovat jestli má bot odpovídat na zprávy od ostatních botů.",
 	"configuring-help-domain": "Změní doménu, ze které jsou na tomto serveru vysílány poslední změny. Funguje pouze pro projekty Wikimedia.",
 	"configuring-help-domain-value": "doména projektu Wikimedia (ve formátu en.wikipedia.org). Použijte `-` k resetu do výchozího nastavení.",
 	"configuring-help-lang": "Změní jazyk bota na tomto serveru.",
@@ -73,6 +76,7 @@
 	"streaming-key-patrolled": "filtrování pomocí patrolovacího statusu",
 	"streaming-key-title": "název stránky",
 	"streaming-key-type": "typ editace",
+	"streaming-required-access": "Bot potřebuje přístup k zobrazování a posílání zpráv v kanálu {0}. Prosím zkontrolujte nastavení kanálu a pošlete příkaz znovu.",
 	"streaming-required-goal": "Cíl streamu (název stránky nebo číslo jmenného prostoru) je povinný.\nChcete-li získat plnou pomoc k příkazu, odešlete '{1}help {0}`.",
 	"streaming-help-open": "Začne streamovat poslední změny v kanálu.",
 	"streaming-help-edit": "Upraví parametry streamu posledních změn v kanálu.",
