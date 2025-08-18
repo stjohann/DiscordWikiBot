@@ -65,7 +65,7 @@
 	"streaming-edited": ":eight_spoked_asterisk:Η ροή {0} στο κανάλι {1} άλλαξε σύμφωνα με τις παραμετρους: {2}",
 	"streaming-edited-nothing": ":ok: Η ροή {0} στο κανάλι {1} δέν έχει αλλάξει.",
 	"streaming-closed": ":negative_squared_cross_mark: Η ροή {0} εχει αφαιρεθεί απο το κανάλι {1}.",
-	"streaming-list": ":information_source: {0} {0:ενεργή ροή|ενεργές ροές} σε αυτόν τον διακομιστή.  {1}",
+	"streaming-list": ":information_source: {0} {0:ενεργή ροή|ενεργές ροές} σε αυτόν τον διακομιστή. {2}\n{1}",
 	"streaming-list-nothing": ":ok: Δέν υπάρχουν ανοιχτές ροές σε αυτόν τον διακομιστή.",
 	"streaming-list-stream": "\n{1:Ροή|Ροές}{0}:**",
 	"streaming-key-bot": "Συμπερίληψη των συνείσφορών ρομπότ",
