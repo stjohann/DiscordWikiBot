@@ -1,5 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WikiClientLibrary.Client;
 
 namespace DiscordWikiBot.Tests
 {
@@ -145,8 +146,8 @@ namespace DiscordWikiBot.Tests
 		public void NonCapitalisedLinks()
 		{
 			Assert.AreEqual(
-				@"Ссылки: [[[`wikt:пёс`]]]( <https://ru.wiktionary.org/wiki/пёс> ), [[[`wikt:MediaWiki:Common.js`]]]( <https://ru.wiktionary.org/wiki/MediaWiki:Common.js> )",
-				TestMessage("[[wikt:пёс]] [[wikt:mediawiki:common.js]]")
+				@"Ссылки: [[[`wikt:пёс`]]]( <https://ru.wiktionary.org/wiki/пёс> ), [[[`wikt:MediaWiki:Common.js`]]]( <https://ru.wiktionary.org/wiki/MediaWiki:Common.js> ), [[[`ხაჭაპური`]]]( <https://ru.wikipedia.org/wiki/ხაჭაპური> )",
+				TestMessage("[[wikt:пёс]] [[wikt:mediawiki:common.js]] [[ხაჭაპური]]")
 			);
 		}
 
@@ -346,6 +347,10 @@ namespace DiscordWikiBot.Tests
 				Token = "-",
 			});
 			Config.Init();
+			Program.WikiClient = new WikiClient
+			{
+				ClientUserAgent = Program.GetBotUserAgent(),
+			};
 			Locale.Init();
 			Linking.Init().Wait();
 		}

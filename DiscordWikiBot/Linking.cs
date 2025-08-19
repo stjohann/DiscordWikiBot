@@ -1059,6 +1059,13 @@ namespace DiscordWikiBot
 				return value;
 			}
 
+			// Georgian letters should not be capitalised
+			// TODO: Implement more proper language support 
+			if (Regex.IsMatch(value[0].ToString(), @"\p{IsGeorgian}"))
+			{
+				return value;
+			}
+
 			return value[0].ToString().ToUpper() + value.Substring(1);
 		}
 

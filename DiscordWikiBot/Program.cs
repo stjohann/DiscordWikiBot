@@ -28,10 +28,7 @@ namespace DiscordWikiBot
 		/// <summary>
 		/// An instance of MediaWiki client with necessary useragent.
 		/// </summary>
-		public static WikiClient WikiClient = new WikiClient
-		{
-			ClientUserAgent = UserAgent,
-		};
+		public static WikiClient WikiClient { get; set; }
 
 		/// <summary>
 		/// DiscordWikiBot version.
@@ -103,6 +100,10 @@ namespace DiscordWikiBot
 			// Initialise events
 			LogMessage($"Starting DiscordWikiBot, version {Version}");
 			LogMessage($"UserAgent: {UserAgent}");
+			WikiClient = new WikiClient
+			{
+				ClientUserAgent = UserAgent,
+			};
 
 			// Get default locale
 			await Locale.Load();
@@ -331,9 +332,14 @@ namespace DiscordWikiBot
 		/// You need to provide your own when modifying the bot's source code:
 		/// <para>https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy </para>
 		/// </summary>
-		private static string GetBotUserAgent()
+		public static string GetBotUserAgent()
 		{
-			var userAgent = Config.GetValue("userAgent")?.ToString();
+			if (Version == null)
+			{
+				Version = GetBotVersion();
+			}
+
+			var userAgent = Config.GetValue("userAgent")?.ToString().Trim();
 			if (userAgent == null || userAgent == "")
 			{
 				LogMessage("Please add a custom user agent string in config.json if you changed  DiscordWikiBot internals (not including configs). See https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_User-Agent_Policy for details.", level: "error");
