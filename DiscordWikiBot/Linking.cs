@@ -48,6 +48,16 @@ namespace DiscordWikiBot
 			8, 9,
 		];
 
+		/// <summary>
+		/// Link patterns for which an embed is always useful
+		/// </summary>
+		private static readonly string[] alwaysEmbeddableLinks = [
+			"://phabricator.wikimedia.org/T",
+			// Wikidata links only have descriptions in embeds, so this isn’t useful yet
+			// "://www.wikidata.org/wiki/Lexeme:L",
+			"://www.wikidata.org/wiki/Property:P",
+		];
+
 		private static readonly bool useDiscordLinkEmbeds = Config.GetValue("useDiscordLinkEmbeds") != null;
 
 		/// <summary>
@@ -1022,11 +1032,13 @@ namespace DiscordWikiBot
 				text = DecodePageTitle(title);
 			}
 
-			if (useDiscordLinkEmbeds)
+			string url = GetUrl(title, format);
+			bool isEmbeddable = alwaysEmbeddableLinks.Any(l => url.Contains(l));
+			if (useDiscordLinkEmbeds || isEmbeddable)
 			{
-				return $"[{text}]( {GetUrl(title, format)} )";
+				return $"[{text}]( {url} )";
 			}
-			return $"[{text}]( <{GetUrl(title, format)}> )";
+			return $"[{text}]( <{url}> )";
 		}
 
 		/// <summary>

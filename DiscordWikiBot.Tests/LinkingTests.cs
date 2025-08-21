@@ -134,6 +134,15 @@ namespace DiscordWikiBot.Tests
 		}
 
 		[TestMethod]
+		public void EmbeddableLink()
+		{
+			Assert.AreEqual(
+				@"Ссылка: [[[`phab:T2001`]]]( https://phabricator.wikimedia.org/T2001 )",
+				TestMessage(@"[[phab:T2001]]")
+			);
+		}
+
+		[TestMethod]
 		public void NamespaceAliasLink()
 		{
 			Assert.AreEqual(
