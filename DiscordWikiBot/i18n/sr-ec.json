@@ -25,7 +25,7 @@
 	"help-aliases": "Псеудоними",
 	"help-arguments": "Аргументи",
 	"help-default": "По подразумеваном: `{0}`.",
-	"help-optional": "опционално",
+	"help-optional": "необавезно",
 	"help-group-standalone": "Ова група је самостална команда.",
 	"help-command": "Приказује помоћ за команде.",
 	"help-command-command": "команда за пружање помоћи.",
