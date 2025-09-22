@@ -5,6 +5,7 @@
 			"Linuxmetel",
 			"RYOUMA1117",
 			"Shirayuki",
+			"Shulmj",
 			"Stjn",
 			"YeBoy371",
 			"春春眠眠"
@@ -44,6 +45,8 @@
 	"configuring-badvalue-lang": "BOTは、入力を有効なISO639コードとして認識しません。",
 	"configuring-badvalue-wiki": "ボットはこのウィキのAPI情報を取得できません。URLの最後に `{0}`が必要です。",
 	"configuring-help-status": "ボットが動作しているかどうかを確認します。",
+	"configuring-help-answerBots": "ボットが他のボットからのメッセージに応答するかどうかを設定します。",
+	"configuring-help-answerBots-value": "ブール値 ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "このサーバーで最近の変更が、ブロードキャストされるドメインを変更します。\nウィキメディアプロジェクトでのみ機能します。",
 	"configuring-help-domain-value": "ウィキメディアプロジェクトのドメイン (en.wikipedia.org 形式)。既定値にリセットするには、`-` を使用します。",
 	"configuring-help-lang": "ボットの言語を変更します。",
