@@ -13,11 +13,11 @@
 	<ItemGroup>
 		<PackageReference Include="CXuesong.MW.WikiClientLibrary" Version="0.9.0-int.3" />
 		<PackageReference Include="DSharpPlus.CommandsNext" Version="4.5.1" />
-		<PackageReference Include="LaunchDarkly.EventSource" Version="5.2.0" />
+		<PackageReference Include="LaunchDarkly.EventSource" Version="5.2.1" />
 		<PackageReference Include="Microsoft.NETCore.Platforms" Version="7.0.4" />
 		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-		<PackageReference Include="SmartFormat.NET" Version="3.6.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="SmartFormat.NET" Version="3.6.1" />
 		<PackageReference Include="System.Collections" Version="4.3.0" />
 		<PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
 		<PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
