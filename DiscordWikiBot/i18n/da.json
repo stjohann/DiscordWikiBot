@@ -3,6 +3,7 @@
 		"authors": [
 			"Peterleth",
 			"Saederup92",
+			"SaldırganSincap",
 			"Sarrus",
 			"Steenth"
 		]
@@ -52,7 +53,7 @@
 	"configuring-help-translatewiki-value": "sprog, der er tilgængeligt på Translatewiki til oversættelse (sprogkode i ISO 639). Udfyld `-` som et sprog for at afslutte rapporteringen.",
 	"configuring-help-wiki": "Skift hovedwikien for links på denne server. /wiki/$1 til sidst er påkrævet.",
 	"configuring-help-wiki-channel": "Skift wikien for links på denne kanal. /wiki/ $1 til sidst er påkrævet.",
-	"configuring-help-wiki-value": "den wiki du ønsker (i <https://en.wikipedia.org/wiki/<span class=\"notranslate\" translate=\"no\"> $1 > format). Brug `-` for at nulstille til standard.",
+	"configuring-help-wiki-value": "den wiki du ønsker (i <https://da.wikipedia.org/wiki/$1> format). Brug `-` for at nulstille til standard.",
 	"eventstreams-diff": "forskel",
 	"eventstreams-talk": "diskussion",
 	"eventstreams-contribs": "bidrag",
