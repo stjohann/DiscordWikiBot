@@ -37,6 +37,20 @@ namespace DiscordWikiBot
 		public static DateTime LatestTimestamp = DateTime.MinValue.ToUniversalTime();
 
 		/// <summary>
+		/// List of allowed keys and their defaults
+		/// </summary>
+		public static readonly Dictionary<string, dynamic> StreamParams = new Dictionary<string, dynamic>
+		{
+			{ "bot", false },
+			{ "in-comment", "" },
+			{ "in-title", "" },
+			{ "diff-length", 0 },
+			{ "minor", true },
+			{ "patrolled", "any" },
+			{ "type", "any" },
+		};
+
+		/// <summary>
 		/// List of all allowed Wikimedia projects.
 		/// </summary>
 		private static readonly string[] WMProjects = {
@@ -282,14 +296,16 @@ namespace DiscordWikiBot
 					}
 				}
 
-				// Check string in comment text
-				if (args.ContainsKey("in-comment"))
+				// Check if title matches
+				if (args.ContainsKey("in-title") && StringFailsRegex(change.Title, args.GetValueOrDefault("in-title")))
 				{
-					string comment = change.Comment.ToLower();
-					if (!comment.Contains(args["in-comment"]))
-					{
-						continue;
-					}
+					continue;
+				}
+
+				// Check if comment text matches
+				if (args.ContainsKey("in-comment") && StringFailsRegex(change.Comment, args.GetValueOrDefault("in-comment")))
+				{
+					continue;
 				}
 
 				// Send the message
@@ -497,17 +513,6 @@ namespace DiscordWikiBot
 			Program.LogMessage($"Channel #{channel} triggered a change ({goal}) in eventStreams.json.", "EventStreams");
 			Dictionary<string, dynamic> changes = new Dictionary<string, dynamic>();
 
-			// List of allowed keys and their defaults
-			Dictionary<string, dynamic> allowedKeys = new Dictionary<string, dynamic>
-			{
-				{ "bot", false },
-				{ "in-comment", "" },
-				{ "diff-length", 0 },
-				{ "minor", true },
-				{ "patrolled", "any" },
-				{ "type", "any" },
-			};
-
 			// Set data object if undefined
 			if (Data.Value<JObject>(goal) == null)
 			{
@@ -523,14 +528,14 @@ namespace DiscordWikiBot
 
 			foreach (KeyValuePair<string, dynamic> item in args)
 			{
-				if (!allowedKeys.ContainsKey(item.Key))
+				if (!StreamParams.ContainsKey(item.Key))
 				{
 					continue;
 				}
 
 				var key = item.Key;
 				var value = item.Value;
-				var requiredValueType = allowedKeys.GetValueOrDefault(key)?.GetType();
+				var requiredValueType = StreamParams.GetValueOrDefault(key)?.GetType();
 				if (item.Value == null || requiredValueType == null)
 				{
 					continue;
@@ -549,7 +554,7 @@ namespace DiscordWikiBot
 				}
 
 				// Reset to default
-				if (allowedKeys.GetValueOrDefault(item.Key)?.Equals(item.Value))
+				if (StreamParams.GetValueOrDefault(item.Key)?.Equals(item.Value))
 				{
 					if (discardPrevData == true)
 					{
@@ -705,6 +710,36 @@ namespace DiscordWikiBot
 
 			list = WMProjects;
 			return list.Any(domain.EndsWith);
+		}
+
+		/// <summary>
+		/// Check if a string fails a regular expression check.
+		/// </summary>
+		/// <param name="str">Matching string.</param>
+		/// <param name="regExp">Regular expression string.</param>
+		private static bool StringFailsRegex(string str, string regExp)
+		{
+			if (string.IsNullOrWhiteSpace(regExp))
+			{
+				return true;
+			}
+
+			var rx = new Regex(regExp, RegexOptions.IgnoreCase);
+			try
+			{
+				if (rx.IsMatch(str))
+				{
+					return false;
+				}
+
+				return true;
+			}
+			catch (Exception exception)
+			{
+				Program.LogMessage($"Regex {regExp} returned the following exception: {exception}", "EventStreams", "warning");
+			}
+
+			return true;
 		}
 	}
 }

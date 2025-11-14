@@ -81,7 +81,8 @@
 	"streaming-list-stream": "**{1:Stream|Streams} {0}:**",
 
 	"streaming-key-bot": "include bot edits",
-	"streaming-key-in-comment": "search in comment",
+	"streaming-key-in-title": "regular expression for page title",
+	"streaming-key-in-comment": "regular expression for edit comment",
 	"streaming-key-diff-length": "minimum diff length",
 	"streaming-key-minor": "include minor edits",
 	"streaming-key-namespace": "namespace number",
@@ -91,13 +92,15 @@
 
 	"streaming-required-access": "The bot needs access to view and post messages in {0} channel. Please check channel settings and send the command again.",
 	"streaming-required-goal": "The stream goal (page title or namespace number) is required.\nTo get full help for the command, send `{1}help {0}`.",
+	"streaming-badvalue-in-title": "The `--in-title` parameter can only be used with a namespace stream.",
+	"streaming-badvalue-regex": "The regular expression `{0}` for `{1}` parameter is not valid and will not work. Please fix it and submit the command again.",
 
 	"streaming-help-open": "Start streaming recent changes in the channel.",
 	"streaming-help-edit": "Edit parameters of a recent changes stream in the channel.",
 	"streaming-help-close": "Stop streaming recent changes in the channel.",
 	"streaming-help-list": "List all opened streams on this server.",
 	"streaming-help-channel": "a channel that’s available to the bot.",
-	"streaming-help-args": "available stream parameters:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "available stream parameters, [see documentation](https://w.wiki/4nm):",
 
 	"translatewiki-deadline": "Find time to check translations for this week **until 00:00** Monday UTC to avoid bad translations and vandalism to catch on.",
 	"translatewiki-header": "{0} {1:message|messages} by {2} {2:author|authors}"

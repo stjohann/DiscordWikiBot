@@ -79,7 +79,7 @@
 	"streaming-help-close": "चैनल पर हाल में हुए बदलाव स्ट्रीम करना बंद करें।",
 	"streaming-help-list": "इस सर्वर पर सभी खुले स्ट्रीम्स की सूची बनाएँ।",
 	"streaming-help-channel": "एक चैनल जो बॉट को उपलब्ध है।",
-	"streaming-help-args": "स्ट्रीम के उपलब्ध पैरामीटर्स:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "स्ट्रीम के उपलब्ध पैरामीटर्स:",
 	"translatewiki-deadline": "बुरे अनुवादों और बर्बरता से बचने के लिए इस हफ़्ते **0:00** सोमवार UTC तक अनुवादों को जाँचने का समय निकालें।",
 	"translatewiki-header": "{2} {2:लेखक|लेखकों} द्वारा {0} {1:संदेश|संदेश}"
 }

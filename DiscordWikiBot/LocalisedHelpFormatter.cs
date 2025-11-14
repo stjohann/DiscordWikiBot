@@ -198,6 +198,12 @@ namespace DiscordWikiBot
 					if (desc.Length > 0)
 					{
 						sb.Append(Locale.GetMessage("separator", Lang, Locale.GetMessage(desc, Lang)));
+
+						// Special case EventStreams arguments
+						if (desc == "streaming-help-args")
+						{
+							sb.Append(Streaming.GetArgumentsHelp(Lang));
+						}
 					}
 
 					// List the default value

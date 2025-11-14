@@ -87,7 +87,7 @@
 	"streaming-help-close": "Stop streaming af de seneste ændringer i kanalen.",
 	"streaming-help-list": "Liste over alle åbne streams på denne server.",
 	"streaming-help-channel": "en kanal der er tilgængelig for botten.",
-	"streaming-help-args": "Tilgængelige streamparametre:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "Tilgængelige streamparametre:",
 	"translatewiki-deadline": "Find tid til at tjekke oversættelser for denne uge **indtil 00:00** mandag UTC for at undgå dårlige oversættelser og hærværk.",
 	"translatewiki-header": "{0} {1:besked|beskeder} af {2} {2:forfatter|forfattere}"
 }

@@ -80,7 +80,7 @@
 	"streaming-help-close": "หยุดสตรีมการเปลี่ยนแปลงในแชนแนล",
 	"streaming-help-list": "รายการของสตรีมที่เปิดอยู่บนเซิร์ฟเวอร์นี้",
 	"streaming-help-channel": "แชนแนลที่บอตสามารถเข้าถึงได้",
-	"streaming-help-args": "พารามิเตอร์สตรีมที่พร้อมใช้งาน:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "พารามิเตอร์สตรีมที่พร้อมใช้งาน:",
 	"translatewiki-deadline": "ค้นหาเวลาที่จะตรวจหารแก้ไขสำหรับสัปดาห์นี้ **จนถึง 00:00** ของวันจันทร์ ตามเวลาสากลเชิงพิกัดกรีนิช เพื่อลดการแปลที่ไม่ดีและการก่อกวน",
 	"translatewiki-header": "{0} {1:ข้อความ|ข้อความ} จาก {2} ผู้แก้ไข"
 }

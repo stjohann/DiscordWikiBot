@@ -79,7 +79,7 @@
 	"streaming-help-close": "Itigil ang pag-stream sa mga kamakailang pagbabago sa channel.",
 	"streaming-help-list": "Ilista lahat ng mga nakabukas na stream sa server na ito.",
 	"streaming-help-channel": "channel na magagamit ng bot.",
-	"streaming-help-args": "magagamit na parameter ng stream:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "magagamit na parameter ng stream:",
 	"translatewiki-deadline": "Maghanap ng oras para silipin ang mga salin para sa linggong ito **hanggang 00:00** Lunes UTC para maiwasang humabol ang mga pangit na salin at bandalismo.",
 	"translatewiki-header": "{0} {1:mensahe|(na) mensahe} ng {2} {2:may-akda|(na) may-akda}"
 }

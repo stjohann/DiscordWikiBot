@@ -92,7 +92,7 @@
 	"streaming-help-close": "Das Streaming der letzten Änderungen im Kanal beenden.",
 	"streaming-help-list": "Alle geöffneten Streams auf diesem Server auflisten.",
 	"streaming-help-channel": "ein Kanal, der dem Bot zur Verfügung steht.",
-	"streaming-help-args": "Verfügbare Stream-Parameter:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "Verfügbare Stream-Parameter:",
 	"translatewiki-deadline": "Nimm dir die Zeit, die Übersetzungen für diese Woche **bis 00:00** Montag UTC zu überprüfen, um zu vermeiden, dass sich schlechte Übersetzungen und Vandalismus einschleichen.",
 	"translatewiki-header": "{0} {1:Nachricht|Nachrichten} von {2} {2:Autor|Autoren}"
 }

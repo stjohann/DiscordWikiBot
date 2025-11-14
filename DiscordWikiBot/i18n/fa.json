@@ -91,7 +91,7 @@
 	"streaming-help-close": "توقف استریم تغییرات اخیر در کانال",
 	"streaming-help-list": "فهرست تمام استریم‌های باز شده در این سرور.",
 	"streaming-help-channel": "کانالی که برای ربات در دسترس است.",
-	"streaming-help-args": "پارامترهای موجود برای استریم:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "پارامترهای موجود برای استریم:",
 	"translatewiki-deadline": "برای بررسی ترجمه‌های این هفته **تا 00:00** دوشنبه به وقت UTC برای جلوگیری از ترجمه‌های اشتباه و خرابکاری وقت بگذارید.",
 	"translatewiki-header": "{0} {1:پیغام|پیغام} توسط {2} {2:نویسنده|نویسنده}"
 }

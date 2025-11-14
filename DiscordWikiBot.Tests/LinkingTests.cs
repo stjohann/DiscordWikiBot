@@ -250,22 +250,48 @@ namespace DiscordWikiBot.Tests
 			);
 
 			Assert.AreEqual(
-				@"Ссылки: [[[`Foo`]]]( <https://ru.wikipedia.org/wiki/Foo> ), [[[`Nested`]]]( <https://ru.wikipedia.org/wiki/Nested> ), [[[`Служебная:Search/insource:/Спецыялізуецца ў \./`]]]( <https://ru.wikipedia.org/wiki/Служебная:Search/insource:/Спецыялізуецца_ў_%5C./> )",
+				@"Ссылки: [[[`\\`]]]( <https://ru.wikipedia.org/wiki/%5C%5C> ), [[[`Foo`]]]( <https://ru.wikipedia.org/wiki/Foo> ), [[[`Nested`]]]( <https://ru.wikipedia.org/wiki/Nested> ), [[[`Служебная:Search/insource:/Спецыялізуецца ў \./`]]]( <https://ru.wikipedia.org/wiki/Служебная:Search/insource:/Спецыялізуецца_ў_%5C./> )",
 				TestMessage(@"
+					[[\\]]
 					[[foo|bar|baz]]
 					[[nested|[pipes]]]
 					[[Special:Search/insource:/Спецыялізуецца ў \./]]
 				")
 			);
+		}
+
+		[TestMethod]
+		public void MarkdownQuirks()
+		{
 
 			Assert.AreEqual(
 				@"Ссылки: [[[`` ` ``]]]( <https://ru.wikipedia.org/wiki/%60> ), [[[``en:` ``]]]( <https://en.wikipedia.org/wiki/%60> ), [[[`*`]]]( <https://ru.wikipedia.org/wiki/*> ), [[[``Unsupported titles/f`num``num`k``]]]( <https://ru.wikipedia.org/wiki/Unsupported_titles/f%60num%60%60num%60k> )",
 				TestMessage(@"
-					[[\`]]
+					[[`]]
 					[[:en:\`]]
 					[[*]]
 					[[\*]]
+					[[Unsupported titles/f`num``num`k]]
 					[[Unsupported titles/f\`num\`\`num\`k]]
+				")
+			);
+		}
+
+		[TestMethod]
+		public void SupportedInvalidLinks()
+		{
+			Assert.AreEqual(
+				@"Ссылки: [[[`//`]]]( <https://ru.wikipedia.org/wiki///> ), [[[`//Khara Hais Local Municipality`]]]( <https://ru.wikipedia.org/wiki///Khara_Hais_Local_Municipality> )",
+				TestMessage(@"
+					[[//]]
+					[[//Khara Hais Local Municipality]]
+				")
+			);
+
+			Assert.AreEqual(
+				@"Ссылка: [[[`google:test test test`]]]( <https://www.google.com/search?q=test+test+test> )",
+				TestMessage(@"
+					[[google:test test test]]
 				")
 			);
 		}

@@ -83,7 +83,7 @@
 	"streaming-help-close": "Arrestar le fluxo de modificationes recente in le canal.",
 	"streaming-help-list": "Listar tote le fluxos aperite sur iste servitor.",
 	"streaming-help-channel": "un canal que es disponibile pro le robot.",
-	"streaming-help-args": "parametros de fluxo disponibile:\n{msg:bullet}`--title` (*catena*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*numero integre*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*valor boolean*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*catena*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*numero integre*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*valor boolean*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "parametros de fluxo disponibile:",
 	"translatewiki-deadline": "Reserva tempore pro verificar le traductiones de iste septimana **usque a lunedi 00:00 UTC** pro evitar le diffusion de traductiones incorrecte e vandalismo.",
 	"translatewiki-header": "{0} {1:message|messages} de {2} {2:autor|autores}"
 }

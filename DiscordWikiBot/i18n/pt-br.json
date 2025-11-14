@@ -83,7 +83,7 @@
 	"streaming-help-close": "Pare de transmitir alterações recentes no canal.",
 	"streaming-help-list": "Listar todos os fluxos abertos neste servidor.",
 	"streaming-help-channel": "um canal que está disponível para o robô.",
-	"streaming-help-args": "parâmetros de fluxo disponíveis:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "parâmetros de fluxo disponíveis:",
 	"translatewiki-deadline": "Encontre tempo para verificar as traduções desta semana **até 00: 00** segunda-feira, UTC, para evitar más traduções e vandalismo.",
 	"translatewiki-header": "{0} {1:mensagem|mensagens} por {2} {2:autor|autores}"
 }

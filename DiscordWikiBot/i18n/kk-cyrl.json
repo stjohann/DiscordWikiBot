@@ -64,7 +64,7 @@
 	"streaming-help-close": "Арнадағы ағымдағы өзгерістерді жариялауды тоқтату.",
 	"streaming-help-list": "Осы сервердегі барлық ашылған ағындар тізімі.",
 	"streaming-help-channel": "ботқа қолжетімді арна.",
-	"streaming-help-args": "қолжетімді ағын параметрлері:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "қолжетімді ағын параметрлері:",
 	"translatewiki-deadline": "Нашар аудармалар мен вандализмге жол бермеу үшін осы аптадағы **00:00-ге дейін** дүйсенбі UTC аудармаларын тексеруге уақыт табыңыз.",
 	"translatewiki-header": "{2} {2:авторлардан} {0} {1:хабарлама}"
 }

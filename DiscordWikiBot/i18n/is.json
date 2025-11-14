@@ -78,7 +78,7 @@
 	"streaming-help-close": "Hætta að streyma nýlegum breytingum á rásinni.",
 	"streaming-help-list": "Listaðu alla opna strauma á þessum netþjóni.",
 	"streaming-help-channel": "rás sem er í boði fyrir vélmennið.",
-	"streaming-help-args": "tiltækar straumbreytur:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "tiltækar straumbreytur:",
 	"translatewiki-deadline": "Finndu tíma til að athuga þýðingar þessa vikuna **til 00:00** mánudagur UTC til að forðast slæmar þýðingar og skemmdarverk til að grípa til.",
 	"translatewiki-header": "{0} {1:skilaboð|skilaboð} af {2} {2:höfundur|höfundar}"
 }

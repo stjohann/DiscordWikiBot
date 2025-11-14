@@ -223,6 +223,26 @@ namespace DiscordWikiBot
 				return;
 			}
 
+			// Check if title and in-title aren’t combined
+			if (arguments.ContainsKey("title") && arguments.ContainsKey("in-title"))
+			{
+				await ctx.RespondAsync(Locale.GetMessage("streaming-badvalue-in-title", lang));
+				return;
+			}
+
+			// Check if regular expressions are valid
+			if (IsInvalidRegex(arguments.GetValueOrDefault("in-comment")))
+			{
+				await ctx.RespondAsync(Locale.GetMessage("streaming-badvalue-regex", lang, arguments["in-comment"], "--in-comment"));
+				return;
+			}
+
+			if (IsInvalidRegex(arguments.GetValueOrDefault("in-title")))
+			{
+				await ctx.RespondAsync(Locale.GetMessage("streaming-badvalue-regex", lang, arguments["in-title"], "--in-title"));
+				return;
+			}
+
 			callback(arguments, lang);
 		}
 
@@ -341,13 +361,40 @@ namespace DiscordWikiBot
 				}
 			}
 
-			// Transform comment text to lowercase
+			// Remove potential regex leftovers
 			if (result.ContainsKey("in-comment"))
 			{
-				result["in-comment"] = result["in-comment"].ToLower();
+				result["in-comment"] = result["in-comment"].Trim('/');
+			}
+
+			if (result.ContainsKey("in-title"))
+			{
+				result["in-title"] = result["in-title"].Trim('/');
 			}
 
 			return result;
+		}
+
+		/// <summary>
+		/// Check for an invalid regular expression.
+		/// </summary>
+		/// <param name="regExp">Regular expression string.</param>
+		private static bool IsInvalidRegex(string regExp)
+		{
+			if (string.IsNullOrWhiteSpace(regExp))
+			{
+				return false;
+			}
+
+			try
+			{
+				Regex.IsMatch("test", regExp);
+				return false;
+			}
+			catch
+			{
+				return true;
+			}
 		}
 
 		/// <summary>
@@ -383,6 +430,33 @@ namespace DiscordWikiBot
 				}
 
 				return Locale.GetMessage("bullet", lang, Locale.GetMessage($"streaming-key-{x.Key}", lang) + Locale.GetMessage("separator", lang, $"`{value}`"));
+			}));
+		}
+
+		/// <summary>
+		/// Generate text for the help command based on currently available arguments.
+		/// </summary>
+		/// <param name="lang">Message language.</param>
+		public static string GetArgumentsHelp(string lang)
+		{
+			return "\n" + string.Join("\n", EventStreams.StreamParams.Select(x =>
+			{
+				string valueType = x.Value.GetType().ToString();
+				if (x.Value is bool)
+				{
+					valueType = "bool";
+				}
+				else if (x.Value is int)
+				{
+					valueType = "int";
+				}
+				else if (x.Value is string)
+				{
+					valueType = "string";
+				}
+				var text = string.Format("`--{0}` (*{1}*) {2}", x.Key, valueType, Locale.GetMessage("separator", lang, Locale.GetMessage($"streaming-key-{x.Key}", lang)));
+
+				return Locale.GetMessage("bullet", lang, text);
 			}));
 		}
 	}

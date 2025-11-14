@@ -89,7 +89,7 @@
 	"streaming-help-close": "停止串流頻道中的近期變更。",
 	"streaming-help-list": "列出此伺服器上所有開放的串流。",
 	"streaming-help-channel": "機器人可用的頻道。",
-	"streaming-help-args": "可用串流參數：\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "可用串流參數：",
 	"translatewiki-deadline": "請抽出時間檢查本週的翻譯**直到 UTC 週一 00:00** 以避免不良翻譯和破壞行為流行。",
 	"translatewiki-header": "出自{2}位作者的{0}條訊息"
 }

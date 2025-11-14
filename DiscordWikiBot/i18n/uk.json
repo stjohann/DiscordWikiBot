@@ -92,7 +92,7 @@
 	"streaming-help-close": "Відключити трансляцію нових редагувань в каналі.",
 	"streaming-help-list": "Перелічити діючі трансляції на цьому сервері.",
 	"streaming-help-channel": "доступний боту канал трансляції.",
-	"streaming-help-args": "параметри трансляції:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "параметри трансляції:",
 	"translatewiki-deadline": "Встигніть перевірити повідомлення за тиждень **до 00:00** UTC понеділка, щоб знайти вандалізм і неякісний переклад.",
 	"translatewiki-header": "{0} {1:повідомлення|повідомлення|повідомлень|повідомлень} від {2} {2:автора|авторів|авторів|авторів}"
 }

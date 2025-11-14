@@ -93,7 +93,7 @@
 	"streaming-help-close": "停止播放频道中的最新更改。",
 	"streaming-help-list": "列出此服务器上所有开启的串流。",
 	"streaming-help-channel": "机器人可用的频道。",
-	"streaming-help-args": "可用串流参数：\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "可用串流参数：",
 	"translatewiki-deadline": "请抽出时间检查本周的翻译**直到 UTC 周一 00:00** 以避免不良翻译和破坏行为流行。",
 	"translatewiki-header": "{2}{2:位作者|位作者}的{0}{1:条消息|条消息}"
 }

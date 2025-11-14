@@ -80,7 +80,7 @@
 	"streaming-help-close": "Akhiri siaran perubahan terbaru di kanal.",
 	"streaming-help-list": "Daftar semua siaran yang terbuka di peladen ini.",
 	"streaming-help-channel": "kanal yang tersedia untuk bot.",
-	"streaming-help-args": "parameter siaran yang tersedia:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "parameter siaran yang tersedia:",
 	"translatewiki-deadline": "Temukan waktu untuk memeriksa terjemahan minggu ini **hingga pukul 00:00** hari Senin UTC untuk menghindari terjemahan buruk dan vandalisme.",
 	"translatewiki-header": "{0} {1:pesan|pesan} oleh {2} {2:penulis|penulis}"
 }

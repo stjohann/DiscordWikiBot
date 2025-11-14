@@ -83,6 +83,6 @@
 	"streaming-help-close": "Termina di seguire le modifiche recenti nel canale.",
 	"streaming-help-list": "Elenca tutti i flussi aperti su questo server.",
 	"streaming-help-channel": "un canale disponibile al bot.",
-	"streaming-help-args": "parametri disponibili per i flussi:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "parametri disponibili per i flussi:",
 	"translatewiki-header": "{0} {1:messaggio|messaggi} da {2} {2:autore|autori}"
 }

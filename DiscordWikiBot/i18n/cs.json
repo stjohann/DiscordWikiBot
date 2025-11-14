@@ -85,7 +85,7 @@
 	"streaming-help-close": "Zastaví streamování posledních změn v kanálu.",
 	"streaming-help-list": "Seznam všech otevřených streamů na tomto serveru.",
 	"streaming-help-channel": "kanál, který je k dispozici pro bota.",
-	"streaming-help-args": "dostupné parametry streamů:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "dostupné parametry streamů:",
 	"translatewiki-deadline": "Najděte si čas na kontrolu překladů pro tento týden **do 00:00** UTC v pondělí, abyste se vyhnuli špatným překladům a vandalismu, které byste mohli zachytit.",
 	"translatewiki-header": "{0} {1:zpráva|zprávy|zpráv|zpráv} od {2} {2:autora|autorů|autorů|autorů}"
 }

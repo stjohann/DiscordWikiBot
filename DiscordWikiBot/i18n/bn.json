@@ -78,6 +78,6 @@
 	"streaming-help-close": "চ্যানেলে সাম্প্রতিক পরিবর্তন স্ট্রিমিং করা বন্ধ করুন।",
 	"streaming-help-list": "এই সার্ভারে সকল খোলা স্ট্রিমের তালিকা দেখুন।",
 	"streaming-help-channel": "একটি চ্যানেল যা বটের কাছে উপলব্ধ।",
-	"streaming-help-args": "উপলব্ধ স্ট্রিম প্যারামিটারগুলি হল:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "উপলব্ধ স্ট্রিম প্যারামিটারগুলি হল:",
 	"translatewiki-header": "{2} জন {2:লেখক|লেখক} কর্তৃক {0}টি {1:বার্তা|বার্তা}"
 }

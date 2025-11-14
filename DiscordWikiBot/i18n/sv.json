@@ -82,7 +82,7 @@
 	"streaming-help-close": "Sluta strömma senaste ändringarna i kanalen.",
 	"streaming-help-list": "Lista upp alla öppnade strömmar på denna server.",
 	"streaming-help-channel": "en kanal som är tillgänglig för boten.",
-	"streaming-help-args": "tillgängliga strömparametrar:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "tillgängliga strömparametrar:",
 	"translatewiki-deadline": "Hitta tiden att kontrollera översättningar för denna vecka **fram tills 00:00** UTC på måndag för att undvika dåliga översättningar och vandalism ska komma med.",
 	"translatewiki-header": "{0} {1:meddelande|meddelanden} av {2} {2:författare|författare}"
 }

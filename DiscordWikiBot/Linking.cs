@@ -49,9 +49,9 @@ namespace DiscordWikiBot
 		];
 
 		/// <summary>
-		/// Link patterns for which an embed is always useful
+		/// URL patterns for which an embed is always useful
 		/// </summary>
-		private static readonly string[] alwaysEmbeddableLinks = [
+		private static readonly string[] alwaysEmbeddableUrls = [
 			"://phabricator.wikimedia.org/T",
 			// Wikidata links only have descriptions in embeds, so this isn’t useful yet
 			// "://www.wikidata.org/wiki/Lexeme:L",
@@ -59,6 +59,14 @@ namespace DiscordWikiBot
 		];
 
 		private static readonly bool useDiscordLinkEmbeds = Config.GetValue("useDiscordLinkEmbeds") != null;
+
+		/// <summary>
+		/// URL patterns for which there are custom delimiters instead of _
+		/// </summary>
+		private static readonly Dictionary<string, string> specialDelimiterUrls = new Dictionary<string, string>()
+		{
+			{ "://www.google.com/search", "+" },
+		};
 
 		/// <summary>
 		/// Replacement string for long messages.
@@ -367,8 +375,20 @@ namespace DiscordWikiBot
 				return "";
 			}
 
+			// Hide link contents from being parsed by the following lines
+			var linkEncoder = "%%WL%%";
+			var linkStorage = new List<string>();
+			var linkCount = -1;
+			content = linkPattern.Replace(content, match =>
+			{
+				linkCount++;
+				var g2 = match.Groups[2].ToString();
+				linkStorage.Add(g2);
+				return match.Value.Replace(g2, $"{linkEncoder}{linkCount}{linkEncoder}");
+			});
+
 			// Remove unescaped code syntax
-			content = Regex.Replace(content, @"(`{2,3}).*?\1", string.Empty, RegexOptions.Singleline);
+			content = Regex.Replace(content, @"(`{2,3}).*?.*?\1", string.Empty, RegexOptions.Singleline);
 			content = Regex.Replace(content, @"(?<!\\)(`).*?\1", string.Empty, RegexOptions.Singleline);
 
 			// Remove nowiki tags
@@ -377,6 +397,14 @@ namespace DiscordWikiBot
 			// Remove quote blocks
 			content = Regex.Replace(content, @"^>>> [^$]+$", string.Empty, RegexOptions.Multiline);
 			content = Regex.Replace(content, @"^> .+", string.Empty, RegexOptions.Multiline);
+
+			// Restore the link values
+			content = linkPattern.Replace(content, match =>
+			{
+				var g2 = match.Groups[2].ToString();
+				int.TryParse(g2.Replace(linkEncoder, ""), out int linkIndex);
+				return match.Value.Replace(g2, linkStorage[linkIndex]);
+			});
 
 			// Replace emojis like <:meta:873203055804436513> with :meta:
 			content = Regex.Replace(content, @"<:([^:]+):[\d]+>", ":$1:", RegexOptions.Multiline);
@@ -991,7 +1019,9 @@ namespace DiscordWikiBot
 				"https://", "irc://", "ircs://", "magnet:", "mailto:", "matrix:", "mms://",
 				"news:", "nntp://", "redis://", "sftp://", "sip:", "sips:", "sms:",
 				"ssh://", "svn://", "tel:", "telnet://", "urn:", "worldwind://", "xmpp:",
-				"//",
+				// There are valid titles starting with // even if MediaWiki doesn’t support them
+				// e.g. https://en.wikipedia.org/wiki///Khara_Hais_Local_Municipality
+				// "//",
 			];
 			if (checkProtocol && uriProtocols.Any(str.StartsWith)) return true;
 
@@ -1024,6 +1054,7 @@ namespace DiscordWikiBot
 		/// </summary>
 		/// <param name="title">Page title.</param>
 		/// <param name="format">Wiki URL.</param>
+		/// <param name="text">Visible link text.</param>
 		/// <returns>A page URL in specified format.</returns>
 		public static string GetMarkdownLink(string title, string format = null, string text = "")
 		{
@@ -1033,7 +1064,7 @@ namespace DiscordWikiBot
 			}
 
 			string url = GetUrl(title, format);
-			bool isEmbeddable = alwaysEmbeddableLinks.Any(l => url.Contains(l));
+			bool isEmbeddable = alwaysEmbeddableUrls.Any(l => url.Contains(l));
 			if (useDiscordLinkEmbeds || isEmbeddable)
 			{
 				return $"[{text}]( {url} )";
@@ -1054,7 +1085,13 @@ namespace DiscordWikiBot
 				format = Config.GetWiki();
 			}
 
-			title = EncodePageTitle(title);
+			var spaceCharData = specialDelimiterUrls.FirstOrDefault(sc => format.Contains(sc.Key));
+			var spaceChar = "_";
+			if (spaceCharData.Key != null)
+			{
+				spaceChar = spaceCharData.Value;
+			}
+			title = EncodePageTitle(title, spaceChar);
 			return format.Replace("$1", title);
 		}
 
@@ -1113,9 +1150,9 @@ namespace DiscordWikiBot
 				')',
 			];
 
-			// Decode and replace all spaces to required space symbol
+			// Decode and replace all spaces to regular space
 			str = DecodePageTitle(str);
-			str = Regex.Replace(str, @"\s{1,}", spaceChar);
+			str = Regex.Replace(str, @"\s{1,}", " ");
 
 			// Percent encoding for special characters
 			foreach (var ch in specialChars)
@@ -1123,7 +1160,12 @@ namespace DiscordWikiBot
 				str = str.Replace(ch.ToString(), Uri.EscapeDataString(ch.ToString()));
 			}
 
-			return str;
+			// Replace spaces to required space symbol
+			if (spaceChar == null)
+			{
+				spaceChar = "_";
+			}
+			return str.Replace(" ", spaceChar);
 		}
 
 		/// <summary>
@@ -1134,9 +1176,6 @@ namespace DiscordWikiBot
 		{
 			str = str.Trim().TrimStart(':').Replace('_', ' ');
 			str = Regex.Replace(str, @" {2,}", " ");
-
-			// Remove escaping symbols for \ in Discord
-			str = Regex.Replace(str, @"\\\\", "");
 
 			// Decode HTML-encoded symbols before encoding
 			if (str.Contains("&")) str = HttpUtility.HtmlDecode(str);

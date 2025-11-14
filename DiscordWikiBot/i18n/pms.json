@@ -83,7 +83,7 @@
 	"streaming-help-close": "Fërmé ël fluss ëd j'ùltime modìfiche ant ël canal.",
 	"streaming-help-list": "Listé tuti ij fluss duvert ansima a 's servent.",
 	"streaming-help-channel": "un canal ch'a l'é disponìbil për ël trigomiro.",
-	"streaming-help-args": "available stream parameters:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "available stream parameters:",
 	"translatewiki-deadline": "Ch'a treuva ël temp ëd controlé le tradussion ëd costa sman-a **fin-a a le 00:00** ëd lùn-es UTC për evité le tradussion lòfie e ciapé ij vandalism.",
 	"translatewiki-header": "{0} {1:mëssagi|mëssagi} da {2} {2:autor|autor}"
 }

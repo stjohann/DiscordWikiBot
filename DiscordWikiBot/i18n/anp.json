@@ -72,6 +72,6 @@
 	"streaming-help-close": "चैनल प हिन्ने होलौ बदलाव स्ट्रीम करना बंद करौ।",
 	"streaming-help-list": "हैय सर्वर प सब्भे खुल्ला स्ट्रीम्स क सूची बनाबौ।",
 	"streaming-help-channel": "एगो चैनल जे बॉट क उपलब्ध छै।",
-	"streaming-help-args": "स्ट्रीम केरौ उपलब्ध पैरामीटर्स:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "स्ट्रीम केरौ उपलब्ध पैरामीटर्स:",
 	"translatewiki-header": "{2} {2:लेखक|लेखक सिनी} द्वारा {0} {1:संदेश|संदेश}"
 }

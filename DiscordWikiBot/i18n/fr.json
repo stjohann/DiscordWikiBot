@@ -92,7 +92,7 @@
 	"streaming-help-close": "Arrêter le flux des changements récents dans le canal.",
 	"streaming-help-list": "Lister tous les flux ouverts sur ce serveur.",
 	"streaming-help-channel": "un canal qui est disponible pour le robot.",
-	"streaming-help-args": "paramètres disponibles pour le flux :\n{msg:bullet}`--title` (*chaîne*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*entier*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*booléen*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*chaîne*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*entier*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*booléen*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "paramètres disponibles pour le flux :",
 	"translatewiki-deadline": "Trouvez le temps de vérifier les traductions pour cette semaine ** jusqu’à lundi 00 h 00 ** UTC pour éviter les mauvaises traductions et le vandalisme.",
 	"translatewiki-header": "{1:Un message|{0} messages} par {2:un auteur|{2} auteurs}"
 }

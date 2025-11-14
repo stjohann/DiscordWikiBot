@@ -93,7 +93,7 @@
 	"streaming-help-close": "Зауставите ток недавних промена у каналу.",
 	"streaming-help-list": "Списак свих отворених токова на серверу.",
 	"streaming-help-channel": "канал који је доступан боту.",
-	"streaming-help-args": "доступни параметри тока:\n{msg:bullet}`--title` (*ниска*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*цео број*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*Булов*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*ниска*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*цео број*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*Булов*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "доступни параметри тока:",
 	"translatewiki-deadline": "Одвојите нешто времена за проверу овонедељних превода **до поноћи** у понедељак по временској зони UTC да бисте избегли лоше преводе и ухватили вандализме.",
 	"translatewiki-header": "{0} {1:порука|поруке|порука} {2} {2:аутора|аутора|аутора}"
 }

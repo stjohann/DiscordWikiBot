@@ -79,7 +79,7 @@
 	"streaming-help-close": "Zastaviť streamovanie nedávnych zmien na tomto kanáli.",
 	"streaming-help-list": "Zobraziť všetky otvorené streamy na tomto serveri.",
 	"streaming-help-channel": "kanál dostupný pre bota.",
-	"streaming-help-args": "dostupné parametre pre stream:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "dostupné parametre pre stream:",
 	"translatewiki-deadline": "Nájsť čas na kontrolu prekladov tento týždeň do pondelka 00:00 UTC na vyhnutie sa nesprávnym prekladom a vandalizmu.",
 	"translatewiki-header": "{0} {1:správa|správy|správ|správ} d {2} {2:autora|autorov|autorov|autorov}"
 }

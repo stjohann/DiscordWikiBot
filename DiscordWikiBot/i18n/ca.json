@@ -79,7 +79,7 @@
 	"streaming-help-close": "Aturar el flux dels canvis recents al canal.",
 	"streaming-help-list": "Llista tots els fluxos oberts en aquest servidor.",
 	"streaming-help-channel": "un canal que està disponible per al bot.",
-	"streaming-help-args": "paràmetres disponibles per al flux:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "paràmetres disponibles per al flux:",
 	"translatewiki-deadline": "Cerqueu temps per consultar les traduccions d’aquesta setmana ** fins el dilluns a les 00:00 ** UTC per evitar males traduccions i actes vandàlics.",
 	"translatewiki-header": "{0} {1:missatge| missatges} per {2} {2:autor|autors}"
 }

@@ -90,7 +90,7 @@
 	"streaming-help-close": "Kanaldaki son değişiklikleri yayınlamayı durdurun.",
 	"streaming-help-list": "Bu sunucudaki tüm açık yayınları listele.",
 	"streaming-help-channel": "bot için uygun bir kanal.",
-	"streaming-help-args": "kullanılabilir akış parametreleri:\n{msg:bullet}`--title` (*string*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*int*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*bool*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*string*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*int*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*bool*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "kullanılabilir akış parametreleri:",
 	"translatewiki-deadline": "Kötü çevirileri ve vandalizmi yakalamak için bu hafta **saat 00:00 ** Pazartesi UTC'ye kadar çevirileri kontrol etmek için zaman bulun.",
 	"translatewiki-header": "{0} {1:mesaj|mesaj} üzerinden {2} {2:yazar|yazar}"
 }

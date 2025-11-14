@@ -90,7 +90,7 @@
 	"streaming-help-close": "Stoppen met het streamen van recente wijzigingen in het kanaal.",
 	"streaming-help-list": "Een lijst maken van alle geopende streams op deze server.",
 	"streaming-help-channel": "een kanaal dat beschikbaar is voor de robot.",
-	"streaming-help-args": "beschikbare stream-parameters:\n{msg:bullet}`--title` (*tekenreeks*){msg:separator}{msg:streaming-key-title}\n{msg:bullet}`--namespace` (*geheel getal*){msg:separator}{msg:streaming-key-namespace}\n{msg:bullet}`--bot` (*booleaanse waarde*){msg:separator}{msg:streaming-key-bot}\n{msg:bullet}`--in-comment` (*tekenreeks*){msg:separator}{msg:streaming-key-in-comment}\n{msg:bullet}`--diff-length` (*geheel getal*){msg:separator}{msg:streaming-key-diff-length}\n{msg:bullet}`--minor` (*booleaanse waarde*){msg:separator}{msg:streaming-key-minor}\n{msg:bullet}`--patrolled` (`only` / `none` / `any`){msg:separator}{msg:streaming-key-patrolled}\n{msg:bullet}`--type` (`new` / `edit` / `any`){msg:separator}{msg:streaming-key-type}",
+	"streaming-help-args": "beschikbare stream-parameters:",
 	"translatewiki-deadline": "Neem de tijd om de vertalingen van deze week na te kijken **tot 00:00** op maandag (UTC) om te vermijden dat slechte vertalingen en vandalisme zich verspreiden.",
 	"translatewiki-header": "{0} {1:bericht|berichten} van {2} {2:auteur|auteurs}"
 }
