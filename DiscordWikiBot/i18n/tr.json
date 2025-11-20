@@ -76,7 +76,7 @@
 	"streaming-list-nothing": ":ok: Bu sunucuda açık canlı yok.",
 	"streaming-list-stream": "**{1:Canlı|Canlı} {0}:**",
 	"streaming-key-bot": "bot düzenlemelerini dahil et",
-	"streaming-key-in-comment": "yorumda ara",
+	"streaming-key-in-comment": "yorumu düzenlemek için düzenli ifade",
 	"streaming-key-diff-length": "minimum fark uzunluğu",
 	"streaming-key-minor": "küçük düzenlemeleri dahil et",
 	"streaming-key-namespace": "ad alanı numarası",

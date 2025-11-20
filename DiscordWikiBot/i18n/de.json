@@ -78,11 +78,12 @@
 	"streaming-list-nothing": ":ok: Es gibt keine geöffneten Streams auf diesem Server.",
 	"streaming-list-stream": "**{1:Stream|Streams} {0}:**",
 	"streaming-key-bot": "Bot-Bearbeitungen einschließen",
-	"streaming-key-in-comment": "im Kommentar suchen",
+	"streaming-key-in-title": "regulärer Ausdruck für Seitentitel",
+	"streaming-key-in-comment": "regulärer Ausdruck für Bearbeitungskommentar",
 	"streaming-key-diff-length": "Mindestlänge des Versionsunterschieds",
 	"streaming-key-minor": "kleine Änderungen einschließen",
 	"streaming-key-namespace": "Namensraum-Nummer",
-	"streaming-key-patrolled": "Nach Überprüfungs-Status filtern",
+	"streaming-key-patrolled": "nach Überprüfungs-Status filtern",
 	"streaming-key-title": "Seitentitel",
 	"streaming-key-type": "Bearbeitungstyp",
 	"streaming-required-access": "Der Bot benötigt die Berechtigung, Nachrichten in Kanal {0} zu sehen und zu senden. Überprüfe bitte die Kanaleinstellungen und nutze den Befehl erneut.",
@@ -92,7 +93,7 @@
 	"streaming-help-close": "Das Streaming der letzten Änderungen im Kanal beenden.",
 	"streaming-help-list": "Alle geöffneten Streams auf diesem Server auflisten.",
 	"streaming-help-channel": "ein Kanal, der dem Bot zur Verfügung steht.",
-	"streaming-help-args": "Verfügbare Stream-Parameter:",
+	"streaming-help-args": "Verfügbare Stream-Parameter, [siehe Dokumentation](https://w.wiki/4nm):",
 	"translatewiki-deadline": "Nimm dir die Zeit, die Übersetzungen für diese Woche **bis 00:00** Montag UTC zu überprüfen, um zu vermeiden, dass sich schlechte Übersetzungen und Vandalismus einschleichen.",
 	"translatewiki-header": "{0} {1:Nachricht|Nachrichten} von {2} {2:Autor|Autoren}"
 }

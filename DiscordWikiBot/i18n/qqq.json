@@ -60,10 +60,14 @@
 	"streaming-list-nothing": "The bot response to <code>!listStreams</code> command when there are no active streams on a server. <code>:ok:</code> should not be translated.",
 	"streaming-list-stream": "The subheader in a message informing about the number of active streams on a server.\n* <code>{0}</code> – stream target. Uses {{msg-wm|Discordwikibot-streaming-stream-title}} and {{msg-wm|Discordwikibot-streaming-stream-namespace}}.\n* <code>{1}</code> – number of active streams.",
 	"streaming-key-bot": "Explanation for <code>bot</code> key of recent changes streams configuration. \"Include\" is a verb in infinitive form here.",
-	"streaming-key-in-comment": "Explanation for <code>in-comment</code> key of recent changes streams configuration. \"Search\" is a verb in infinitive form here.",
+	"streaming-key-in-title": "Explanation for <code>in-title</code> key of recent changes streams configuration. [[w:Regular expression|Regular expression]] is a technical term.",
+	"streaming-key-in-comment": "Explanation for <code>in-comment</code> key of recent changes streams configuration. [[w:Regular expression|Regular expression]] is a technical term.",
 	"streaming-key-minor": "Explanation for <code>minor</code> key of recent changes streams configuration. \"Include\" is a verb in infinitive form here.",
 	"streaming-key-patrolled": "Explanation for <code>patrolled</code> key of recent changes streams. \"Patrolling\" is [[mw:Help:Patrolling|MediaWiki patrolling]] here. \"Filter\" is a verb in infinitive form here.",
 	"streaming-key-title": "Explanation for <code>title</code> key of recent changes streams configuration.\n{{Identical|Page title}}",
 	"streaming-required-goal": "The error response when a user did not provide the stream goal. <code>{1}help {0}</code> should not be translated.\nThe message to translate is formatted using the Markdown syntax.",
+	"streaming-badvalue-in-title": "<code>--in-title</code> should be left untranslated.",
+	"streaming-badvalue-regex": "The error message for invalid [[w:Regular expression|regular expressions]] passed in a parameter.\n* <code>{0}</code> is the regular expression code.\n* <code>{1}</code> is the name of the parameter: <code>--in-title</code> or <code>--in-comment</code>.",
+	"streaming-help-args": "Please translate the first line only.",
 	"translatewiki-header": "The header in a bot response about new [[:mw:Special:MyLanguage/Help:System message|interface messages]] on translatewiki.net.\n* <code>{0}</code> – formatted number of messages.\n* <code>{1}</code> – unformatted number of messages.\n* <code>{2}</code> – number of authors that have edited those messages."
 }

@@ -6,6 +6,7 @@
 			"Champ0999",
 			"Giorgx12",
 			"IrsY",
+			"McDutchie",
 			"UnGiglio",
 			"Yacine Boussoufa",
 			"ZandDev"
@@ -70,7 +71,7 @@
 	"streaming-list-nothing": ":ok: Non ci sono flussi aperti in questo server.",
 	"streaming-list-stream": "**{1:Flusso|Flussi} {0}:**",
 	"streaming-key-bot": "includi le modifiche bot",
-	"streaming-key-in-comment": "cerca nei commenti",
+	"streaming-key-in-comment": "espressione regolare per il commento della modifica",
 	"streaming-key-diff-length": "minima lunghezza dei diff",
 	"streaming-key-minor": "includere modifiche minori",
 	"streaming-key-namespace": "numero del namespace",
@@ -83,6 +84,6 @@
 	"streaming-help-close": "Termina di seguire le modifiche recenti nel canale.",
 	"streaming-help-list": "Elenca tutti i flussi aperti su questo server.",
 	"streaming-help-channel": "un canale disponibile al bot.",
-	"streaming-help-args": "parametri disponibili per i flussi:",
+	"streaming-help-args": "parametri disponibili per i flussi, [vedi documentazione](https://w.wiki/4nm):",
 	"translatewiki-header": "{0} {1:messaggio|messaggi} da {2} {2:autore|autori}"
 }

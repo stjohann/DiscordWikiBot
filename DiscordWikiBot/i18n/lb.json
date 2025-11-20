@@ -25,6 +25,7 @@
 	"linking-links": "{0:Link|Linken}:&#32;",
 	"streaming-stream-namespace": "vum Nummraum '{0}'",
 	"streaming-stream-title": "vun der Säit '{0}'",
+	"streaming-key-in-title": "regulären Ausdrock fir Säitentitelen",
 	"streaming-key-namespace": "Nummraum-Zuel",
 	"streaming-key-title": "Titel vun der Säit",
 	"streaming-key-type": "Typ vun der Ännerung",

@@ -74,6 +74,7 @@
 	"streaming-list-nothing": ":ok: Bu serverdə açılmış yayım yoxdur.",
 	"streaming-list-stream": "**{0} {1:yayım|yayımlar}:**",
 	"streaming-key-bot": "bot redaktələrini daxil et",
+	"streaming-key-in-title": "səhifə başlığı üçün requlyar ifadə",
 	"streaming-key-in-comment": "rəydə axtar",
 	"streaming-key-diff-length": "minimum fərq uzunluğu",
 	"streaming-key-minor": "kiçik redaktələri daxil et",
