@@ -79,7 +79,7 @@
 	"streaming-list-nothing": ":ok: Нема отворених токова на серверу.",
 	"streaming-list-stream": "**{1:Ток|Токови} {0}:**",
 	"streaming-key-bot": "уврсти ботовске измене",
-	"streaming-key-in-comment": "претражи у коментару",
+	"streaming-key-in-comment": "регуларни израз за уреди коментар",
 	"streaming-key-diff-length": "најмања величина разлике",
 	"streaming-key-minor": "уврсти мање измене",
 	"streaming-key-namespace": "број именског простора",
