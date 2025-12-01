@@ -6,7 +6,8 @@
 			"Joquliina",
 			"Markus Mikkonen",
 			"Nike",
-			"Pyscowicz"
+			"Pyscowicz",
+			"Samoasambia"
 		]
 	},
 	"yes": "kyllä",
@@ -52,7 +53,7 @@
 	"streaming-key-patrolled": "suodata partioinnin tilan mukaan",
 	"streaming-key-title": "sivun otsikko",
 	"streaming-key-type": "muokkauksen tyyppi",
-	"streaming-required-access": "Botti tarvitsee oikeudet viestien näkemiseen ja lähettämiseen kanavalla {0}. Tarkista kanavan asetukset ja lähetä komento uudestaan.",
+	"streaming-required-access": "Botti tarvitsee oikeudet viestien näkemiseen ja lähettämiseen kanavalla {0}. Tarkista kanavan asetukset ja lähetä komento uudelleen.",
 	"streaming-help-channel": "kanava, jonne botilla on pääsy.",
 	"translatewiki-header": "{0} {1:viesti|viestiä} {2} {2:käyttäjältä|käyttäjältä}"
 }

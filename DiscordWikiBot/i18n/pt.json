@@ -4,6 +4,7 @@
 			"B3rnas",
 			"Hamilton Abreu",
 			"Mansil alfalb",
+			"Maria Manuela Silva",
 			"O andras"
 		]
 	},
@@ -86,7 +87,7 @@
 	"streaming-help-close": "Parar de transmitir as alterações recentes no canal.",
 	"streaming-help-list": "Lista todos os fluxos abertos neste servidor.",
 	"streaming-help-channel": "um canal que está disponível para o bot.",
-	"streaming-help-args": "parâmetros de transmissão disponíveis:",
+	"streaming-help-args": "parâmetros de transmissão disponíveis,[consulte a documentação] (https://w.wiki/4nm):",
 	"translatewiki-deadline": "Arranje tempo para verificar as traduções para esta semana **até às 00:00** de segunda-feira UTC para evitar que as más traduções e o vandalismo se espalhem.",
 	"translatewiki-header": "{0} {1:mensagem|mensagens} de {2} {2:autor|autores}"
 }

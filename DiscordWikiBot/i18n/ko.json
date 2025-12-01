@@ -59,6 +59,7 @@
 	"streaming-list-nothing": ":ok: 이 서버에 열려 있는 스트림이 없습니다.",
 	"streaming-list-stream": "**{1:스트림} {0}:**",
 	"streaming-key-bot": "봇 편집 포함",
+	"streaming-key-in-title": "문서 제목에 사용할 정규표현식",
 	"streaming-key-in-comment": "편집 요약에서 추출할 정규 표현식",
 	"streaming-key-minor": "사소한 편집 포함",
 	"streaming-key-namespace": "이름공간 번호",
@@ -68,5 +69,6 @@
 	"streaming-help-open": "채널에 최근 바뀜의 스트리밍을 시작합니다.",
 	"streaming-help-close": "채널에 최근 바뀜의 스트리밍을 중지합니다.",
 	"streaming-help-list": "이 서버에 열려 있는 모든 스트림을 나열합니다.",
+	"translatewiki-deadline": "월요일 오전 **00:00 이전** (UTC 시간대) 이전에 번역을 검토해야 저품질 번역과 문서 훼손이 시스템 번역에 반영되는 것을 막을 수 있습니다.",
 	"translatewiki-header": "{2}명의 사용자가 번역한 {0}개의 메시지"
 }

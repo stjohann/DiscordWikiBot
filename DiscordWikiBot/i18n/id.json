@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Naufal06",
+			"Penyuwangi",
 			"Sonic Speedy",
 			"Veracious"
 		]
@@ -80,7 +81,7 @@
 	"streaming-help-close": "Akhiri siaran perubahan terbaru di kanal.",
 	"streaming-help-list": "Daftar semua siaran yang terbuka di peladen ini.",
 	"streaming-help-channel": "kanal yang tersedia untuk bot.",
-	"streaming-help-args": "parameter siaran yang tersedia:",
+	"streaming-help-args": "parameter aliran yang tersedia, [lihat dokumentasi](https://w.wiki/4nm):",
 	"translatewiki-deadline": "Temukan waktu untuk memeriksa terjemahan minggu ini **hingga pukul 00:00** hari Senin UTC untuk menghindari terjemahan buruk dan vandalisme.",
 	"translatewiki-header": "{0} {1:pesan|pesan} oleh {2} {2:penulis|penulis}"
 }
