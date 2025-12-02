@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Juwan~backup",
-			"שוקו מוקה"
+			"שוקו מוקה",
+			"Tamzin"
 		]
 	},
 	"yes": "lon",
@@ -17,7 +18,7 @@
 	"help-optional": "namako",
 	"eventstreams-diff": "ante",
 	"eventstreams-talk": "toki",
-	"eventstreams-contribs": "ante",
+	"eventstreams-contribs": "pali",
 	"eventstreams-new": "lipu sin",
 	"eventstreams-bot": "i",
 	"eventstreams-minor": "l",
