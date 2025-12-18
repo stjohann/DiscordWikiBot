@@ -3,6 +3,7 @@
 		"authors": [
 			"Juwan~backup",
 			"Stjn",
+			"Tamzin",
 			"שוקו מוקה"
 		]
 	},
@@ -29,5 +30,5 @@
 	"streaming-stream-title": "lipu `{0}`",
 	"streaming-opened": ":white_check_mark: nasin {0} la linja toki li lon tomo toki {1} {2}",
 	"streaming-key-title": "nimi lipu",
-	"translatewiki-header": "{2:jan} {2} li {1:toki} {0}"
+	"translatewiki-header": "{2:jan} {2} li ante e {1:toki} {0}"
 }
