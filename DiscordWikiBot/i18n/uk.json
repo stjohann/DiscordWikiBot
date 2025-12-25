@@ -78,7 +78,7 @@
 	"streaming-list-nothing": ":ok: На цьому сервері немає діючих трансляцій.",
 	"streaming-list-stream": "**{1:Трансляція|Трансляції} {0}:**",
 	"streaming-key-bot": "включати редагування ботів",
-	"streaming-key-in-comment": "шукати в тексті опису змін",
+	"streaming-key-in-comment": "регулярний вираз для опису змін",
 	"streaming-key-diff-length": "мінімальний розмір змін",
 	"streaming-key-minor": "включати незначні зміни",
 	"streaming-key-namespace": "номер простору назв",
