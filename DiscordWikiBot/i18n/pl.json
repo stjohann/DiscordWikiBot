@@ -6,7 +6,8 @@
 			"PanWor",
 			"Rail",
 			"Rainbow P",
-			"WaldiSt"
+			"WaldiSt",
+			"Woytecr"
 		]
 	},
 	"yes": "tak",
@@ -74,7 +75,7 @@
 	"streaming-list-nothing": ":ok: Nie ma strumieni otwartych na tym serwerze.",
 	"streaming-list-stream": "**{1:Strumień|Strumienie} {0}:**",
 	"streaming-key-bot": "dołącz edycje botów",
-	"streaming-key-in-comment": "szukaj w komentarzu",
+	"streaming-key-in-comment": "wyrażenie regularne do wyszukiwania w opisie zmian",
 	"streaming-key-diff-length": "minimalny rozmiar różnicy",
 	"streaming-key-minor": "dołącz drobne edycje",
 	"streaming-key-namespace": "numer przestrzeni nazw",
