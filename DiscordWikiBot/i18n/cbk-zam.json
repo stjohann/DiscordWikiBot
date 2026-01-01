@@ -79,7 +79,7 @@
 	"streaming-required-access": "Necesita access el bot para puede mira y man post maga mensaje na {0} channel. Por favor chequea con el maga configuracion de channel y envia otra vez con el command.",
 	"streaming-required-goal": "Ta necesita el stream goal (titulo de pagina o numero de namespace). Para tiene contigo ayuda para na command, envia `{1}ayuda {0}`.",
 	"streaming-help-open": "Hace empeza con el reciente cambio de streaming na channel.",
-	"streaming-help-edit": "Hace edit maga parametro de un stream de reciente cambio na channel.",
+	"streaming-help-edit": "Edita maga parametro de un recent changes stream na channel.",
 	"streaming-help-close": "Hace para con el reciente cambio de streaming na channel.",
 	"streaming-help-list": "Lista todo'l maga abierto streams na este server.",
 	"streaming-help-channel": "un channel que available na bot.",
