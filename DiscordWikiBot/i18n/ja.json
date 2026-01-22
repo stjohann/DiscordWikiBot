@@ -7,6 +7,7 @@
 			"Shirayuki",
 			"Shulmj",
 			"Stjn",
+			"Yaakiyu.jp",
 			"YeBoy371",
 			"春春眠眠"
 		]
@@ -65,13 +66,14 @@
 	"eventstreams-minor": "細",
 	"linking-links": "{0:リンク}：&#32;",
 	"linking-toolong": "メッセージがDiscordには長すぎるため、\n上記のメッセージへのリンクは提供されていません。",
+	"streaming-domain": "ストリーム中のドメイン: `{0}`",
 	"streaming-stream-namespace": "名前空間 `{0}`から",
 	"streaming-stream-title": "ページ `{0}`から",
 	"streaming-opened": ":white_check_mark: ストリーム{0}がチャンネル{1} {2}に追加されます",
 	"streaming-edited": "チャンネル{1}のストリーム{0}は、{2}のパラメータを変更しました。",
 	"streaming-edited-nothing": ":ok: チャンネル{1}のストリーム{0}に変更はありませんでした。",
 	"streaming-closed": ":negative_squared_cross_mark: ストリーム{0}がチャンネル{1}から削除されました。",
-	"streaming-list": ":information_source: このサーバー上の{0} {0：アクティブストリーム|アクティブストリーム}。 {1}",
+	"streaming-list": ":information_source: このサーバー上の{0}個の{0：アクティブストリーム|アクティブストリーム}。{2}\n{1}",
 	"streaming-list-nothing": ":ok: このサーバーには開いているストリームはありません。",
 	"streaming-list-stream": "**{1:ストリーム} {0}:**",
 	"streaming-key-bot": "ボットによる編集を含める",

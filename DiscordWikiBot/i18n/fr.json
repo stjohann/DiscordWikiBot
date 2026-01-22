@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Eihel",
 			"Gomoko",
 			"Mahabarata",
 			"McDutchie",
@@ -78,6 +79,7 @@
 	"streaming-list-nothing": ":ok: Il n’y a aucun flux ouvert sur ce serveur.",
 	"streaming-list-stream": "** Flux{1:|} {0} : **",
 	"streaming-key-bot": "inclure les modifications de robot",
+	"streaming-key-in-title": "expression régulière pour le titre de la page",
 	"streaming-key-in-comment": "rechercher dans le commentaire",
 	"streaming-key-diff-length": "longueur minimale pour un diff",
 	"streaming-key-minor": "inclure les modifications mineures",
