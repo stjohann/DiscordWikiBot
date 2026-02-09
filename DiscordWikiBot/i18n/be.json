@@ -5,6 +5,7 @@
 			"Maksim L.",
 			"MocnyDuham",
 			"Plaga med",
+			"Ucukor",
 			"ZlyiLev",
 			"Хтосьці"
 		]
@@ -41,7 +42,7 @@
 	"configuring-error-same": "Уведзенае вамі значэнне супадае з бягучым.",
 	"configuring-error-strange": "Ваша каманда не прайшла праз невядомую памылку.",
 	"configuring-required-value": "Патрабуецца значэнне параметру.\nКаб атрымаць поўную даведку, увядзіце `{1}help {0}`.",
-	"configuring-badvalue-domain": "Патоки даступны толькі для праектаў Вікімедыя.\nСпіс дапушчальных даменаў: {0}.",
+	"configuring-badvalue-domain": "Трансляцыі даступны толькі для праектаў Вікімедыя.\nСпіс дапушчальных даменаў: {0}.",
 	"configuring-badvalue-lang": "Бот не лічыць уведзенае вамі карэктным моўным кодам ISO 639.",
 	"configuring-badvalue-wiki": "Бот не можа атрымаць API інфармацыю для гэтай вікі. Ваш URL мусіць заканчвацца на `{0}`.",
 	"configuring-help-status": "Праверыць працу бота.",
