@@ -59,6 +59,7 @@
 	"eventstreams-minor": "μ",
 	"linking-links": "{0:Σύνδεσμος|Σύνδεσμοι}:&#32;",
 	"linking-toolong": "Οι σύνδεσμοι στο παραπάνω μύνημα δέν δίνονται, επειδή το μύνημα θα ήταν υπερβολικά μεγαλο για το Discord.",
+	"streaming-domain": "Τομέας ροής: `{0}`",
 	"streaming-stream-namespace": "Απο τον χώρο ονομάτων {0}",
 	"streaming-stream-title": "απο την σελίδα {0}",
 	"streaming-opened": ":white_check_mark: Το κανάλι {0} προσετέθηκε στο κανάλι {1}{2}",
