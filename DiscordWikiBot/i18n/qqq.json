@@ -21,7 +21,6 @@
 	"help-repo": "Link to [[w:Source code|source code]] of the bot. <code>{0}</code> is the link text.",
 	"help-commands": "{{Identical|Command}}",
 	"help-subcommands": "{{Identical|Subcommand}}",
-	"help-aliases": "{{Identical|Aliases}}",
 	"help-arguments": "{{Identical|Arguments}}",
 	"help-default": "The default value of a parameter. <code>{0}</code> is the default value.\nThe message to translate is formatted using the Markdown syntax.",
 	"help-optional": "{{Identical|Optional}}",
