@@ -3,6 +3,7 @@
 		"authors": [
 			"Jay17",
 			"Revi",
+			"Tensama0415",
 			"YeBoy371",
 			"Ykhwong",
 			"그냥기여자"
@@ -35,7 +36,7 @@
 	"configuring-changed-reset": "이 값은 기본값으로 다시 초기화되었습니다.",
 	"configuring-error-same": "입력한 값은 현재의 값과 동일합니다.",
 	"configuring-error-strange": "일부 오류로 인해 명령이 실패했습니다.",
-	"configuring-required-value": "이 매개변구 값이 반드시 입력되어야 합니다.\n이 명령어에 대한 도움말을 보려면 `{1}help {0}` 명령어를 전송하세요.",
+	"configuring-required-value": "이 매개변수 값이 반드시 입력되어야 합니다.\n이 명령어에 대한 도움말을 보려면 `{1}help {0}` 명령어를 전송하세요.",
 	"configuring-badvalue-domain": "스트림은 위키미디어 프로젝트에서만 허용됩니다.\n허용된 도메인 목록: {0}.",
 	"configuring-badvalue-lang": "봇은 입력을 유효한 ISO 639 코드로 인식하지 못합니다.",
 	"configuring-badvalue-wiki": "이 위키의 API 정보는 봇이 가져올 수 없습니다. URL 끝에 `{0}`가 있어야 합니다.",

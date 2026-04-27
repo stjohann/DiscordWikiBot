@@ -4,7 +4,8 @@
 			"BaRaN6161 TURK",
 			"NMW03",
 			"Nemoralis",
-			"Stjn"
+			"Stjn",
+			"Əkrəm"
 		]
 	},
 	"bullet": "• {0}",
@@ -50,7 +51,7 @@
 	"configuring-help-lang": "Bu serverdə botun dilini dəyişdirin.",
 	"configuring-help-lang-value": "istədiyiniz botun dili. Defolt olaraq yenidən qurmaq üçün `-` istifadə edin.",
 	"configuring-help-translatewiki": "Kanallardan birində Translatewiki-də son dəyişikliklər barədə hər saat hesabat verməyə başlayın və ya bitirin.",
-	"configuring-help-translatewiki-channel": "bot üçün mövcud olan bir kanal.",
+	"configuring-help-translatewiki-channel": "bot üçün əlçatan olan bir kanal.",
 	"configuring-help-translatewiki-value": "Tərcümə üçün Translatewiki-də mövcud olan dil (ISO 639-da dil kodu). Hesabatı bitirmək üçün dili `-` olaraq yazın.",
 	"configuring-help-wiki": "Bu serverdəki bağlantılar üçün əsas vikini dəyişdirin. Sonda /wiki/$1 olaraq yazılması tələb olunur.",
 	"configuring-help-wiki-channel": "Bu kanaldakı bağlantılar üçün viki dəyişdirin. Sonunda /wiki/$1 tələb olunur.",
@@ -75,7 +76,7 @@
 	"streaming-list-stream": "**{0} {1:yayım|yayımlar}:**",
 	"streaming-key-bot": "bot redaktələrini daxil et",
 	"streaming-key-in-title": "səhifə başlığı üçün requlyar ifadə",
-	"streaming-key-in-comment": "rəydə axtar",
+	"streaming-key-in-comment": "redaktə şərhi üçün requlyar ifadə",
 	"streaming-key-diff-length": "minimum fərq uzunluğu",
 	"streaming-key-minor": "kiçik redaktələri daxil et",
 	"streaming-key-namespace": "adlar fəzası nömrəsi",
@@ -84,6 +85,8 @@
 	"streaming-key-type": "redaktənin tipi",
 	"streaming-required-access": "Bota {0} kanalında mesajlara baxmaq və göndərmək icazəsi lazımdır. Kanal parametrlərini yoxlayın və əmri yenidən göndərin.",
 	"streaming-required-goal": "Yayım məqsədi (səhifə adı və ya adlar fəzası nömrəsi) tələb olunur.\nKomanda üçün tam kömək almaq üçün `{1}help {0}` yazın.",
+	"streaming-badvalue-in-title": "`--in-title` parametri ancaq ad fəzası yayımı ilə istifadə edilə bilər.",
+	"streaming-badvalue-regex": "`{1}` parametri üçün istifadə edilən `{0}` requlyar ifadəsi etibarlı deyil və işləməyəcək. Zəhmət olmasa, onu düzəldib komandanı yenidən işə salın.",
 	"streaming-help-open": "Kanalda son dəyişiklikləri yayımlamağa başlayın.",
 	"streaming-help-edit": "Kanaldakı son dəyişiklik yayımının parametrlərini düzəldin.",
 	"streaming-help-close": "Kanaldakı son dəyişiklik yayımını söndürün.",
