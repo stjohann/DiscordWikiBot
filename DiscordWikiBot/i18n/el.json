@@ -5,7 +5,8 @@
 			"Geraki",
 			"GhotuoIncubator",
 			"Jimkats",
-			"Norhorn"
+			"Norhorn",
+			"Stjn"
 		]
 	},
 	"yes": "ναι",
@@ -43,7 +44,7 @@
 	"configuring-badvalue-wiki": "Το bot δεν μπορεί να λάβει πληροφορίες API για αυτό το wiki. Πρέπει να υπάρχει «{0}» στο τέλος της διεύθυνσης URL σας.",
 	"configuring-help-status": "Ελέγξτε αν το bot λειτουργεί.",
 	"configuring-help-answerBots": "Ρυθμίστε εάν το bot θα πρέπει να απαντά σε μηνύματα από άλλα bot.",
-	"configuring-help-answerBots-value": "Λογική τιμή ({msg:ναι} / {msg:όχι})",
+	"configuring-help-answerBots-value": "Λογική τιμή ({msg:yes} / {msg:no})",
 	"configuring-help-domain": "Άλλαξε την διεύθυνση απο την οποία οι πρόσφατες αλλαγές μεταδίδονται σε αυτόν τον διακομιστή. Μόνο για πρότζεκτ της Wikimedia.",
 	"configuring-help-domain-value": "Η διεύθυνση ενότ πρότζεκτ της Wikimedia (π.χ. en.wikipedia.org).  Χρησημοποίησε το `-` για επιστροφή στο προκαθορισμένο.",
 	"configuring-help-lang": "Αλλαγή της γλώσσας του ρομπότ σε αυτόν τον διακομιστή.",

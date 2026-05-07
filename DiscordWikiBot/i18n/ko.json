@@ -46,6 +46,8 @@
 	"configuring-help-lang": "이 서버의 봇의 언어를 변경합니다.",
 	"configuring-help-lang-value": "사용을 원하는 봇 언어입니다. 기본값으로 재설정하려면 `-`를 사용하십시오.",
 	"configuring-help-translatewiki-channel": "봇이 메시지를 보낼 수 있는 채널이어야 합니다.",
+	"configuring-help-wiki": "이 채널에서 링크용으로 사용할 메인 위키를 변경합니다. 끝에 /wiki/$1 가 포함되어야 합니다.",
+	"configuring-help-wiki-channel": "이 채널에서 링크용으로 사용할 위키를 변경합니다. 끝에 /wiki/$1 가 포함되어야 합니다.",
 	"eventstreams-diff": "차이",
 	"eventstreams-talk": "토론",
 	"eventstreams-contribs": "기여",
