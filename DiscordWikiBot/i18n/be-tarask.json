@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ucukor"
+		]
+	},
+	"yes": "так",
+	"no": "не",
+	"help-title": "Дапамога",
+	"help-title-command": "{1}{0}{msg:separator}дапамога",
+	"help-version": "Вэрсія {0}.",
+	"help-repo": "Крынічны код: {0}",
+	"help-commands": "Каманды",
+	"help-subcommands": "Падкаманды",
+	"help-aliases": "Псэўданімы",
+	"help-arguments": "Арґумэнты",
+	"help-default": "Перадвызначана: `{0}`.",
+	"help-command": "Паказвае дапамогу для каманды.",
+	"configuring-status": ":information_source: Падлучаны да разэткі.",
+	"configuring-changed-reset": "Скінута на перадвызначанае.",
+	"configuring-help-answerBots-value": "Булевае значэньне ({msg:yes} / {msg:no})",
+	"eventstreams-diff": "розьн",
+	"eventstreams-talk": "гутаркі",
+	"eventstreams-contribs": "унёсак",
+	"eventstreams-new": "Н",
+	"eventstreams-bot": "р",
+	"eventstreams-minor": "д",
+	"linking-links": "{0:Спасылка|Спасылкі}:&#32;"
+}
