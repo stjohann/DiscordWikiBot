@@ -22,7 +22,7 @@
 	"help-command-command": "le commando pro le qual fornir adjuta.",
 	"configuring-status": ":information_source: Connectite al prisa de currente.",
 	"configuring-status-streaming": "Ultime responsa del fluxos: {0} {0:minuta|minutas} {1} {1:secunda|secundas} retro.",
-	"configuring-changed-answerBots": "Le robot {0:respondera al|ignorara le} nove messages de altere robots sur iste servitor.",
+	"configuring-changed-answerBots": "Le robot {yesno:respondera al|ignorara le} nove messages de altere robots sur iste servitor.",
 	"configuring-changed-domain": "Le dominio pro le fluxos de modificationes recente sur iste servitor ha essite cambiate a **{0}**.",
 	"configuring-changed-lang": "Le lingua del robot sur iste servitor ha essite cambiate a **{0}**.",
 	"configuring-changed-translatewiki": "Le reportos sur le modificationes recente in Translatewiki es activate in le canal {0} pro le lingua **{1}**.",

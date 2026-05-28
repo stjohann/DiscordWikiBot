@@ -27,7 +27,7 @@
 	"help-command-command": "Εντολή για παροχή βοήθειας στο.",
 	"configuring-status": ":information_source:Συνενδεμένο στην πρίζα.",
 	"configuring-status-streaming": "Τελευταία απάντηση απο τις ροές: {0}{0:λεπτό|λεπτά}{1}{1:δευτερόλεπτο|δευτερόλεπτα} πρίν.",
-	"configuring-changed-answerBots": "Το bot θα {0:απαντήσει|αγνοήσει} νέα μηνύματα από άλλα bot σε αυτόν τον διακομιστή.",
+	"configuring-changed-answerBots": "Το bot θα {yesno:απαντήσει|αγνοήσει} νέα μηνύματα από άλλα bot σε αυτόν τον διακομιστή.",
 	"configuring-changed-domain": "Η διεύθυνση για τις ροές πρόσφατων αλλαγών σε αυτόν τον διακομιστή άλλαξε στο {0}",
 	"configuring-changed-lang": "Η Γλώσσα του ρομπότ σε αυτόν τον διακομιστή άλλαξε σε **{0}**",
 	"configuring-changed-translatewiki": "Οι αναφορές σχετικα με τις πρόσφατες αλλαγές στο Translatewiki είναι ανοιχτές στο κανάλι {0} της γλώσσας **{1}**",

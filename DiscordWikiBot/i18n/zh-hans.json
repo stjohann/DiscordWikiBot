@@ -32,7 +32,7 @@
 	"help-command-command": "提供帮助的命令",
 	"configuring-status": ":information_source: 插入插座。",
 	"configuring-status-streaming": "来自信息流的最新响应：{0} {0:分钟|分钟} {1} {1:秒|秒} 前。",
-	"configuring-changed-answerBots": "机器人将{0:回应|忽略}此服务器上其他机器人发送的新消息。",
+	"configuring-changed-answerBots": "机器人将{yesno:回应|忽略}此服务器上其他机器人发送的新消息。",
 	"configuring-changed-domain": "此服务器上最近更改流的域已更改为 **{0}**。",
 	"configuring-changed-lang": "此服务器上的机器人使用语言已更改至 **{0}**。",
 	"configuring-changed-translatewiki": "有关 translatewiki 近期更改的报告已在语言 **{1}** 的频道 {0} 中启用。",

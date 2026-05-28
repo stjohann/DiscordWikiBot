@@ -22,7 +22,7 @@
 	"help-command-command": "command para man provide ayuda.",
 	"configuring-status": ":information_source: Conectao ya.",
 	"configuring-status-streaming": "Reciente contestada estaba na maga streams: {0} {0:minuto|minuto} {1} {1:segundo|segundo} pasao.",
-	"configuring-changed-answerBots": "El bot ay {0:contesta|hende hace caso} con el maga nuevo mensaje estaba na maga otro bots na este server.",
+	"configuring-changed-answerBots": "El bot ay {yesno:contesta|hende hace caso} con el maga nuevo mensaje estaba na maga otro bots na este server.",
 	"configuring-changed-domain": "El domain para na maga streams de reciente cambio na este server ya queda cambiao na **{0}**.",
 	"configuring-changed-lang": "Lenguaje del bot na este server ya queda cambiao na **{0}**.",
 	"configuring-changed-translatewiki": "Activao el maga report acerca de maga reciente cambio na TranslateWiki na channel {0} para na lenguaje **{1}**.",

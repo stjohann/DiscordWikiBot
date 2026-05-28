@@ -31,7 +31,7 @@
 	"help-command-command": "Befehl zur Hilfeleistung.",
 	"configuring-status": ":information_source: In die Steckdose eingesteckt.",
 	"configuring-status-streaming": "Neueste Antwort aus den Streams: vor {0} {0:Minute|Minuten} {1} {1:Sekunde|Sekunden}.",
-	"configuring-changed-answerBots": "Der Bot wird neue Nachrichten von anderen Bots auf diesem Server {0:beantworten|ignorieren}.",
+	"configuring-changed-answerBots": "Der Bot wird neue Nachrichten von anderen Bots auf diesem Server {yesno:beantworten|ignorieren}.",
 	"configuring-changed-domain": "Die Domäne für die Streams der letzten Änderungen auf diesem Server wurde auf **{0}** geändert.",
 	"configuring-changed-lang": "Die Sprache des Bot auf diesem Server wurde auf **{0}** geändert.",
 	"configuring-changed-translatewiki": "Berichte über letzte Änderungen in Translatewiki werden im Kanal {0} für Sprache **{1}** aktiviert.",

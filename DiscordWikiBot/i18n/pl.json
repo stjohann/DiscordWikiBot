@@ -28,7 +28,7 @@
 	"help-command-command": "komenda, dla której wyświetlić pomoc.",
 	"configuring-status": ":information_source: Gniazdko pomyślnie znalezione.",
 	"configuring-status-streaming": "Ostatnia odpowiedź od strumieni: {0} {0:minuta|minuty|minut|minuty} {1} {1:sekunda|sekundy|sekund|sekundy} temu.",
-	"configuring-changed-answerBots": "Bot będzie {0:odpowiadał na|ignorował|błąd|błąd} nowe wiadomości od innych botów na tym serwerze.",
+	"configuring-changed-answerBots": "Bot będzie {yesno:odpowiadał na|ignorował} nowe wiadomości od innych botów na tym serwerze.",
 	"configuring-changed-domain": "Domena strumieni ostatnich zmian na tym serwerze została zmieniona na **{0}**.",
 	"configuring-changed-lang": "Język bota na tym serwerze został zmieniony na **{0}**.",
 	"configuring-changed-translatewiki": "Raporty nt. ostatnich zmian w Translatewiki są włączone w kanale {0} dla języka **{1}**.",

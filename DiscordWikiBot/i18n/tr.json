@@ -29,7 +29,7 @@
 	"help-command-command": "yardım sağlama komutu.",
 	"configuring-status": ":information_source: Sokete takılı.",
 	"configuring-status-streaming": "Akışlardan en son yanıt: {0} {0:dakika|dakika} {1} {1:saniye|saniye} önce.",
-	"configuring-changed-answerBots": "Bot, bu sunucudaki diğer botlardan gelen yeni mesajları {0:answer|yoksayacak}.",
+	"configuring-changed-answerBots": "Bot, bu sunucudaki diğer botlardan gelen yeni mesajları {yesno:answer|yoksayacak}.",
 	"configuring-changed-domain": "Son değişikliklerin etki alanı bu sunucudaki akışlar **{0}** olarak değiştirildi.",
 	"configuring-changed-lang": "Bu sunucudaki botun dili **{0}** olarak değiştirildi.",
 	"configuring-changed-translatewiki": "Translatewiki'deki son değişikliklerle ilgili raporlar, dil için {0} kanalında **{1}**.",

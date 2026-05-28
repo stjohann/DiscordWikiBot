@@ -131,8 +131,7 @@ namespace DiscordWikiBot
 		{
 			var str = GetFallbackChain(lang)
 				.Select(lng => GetMessageCode(key, lng))
-				.Where(x => x != null && !x.StartsWith("!!FUZZY!!"))
-				.FirstOrDefault();
+				.FirstOrDefault(x => x != null && !x.StartsWith("!!FUZZY!!"));
 
 			// Return a MediaWiki-styled key-value pair if there is no message
 			if (str == null)

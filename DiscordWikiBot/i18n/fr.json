@@ -33,7 +33,7 @@
 	"help-command-command": "commande pour laquelle l’aide est à fournir.",
 	"configuring-status": ":information_source: Branché sur la prise.",
 	"configuring-status-streaming": "Dernière réponse des flux : il y a {0} {0:minute|minutes} {1} {1:seconde|secondes}.",
-	"configuring-changed-answerBots": "Le robot {0:répondra|ignorera} les nouveaux messages provenant d'autres robots sur ce serveur.",
+	"configuring-changed-answerBots": "Le robot {yesno:répondra|ignorera} les nouveaux messages provenant d'autres robots sur ce serveur.",
 	"configuring-changed-domain": "Le domaine pour les flux de modifications récentes sur ce serveur a été modifié en **{0}**.",
 	"configuring-changed-lang": "La langue du bot sur ce serveur a été modifiée et est maintenant **{0}**.",
 	"configuring-changed-translatewiki": "Les rapports concernant les modifications récentes sur Translatewiki sont activés dans le canal {0} pour la langue **{1}**.",

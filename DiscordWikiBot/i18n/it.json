@@ -31,7 +31,7 @@
 	"help-command-command": "comando per fornire aiuto.",
 	"configuring-status": ":information_source: Connesso al socket.",
 	"configuring-status-streaming": "Ultima risposta dai flussi: {0} {0:minuto|minuti} {1} {1:secondo|secondi} fa.",
-	"configuring-changed-answerBots": "Il bot {0:risponderà ai|ignorerà i} nuovi messaggi da altri bot in questo server.",
+	"configuring-changed-answerBots": "Il bot {yesno:risponderà ai|ignorerà i} nuovi messaggi da altri bot in questo server.",
 	"configuring-changed-domain": "Il dominio per il flusso di modifiche recenti su questo server è stato cambiato a **{0}**.",
 	"configuring-changed-lang": "La lingua del bot su questo server è stata cambiata in **{{0}}**.",
 	"configuring-changed-wiki": "La wiki per i collegamenti in questo server è stata cambiata in **{0}**.",

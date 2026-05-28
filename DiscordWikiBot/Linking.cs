@@ -419,7 +419,7 @@ namespace DiscordWikiBot
 			if (!content.Contains("[[") && !content.Contains("{{")) return "";
 
 			// Extract visible content (no spoilers)
-			string visibleContent = Regex.Replace(content, @"\|{2}(.+?)\|{2}", "", RegexOptions.Multiline);
+			string visibleContent = Regex.Replace(content, @"\|{2}(.+?)\|{2}", "", RegexOptions.Singleline);
 
 			// Start digging for links
 			var matches = linkPattern.Matches(content);

@@ -33,7 +33,7 @@
 	"help-command-command": "comando para proporcionar ayuda.",
 	"configuring-status": ":electric_plug: Conectado.",
 	"configuring-status-streaming": "Respuesta más reciente de las transmisiones: hace {0} {0:minuto|minutos} {1} {1:segundo|segundos}.",
-	"configuring-changed-answerBots": "El bot {0:responderá|ignorará} nuevos mensajes de otros bots en este servidor.",
+	"configuring-changed-answerBots": "El bot {yesno:responderá|ignorará} nuevos mensajes de otros bots en este servidor.",
 	"configuring-changed-domain": "El dominio usado para la transmisión de cambios recientes en este servidor fue cambiado a **{0}**.",
 	"configuring-changed-lang": "El idioma del bot en este servidor fue cambiado a **{0}**.",
 	"configuring-changed-translatewiki": "Los informes sobre cambios recientes en Translatewiki están habilitados en el canal {0} para el idioma **{1}**.",

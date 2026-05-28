@@ -23,7 +23,7 @@
 	"help-command-command": "comando para o que proporcionar axuda.",
 	"configuring-status": ":information_source: Conectado ao zócolo.",
 	"configuring-status-streaming": "A última resposta das emisións foi hai {0} {0:minuto|minutos} {1} {1:segundo|segundos}.",
-	"configuring-changed-answerBots": "O bot {0:responderá|ignorará} as mensaxes novas doutros bots neste servidor.",
+	"configuring-changed-answerBots": "O bot {yesno:responderá|ignorará} as mensaxes novas doutros bots neste servidor.",
 	"configuring-changed-domain": "O dominio para os cambios de emisións recentes neste servidor cambiouse a **{0}**.",
 	"configuring-changed-lang": "A lingua do bot neste servidor cambiouse a **{0}**.",
 	"configuring-changed-translatewiki": "Os informes sobre cambios recentes en Translatewiki están habilitados na canle {0} para a lingua **{1}**.",

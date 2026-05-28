@@ -38,7 +38,7 @@ namespace DiscordWikiBot
 			int succeeds = await Config.SetOverride(ctx.Guild, "answerBots", overrideVal);
 			if (succeeds == Config.RESULT_CHANGE || succeeds == Config.RESULT_RESET)
 			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-answerBots", lang, overrideVal));
+				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-answerBots", lang, new { yesno = overrideVal }));
 				return;
 			}
 			await RespondOnErrors(succeeds, ctx, lang);

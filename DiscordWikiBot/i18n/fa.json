@@ -30,7 +30,7 @@
 	"help-command-command": "دستور برای راهنمایی.",
 	"configuring-status": ":information_source: به دوشاخهٔ برق وصل شد.",
 	"configuring-status-streaming": "آخرین پاسخ از استریم‌ها: {0} {0:دقیقه|دقیقه} {1} {1:ثانیه|ثانیه} پیش.",
-	"configuring-changed-answerBots": "ربات پیام‌های جدید از ربات‌های دیگر در این سرور را {0:پاسخ می‌دهد|نادیده می‌گیرد}.",
+	"configuring-changed-answerBots": "ربات پیام‌های جدید از ربات‌های دیگر در این سرور را {yesno:پاسخ می‌دهد|نادیده می‌گیرد}.",
 	"configuring-changed-domain": "دامنه برای استریم تغییرات اخیر در این سرور به **{0}** تغییر داده شد.",
 	"configuring-changed-lang": "زبان ربات در این سرور به **{0}** تغییر داده شد.",
 	"configuring-changed-translatewiki": "گزارش‌‌ها دربارهٔ تغییرات اخیر در ویکی‌ترجمه در کانال {0} برای زبان **{1}** فعال شد.",

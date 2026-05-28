@@ -27,7 +27,7 @@
 	"help-command-command": "kommandot att ge hjälp om.",
 	"configuring-status": ":information_source: Inkopplad i uttaget.",
 	"configuring-status-streaming": "Senaste svaret från strömmarna: {0} {0:minut|minuter} {1} {1:sekund|sekunder} sedan.",
-	"configuring-changed-answerBots": "Boten kommer att {0:answer|ignorera} nya meddelanden från andra botar på den här servern.",
+	"configuring-changed-answerBots": "Boten kommer att {yesno:answer|ignorera} nya meddelanden från andra botar på den här servern.",
 	"configuring-changed-domain": "Domänen för senaste ändringar-strömmen på denna server ändrades till **{0}**.",
 	"configuring-changed-lang": "Språket för boten på denna server ändrades till **{0}**.",
 	"configuring-changed-translatewiki": "Rapporter om senaste ändringar på Translatewiki har aktiverats i kanalen {0} för språket **{1}**.",

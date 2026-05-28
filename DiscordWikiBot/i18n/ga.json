@@ -22,7 +22,7 @@
 	"help-command-command": "ordú chun cabhair a sholáthar do.",
 	"configuring-status": ":information_source: Breiseáilte isteach sa soicéad.",
 	"configuring-status-streaming": "An freagra is déanaí ó na sruthanna: {0} {0:nóiméad|nóiméad|nóiméad|nóiméad|nóiméad} {1} {1:soicind|soicind|soicind|soicind|soicind} ó shin.",
-	"configuring-changed-answerBots": "Déanfaidh an bota {0:freagairt|freagairt|freagairt|freagairt|freagairt} ar theachtaireachtaí nua ó bhotaí eile ar an bhfreastalaí seo.",
+	"configuring-changed-answerBots": "Déanfaidh an bota {yesno:freagairt|freagairt|freagairt|freagairt|freagairt} ar theachtaireachtaí nua ó bhotaí eile ar an bhfreastalaí seo.",
 	"configuring-changed-domain": "Athraíodh fearann ​​​​le haghaidh sruthanna athruithe le déanaí ar an bhfreastalaí seo go **{0}**.",
 	"configuring-changed-lang": "Athraíodh teanga an bhota ar an bhfreastalaí seo go **{0}**.",
 	"configuring-changed-translatewiki": "Tá tuairiscí faoi athruithe le déanaí ar Translatewiki cumasaithe sa chainéal {0} don teanga **{1}**.",

@@ -26,7 +26,7 @@
 	"help-command-command": "kommando om at yde hjælp til.",
 	"configuring-status": ":information_source: Sat i stikkontakten.",
 	"configuring-status-streaming": "Seneste svar fra streams: {0} {0:minut|minutter} {1} {1:sekund|sekunder} siden.",
-	"configuring-changed-answerBots": "Botten vil {0:besvare|ignorere} nye beskeder fra andre bots på denne server.",
+	"configuring-changed-answerBots": "Botten vil {yesno:besvare|ignorere} nye beskeder fra andre bots på denne server.",
 	"configuring-changed-domain": "Domænet for streams af de seneste ændringer på denne server blev ændret til **{0}**.",
 	"configuring-changed-lang": "Sproget på botten på denne server er blevet ændret til **{0}**.",
 	"configuring-changed-translatewiki": "Rapporter om de seneste ændringer på Translatewiki er aktiveret i kanalen {0} for sproget **{1}**.",

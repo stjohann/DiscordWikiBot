@@ -24,7 +24,7 @@
 	"help-command-command": "příkaz pro poskytnutí nápovědy.",
 	"configuring-status": ":information_source: Připojeno do socketu.",
 	"configuring-status-streaming": "Poslední odpověď ze streamů: před {0} {0:minutou|minutami|minutami|minutami} {1} {1:sekundou|sekundami|sekundami|sekundami}.",
-	"configuring-changed-answerBots": "Bot bude {0:odpovídat na|0:odpovídat na|ignorovat|ignorovat} nové zprávy ostatních botů na tomto serveru.",
+	"configuring-changed-answerBots": "Bot bude {yesno:odpovídat na|ignorovat} nové zprávy ostatních botů na tomto serveru.",
 	"configuring-changed-domain": "Doména pro streamy posledních změn na tomto serveru byla změněna na **{0}**.",
 	"configuring-changed-lang": "Jazyk bota na tomto serveru byl změněn na **{0}**.",
 	"configuring-changed-translatewiki": "Hlášení o posledních změnách na Translatewiki pro jazyk **{1}** byla povolena v kanálu {0}.",
