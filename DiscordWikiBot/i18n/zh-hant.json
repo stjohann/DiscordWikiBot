@@ -28,7 +28,7 @@
 	"help-command-command": "提供說明的命令",
 	"configuring-status": ":information_source:插入至插座。",
 	"configuring-status-streaming": "來自資訊流的最新回應：{0} {0:分鐘|分鐘} {1} {1:秒|秒} 前。",
-	"configuring-changed-answerBots": "機器人將{0：回答|忽略}來自此伺服器上其他機器人的新訊息。",
+	"configuring-changed-answerBots": "機器人將{yesno:回答|忽略}來自此伺服器上其他機器人的新訊息。",
 	"configuring-changed-domain": "此伺服器上近期變更串流的網域已變更為 **{0}**。",
 	"configuring-changed-lang": "在此伺服器上的機器人語言被變更為 **{0}**。",
 	"configuring-changed-translatewiki": "有關 translatewiki 近期變更的報告已在語言 **{1}** 的頻道 {0} 中啟用。",
