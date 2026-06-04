@@ -15,6 +15,7 @@
 	"help-arguments": "Argumenter",
 	"help-default": "Als Standard: '{0}'.",
 	"help-optional": "fakultativ",
+	"configuring-changed-answerBots": "De Bot wäert nei Messagë vun anere Botten op dësem Server {yesno:beäntweren|ignoréieren}.",
 	"configuring-help-lang": "D'Sprooch vum Bot op dësem Server änneren.",
 	"eventstreams-diff": "Ënnerscheed",
 	"eventstreams-talk": "Diskussioun",

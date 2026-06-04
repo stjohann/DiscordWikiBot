@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"Tymewalk"
 		]
 	},
 	"yes": "jes",
@@ -16,6 +17,7 @@
 	"help-arguments": "Argumentoj",
 	"help-default": "Defaŭlte: `{0}`.",
 	"help-optional": "nedeviga",
+	"configuring-help-answerBots-value": "Bulea valoro ({msg:yes} / {msg:no})",
 	"eventstreams-diff": "malsamoj",
 	"eventstreams-talk": "diskuto",
 	"eventstreams-contribs": "kontribuoj",
@@ -26,5 +28,6 @@
 	"streaming-stream-namespace": "de la nomspaco `{0}`",
 	"streaming-stream-title": "de la paĝo `{0}`",
 	"streaming-list-stream": "**{1:Elsendo|Elsendoj} {0}:**",
+	"streaming-key-title": "titolo de paĝo",
 	"translatewiki-header": "{0} {1:mesaĝo|mesaĝoj} de {2} {2:aŭtoro|aŭtoroj}"
 }
