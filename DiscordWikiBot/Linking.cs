@@ -187,7 +187,8 @@ namespace DiscordWikiBot
 			}
 
 			// Send message
-			string msg = PrepareMessage(content, lang, wikiUrl);
+			bool ignoreFormattedLinks = Config.GetIgnoreFormattedLinks(isServerMessage ? e.Guild : null);
+			string msg = PrepareMessage(content, lang, wikiUrl, ignoreFormattedLinks);
 			if (msg != "")
 			{
 				bool isTooLong = msg == TOO_LONG;
@@ -233,7 +234,8 @@ namespace DiscordWikiBot
 			await Init(e.Channel);
 
 			// Get a message
-			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(e.Channel));
+			bool ignoreFormattedLinks = Config.GetIgnoreFormattedLinks(e.Guild);
+			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(e.Channel), ignoreFormattedLinks);
 			bool isTooLong = msg == TOO_LONG;
 
 			// Post a reply to a recent message if it was without links
@@ -362,13 +364,29 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Check whether a wikilink match is the display text of an already-formatted Discord Markdown link.
+		/// Detects the structure [[[...]]](url) where [[...]] is the match.
+		/// </summary>
+		private static bool IsInMarkdownLink(string content, Match link)
+		{
+			int start = link.Index;
+			int end = start + link.Length;
+			if (start == 0 || content[start - 1] != '[') return false;
+			if (end >= content.Length || content[end] != ']') return false;
+			int pos = end + 1;
+			while (pos < content.Length && content[pos] == ' ') pos++;
+			return pos < content.Length && content[pos] == '(';
+		}
+
+		/// <summary>
 		/// Parse a Discord message.
 		/// </summary>
 		/// <param name="content">Discord message content.</param>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
 		/// <param name="linkFormat">Standard link format for the message.</param>
+		/// <param name="ignoreFormattedLinks">Whether to skip wiki syntax already used as Markdown link display text.</param>
 		/// <returns>A message with parsed wiki links or a response code.</returns>
-		public static string PrepareMessage(string content, string lang, string linkFormat)
+		public static string PrepareMessage(string content, string lang, string linkFormat, bool ignoreFormattedLinks = false)
 		{
 			if (content == "" || content == null)
 			{
@@ -431,6 +449,8 @@ namespace DiscordWikiBot
 				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
+					if (ignoreFormattedLinks && IsInMarkdownLink(content, link)) continue;
+
 					var linkData = AddLink(link, linkFormat);
 					if (linkData == null) continue;
 
