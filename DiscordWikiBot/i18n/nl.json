@@ -51,7 +51,7 @@
 	"configuring-help-domain-value": "domein van een Wikimedia-project (in formaat nl.wikipedia.org). Gebruik `-` om de standaardwaarde terug te zetten.",
 	"configuring-help-lang": "De taal van de robot op deze server wijzigen.",
 	"configuring-help-lang-value": "de gewenste taal van de robot. Gebruik `-` om de standaardwaarde terug te zetten.",
-	"configuring-help-translatewiki": "Elk uur starten of stoppen met rapporteren over recente wijzigingen op translatewiki.net in een van de kanalen.",
+	"configuring-help-translatewiki": "Elk uur starten of stoppen met melden over recente wijzigingen op translatewiki.net in een van de kanalen.",
 	"configuring-help-translatewiki-channel": "een kanaal dat beschikbaar is voor de robot.",
 	"configuring-help-translatewiki-value": "taal die op translatewiki.net voor vertaling beschikbaar is (taalcode in ISO 639). Vul `-` in als taal om de rapportage te beëindigen.",
 	"configuring-help-wiki": "De hoofdwiki voor koppelingen op deze server wijzigen. /wiki/$1 aan het einde is vereist.",

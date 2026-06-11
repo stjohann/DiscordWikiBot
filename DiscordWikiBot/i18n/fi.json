@@ -7,7 +7,8 @@
 			"Markus Mikkonen",
 			"Nike",
 			"Pyscowicz",
-			"Samoasambia"
+			"Samoasambia",
+			"Wikipeedikko"
 		]
 	},
 	"yes": "kyllä",
@@ -23,6 +24,7 @@
 	"help-default": "Oletuksena: `{0}`.",
 	"help-optional": "valinnainen",
 	"configuring-status": ":information_source: Kytketty pistorasiaan.",
+	"configuring-changed-answerBots": "Botti {yesno:vastaa uusiin viesteihin|ohittaa uudet viestit} muilta tämän palvelimen boteilta.",
 	"configuring-changed-lang": "Botin kieli tällä palvelimella on nyt **{0}**.",
 	"configuring-error-same": "Antamasi arvo on sama kuin nykyinen arvo.",
 	"configuring-error-strange": "Komentosi epäonnistui jonkin oudon ongelman vuoksi.",
