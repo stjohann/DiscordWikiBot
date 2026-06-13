@@ -212,15 +212,6 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Get whether a specific server ignores already formatted links.
-		/// </summary>
-		/// <param name="server">Discord server instance.</param>
-		public static bool GetIgnoreFormattedLinks(DiscordGuild server = null)
-		{
-			return GetValue("ignoreFormattedLinks", server?.Id.ToString()) != null;
-		}
-
-		/// <summary>
 		/// Get TranslateWiki notifications channel in a server.
 		/// </summary>
 		/// <param name="server">Discord server instance.</param>

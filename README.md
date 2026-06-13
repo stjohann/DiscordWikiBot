@@ -36,11 +36,7 @@ The version in this repository is configured for Russian Wikipedia by default. Y
 	"lang": "ru",
 
 	// REQUIRED: Default wikilink configuration
-	"wiki": "https://ru.wikipedia.org/wiki/$1",
-
-	// Whether the bot should ignore [[wiki syntax]] that is already formatted as a Markdown link
-	// (e.g. [[[`Example`]]]( <https://en.wikipedia.org/wiki/Example> )). Defaults to false.
-	"ignoreFormattedLinks": true
+	"wiki": "https://ru.wikipedia.org/wiki/$1"
 }
 ```
 

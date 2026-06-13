@@ -39,8 +39,5 @@ namespace DiscordWikiBot.Schemas
 		
 		[JsonPropertyName("translatewiki-key")]
 		public string TranslatewikiLastKey { get; set; }
-
-		[JsonPropertyName("ignoreFormattedLinks")]
-		public bool IgnoreFormattedLinks { get; set; }
 	}
 }

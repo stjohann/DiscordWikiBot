@@ -45,32 +45,6 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
-		/// Configure whether already formatted links are ignored.
-		/// </summary>
-		/// <param name="ctx">Discord information.</param>
-		/// <param name="value">Boolean value.</param>
-		[Command("serverIgnoreFormattedLinks")]
-		[Aliases("guildIgnoreFormattedLinks")]
-		[Description("configuring-help-ignoreFormattedLinks")]
-		public async Task SetIgnoreFormattedLinks(CommandContext ctx,
-			[Description("configuring-help-ignoreFormattedLinks-value")] string value)
-		{
-			var lang = Config.GetLang(ctx.Guild);
-			object overrideVal = Config.ParseBool(value, lang);
-
-			bool isEmpty = await RespondIfEmpty(ctx, lang, value);
-			if (isEmpty) return;
-
-			int succeeds = await Config.SetOverride(ctx.Guild, "ignoreFormattedLinks", overrideVal);
-			if (succeeds == Config.RESULT_CHANGE || succeeds == Config.RESULT_RESET)
-			{
-				await ctx.RespondAsync(Locale.GetMessage("configuring-changed-ignoreFormattedLinks", lang, new { yesno = overrideVal }));
-				return;
-			}
-			await RespondOnErrors(succeeds, ctx, lang);
-		}
-
-		/// <summary>
 		/// Set EventStreams domain for a Discord server.
 		/// </summary>
 		/// <param name="ctx">Discord information.</param>

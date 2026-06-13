@@ -187,8 +187,7 @@ namespace DiscordWikiBot
 			}
 
 			// Send message
-			bool ignoreFormattedLinks = Config.GetIgnoreFormattedLinks(isServerMessage ? e.Guild : null);
-			string msg = PrepareMessage(content, lang, wikiUrl, ignoreFormattedLinks);
+			string msg = PrepareMessage(content, lang, wikiUrl);
 			if (msg != "")
 			{
 				bool isTooLong = msg == TOO_LONG;
@@ -234,8 +233,7 @@ namespace DiscordWikiBot
 			await Init(e.Channel);
 
 			// Get a message
-			bool ignoreFormattedLinks = Config.GetIgnoreFormattedLinks(e.Guild);
-			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(e.Channel), ignoreFormattedLinks);
+			string msg = PrepareMessage(e.Message.Content, lang, Config.GetWiki(e.Channel));
 			bool isTooLong = msg == TOO_LONG;
 
 			// Post a reply to a recent message if it was without links
@@ -384,9 +382,8 @@ namespace DiscordWikiBot
 		/// <param name="content">Discord message content.</param>
 		/// <param name="lang">MediaWiki-compatible language code.</param>
 		/// <param name="linkFormat">Standard link format for the message.</param>
-		/// <param name="ignoreFormattedLinks">Whether to skip wiki syntax already used as Markdown link display text.</param>
 		/// <returns>A message with parsed wiki links or a response code.</returns>
-		public static string PrepareMessage(string content, string lang, string linkFormat, bool ignoreFormattedLinks = false)
+		public static string PrepareMessage(string content, string lang, string linkFormat)
 		{
 			if (content == "" || content == null)
 			{
@@ -449,7 +446,7 @@ namespace DiscordWikiBot
 				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
-					if (ignoreFormattedLinks && IsInMarkdownLink(content, link)) continue;
+					if (IsInMarkdownLink(content, link)) continue;
 
 					var linkData = AddLink(link, linkFormat);
 					if (linkData == null) continue;

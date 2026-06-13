@@ -367,23 +367,20 @@ namespace DiscordWikiBot.Tests
 			// Already-formatted link is ignored
 			Assert.AreEqual(
 				"",
-				TestMessage(@"[[[Test]]](https://ru.wikipedia.org/wiki/Test)", ignoreFormattedLinks: true)
+				TestMessage(@"[[[Test]]](https://ru.wikipedia.org/wiki/Test)")
 			);
 
 			// Bot's own output format is ignored
 			Assert.AreEqual(
 				"",
-				TestMessage(@"[[[`Test`]]]( <https://ru.wikipedia.org/wiki/Test> )", ignoreFormattedLinks: true)
+				TestMessage(@"[[[`Test`]]]( <https://ru.wikipedia.org/wiki/Test> )")
 			);
 
 			// Unformatted [[...]] adjacent to a formatted link is still processed
 			Assert.AreEqual(
 				@"Ссылка: [[[`Other`]]]( <https://ru.wikipedia.org/wiki/Other> )",
-				TestMessage(@"[[Other]] [[[Test]]](https://ru.wikipedia.org/wiki/Test)", ignoreFormattedLinks: true)
+				TestMessage(@"[[Other]] [[[Test]]](https://ru.wikipedia.org/wiki/Test)")
 			);
-
-			// Without the flag, the same formatted link is processed normally
-			Assert.AreNotEqual("", TestMessage(@"[[[Test]]](https://ru.wikipedia.org/wiki/Test)"));
 		}
 
 		/// <summary>
@@ -391,13 +388,12 @@ namespace DiscordWikiBot.Tests
 		/// </summary>
 		/// <param name="str">String to be tested.</param>
 		/// <param name="format">Default link format.</param>
-		/// <param name="ignoreFormattedLinks">Whether to skip wiki syntax inside Markdown links.</param>
 		/// <returns></returns>
-		private static string TestMessage(string str, string format = "https://ru.wikipedia.org/wiki/$1", bool ignoreFormattedLinks = false)
+		private static string TestMessage(string str, string format = "https://ru.wikipedia.org/wiki/$1")
 		{
 			// Remove starting spaces
 			str = Regex.Replace(str, @"^[^\S\n\r]+", string.Empty, RegexOptions.Multiline);
-			return Linking.PrepareMessage(str, "ru", format, ignoreFormattedLinks);
+			return Linking.PrepareMessage(str, "ru", format);
 		}
 
 		[ClassInitialize]
