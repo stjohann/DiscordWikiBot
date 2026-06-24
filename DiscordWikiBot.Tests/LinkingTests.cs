@@ -361,6 +361,28 @@ namespace DiscordWikiBot.Tests
 			);
 		}
 
+		[TestMethod]
+		public void IgnoreFormattedLinks()
+		{
+			// Already-formatted link is ignored
+			Assert.AreEqual(
+				"",
+				TestMessage(@"[[[Test]]](https://ru.wikipedia.org/wiki/Test)")
+			);
+
+			// Bot's own output format is ignored
+			Assert.AreEqual(
+				"",
+				TestMessage(@"[[[`Test`]]]( <https://ru.wikipedia.org/wiki/Test> )")
+			);
+
+			// Unformatted [[...]] adjacent to a formatted link is still processed
+			Assert.AreEqual(
+				@"Ссылка: [[[`Other`]]]( <https://ru.wikipedia.org/wiki/Other> )",
+				TestMessage(@"[[Other]] [[[Test]]](https://ru.wikipedia.org/wiki/Test)")
+			);
+		}
+
 		/// <summary>
 		/// Format a call to <see cref="Linking.PrepareMessage" />
 		/// </summary>
