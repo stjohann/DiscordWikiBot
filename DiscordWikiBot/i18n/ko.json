@@ -88,7 +88,7 @@
 	"streaming-badvalue-in-title": "`--in-title` 매개변수는 이름공간 스트림에서만 사용할 수 있습니다.",
 	"streaming-badvalue-regex": "`{1}` 매개변수에 대한 `{0}`의 정규 표현식은 유효하지 않기에 작동하지 않습니다. 수정한 후 명령을 다시 제출해 주세요.",
 	"streaming-help-open": "채널에 최근 바뀜의 스트리밍을 시작합니다.",
-	"streaming-help-edit": "채널의 최근 변경 스트림의 매개 변수를 편집합니다.",
+	"streaming-help-edit": "채널의 최근 변경 스트림의 매개변수를 편집합니다.",
 	"streaming-help-close": "채널에 최근 바뀜의 스트리밍을 중지합니다.",
 	"streaming-help-list": "이 서버에 열려 있는 모든 스트림을 나열합니다.",
 	"streaming-help-channel": "봇이 메시지를 보낼 수 있는 채널이어야 합니다.",
