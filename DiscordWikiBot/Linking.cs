@@ -362,6 +362,21 @@ namespace DiscordWikiBot
 		}
 
 		/// <summary>
+		/// Check whether a wikilink match is the display text of an already-formatted Discord Markdown link.
+		/// Detects the structure [[[...]]](url) where [[...]] is the match.
+		/// </summary>
+		private static bool IsInMarkdownLink(string content, Match link)
+		{
+			int start = link.Index;
+			int end = start + link.Length;
+			if (start == 0 || content[start - 1] != '[') return false;
+			if (end >= content.Length || content[end] != ']') return false;
+			int pos = end + 1;
+			while (pos < content.Length && content[pos] == ' ') pos++;
+			return pos < content.Length && content[pos] == '(';
+		}
+
+		/// <summary>
 		/// Parse a Discord message.
 		/// </summary>
 		/// <param name="content">Discord message content.</param>
@@ -431,6 +446,8 @@ namespace DiscordWikiBot
 				// Add a unique link for each match into the list
 				foreach (Match link in matches)
 				{
+					if (IsInMarkdownLink(content, link)) continue;
+
 					var linkData = AddLink(link, linkFormat);
 					if (linkData == null) continue;
 
