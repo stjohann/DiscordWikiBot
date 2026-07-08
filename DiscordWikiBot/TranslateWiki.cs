@@ -242,7 +242,7 @@ namespace DiscordWikiBot
 					.WithColor(new DiscordColor(0x013467))
 					.WithFooter(
 						"translatewiki.net • " + Locale.GetLanguageName(_lang, "{0} ({1})"),
-						"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/512px-Translatewiki.net_logo.svg.png"
+						"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Translatewiki.net_logo.svg/120px-Translatewiki.net_logo.svg.png"
 					);
 
 				// Fetch info about channel

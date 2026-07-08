@@ -360,7 +360,7 @@ namespace DiscordWikiBot
 				.WithTimestamp(change.Metadata.DateTime);
 
 			DiscordColor embedColor = new DiscordColor(0x72777d);
-			string embedIcon = "2/25/MobileFrontend_bytes-neutral.svg/512px-MobileFrontend_bytes-neutral.svg.png";
+			string embedIcon = "2/25/MobileFrontend_bytes-neutral.svg/120px-MobileFrontend_bytes-neutral.svg.png";
 
 			// Parse statuses from the diff
 			string status = "";
@@ -387,11 +387,11 @@ namespace DiscordWikiBot
 			if (length > 0)
 			{
 				embedColor = new DiscordColor(0x00af89);
-				embedIcon = "a/ab/MobileFrontend_bytes-added.svg/128px-MobileFrontend_bytes-added.svg.png";
+				embedIcon = "a/ab/MobileFrontend_bytes-added.svg/120px-MobileFrontend_bytes-added.svg.png";
 			}
 			else if (length < 0)
 			{
-				embedIcon = "7/7c/MobileFrontend_bytes-removed.svg/128px-MobileFrontend_bytes-removed.svg.png";
+				embedIcon = "7/7c/MobileFrontend_bytes-removed.svg/120px-MobileFrontend_bytes-removed.svg.png";
 				embedColor = new DiscordColor(0xdd3333);
 			}
 
