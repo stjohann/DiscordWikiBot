@@ -56,7 +56,7 @@
 	"eventstreams-new": "N",
 	"eventstreams-bot": "b",
 	"eventstreams-minor": "m",
-	"linking-links": "{0:Pòwrózk|Pòwrózczi|Pòwrózków|Pòwrózczi}:&#32;",
+	"linking-links": "{0:Pòwrózk|Pòwrózczi|Pòwrózczi|Pòwrózczi}:&#32;",
 	"linking-toolong": "Pòwrózczi do wiadła wëżi nie są pòdóné, bò wiadło bëłobë za dłudżé.",
 	"streaming-domain": "Domena strëdżi: `{0}`",
 	"streaming-stream-namespace": "z rëmù pòzwów `{0}`",
