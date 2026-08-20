@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Renessaince",
 			"Ucukor"
 		]
 	},
@@ -8,6 +9,7 @@
 	"no": "не",
 	"help-title": "Дапамога",
 	"help-title-command": "{1}{0}{msg:separator}дапамога",
+	"help-all": "Пералічаныя ўсе каманды верхняга ўзроўню ды групу. Пазначце каманду, каб пабачыць больш інфармацыі.",
 	"help-version": "Вэрсія {0}.",
 	"help-repo": "Крынічны код: {0}",
 	"help-commands": "Каманды",
@@ -15,6 +17,7 @@
 	"help-aliases": "Псэўданімы",
 	"help-arguments": "Арґумэнты",
 	"help-default": "Перадвызначана: `{0}`.",
+	"help-optional": "неабавязковае",
 	"help-command": "Паказвае дапамогу для каманды.",
 	"configuring-status": ":information_source: Падлучаны да разэткі.",
 	"configuring-changed-reset": "Скінута на перадвызначанае.",
