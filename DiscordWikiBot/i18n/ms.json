@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Izing",
+			"Taqi1109",
 			"Tofeiku"
 		]
 	},
@@ -22,6 +23,7 @@
 	"help-command": "Tunjuk bantuan arahan",
 	"help-command-command": "perintah untuk memberikan bantuan bagi.",
 	"configuring-status": ":information_source: Dipasang ke dalam soket.",
+	"configuring-status-streaming": "Respons terkini daripada strim: {0} {0:minit} {1} {1:saat} yang lalu.",
 	"configuring-changed-lang": "Bahasa untuk bot ini di server ini ditukarkan ke {0}.",
 	"configuring-changed-reset": "Nilai telah ditetapkan semula kepada lalai.",
 	"configuring-help-translatewiki-channel": "saluran yang tersedia untuk bot.",
